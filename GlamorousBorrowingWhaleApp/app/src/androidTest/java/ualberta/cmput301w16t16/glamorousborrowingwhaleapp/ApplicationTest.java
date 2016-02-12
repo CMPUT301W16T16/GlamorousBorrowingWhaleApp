@@ -109,10 +109,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // 01.05.01 As an owner of equipment, I want to delete a piece of equipment from my list of owned equipment
+
+    // assert that removing a user's only item removes it from the user's list and is no longer displayed
     public void testDeleteOnlyItem() {
         // create equipment manager
         // create an equipment item that belongs to the equipment manager
-
         // check that the item is in the list of the equipment manager's items
         // check that the item is displayed in the main activity view
         // remove the item from the list of the equipment manager's items
@@ -120,6 +121,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the item is not displayed in the main activity view
     }
 
+    // assert that removing one of the user's items but leaving the rest removes
+    // only that item and leaves the rest
     public void testDeleteOneItem() {
         // create equipment manager
         // create an equipment item that belongs to the equipment manager
@@ -134,6 +137,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the other item is still in the main activity view
     }
 
+    // assert that an item that does not belong to the owner cannot be removed from the
+    // owner's list of items
     public void testDeleteNull() {
         // create equipment manager
         // create a new item
@@ -144,14 +149,18 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // 02.01.01 As an owner or borrower of equipment, I want a piece of equipment to have a status of one of: available, bidded, or borrowed.
+
+    // assert that an item set as available will be visible to a potential borrower and displayed as visible to the owner
     public void testAvailableStatus() {
-        // create equipment manager
+        // create owner
         // create user
         // create an item that belongs to equipment manager
         // set the status of the item to available
         // check that the item is visible to the user
     }
 
+    // assert that an item set as bidded will be displayed as bidded to the owner and the bidder
+    // and that the item will still be visible to another user and displayed as available
     public void testBiddedStatus() {
         // create equipment manager
         // create user1
@@ -163,6 +172,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the status of the item appears as "available" to user2
     }
 
+    // assert that an item set as borrowed will be displayed as borrowed to the owner and the borrower
+    // and will not be visible to another user
     public void testBorrowedStatus() {
         // create owner
         // create user1
@@ -175,12 +186,16 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // 03.01.01 As a user, I want a profile with a unique username and my contact information.
+
+    // assert that a user can create a new profile that will be saved
     public void testSetProfile() {
         // start signUp activity
         // set values for each of the EditText fields
         // check that the entered values are saved as a new user
     }
 
+    // assert that there will be a warning dialogue if a user attempts to create a profile with
+    // an existing username
     public void testSetExistingProfile() {
         // create user with "abc" as username
         // start SignUp activity
@@ -189,64 +204,136 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // assert that there is an error when user tries to press the "sign up" button
     }
 
+    // assert that the user cannot create a new profile without entering something into every field
     public void testSetEmptyProfile() {
         // start SignUp activity
         // assert that the "sign up" button cannot be pressed
     }
 
+    // assert that a new profile will display properly in the main acitivity and the view contact information
     public void testUserContactInfo() {
-        // create user with username and contact information
-        // create an equipment item that belongs to user
+        // start SignUp activity
+        // create a user by setting values in the fields of the SignUp activity
+        // create an equipment item that belongs to the user
         // assert that displayed profile information in main activity is accurate
         // start ViewOneItem activity with equipment item belonging to user
         // check that profile information displayed is accurate
     }
 
     // 03.02.01 As a user, I want to edit the contact information in my profile.
-    public void testEditUserContactInfo() {
-        String user_name = "JohnDoe";
-        String phone_number = 17805551234;
-        String email_address = "JohnDoe@gmail.com";
-        User user = new User(user_name, phone_number, email_address);
 
-        String new_user_name = "SallySmith";
-        String new_phone_number = "1234567890";
-        String new_email_address = "SallySmith@gmail.com";
-        user.editUserName(new_user_name);
-        user.editPhoneNumber(new_phone_number);
-        user.editEmailAddress(new_email_address);
-
-        assertTrue(user.user_name == new_user_name && user.phone_number == new_phone_number && user.email_address = new_email_address);
+    // assert that edited information is updated in the user profile
+    public void testEditProfile() {
+        // create user
+        // start EditProfile activity
+        // set values for each of the fields in the activity
+        // assert that the profile has been edited to the new values
     }
 
-    // 03.03.01 As a user, I want to, when a username is presented for a piece of equipment, retrieve and show its contact information.
-    public void testShowContactInfo() {
-        ListView listView = (ListView) findViewById(R.id.contact_information);
-        //
+    // assert that empty fields in the edit profile activity leave the profile the way that it was before
+    public void testEditProfileNull() {
+        // create user
+        // start EditProfile activity
+        // do not set values for any of the fields in the activity
+        // assert that the profile is the same as it was before
+    }
 
+    // 03.03.01 As a user, I want to, when a username is presented for a thing, retrieve and show its contact information.
+
+    // assert that accurate profile information is given for the user
+    public void testGetProfile() {
+        // create owner
+        // create an equipment item that belongs to the owner
+        // start the GetProfile activity
+        // assert that all of the information for the user is accurate
+        // assert that the back button returns the user to the previous activity
     }
 
     // 04.01.01 As a borrower of equipment, I want to specify a set of keywords, and search for
     // all pieces of equipment not currently borrowed whose description contains all the keywords.
-    public void testSearchEquipmentKeywords() {
 
+    // assert that all items in search are available and that they are all of the items containing the keywords
+    public void testSearchForItem() {
+        // create item1 with "a b c d" description, with available status
+        // create item2 with "c d e f" description with available status
+        // create item3 with "c" description with available status
+        // create item4 with "c" description with borrowed status
+        // start Search activity with "a" as keyword
+        // assert that item1 is the only visible item
 
+        // return to previous activity
+        // start Search activity with "d" as keyword
+        // assert that item1 and item2 are the only visible items
+
+        // return to previous activity
+        // start Search activity with "c" as keyword
+        // assert that item1, item2 and item3 are only visible items
+    }
+
+    // assert that entering nothing into the search field will return no results
+    public void testSearchForEmptyItem() {
+        // create item1 with "a b c d" description, with available status
+        // create item2 with "c d e f" description with available status
+        // create item3 with "c" description with available status
+        // create item4 with "c" description with borrowed status
+        // start Search activity with "" as keyword (empty string)
+        // assert that no items are made visible
+    }
+
+    // assert that entering something into the search field that does not match any descriptions
+    // will return no results
+    public void testSearchForNonExistingItem() {
+        // create item1 with "a b c d" description, with available status
+        // create item2 with "c d e f" description with available status
+        // create item3 with "c" description with available status
+        // create item4 with "c" description with borrowed status
+        // start Search activity with "z" as keyword
+        // assert that no items are made visible
     }
 
     // 04.02.01 As a borrower of equipment, I want search results to show each piece
     // of equipment not currently borrowed with its description, owner username, and status.
+
+    //
     public void testSearchUnborrowedEquipment() {
 
     }
 
     // 05.01.01 As a borrower of equipment, I want to bid for an available piece of equipment, with a monetary rate (in dollars per hour).
-    public void testBid() {
-        // create first user
-        // create second user
-        // create equipment item that belongs to second user
 
-        // make bid as first user on equipment item owned by second user
-        // check that bid has been received by second user
+    // assert that it is possible to make a bid as a borrower
+    public void testBid() {
+        // create borrower
+        // create owner
+        // create equipment item that belongs to owner
+
+        // start ItemDescription activity using equipment item owned by owner
+        // assert that "make bid" button opens "make a bid" dialogue box
+        // enter values for EditText fields
+        // assert that values are saved as a new bid
+        // assert that the bid is in the borrower's list of pending bids
+        // assert that the bid is in the owner's list of incoming bids
+    }
+
+    // assert that a borrower cannot leave any fields blank when making a new bid
+    public void testEmptyBid() {
+        // create borrower
+        // create owner
+        // create equipment item belonging to owner
+
+        // start ItemDescription activity using equipment item owned by owner
+        // open "make a bid" dialogue
+        // assert that the "bid" button cannot be clicked
+
+        // enter a value for the Bid field
+        // assert that the "bid" button cannot be clicked
+    }
+
+    // assert that bids and hours must be numbers
+    public void testStringBids() {
+        // create borrower
+        // create owner
+        // create equipment item belonging to owner
     }
 
     // 05.02.01 As a borrower of equipment, I want to view a list of pieces of equipment I
