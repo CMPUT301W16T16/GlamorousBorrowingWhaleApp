@@ -302,7 +302,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     // 05.01.01 As a borrower of equipment, I want to bid for an available piece of equipment, with a monetary rate (in dollars per hour).
 
     // assert that it is possible to make a bid as a borrower
-    public void testBid() {
+    public void testBidForItem() {
         // create borrower
         // create owner
         // create equipment item that belongs to owner
@@ -316,7 +316,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // assert that a borrower cannot leave any fields blank when making a new bid
-    public void testEmptyBid() {
+    public void testEmptyBidForItem() {
         // create borrower
         // create owner
         // create equipment item belonging to owner
@@ -330,36 +330,72 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // assert that bids and hours must be numbers
-    public void testStringBids() {
+    public void testStringBidForItem() {
         // create borrower
         // create owner
         // create equipment item belonging to owner
+
+        // start ItemDescription activity using equipment item owned by owner
+        // open "make a bid" dialogue
+        // enter non-numeric values for EditText fields
+        // assert that the "bid" button cannot be clicked
     }
 
     // 05.02.01 As a borrower of equipment, I want to view a list of pieces of equipment I
     // have bidded on that are pending, each piece with its description, owner username, and my bid.
-    public void testViewMyBids() {
-        // create first user
-        // create second user
-        // create equipment item that belongs to second user
 
-        // make bid as first user on equipment item owned by second user
-        // check that the item is in the first user's list of pending bids
-        // check that the display of the item is visible to the first user
+    // assert that if the borrower makes one bid, that it can be viewed
+    public void testViewBidsMadeOne() {
+        // create borrower
+        // create owner
+        // create equipment item owned by owner
+
+        // create new bid made by borrower for owner's item
+        // start MyBids activity
+        // assert that the new bid is visible to the borrower
+    }
+
+    // assert that if the borrower makes more than one bid, that they are all viewable
+    public void testViewBidsMadeMultuple() {
+        // create borrower
+        // create owner
+        // create equipment owned by owner
+
+        // create new bid made by borrower for owner's item
+        // create another new bid made by borrower for owner's item
+        // start MyBids activity
+        // assert that both bids are visible to the borrower
+    }
+
+    // assert that if the borrower makes no bids, that there will be no bids visible to the borrower
+    public void testViewBidsMadeNone() {
+        // create borrower
+        // start MyBids activity
+        // assert that no bids are visible to the borrower
     }
 
     // 05.03.01 As an owner of equipment, I want to be notified of a bid.
-    public void testBidNotification() {
-        // create first user
-        // create second user
-        // create equipment item that belongs to second user
 
-        // make bid as first user on equipment owned by second user
-        // check that the second user receives a bid notification
+    // assert that the owner will be notified of one bid
+    public void testNotifyOneBid() {
+        // create owner
+        // create borrower
+        // create equipment item that belongs to owner
+
+        // create new bid made by borrower for owner's item
+        // start IncomingBids activity
+        // assert that bid is visible to the owner
+    }
+
+    // assert that the owner will be notified if there is more than one bid
+    public void testNotifyMultipleBids() {
+
     }
 
     // 05.04.01 As an owner of equipment, I want to view a list of my pieces of equipment with bids.
-    public void testViewBidsOnMyEquipmentList() {
+
+    // assert that if the owner has one piece of equipment with one bid, it will be visible
+    public void testViewBiddedItems() {
         // create first user
         // create second user
         // create third user
@@ -370,8 +406,23 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // make bid as second user on second piece of equipment owned by third user
     }
 
+    // assert that if the owner has one piece of equipment with no bids, nothing will be visible
+    public void testViewNoBiddedItems() {
+
+    }
+
+    // assert that if the owner has no items, nothing will be visible
+    public void testViewBiddedNoItems() {
+
+    }
+
+    // assert that if the owner has multiple items and some bids, only those with bids will be visible
+    public void testViewMultipleBiddedItems() {
+
+    }
+
     // 05.05.01 As an owner of equipment, I want to view the bids on one of my pieces of equipment.
-    public void testViewBidsOnMyEquipment() {
+    public void testInc() {
         // create first user
         // create second user
         // create equipment item that belongs to second user
