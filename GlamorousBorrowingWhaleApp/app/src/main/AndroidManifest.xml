@@ -15,6 +15,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".SignUpActivity">
+        </activity>
+        <activity android:name=".IncomingBidsActivity">
+        </activity>
+        <activity android:name=".MyItemActivity">
+        </activity>
+        <activity android:name=".SignInActivity">
+        </activity>
+        <activity android:name=".SearchResultsActivity">
+        </activity>
+        <activity android:name=".MyBorrowedItemsActivity">
+        </activity>
+        <activity android:name=".MyBidsActivity">
+        </activity>
     </application>
 
 </manifest>

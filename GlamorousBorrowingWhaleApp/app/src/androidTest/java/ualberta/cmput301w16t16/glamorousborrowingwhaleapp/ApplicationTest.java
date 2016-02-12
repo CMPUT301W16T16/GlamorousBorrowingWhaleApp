@@ -1,5 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.Activity;
 import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.widget.ListView;
@@ -11,17 +12,25 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);
     }
+    Activity activity;
 
     // 01.01.01 As an owner, I want to add an  item into my owned item list,
     // each denoted with a clear, suitable description.
 
     // assert that added item is in owner's list of items
     public void testAddItem() {
-        // create equipment manager
+        // create owner
         // create an equipment item
-        // check that the equipment item does not belong to the second user
+        // check that the equipment item does not belong to the owner
         // add the equipment item to the second user's list of equipment
         // check that the equipment item is in the user's list of equipment
+
+        User owner = new User();
+        Equipment equipment = new Equipment();
+
+        assertFalse(owner.hasEquipment(equipment));
+        owner.addEquipment(equipment);
+        assertTrue(owner.hasEquipment(equipment));
     }
 
     // assert that the add button starts the AddItem activity and returns all the inputted
@@ -48,6 +57,13 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // create another equipment item that belongs to the equipment manager
         // check that all items are visible in the main activity view
         // check that each item has description and status visible
+
+        User owner = new User();
+        Equipment equipment = new Equipment();
+        owner.addEquipment(equipment);
+        MainActivity mainActivity = (MainActivity) getActivity();
+
+
     }
 
     // assert that there will be nothing in the ListView if the owner owns no equipment
