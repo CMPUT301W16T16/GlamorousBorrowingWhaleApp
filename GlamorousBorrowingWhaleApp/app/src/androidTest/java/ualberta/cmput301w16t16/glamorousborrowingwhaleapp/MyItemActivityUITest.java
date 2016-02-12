@@ -8,12 +8,12 @@ import android.widget.EditText;
 /**
  * Created by Martina on 16-02-12.
  */
-public class MyItemsActivityTest extends ActivityInstrumentationTestCase2 {
+public class MyItemActivityUITest extends ActivityInstrumentationTestCase2 {
     Instrumentation instrumentation;
     Activity activity;
     EditText textInput;
-    public MyItemsActivityTest() {
-        super(MyItemsActivity.class);
+    public MyItemActivityUITest() {
+        super(MyItemActivity.class);
     }
 
     protected void setUp() throws Exception {

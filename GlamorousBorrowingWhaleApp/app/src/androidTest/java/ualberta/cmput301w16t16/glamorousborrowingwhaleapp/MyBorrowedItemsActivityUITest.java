@@ -21,5 +21,5 @@ public class MyBorrowedItemsActivityUITest extends ActivityInstrumentationTestCa
         instrumentation = getInstrumentation();
         activity = getActivity();
         textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
-    } {
+    }
 }
