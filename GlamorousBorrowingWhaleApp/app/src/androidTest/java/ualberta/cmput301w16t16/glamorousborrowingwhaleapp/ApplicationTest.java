@@ -4,9 +4,6 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 import android.widget.ListView;
 
-import java.io.Serializable;
-import java.util.List;
-
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
@@ -15,37 +12,75 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         super(Application.class);
     }
 
-    // 01.01.01 adding equipment to your list of owned equipment
-    public void testAddEquipment() {
-        EquipmentList el = new EquipmentList();
-        EquipmentPiece ep = new EquipmentPiece();
+    // 01.01.01 As an owner, I want to add an  item into my owned item list,
+    // each denoted with a clear, suitable description.
+    public void testAddItem() {
+        // create equipment manager
+        User equipment_manager = new User();
 
-        assertFalse(el.has(ep));
-        el.add(ep);
+        // create an equipment item
+        Equipment equipment = new Equipment();
+        // check that the equipment item does not belong to the second user
+        assertFalse(user.ownsEquipment(equipment));
 
-        assertTrue(el.has(ep));
+        // add the equipment item to the second user's list of equipment
+        user.addEquipment(equipment);
+        // check that the equipment item is in the user's list of equipment
+        assertTrue(user.ownsEquipment(equipment));
     }
 
-    // 01.02.01 viewing your list of owned equipment and their descriptions and statuses
-    public void testViewOwnedEquipment() {
-        EquipmentList el = new EquipmentList();
-        EquipmentPiece ep = new EquipmentPiece();
-        el.add(ep);
+    public void testAddButton() {
+        // check that when the add button is clicked, the AddItem activity is started
+        // enter something into each field that AddItem requires
+        // check that when the save button is clicked, the previous activity is returned to
+        // check that the new item is present in the equipment manager's list with all the inputted information
+    }
+
+    public void testAddInput() {
+        // enter AddItem activity
+        // check that if any of the fields have no input that the save button will not be usable
+    }
+
+    // 01.02.01 As an owner, I want to view a list of all my things, and their descriptions and statuses.
+    public void testViewList() {
+        // create equipment manager
+        // create an equipment item that belongs to the equipment manager
+        // create another equipment item that belongs to the equipment manager
+        // check that the home button starts the Main activity where the user's information is displayed
+        // check that all items are visible
+        // check that each item has description and status visible
     }
 
     // 01.03.01 As an owner of equipment, I want to view one of my pieces of equipment, its description and status.
-    public void testViewItemDescription() {
+    public void testViewOneItem() {
+        // create equipment manager
+        // create an equipment item that belongs to the equipment manager
+        // enter Main activity where owned items are listed
+        // check that items are clickable
+    }
 
+    public void testClickItem() {
+        // create equipment manager
+        // create an equipment item that belongs to the equipment manager
+        // enter the main activity where owned items are listed
+        // check that the ViewOneItem activity is started
+        // check that the item's description and status is visible
     }
 
     // 01.04.01 As an owner of equipment, I want to edit a piece of equipment in my list of owned equipment
     public void testEditItem() {
-        EquipmentList el = new EquipmentList();
-        EquipmentPiece ep = new EquipmentPiece();
-        el.add(ep);
-        el.status = "Borrowed";
+        // create equipment manager
+        // create an equipment item that belongs to the equipment manager
+        // change an aspect of the items description
+        // check that the description has been changed accurately
+    }
 
-        assertEquals(el.status, "Borrowed");
+    public void testTapToEditItem() {
+        // create equipment manager
+        // create an equipment item that belongs to the equipment manager
+        // start the ViewOneItem activity
+        // check that the ViewOneItem view has layout containing EditText fields
+        
     }
 
     // 01.05.01 As an owner of equipment, I want to delete a piece of equipment from my list of owned equipment
@@ -123,61 +158,170 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     // 05.01.01 As a borrower of equipment, I want to bid for an available piece of equipment, with a monetary rate (in dollars per hour).
     public void testBid() {
+        // create first user
+        // create second user
+        // create equipment item that belongs to second user
 
+        // make bid as first user on equipment item owned by second user
+        // check that bid has been received by second user
     }
 
     // 05.02.01 As a borrower of equipment, I want to view a list of pieces of equipment I
     // have bidded on that are pending, each piece with its description, owner username, and my bid.
     public void testViewMyBids() {
+        // create first user
+        // create second user
+        // create equipment item that belongs to second user
 
+        // make bid as first user on equipment item owned by second user
+        // check that the item is in the first user's list of pending bids
+        // check that the display of the item is visible to the first user
     }
 
     // 05.03.01 As an owner of equipment, I want to be notified of a bid.
     public void testBidNotification() {
+        // create first user
+        // create second user
+        // create equipment item that belongs to second user
 
+        // make bid as first user on equipment owned by second user
+        // check that the second user receives a bid notification
     }
 
     // 05.04.01 As an owner of equipment, I want to view a list of my pieces of equipment with bids.
     public void testViewBidsOnMyEquipmentList() {
+        // create first user
+        // create second user
+        // create third user
+        // create equipment item that belongs to third user
+        // create another equipment item that belongs to third user
 
+        // make bid as first user on first item of equipment owned by third user
+        // make bid as second user on second piece of equipment owned by third user
     }
 
     // 05.05.01 As an owner of equipment, I want to view the bids on one of my pieces of equipment.
     public void testViewBidsOnMyEquipment() {
+        // create first user
+        // create second user
+        // create equipment item that belongs to second user
 
+        // make bid as first user on equipment owned by second user
+        // check that second user can see the bid make by first user
     }
 
     // 05.06.01 As an owner of equipment, I want to accept a bid on one of my pieces of equipment,
     // setting its status to borrowed. (Any other bids are declined.)
     public void testAcceptBid() {
+        // make first user
+        // make second user
+        // make third user
+        // create equipment item that belongs to third user
 
+        // make bid as first user on equipment owned by third user
+        // make bid as second user on equipment owned by third user
+
+        // accept bid from first user as third user
+
+        // check that bid has been accepted for third user
+        // check that bid has been accepted for first user
+        // check that bid has been declined for second user
     }
 
     // 05.07.01 As an owner, I want to decline a bid on one of my pieces of equipment.
     public void testDeclineBid() {
+        // make first user
+        // make second user
+        // create equipment item that belongs to second user
 
+        // make bid as first user on equipment owned by second user
+        // decline bid from first user as second user
+        // check that bid has been declined for first user
+        // check that bid has been declined for second user
     }
 
     // 06.01.01 As a borrower of equipment, I want to view a list of pieces of equipment
     // I am borrowing, each piece with its description and owner username.
     public void testViewBorrowingIn() {
+        // make first user
+        // make second user
+        // create equipment item that belongs to second user
 
+        // make bid as first user on equipment owned by second user
+        // check that bid is in pending bids of first user
+        // check that bid is in list of bids made by other users on second user
+
+        // accept bid made by first user as second user
+        // check that bid has been accepted for first user
+        // check that bid has been accepted for second user
+
+        // check that equipment is in list of things being borrowed by first user
+        // check that equipment is in list of things being rented out by second user
+
+        // check that list of equipment borrowed by first user is visible to first user
+        // check that description and owner username of equipment borrowed by first user is visible to first user
     }
 
     // 06.02.01 As an owner of equipment, I want to view a list of my pieces of equipment
     // being borrowed, each piece with its description and borrower username.
     public void testViewBorrowingOut() {
+        // make first user
+        // make second user
+        // create equipment item that belongs to second user
 
+        // make bid as first user on equipment owned by second user
+        // check that bid is in pending bids of first user
+        // check that bid is in list of bids made by other users on second user
+
+        // accept bid made by first user as second user
+        // check that bid has been accepted for first user
+        // check that bid has been accepted for second user
+
+        // check that equipment is in list of things being borrowed by first user
+        // check that equipment is in list of things being rented out by second user
+        // check that equipment is visible as borrowed (not available) to first user
+        // check that equipment is visible as borrowed (not available) to second user
+
+        // check that list of equipment rented out by second user is visible to second user
+        // check that description and borrower username of equipment borrowed by first user is visible to second user
     }
 
     // 07.01.01 As an owner of equipment, I want to set a borrowed piece of equipment to be available when it is returned.
     public void testSetAvailable() {
+        // make first user
+        // make second user
+        // create equipment item that belongs to second user
 
+        // make bid as first user on equipment owned by second user
+        // check that bid is in pending bids of first user
+        // check that bid is in list of bids made by other users on second user
+
+        // accept bid made by first user as second user
+        // check that bid has been accepted for first user
+        // check that bid has been accepted for second user
+
+        // check that equipment is in list of things being borrowed by first user
+        // check that equipment is in list of things being rented out by second user
+        // check that equipment is visible as borrowed (not available) to first user
+        // check that equipment is visible as borrowed (not available) to second user
+
+        // set equipment owned by second user as available
+        // check that equipment is visible as available to first user
+        // check that equipment is visible as available to second user
     }
 
     // 08.01.01 As an owner of equipment, I want to define new pieces of equipment while offline,
     // and push the additions once I get connectivity.
     public void testDefineEquipmentOffline() {
+        // make first user
+        // make second user
+
+        // check that second user is offline
+        // create equipment item that belongs to second user
+
+        // check that second user is online
+        // check that equipment item is visible to first user
+        // check that equipment item is visible to second user
 
     }
 
