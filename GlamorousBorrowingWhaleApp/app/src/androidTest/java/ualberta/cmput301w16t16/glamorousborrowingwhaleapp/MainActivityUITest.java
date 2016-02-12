@@ -16,5 +16,12 @@ public class MainActivityUITest extends ActivityInstrumentationTestCase2 {
         super(MainActivity.class);
     }
 
+    protected void setUp() throws Exception {
+        super.setUp();
+        instrumentation = getInstrumentation();
+        activity = getActivity();
+        textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
+    }
+
 
 }
