@@ -14,21 +14,18 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     // 01.01.01 As an owner, I want to add an  item into my owned item list,
     // each denoted with a clear, suitable description.
+
+    // assert that added item is in owner's list of items
     public void testAddItem() {
         // create equipment manager
-        User equipment_manager = new User();
-
         // create an equipment item
-        Equipment equipment = new Equipment();
         // check that the equipment item does not belong to the second user
-        assertFalse(user.ownsEquipment(equipment));
-
         // add the equipment item to the second user's list of equipment
-        user.addEquipment(equipment);
         // check that the equipment item is in the user's list of equipment
-        assertTrue(user.ownsEquipment(equipment));
     }
 
+    // assert that the add button starts the AddItem activity and returns all the inputted
+    // information when it closes
     public void testAddButton() {
         // check that when the add button is clicked, the AddItem activity is started
         // enter something into each field that AddItem requires
@@ -36,38 +33,49 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the new item is present in the equipment manager's list with all the inputted information
     }
 
+    // assert that a user cannot leave any fields empty
     public void testAddInput() {
         // enter AddItem activity
-        // check that if any of the fields have no input that the save button will not be usable
+        // assert that the save button cannot be pressed by the user
     }
 
     // 01.02.01 As an owner, I want to view a list of all my things, and their descriptions and statuses.
+
+    // assert that added items are visible in the main activity
     public void testViewList() {
         // create equipment manager
         // create an equipment item that belongs to the equipment manager
         // create another equipment item that belongs to the equipment manager
-        // check that the home button starts the Main activity where the user's information is displayed
-        // check that all items are visible
+        // check that all items are visible in the main activity view
         // check that each item has description and status visible
     }
 
+    // assert that there will be nothing in the ListView if the owner owns no equipment
+    public void testEmptyViewList() {
+        // create owner
+        // assert that the main activity has an empty ListView
+    }
+
     // 01.03.01 As an owner of equipment, I want to view one of my pieces of equipment, its description and status.
+
+    // assert that the items in the main activity list view are clickable and lead to ViewOneItem activity
     public void testViewOneItem() {
         // create equipment manager
         // create an equipment item that belongs to the equipment manager
-        // enter Main activity where owned items are listed
-        // check that items are clickable
+        // assert that items in ListView of main activity are clickable
+        // assert that when an item in the ListView is clicked, the ViewOneItem activity is started
+        // check that the item's description and status in ViewOneItem is visible and accurate
     }
 
-    public void testClickItem() {
+    // assert that the ViewOneItem activity cannot be started if there are no items
+    public void testEmptyViewOneItem() {
         // create equipment manager
-        // create an equipment item that belongs to the equipment manager
-        // enter the main activity where owned items are listed
-        // check that the ViewOneItem activity is started
-        // check that the item's description and status is visible
+        // assert that the ListView is not clickable
     }
 
     // 01.04.01 As an owner of equipment, I want to edit a piece of equipment in my list of owned equipment
+
+    // assert that changing the value of an item updates the item
     public void testEditItem() {
         // create equipment manager
         // create an equipment item that belongs to the equipment manager
@@ -75,48 +83,123 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the description has been changed accurately
     }
 
+    // assert that tapping on an item allows the item to be edited
     public void testTapToEditItem() {
         // create equipment manager
         // create an equipment item that belongs to the equipment manager
-        // start the ViewOneItem activity
-        // check that the ViewOneItem view has layout containing EditText fields
-        
+        // start the ViewOneItem activity with that equipment item
+        // check that the ViewOneItem view has layout containing TextView fields
+        // perform "tapping" of a TextView field
+        // check that the TextView fields are now EditText fields
+        // set new values for the EditText fields
+        // assert that the save button updates the item's information and returns the EditText fields TextView fields
+        // return to previous activity
+        // check that values are changed in the item
+        // check that new values are displayed in Main activity
+    }
+
+    // assert that if nothing is entered into the EditText field, that the item will not be altered
+    public void testEditItemNoChanges() {
+        // create owner
+        // create an equipment item that belongs to the owner
+        // start the ViewOneItemActivity with that equipment item
+        // perform "tapping" of a TextView field
+        // check that the save button returns the EditText fields to TextView fields
+        // assert that the item values are the same as before
     }
 
     // 01.05.01 As an owner of equipment, I want to delete a piece of equipment from my list of owned equipment
-    public void testDeleteEquipment() {
-        EquipmentList el = new EquipmentList();
-        EquipmentPiece ep = new EquipmentPiece();
-        el.add(ep);
+    public void testDeleteOnlyItem() {
+        // create equipment manager
+        // create an equipment item that belongs to the equipment manager
 
-        assertTrue(el.has(ep));
-        el.delete(ep);
-        assertFalse(el.has(ep));
+        // check that the item is in the list of the equipment manager's items
+        // check that the item is displayed in the main activity view
+        // remove the item from the list of the equipment manager's items
+        // check that the item is not in the list of the equipment manager's items
+        // check that the item is not displayed in the main activity view
+    }
+
+    public void testDeleteOneItem() {
+        // create equipment manager
+        // create an equipment item that belongs to the equipment manager
+        // create another equipment item that belongs to the equipment manager
+
+        // check that both items are in the list of the equipment manager's items
+        // check that both items are displayed in the main activity view
+        // remove one item from the list of the equipment manager's items
+        // check that the removed item is no longer in the list of the equipment manager's items
+        // check that the other item is still in the list of the equipment manager's items
+        // check that the removed item is no longer in the main activity view
+        // check that the other item is still in the main activity view
+    }
+
+    public void testDeleteNull() {
+        // create equipment manager
+        // create a new item
+        // check that there is nothing in the list of the equipment manager's items
+        // check that there is nothing displayed in the main activity view
+        // assert that there will be an error when trying to remove the item from the equipment manager's
+        // list of items
     }
 
     // 02.01.01 As an owner or borrower of equipment, I want a piece of equipment to have a status of one of: available, bidded, or borrowed.
-    public void testItemStatus() {
-        EquipmentList el = new EquipmentList();
-        EquipmentPiece ep = new EquipmentPiece();
-        el.add(ep);
-        el.status = 0;
-        assertEqual(el.status, 0);
+    public void testAvailableStatus() {
+        // create equipment manager
+        // create user
+        // create an item that belongs to equipment manager
+        // set the status of the item to available
+        // check that the item is visible to the user
+    }
 
-        el.status = 1;
-        assertEquals(el.status, 1);
+    public void testBiddedStatus() {
+        // create equipment manager
+        // create user1
+        // create user2
+        // create an item that belongs to the equipment manager
+        // set the status of the item to bidded for user1 and owner
+        // check that the status of the item appears as "bidded" to user1
+        // check that the status of the item appears as "bidded" to owner
+        // check that the status of the item appears as "available" to user2
+    }
 
-        el.status = 2;
-        assertEquals(el.status, 2);
+    public void testBorrowedStatus() {
+        // create owner
+        // create user1
+        // create user2
+        // create an item that belongs to the equipment manager
+        // set the status of the item to "borrowed" for user1 and owner
+        // check that the status of the item is "borrowed" for user1
+        // check that the status of the item is "borrowed" for owner
+        // check that user2 is unable to find the item
     }
 
     // 03.01.01 As a user, I want a profile with a unique username and my contact information.
-    public void testUserContactInfo() {
-        String user_name = "JohnDoe";
-        String phone_number = 17805551234;
-        String email_address = "JohnDoe@gmail.com";
-        User user = new User(user_name, phone_number, email_address);
+    public void testSetProfile() {
+        // start signUp activity
+        // set values for each of the EditText fields
+        // check that the entered values are saved as a new user
+    }
 
-        assertTrue(user.user_name == user_name && user.phone_number == phone_number && user.email_address == email_address);
+    public void testSetExistingProfile() {
+        // create user with "abc" as username
+        // start SignUp activity
+        // enter "abc" as username
+        // set values for each of the other EditText fields
+        // assert that there is an error when user tries to press the "sign up" button
+    }
+
+    public void testSetEmptyProfile() {
+        // start SignUp activity
+        // assert that the "sign up" button cannot be pressed
+    }
+
+    public void testUserContactInfo() {
+        // create user with username and contact information
+        // create an equipment item that belongs to user
+        // assert that displayed profile information in main activity is accurate
+        // start ViewOneItem activity with equipment item belonging to user
+        // check that profile information displayed is accurate
     }
 
     // 03.02.01 As a user, I want to edit the contact information in my profile.
