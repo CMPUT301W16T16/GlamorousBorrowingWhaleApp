@@ -94,7 +94,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the description has been changed accurately
 
         User owner = new User();
-        Equipment equipment = new Equipment("Hockey stick", "Child", "New Condition");
+        Equipment equipment = new Equipment("Hockey stick", "Child", "New");
         owner.addEquipment(equipment);
 
         assertTrue(owner.getEquipment("Hockey stick").getSize == "Child");
@@ -140,7 +140,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the item is not displayed in the main activity view
 
         User owner = new User();
-        
+        Equipment equipment = new Equipment("Hockey stick", "Adult", "New");
+        owner.addEquipment(equipment);
+        assertTrue(owner.hasEquipment(equipment));
+        owner.removeEquipment(equipment);
+        assertFalse(owner.hasEquipment(equipment));
     }
 
     // assert that removing one of the user's items but leaving the rest removes
@@ -157,6 +161,17 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the other item is still in the list of the equipment manager's items
         // check that the removed item is no longer in the main activity view
         // check that the other item is still in the main activity view
+
+        User owner = new User();
+        Equipment equipment1 = new Equipment("Hockey stick", "Adult", "New");
+        Equipment equipment2 = new Equipment("Skates", "US 8", "New");
+        owner.addEquipment(equipment1);
+        owner.addEquipment(equipment2);
+        assertTrue(owner.hasEquipment(equipment1));
+        assertTrue(owner.hasEquipment(equipment2));
+        owner.removeEquipment(equipment1);
+        assertFalse(owner.hasEquipment(equipment1));
+        assertTrue(owner.hasEquipment(equipment2));
     }
 
     // assert that an item that does not belong to the owner cannot be removed from the
@@ -176,9 +191,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public void testAvailableStatus() {
         // create owner
         // create user
-        // create an item that belongs to equipment manager
+        // create an item that belongs to owner
         // set the status of the item to available
         // check that the item is visible to the user
+
+        User owner = new User();
+        Equipment equipment = new Equipment("Hockey stick", "Adult", "New");
+        owner.addEquipment(equipment);
+        assertEquals(equipment.getStatus() == "Available");
     }
 
     // assert that an item set as bidded will be displayed as bidded to the owner and the bidder
@@ -192,6 +212,24 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the status of the item appears as "bidded" to user1
         // check that the status of the item appears as "bidded" to owner
         // check that the status of the item appears as "available" to user2
+
+        User owner = new User();
+        User borrower1 = new Borrower();
+        User borrower2 = new Borrower();
+        Equipment equipment = new Equipment("Hockey stick", "Adult", "New");
+        owner.addEquipment(equipment);
+        assertEquals(owner.getEquipment("Hockey stick").getStatus() == "Available");
+        Bid bid = new Bid(equipment, 5);
+        borrower1.addBid(bid);
+        owner.addIncomingBid(bid);
+        owner.getEquipment(equipment).setStatus("Bidded");
+        assertEquals(equipment.getStatus = "Bidded");
+        assertTrue(owner.hasIncomingBid(bid));
+        assertTrue(borrower1.hasBid(bid));
+        assertFalse(borrower2.hasBid(bid));
+
+        assertTrue(owner.getIncomingBid(bid).getStatus() == "Bidded");
+        assertTrue(borrower1.getBid(bid).getStatus() == "Bidded");
     }
 
     // assert that an item set as borrowed will be displayed as borrowed to the owner and the borrower
@@ -411,7 +449,15 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     // assert that the owner will be notified if there is more than one bid
     public void testNotifyMultipleBids() {
+        // create owner
+        // create borrower1
+        // create borrower2
+        // create equipment item that belongs to owner
 
+        // create new bid made by borrower1 for owner's item
+        // create new bid made by borrower2 for owner's item
+        // start IncomingBids activity
+        // assert that both bids are visible to the owner
     }
 
     // 05.04.01 As an owner of equipment, I want to view a list of my pieces of equipment with bids.
@@ -420,37 +466,63 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public void testViewBiddedItems() {
         // create first user
         // create second user
-        // create third user
-        // create equipment item that belongs to third user
-        // create another equipment item that belongs to third user
+        // create equipment item that belongs to second user
+        // create another equipment item that belongs to second user
 
-        // make bid as first user on first item of equipment owned by third user
-        // make bid as second user on second piece of equipment owned by third user
+        // make bid as first user equipment item owned by second user
+        // make bid as second user on equipment item owned by second user
+
+        // assert owner can see both bids
+
+        // assert borrower1 can see their bid
+        // assert borrower2 can see their bid
     }
 
     // assert that if the owner has one piece of equipment with no bids, nothing will be visible
     public void testViewNoBiddedItems() {
-
+        // create user
+        // create equipment item that belongs to user
+        // assert that user cannot see any incoming bids
     }
 
     // assert that if the owner has no items, nothing will be visible
     public void testViewBiddedNoItems() {
-
+        // create user
+        // assert that user cannot see any incoming bids
     }
 
     // assert that if the owner has multiple items and some bids, only those with bids will be visible
     public void testViewMultipleBiddedItems() {
+        // create first user
+        // create second user
+        // create third user
+        // create equipment item that belongs to third user
+        // create another equipment item that belongs to third user
+        // create another equipment item that belongs to third user
 
+        // make bid as first user on first item of equipment owned by third user
+        // make bid as second user on second piece of equipment owned by third user
+
+        // assert that third user can see bid made by first user on first equipment item
+        // assert that third user can see bid made by second user on second equipment item
     }
 
     // 05.05.01 As an owner of equipment, I want to view the bids on one of my pieces of equipment.
-    public void testInc() {
+
+    // assert that bids can be viewed if there are bids
+    public void testViewBidsOnMyEquipment() {
         // create first user
         // create second user
         // create equipment item that belongs to second user
 
         // make bid as first user on equipment owned by second user
         // check that second user can see the bid make by first user
+    }
+
+    // assert that no bids will be seen if there are no bids
+    public void testViewNoBidsOnMyEquipment() {
+        // create user
+        // check user can not see any incoming bids in ListView
     }
 
     // 05.06.01 As an owner of equipment, I want to accept a bid on one of my pieces of equipment,
