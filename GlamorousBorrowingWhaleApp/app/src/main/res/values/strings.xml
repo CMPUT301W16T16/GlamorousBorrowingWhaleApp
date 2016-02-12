@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GlamorousBorrowingWhaleApp</string>
+    <string name="title_activity_log_in">LogInActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_search_potentials">SearchPotentialsActivity</string>
+    <string name="title_activity_things_owned">ThingsOwnedActivity</string>
+    <string name="title_activity_view_incoming_bids">ViewIncomingBidsActivity</string>
+    <string name="title_activity_view_things_borrowed">ViewThingsBorrowedActivity</string>
+    <string name="title_activity_view_pending_bids">ViewPendingBidsActivity</string>
+    <string name="title_activity_view_my_item">ViewMyItemActivity</string>
 </resources>

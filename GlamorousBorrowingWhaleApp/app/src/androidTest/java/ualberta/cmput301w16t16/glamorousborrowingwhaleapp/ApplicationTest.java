@@ -5,6 +5,7 @@ import android.test.ApplicationTestCase;
 import android.widget.ListView;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -74,7 +75,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // 03.01.01 As a user, I want a profile with a unique username and my contact information.
-    public void testUserContact() {
+    public void testUserContactInfo() {
         String user_name = "JohnDoe";
         String phone_number = 17805551234;
         String email_address = "JohnDoe@gmail.com";
@@ -84,7 +85,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // 03.02.01 As a user, I want to edit the contact information in my profile.
-    public void testEditUserContact() {
+    public void testEditUserContactInfo() {
         String user_name = "JohnDoe";
         String phone_number = 17805551234;
         String email_address = "JohnDoe@gmail.com";
@@ -101,13 +102,16 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // 03.03.01 As a user, I want to, when a username is presented for a piece of equipment, retrieve and show its contact information.
-    public void testShowContact() {
+    public void testShowContactInfo() {
+        ListView listView = (ListView) findViewById(R.id.contact_information);
+        //
 
     }
 
     // 04.01.01 As a borrower of equipment, I want to specify a set of keywords, and search for
     // all pieces of equipment not currently borrowed whose description contains all the keywords.
     public void testSearchEquipmentKeywords() {
+
 
     }
 
