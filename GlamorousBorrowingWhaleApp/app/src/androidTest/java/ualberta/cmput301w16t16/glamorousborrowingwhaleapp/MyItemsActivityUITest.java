@@ -21,7 +21,7 @@ public class MyItemsActivityUITest extends ActivityInstrumentationTestCase2 {
         super.setUp();
         instrumentation = getInstrumentation();
         activity = getActivity();
-        textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
+        textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.description));
     }
 
     // fills in the text field and clicks the save button

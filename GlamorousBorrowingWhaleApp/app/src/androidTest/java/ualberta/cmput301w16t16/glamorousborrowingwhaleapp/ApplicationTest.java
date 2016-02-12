@@ -27,8 +27,6 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
         User owner = new User();
         Equipment equipment = new Equipment();
-
-        assertFalse(owner.hasEquipment(equipment));
         owner.addEquipment(equipment);
         assertTrue(owner.hasEquipment(equipment));
     }
@@ -59,11 +57,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that each item has description and status visible
 
         User owner = new User();
-        Equipment equipment = new Equipment();
+        Equipment equipment = newEquipment();
         owner.addEquipment(equipment);
-        MainActivity mainActivity = (MainActivity) getActivity();
-
-
     }
 
     // assert that there will be nothing in the ListView if the owner owns no equipment
@@ -97,6 +92,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // create an equipment item that belongs to the equipment manager
         // change an aspect of the items description
         // check that the description has been changed accurately
+
+        User owner = new User();
+        Equipment equipment = new Equipment("Hockey stick", "Child", "New Condition");
+        owner.addEquipment(equipment);
+
+        assertTrue(owner.getEquipment("Hockey stick").getSize == "Child");
+        owner.getEquipment("Hockey Stick").editSize("Adult");
+        assertTrue(owner.getEquipment("Hockey stick").getSize == "Adult");
     }
 
     // assert that tapping on an item allows the item to be edited
@@ -135,6 +138,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // remove the item from the list of the equipment manager's items
         // check that the item is not in the list of the equipment manager's items
         // check that the item is not displayed in the main activity view
+
+        User owner = new User();
+        
     }
 
     // assert that removing one of the user's items but leaving the rest removes

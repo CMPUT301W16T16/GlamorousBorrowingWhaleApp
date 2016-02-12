@@ -3,6 +3,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
 import android.widget.EditText;
 
 /**
@@ -11,7 +12,8 @@ import android.widget.EditText;
 public class MainActivityUITest extends ActivityInstrumentationTestCase2 {
     Instrumentation instrumentation;
     Activity activity;
-    EditText textInput;
+    Button my_stuff_button;
+    Button my_bids_button;
     public MainActivityUITest() {
         super(MainActivity.class);
     }
@@ -20,8 +22,7 @@ public class MainActivityUITest extends ActivityInstrumentationTestCase2 {
         super.setUp();
         instrumentation = getInstrumentation();
         activity = getActivity();
-        textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
+        my_stuff_button = ((Button) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.my_stuff_button);
+        my_bids_button = ((Button) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.my_bids_button));
     }
-
-
 }
