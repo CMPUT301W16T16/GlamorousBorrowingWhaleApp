@@ -34,7 +34,11 @@ public class MyItemsActivityUITest extends ActivityInstrumentationTestCase2 {
     public void testAddItem() {
         User owner = new User();
         Equipment equipment = new Equipment();
+
+        assertFalse(owner.hasEquipment(equipment));
         owner.addEquipment(equipment);
+
+        assertTrue(owner.hasEquipment(equipment));
     }
 
 
