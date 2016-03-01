@@ -17,7 +17,6 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
     private String username;
 
     private static final int SIGN_UP = 1;
-    private static final int SIGN_IN = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +24,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_sign_in);
 
         // sign up button starts the sign up activity and the sign up view
-        Button signUpButton = (Button) findViewById(R.id.signUpButton);
+        Button signUpButton = (Button) findViewById(R.id.sign_up_button);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 setResult(RESULT_OK);
@@ -49,7 +48,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 } else {
                     Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
                     // TODO fetch user from username, and put the user as extra instead of username
-                    intent.putExtra("USERNAME", (Serializable) user);
+                    intent.putExtra("USERNAME", user);
                     startActivity(intent);
                 }
 

@@ -48,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     // taken Feb-29-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
                     User user = new User(username, emailAddress, phoneNumber);
                     Intent intent = new Intent(SignUpActivity.this, SignUpActivity.class);
-                    intent.putExtra("NEW_USER", (Serializable) user);
+                    intent.putExtra("NEW_USER", user);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
