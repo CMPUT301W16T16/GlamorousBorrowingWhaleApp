@@ -8,13 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.Serializable;
 
 public class SignUpActivity extends AppCompatActivity implements Serializable {
 
-    //private Drawable enteredPicture;
+    private ImageButton enteredPicture;
     private EditText enteredUsername;
     private EditText enteredPhoneNumber;
     private EditText enteredEmailAddress;

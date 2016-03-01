@@ -10,16 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.SignUpActivity">
 
-    <TextView
-        android:id="@+id/picturePrompt"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Picture"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="75dp"/>
-        />
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:id="@+id/picture"
+            android:src="@drawable/blank_profile_picture_large"
+            android:scaleType="fitXY"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"/>
+    </LinearLayout>
+
 
     <TextView android:id="@+id/usernamePrompt"
         android:layout_width="wrap_content"
@@ -72,13 +76,6 @@
         android:layout_alignBottom="@+id/emailPrompt"
         android:layout_alignEnd="@+id/phone"
         android:layout_alignStart="@+id/phone" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:layout_alignTop="@+id/picturePrompt"
-        android:layout_toEndOf="@+id/usernamePrompt"/>
 
     <Button
         android:id="@+id/done_sign_up"
