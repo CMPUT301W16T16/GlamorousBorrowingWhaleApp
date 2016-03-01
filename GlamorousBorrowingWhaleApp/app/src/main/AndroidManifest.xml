@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".MyBidsActivity">
         </activity>
+        <activity android:name=".UserController">
+        </activity>
     </application>
 
 </manifest>
