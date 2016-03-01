@@ -14,7 +14,7 @@ public class MyItemsActivityUITest extends ActivityInstrumentationTestCase2 {
         Activity activity;
         EditText textInput;
         public MyItemsActivityUITest() {
-            super(MainActivity.class);
+            super(SignInActivity.class);
         }
 
     protected void setUp() throws Exception {

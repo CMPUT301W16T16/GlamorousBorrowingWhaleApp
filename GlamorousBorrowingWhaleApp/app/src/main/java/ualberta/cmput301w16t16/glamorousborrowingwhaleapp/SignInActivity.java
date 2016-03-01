@@ -11,21 +11,33 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity implements Serializable {
 
     private EditText enteredUsername;
     private String username;
-    private Button doneButton;
+
+    private static final int SIGN_UP = 1;
+    private static final int SIGN_IN = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        // sign up button starts the sign up activity and the sign up view
+        Button signUpButton = (Button) findViewById(R.id.signUpButton);
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                setResult(RESULT_OK);
+                Intent logIntent = new Intent(view.getContext(), SignUpActivity.class);
+                startActivityForResult(logIntent, SIGN_UP);
+            }
+        });
+
         Intent intent = getIntent();
         enteredUsername = (EditText) findViewById(R.id.username);
-        doneButton = (Button) findViewById(R.id.done_sign_up);
-        doneButton.setOnClickListener(new View.OnClickListener() {
+        Button loginButton = (Button) findViewById(R.id.login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 username = enteredUsername.getText().toString();
@@ -34,17 +46,32 @@ public class SignInActivity extends AppCompatActivity {
                 if (username.isEmpty()) {
                     Toast.makeText(SignInActivity.this, "You must enter your username.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // taken Feb-29-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
-                    // TODO need to find the user with this username, not create a new user
-                    User user = new User(username, "find_old_number", "find_old_email");
-                    Intent intent = new Intent(SignInActivity.this, SignInActivity.class);
-                    intent.putExtra("OLD_USER", (Serializable) user);
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
+                    Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
+                    // TODO fetch user from username, and put the user as extra instead of username
+                    intent.putExtra("USERNAME", username);
+                    startActivity(intent);
                 }
 
             }
         });
     }
 
+    // the sign up activity returns the new user and starts the ViewProfileActivity
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            // receives the information from the AddEntryActivity,
+            // converts it into an entry and adds it to the list of entries
+            case (SIGN_UP) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    User user = (User) data.getSerializableExtra("NEW_USER");
+                    Intent intent = new Intent(this, ProfileViewActivity.class);
+                    intent.putExtra("USER", (Serializable) user);
+                    startActivity(intent);
+                }
+                break;
+            }
+        }
+    }
 }

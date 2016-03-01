@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
-import android.widget.EditText;
 
 /**
  * Created by Martina on 16-02-12.
@@ -15,7 +14,7 @@ public class MainActivityUITest extends ActivityInstrumentationTestCase2 {
     Button my_stuff_button;
     Button my_bids_button;
     public MainActivityUITest() {
-        super(MainActivity.class);
+        super(SignInActivity.class);
     }
 
     protected void setUp() throws Exception {
