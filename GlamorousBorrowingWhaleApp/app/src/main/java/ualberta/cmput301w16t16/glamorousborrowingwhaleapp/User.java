@@ -2,10 +2,12 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
+
 /**
  * Created by Martina on 16-02-29.
  */
-public class User {
+public class User implements Serializable {
     private String name;
     private String emailAddress;
     private String phoneNumber;
