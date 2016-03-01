@@ -8,4 +8,10 @@
     <string name="title_activity_view_things_borrowed">ViewThingsBorrowedActivity</string>
     <string name="title_activity_view_pending_bids">ViewPendingBidsActivity</string>
     <string name="title_activity_view_my_item">ViewMyItemActivity</string>
+    <string name="my_stuff">My Stuff</string>
+    <string name="my_bids">My Bids</string>
+    <string name="borrow">Borrow</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
 </resources>

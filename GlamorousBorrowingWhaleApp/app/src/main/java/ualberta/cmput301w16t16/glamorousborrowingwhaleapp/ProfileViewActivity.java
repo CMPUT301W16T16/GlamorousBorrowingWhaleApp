@@ -68,7 +68,7 @@ public class ProfileViewActivity extends AppCompatActivity {
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
     public boolean longClick() {
         LayoutInflater layoutInflater = LayoutInflater.from(ProfileViewActivity.this);
-        View editProfileView = layoutInflater.inflate(R.layout.editprofileview, null);
+        View editProfileView = layoutInflater.inflate(R.layout.edit_profile_view, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProfileViewActivity.this);
 
