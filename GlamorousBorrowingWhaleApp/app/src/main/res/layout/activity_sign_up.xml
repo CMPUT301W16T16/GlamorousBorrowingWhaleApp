@@ -10,4 +10,56 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.SignUpActivity">
 
+    <TextView android:id="@+id/usernamePrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Username"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView android:id="@+id/phonePrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Phone"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/username"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Email"
+        android:id="@+id/emailPrompt"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/phonePrompt"
+        android:layout_alignParentStart="true" />
+
+    <EditText android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/usernamePrompt" />
+
+    <EditText android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:layout_above="@+id/emailPrompt"
+        android:layout_alignEnd="@+id/username"
+        android:layout_alignStart="@+id/username" />
+
+    <EditText android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_alignBottom="@+id/emailPrompt"
+        android:layout_alignEnd="@+id/phone"
+        android:layout_alignStart="@+id/phone" />
+
 </RelativeLayout>
