@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".UserController">
         </activity>
+        <activity android:name=".ProfileViewActivity">
+        </activity>
     </application>
 
 </manifest>
