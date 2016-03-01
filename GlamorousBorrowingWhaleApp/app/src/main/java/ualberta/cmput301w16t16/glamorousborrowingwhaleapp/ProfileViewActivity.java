@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,6 +16,11 @@ public class ProfileViewActivity extends AppCompatActivity {
     private TextView profileName;
     private TextView profilePhone;
     private TextView profileEmail;
+
+    private Button buttonMyBids;
+    private Button buttonMyStuff;
+    private Button buttonSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,10 @@ public class ProfileViewActivity extends AppCompatActivity {
         profileName.setText(user.getName());
         profilePhone.setText(user.getPhoneNumber());
         profileEmail.setText(user.getEmailAddress());
+
+        buttonMyBids = (Button) findViewById(R.id.buttonMyBids);
+        buttonMyStuff = (Button) findViewById(R.id.buttonMyStuff);
+        buttonSearch = (Button) findViewById(R.id.buttonBorrowSearch);
 
         profileName.setOnLongClickListener(
                 new View.OnLongClickListener() {
@@ -63,6 +73,24 @@ public class ProfileViewActivity extends AppCompatActivity {
                     }
                 }
         );
+        buttonMyBids.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO send to mybids
+            }
+        });
+        buttonMyStuff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO send to mystuff
+            }
+        });
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO send to search thing
+            }
+        });
     }
 
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
@@ -108,6 +136,19 @@ public class ProfileViewActivity extends AppCompatActivity {
         alertDialog.show();
 
         return false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Do not write to storage/server here!
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //TODO maybe add refresh content in case of offsite server update, etc. + toast to notify if done or not
+        //onCreate will take care of memory release
     }
 
 
