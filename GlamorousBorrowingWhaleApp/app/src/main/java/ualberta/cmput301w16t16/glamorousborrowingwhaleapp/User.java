@@ -6,19 +6,28 @@ import android.graphics.drawable.Drawable;
  * Created by Martina on 16-02-29.
  */
 public class User {
-    private String name;
+    private String username;
     private String emailAddress;
     private String phoneNumber;
-    private Drawable picture;
+    //private Drawable picture;
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
 
+    // need to include picture
+    public User(String username, String emailAddress, String phoneNumber) {
+        this.username = username;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+    }
+
+    // need to add picture getters and setters
+
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getEmailAddress() {
@@ -35,14 +44,6 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public Drawable getPicture() {
-        return picture;
-    }
-
-    public void setPicture(Drawable picture) {
-        this.picture = picture;
     }
 
     public ItemList getItemsBorrowing() {
