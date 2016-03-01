@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     @Override
@@ -48,10 +46,12 @@ public class MainActivity extends AppCompatActivity {
             case (SIGN_UP) : {
                 if (resultCode == Activity.RESULT_OK) {
                     User user = (User) data.getSerializableExtra("NEW_USER");
+
                 }
                 break;
             }
             case (SIGN_IN) : {
+                // TODO change this to loading the specified user based on the given username
                 if (resultCode == Activity.RESULT_OK) {
                     User user = (User) data.getSerializableExtra("OLD_USER");
                 }
@@ -59,4 +59,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }
