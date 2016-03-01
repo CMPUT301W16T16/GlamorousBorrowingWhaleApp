@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
  * Created by Martina on 16-02-29.
  */
 public class User {
-    private String username;
+    private String name;
     private String emailAddress;
     private String phoneNumber;
     //private Drawable picture;
@@ -14,8 +14,8 @@ public class User {
     private ItemList itemsRenting;
 
     // need to include picture
-    public User(String username, String emailAddress, String phoneNumber) {
-        this.username = username;
+    public User(String name, String emailAddress, String phoneNumber) {
+        this.name = name;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
     }
@@ -23,11 +23,11 @@ public class User {
     // need to add picture getters and setters
 
     public String getName() {
-        return username;
+        return name;
     }
 
     public void setName(String name) {
-        this.username = name;
+        this.name = name;
     }
 
     public String getEmailAddress() {

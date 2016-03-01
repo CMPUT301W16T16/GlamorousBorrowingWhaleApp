@@ -41,6 +41,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View view) {
                 username = enteredUsername.getText().toString();
+                User user = new User(username, "temporary", "temporary");
 
                 // prevents user from leaving the username field empty
                 if (username.isEmpty()) {
@@ -48,7 +49,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 } else {
                     Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
                     // TODO fetch user from username, and put the user as extra instead of username
-                    intent.putExtra("USERNAME", username);
+                    intent.putExtra("USERNAME", (Serializable) user);
                     startActivity(intent);
                 }
 
