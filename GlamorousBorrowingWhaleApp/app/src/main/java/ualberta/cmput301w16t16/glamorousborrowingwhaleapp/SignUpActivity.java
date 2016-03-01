@@ -45,9 +45,10 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     Toast.makeText(SignUpActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
                 } else {
                     // need to include picture
+                    // taken Feb-29-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
                     User user = new User(username, emailAddress, phoneNumber);
                     Intent intent = new Intent(SignUpActivity.this, SignUpActivity.class);
-                    intent.putExtra("NEW_USER", user);
+                    intent.putExtra("NEW_USER", (Serializable) user);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }

@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 public class UserController extends AppCompatActivity {
 
-    User currentUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

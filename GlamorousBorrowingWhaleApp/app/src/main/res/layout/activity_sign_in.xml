@@ -26,4 +26,13 @@
               android:layout_alignParentEnd="true"
               android:layout_toEndOf="@+id/usernamePrompt" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/done_sign_in"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"/>
+
 </RelativeLayout>

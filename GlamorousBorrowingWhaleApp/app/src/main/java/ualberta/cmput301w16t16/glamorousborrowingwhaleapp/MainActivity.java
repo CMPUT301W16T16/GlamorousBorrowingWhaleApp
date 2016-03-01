@@ -10,6 +10,8 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private static final int SIGN_UP = 1;
+    private static final int SIGN_IN = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 setResult(RESULT_OK);
                 Intent logIntent = new Intent(view.getContext(), SignInActivity.class);
-                startActivity(logIntent);
+                startActivityForResult(logIntent, SIGN_IN);
             }
         });
 
@@ -46,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
             case (SIGN_UP) : {
                 if (resultCode == Activity.RESULT_OK) {
                     User user = (User) data.getSerializableExtra("NEW_USER");
+                }
+                break;
+            }
+            case (SIGN_IN) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    User user = (User) data.getSerializableExtra("OLD_USER");
                 }
                 break;
             }
