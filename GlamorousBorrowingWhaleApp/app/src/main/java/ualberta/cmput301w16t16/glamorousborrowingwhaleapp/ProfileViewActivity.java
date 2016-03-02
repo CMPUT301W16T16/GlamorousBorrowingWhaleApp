@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+// controls the view where the user is able to view their profile and allows the
+// user to edit their profile, access the borrowed item pages and search
+// for new items to make bids on
 public class ProfileViewActivity extends AppCompatActivity {
 
     private TextView profileName;
@@ -94,6 +97,7 @@ public class ProfileViewActivity extends AppCompatActivity {
     }
 
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
+    // TODO fix the bug where tou can only edit the profile once before the app crashes
     public boolean longClick() {
         LayoutInflater layoutInflater = LayoutInflater.from(ProfileViewActivity.this);
         View editProfileView = layoutInflater.inflate(R.layout.edit_profile_view, null);

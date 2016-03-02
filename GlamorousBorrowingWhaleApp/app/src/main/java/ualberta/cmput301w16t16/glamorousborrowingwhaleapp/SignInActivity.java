@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
+// this is the first page that the user encounters upon starting the app.
+// the user is able to log in using an existing username or open the sign up page
+// to create a new user
 public class SignInActivity extends AppCompatActivity implements Serializable {
 
     private EditText enteredUsername;

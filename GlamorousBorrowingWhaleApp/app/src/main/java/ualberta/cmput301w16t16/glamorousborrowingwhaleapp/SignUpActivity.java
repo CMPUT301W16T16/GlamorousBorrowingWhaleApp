@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
+// page where the user can create a new account with a name, phoen number email and username
+// that they can use to access their account again in the future
+// after the user creates an account they are brought to the profile view activity / page
 public class SignUpActivity extends AppCompatActivity implements Serializable {
 
     private ImageButton enteredPicture;
@@ -53,7 +56,6 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
-
             }
         });
     }
@@ -63,10 +65,4 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
         phoneNumber = enteredPhoneNumber.getText().toString();
         emailAddress = enteredEmailAddress.getText().toString();
     }
-
-
-
-
-
-
 }
