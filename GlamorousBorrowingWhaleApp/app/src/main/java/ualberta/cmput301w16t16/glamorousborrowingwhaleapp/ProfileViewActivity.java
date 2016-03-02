@@ -79,13 +79,17 @@ public class ProfileViewActivity extends AppCompatActivity {
         buttonMyBids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO send to mybids
+                setResult(RESULT_OK);
+                Intent bidsIntent = new Intent(v.getContext(), MyBidsActivity.class);
+                startActivity(bidsIntent);
             }
         });
         buttonMyStuff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO send to mystuff
+                setResult(RESULT_OK);
+                Intent stuffIntent = new Intent(v.getContext(), MyItemsActivity.class);
+                startActivity(stuffIntent);
             }
         });
         buttonSearch.setOnClickListener(new View.OnClickListener() {
