@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.sql.ResultSet;
+
 public class MyItemsActivity extends AppCompatActivity{
     public ListView itemsList;
     @Override
@@ -17,20 +19,14 @@ public class MyItemsActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_items);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        itemsList = (ListView) findViewById(R.id.itemsList);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: send to create item page
-            }
-        });
-        itemsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int place, long id) {
-                Intent intent = new Intent(view.getContext(), MyItemActivity.class);
+                setResult(RESULT_OK);
+                Intent intent = new Intent(v.getContext(), NewListingActivity.class);
                 startActivity(intent);
             }
         });

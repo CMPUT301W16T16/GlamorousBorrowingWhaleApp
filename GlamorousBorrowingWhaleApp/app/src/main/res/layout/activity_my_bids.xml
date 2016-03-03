@@ -10,28 +10,4 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyBidsActivity">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bidsList"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/acceptBidButton" />
-    <ImageButton
-        android:id="@+id/rejectBidButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:onClick="removeAtomPayOnClickHandler"
-        android:src="@android:drawable/ic_delete"
-        android:layout_alignTop="@+id/bidsList"
-        android:layout_alignParentEnd="true" />
-    <ImageButton
-        android:id="@+id/acceptBidButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:onClick="removeAtomPayOnClickHandler"
-        android:src="@android:drawable/ic_input_add"
-        android:layout_alignTop="@+id/bidsList"
-        android:layout_toStartOf="@+id/rejectBidButton" />
-
 </RelativeLayout>

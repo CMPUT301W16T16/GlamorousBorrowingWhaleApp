@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyBorrowedItemActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_my_borrowed_item" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view2"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="140dp"
+            android:scaleType="fitXY"
+            android:id="@+id/profilePictureView"
+            android:src="@drawable/blank_profile_picture_large"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="67dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/name"
+            android:hint="Name of the item"
+            android:layout_alignTop="@+id/profilePictureView"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/profilePictureView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/owner"
+            android:hint="Owner of the item"
+            android:layout_below="@+id/name"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/profilePictureView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/status"
+            android:hint="Status of the item"
+            android:layout_alignBottom="@+id/profilePictureView"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/owner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Description"
+            android:id="@+id/descriptionPrompt"
+            android:layout_below="@+id/profilePictureView"
+            android:layout_alignStart="@+id/profilePictureView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Make Bid"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/makeBidButton"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/description"
+            android:hint="Description of the item"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_above="@+id/makeBidButton"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/descriptionPrompt"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

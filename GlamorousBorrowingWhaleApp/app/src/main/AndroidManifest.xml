@@ -15,17 +15,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".IncomingBidsActivity"></activity>
-        <activity android:name=".MyItemActivity"></activity>
-        <activity android:name=".SearchResultsActivity"></activity>
-        <activity android:name=".MyBorrowedItemsActivity"></activity>
-        <activity android:name=".MyBidsActivity"></activity>
-        <activity android:name=".UserController"></activity>
-        <activity android:name=".ProfileViewActivity"></activity>
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".IncomingBidsActivity" />
+        <activity android:name=".MyItemActivity" />
+        <activity android:name=".SearchResultsActivity" />
+        <activity android:name=".MyBorrowedItemsActivity" />
+        <activity android:name=".MyBidsActivity" />
+        <activity android:name=".UserController" />
+        <activity android:name=".ProfileViewActivity" />
         <activity
             android:name=".MyItemsActivity"
             android:label="@string/title_activity_my_items"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewListingActivity"
+            android:label="@string/title_activity_new_listing"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MyBorrowedItemActivity"
+            android:label="@string/title_activity_my_borrowed_item"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

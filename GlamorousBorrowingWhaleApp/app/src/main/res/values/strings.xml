@@ -15,4 +15,6 @@
     <string name="email">Email</string>
     <string name="phone">Phone</string>
     <string name="title_activity_my_items">MyItemsActivity</string>
+    <string name="title_activity_new_listing">NewListingActivity</string>
+    <string name="title_activity_my_borrowed_item">MyBorrowedItemActivity</string>
 </resources>

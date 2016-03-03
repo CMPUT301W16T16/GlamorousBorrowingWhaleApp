@@ -12,9 +12,4 @@
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyItemsActivity"
     tools:showIn="@layout/activity_my_items">
 
-    <ListView android:id="@+id/itemsList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
