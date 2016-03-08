@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-// controls the view where the user is able to view their profile and allows the
-// user to edit their profile, access the borrowed item pages and search
-// for new items to make bids on
-public class ProfileViewActivity extends AppCompatActivity {
+public class MyProfileViewActivity extends AppCompatActivity {
 
     private TextView profileName;
     private TextView profilePhone;
@@ -79,17 +76,13 @@ public class ProfileViewActivity extends AppCompatActivity {
         buttonMyBids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_OK);
-                Intent bidsIntent = new Intent(v.getContext(), MyBidsActivity.class);
-                startActivity(bidsIntent);
+                //TODO send to mybids
             }
         });
         buttonMyStuff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_OK);
-                Intent stuffIntent = new Intent(v.getContext(), MyItemsActivity.class);
-                startActivity(stuffIntent);
+                //TODO send to mystuff
             }
         });
         buttonSearch.setOnClickListener(new View.OnClickListener() {
@@ -101,12 +94,11 @@ public class ProfileViewActivity extends AppCompatActivity {
     }
 
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
-    // TODO fix the bug where tou can only edit the profile once before the app crashes
     public boolean longClick() {
-        LayoutInflater layoutInflater = LayoutInflater.from(ProfileViewActivity.this);
+        LayoutInflater layoutInflater = LayoutInflater.from(MyProfileViewActivity.this);
         View editProfileView = layoutInflater.inflate(R.layout.edit_profile_view, null);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ProfileViewActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MyProfileViewActivity.this);
 
         alertDialogBuilder.setView(editProfileView);
 

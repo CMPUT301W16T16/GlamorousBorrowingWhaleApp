@@ -11,9 +11,6 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
-// this is the first page that the user encounters upon starting the app.
-// the user is able to log in using an existing username or open the sign up page
-// to create a new user
 public class SignInActivity extends AppCompatActivity implements Serializable {
 
     private EditText enteredUsername;
@@ -49,7 +46,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 if (username.isEmpty()) {
                     Toast.makeText(SignInActivity.this, "You must enter your username.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
+                    Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                     // TODO fetch user from username, and put the user as extra instead of username
                     intent.putExtra("USERNAME", user);
                     startActivity(intent);
@@ -69,7 +66,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
             case (SIGN_UP) : {
                 if (resultCode == Activity.RESULT_OK) {
                     User user = (User) data.getSerializableExtra("NEW_USER");
-                    Intent intent = new Intent(this, ProfileViewActivity.class);
+                    Intent intent = new Intent(this, MyProfileViewActivity.class);
                     intent.putExtra("USER", (Serializable) user);
                     startActivity(intent);
                 }
