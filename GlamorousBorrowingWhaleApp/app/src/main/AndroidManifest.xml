@@ -31,6 +31,8 @@
         </activity>
         <activity android:name=".TheirItemActivity">
         </activity>
+        <activity android:name=".MyItemsActivity">
+        </activity>
     </application>
 
 </manifest>

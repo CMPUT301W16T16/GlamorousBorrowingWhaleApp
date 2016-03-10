@@ -32,8 +32,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_view);
 
         Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra("USER");
-
 
         profileName = (TextView) findViewById(R.id.profileName);
         profilePhone = (TextView) findViewById(R.id.profilePhone);
@@ -96,20 +94,24 @@ public class MyProfileViewActivity extends AppCompatActivity {
         buttonMyBids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-
+                Intent intent = new Intent(v.getContext(), MyBorrowedItemsActivity.class);
+                startActivity(intent);
             }
         });
+
         buttonMyStuff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO send to mystuff
+                Intent intent = new Intent(v.getContext(), MyItemsActivity.class);
+                startActivity(intent);
             }
         });
+
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO send to search thing
+                Intent intent = new Intent(v.getContext(), SearchResultsActivity.class);
+                startActivity(intent);
             }
         });
     }
