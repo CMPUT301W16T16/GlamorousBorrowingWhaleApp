@@ -61,28 +61,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/status"
-            android:layout_alignBottom="@+id/profilePictureView"
+            android:layout_below="@+id/owner"
             android:layout_alignParentEnd="true"
             android:layout_alignStart="@+id/owner" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/size"
+            android:hint="Size"
+            android:layout_below="@+id/status"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/status" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Description"
             android:id="@+id/descriptionPrompt"
-            android:layout_below="@+id/profilePictureView"
+            android:layout_below="@+id/size"
             android:layout_alignStart="@+id/profilePictureView" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/description"
-            android:layout_below="@+id/descriptionPrompt"
             android:layout_alignStart="@+id/descriptionPrompt"
             android:layout_alignParentEnd="true"
-            android:layout_above="@+id/comment2" />
+            android:layout_above="@+id/comment2"
+            android:layout_below="@+id/descriptionPrompt" />
 
         <ImageButton
             android:layout_width="60dp"
