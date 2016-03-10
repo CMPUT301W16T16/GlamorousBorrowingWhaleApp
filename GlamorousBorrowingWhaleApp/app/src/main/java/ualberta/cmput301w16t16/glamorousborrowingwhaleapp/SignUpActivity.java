@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -59,8 +58,9 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     //will refresh to display the image.]
                     // taken Feb-29-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
                     User user = new User(username, emailAddress, phoneNumber);
+                    UserController.setUser(user);
                     Intent intent = new Intent(SignUpActivity.this, SignUpActivity.class);
-                    intent.putExtra("NEW_USER", user);
+                    //intent.putExtra("NEW_USER", user);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                 }

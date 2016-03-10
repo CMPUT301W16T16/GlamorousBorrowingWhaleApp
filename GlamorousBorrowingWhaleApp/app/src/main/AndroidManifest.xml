@@ -27,8 +27,6 @@
         </activity>
         <activity android:name=".MyBidsActivity">
         </activity>
-        <activity android:name=".UserController">
-        </activity>
         <activity android:name=".MyProfileViewActivity">
         </activity>
         <activity android:name=".TheirItemActivity">

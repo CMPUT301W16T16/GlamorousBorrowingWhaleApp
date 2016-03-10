@@ -24,6 +24,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
     private Button buttonMyStuff;
     private Button buttonSearch;
 
+    private User user = UserController.getUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
         buttonMyBids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO send to mybids
+                Intent intent = new Intent();
+
             }
         });
         buttonMyStuff.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +173,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
         //TODO maybe add refresh content in case of offsite server update, etc. + toast to notify if done or not
         //onCreate will take care of memory release
     }
+
+
 
 
 }

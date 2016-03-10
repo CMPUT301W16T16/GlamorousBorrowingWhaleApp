@@ -2,8 +2,6 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -49,9 +47,10 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 if (username.isEmpty()) {
                     Toast.makeText(SignInActivity.this, "You must enter your username.", Toast.LENGTH_SHORT).show();
                 } else {
+                    UserController.setUser(user);
                     Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                     // TODO fetch user from username, and put the user as extra instead of username
-                    intent.putExtra("USERNAME", user);
+                    //intent.putExtra("USERNAME", user);
                     startActivity(intent);
                 }
 
