@@ -1,17 +1,25 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 
 import java.io.Serializable;
 
 /**
  * Created by Martina on 16-02-29.
  */
-public class User implements Serializable {
+public class User extends AppCompatActivity implements Serializable {
     private String name;
     private String emailAddress;
     private String phoneNumber;
-    //private Drawable picture;
+    //private Drawable picture [Adam: See directly below];
+    private String profilePictureRef;
+    //http://developer.android.com/reference/android/graphics/Bitmap.html
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
 
@@ -21,7 +29,6 @@ public class User implements Serializable {
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
     }
-
     // need to add picture getters and setters
 
     public String getName() {
@@ -78,5 +85,15 @@ public class User implements Serializable {
 
     public void removeItemRenting(Item item) {
         itemsRenting.remove(item);
+    }
+
+    public String getProfilePictureRef() { //temp placeholder
+        return profilePictureRef;
+    }
+
+    public void setProfilePictureRef(String profilePictureRef) { //temp placeholder
+        //this setter will definitely need some tweaking depending on how the bitmap/drawable/whatever
+        //we end up using plays with the type(s) set.
+        this.profilePictureRef = profilePictureRef;
     }
 }
