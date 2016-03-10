@@ -60,6 +60,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                     }
                 }
         );
+
         profilePhone.setOnLongClickListener(
                 new View.OnLongClickListener() {
                     @Override
@@ -70,6 +71,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                     }
                 }
         );
+
         profileEmail.setOnLongClickListener(
                 new View.OnLongClickListener() {
                     @Override
@@ -80,6 +82,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                     }
                 }
         );
+
         profilePictureView.setOnLongClickListener(
                 new View.OnLongClickListener() {
                     @Override
@@ -91,6 +94,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                     }
                 }
         );
+
         buttonMyBids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
