@@ -70,6 +70,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                     User user = (User) data.getSerializableExtra("NEW_USER");
                     Intent intent = new Intent(this, MyProfileViewActivity.class);
                     intent.putExtra("USER", (Serializable) user);
+                    //TODO investigate the "redundant" Serializable studio complains about
                     startActivity(intent);
                 }
                 break;

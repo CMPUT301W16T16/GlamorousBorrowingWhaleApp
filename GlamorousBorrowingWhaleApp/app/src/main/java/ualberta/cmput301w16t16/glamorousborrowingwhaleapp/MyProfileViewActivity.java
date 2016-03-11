@@ -43,7 +43,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         profilePhone.setText(user.getPhoneNumber());
         profileEmail.setText(user.getEmailAddress());
         profilePictureView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
-                R.drawable.blank_profile_picture)); //get bitmap reference from USER and set
+                R.drawable.glamorouswhale1)); //get bitmap reference from USER and set
         //the imageView type with the bitmap. The idea is that the imageView handles the scaling and
         //such rather than a bitmap drawable directly. Something to due with memory or something.
 
@@ -124,6 +124,9 @@ public class MyProfileViewActivity extends AppCompatActivity {
 
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
     public boolean longClick() {
+        //LayoutInflater has an issue with large size bitmap in xml for alertdialog, has
+        //memory leak in alertdialog and outofmemory
+        //http://stackoverflow.com/questions/7083441/android-alertdialog-causes-a-memory-leak
         LayoutInflater layoutInflater = LayoutInflater.from(MyProfileViewActivity.this);
         View editProfileView = layoutInflater.inflate(R.layout.edit_profile_view, null);
 
@@ -135,8 +138,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
         final EditText nameInput = (EditText) editProfileView.findViewById(R.id.editProfileName);
         final EditText phoneInput = (EditText) editProfileView.findViewById(R.id.editProfilePhone);
         final EditText emailInput = (EditText) editProfileView.findViewById(R.id.editProfileEmail);
-        //final so the references to the profileView boxes does not change?
-
         alertDialogBuilder
                 .setCancelable(false)
                 .setPositiveButton("OK",
@@ -166,6 +167,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
 
         alertDialog.show();
 
+
         return false;
     }
 
@@ -180,6 +182,12 @@ public class MyProfileViewActivity extends AppCompatActivity {
         super.onResume();
         //TODO maybe add refresh content in case of offsite server update, etc. + toast to notify if done or not
         //onCreate will take care of memory release
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //TODO add the write to disk/server function here probably
     }
 
 
