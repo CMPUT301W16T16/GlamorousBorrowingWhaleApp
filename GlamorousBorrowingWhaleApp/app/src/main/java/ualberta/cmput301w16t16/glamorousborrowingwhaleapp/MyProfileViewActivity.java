@@ -1,5 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -108,6 +109,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MyItemsActivity.class);
                 startActivity(intent);
+                setResult(Activity.RESULT_OK, intent);
             }
         });
 
