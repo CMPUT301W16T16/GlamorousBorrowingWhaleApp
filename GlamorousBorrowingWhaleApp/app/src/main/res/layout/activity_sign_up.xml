@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/backgroundBlue"
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.SignUpActivity">
 
     <LinearLayout
@@ -18,8 +19,8 @@
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:id="@+id/picture"
-            android:src="@drawable/blank_profile_picture_large"
-            android:scaleType="fitXY"
+            android:src="@drawable/glamorouswhale1"
+            android:scaleType="fitCenter"
             android:layout_weight="1"
             android:adjustViewBounds="true"/>
     </LinearLayout>
