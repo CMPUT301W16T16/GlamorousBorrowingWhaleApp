@@ -29,6 +29,7 @@ public class User extends AppCompatActivity implements Serializable {
     //http://developer.android.com/reference/android/graphics/Bitmap.html
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
+    private String ID;
 
     // need to include picture
     public User(String name, String emailAddress, String phoneNumber) {
@@ -103,5 +104,13 @@ public class User extends AppCompatActivity implements Serializable {
         //this setter will definitely need some tweaking depending on how the bitmap/drawable/whatever
         //we end up using plays with the type(s) set.
         this.profilePictureRef = profilePictureRef;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }
