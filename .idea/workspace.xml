@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ced81c4c-b235-494b-b6c5-b9c7a8417f3e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GlamorousBorrowingWhaleApp/app/src/main/res/layout/activity_my_items.xml" afterPath="$PROJECT_DIR$/GlamorousBorrowingWhaleApp/app/src/main/res/layout/activity_my_items.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GlamorousBorrowingWhaleApp/.idea/misc.xml" afterPath="$PROJECT_DIR$/GlamorousBorrowingWhaleApp/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GlamorousBorrowingWhaleApp/.idea/vcs.xml" afterPath="$PROJECT_DIR$/GlamorousBorrowingWhaleApp/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GlamorousBorrowingWhaleApp.iws" />

@@ -13,8 +13,6 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/myItems"
-        android:layout_weight="1" />
-    </ListView>
+        android:id="@+id/myItems" />
 
 </LinearLayout>

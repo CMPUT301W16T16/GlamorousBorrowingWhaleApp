@@ -24,7 +24,7 @@ public class MyItemsAdapter extends ArrayAdapter<Item> {
 
         if (v==null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v - inflater.inflate(R.layout.my_items_list_item, null);
+            v = inflater.inflate(R.layout.my_items_list_item);
         }
     }
 }
