@@ -13,6 +13,13 @@ import java.io.Serializable;
 /**
  * Created by Martina on 16-02-29.
  */
+
+/*User Class contains all the information about a particular user, denoted by a USERNAME.
+What can be serialized into JSON will be stored in the object directly, what cannot will have
+a reference stored into the object, and the content will be retrieved when needed (eg.
+Thing Pictures from the server). UserController is the controller for interaction by the app.
+
+ */
 public class User extends AppCompatActivity implements Serializable {
     private String name;
     private String emailAddress;
@@ -68,6 +75,7 @@ public class User extends AppCompatActivity implements Serializable {
     }
 
     public void setItemsRenting(ItemList itemsRenting) {
+        //seems like this will overwrite the existing list if there is one FYI
         this.itemsRenting = itemsRenting;
     }
 

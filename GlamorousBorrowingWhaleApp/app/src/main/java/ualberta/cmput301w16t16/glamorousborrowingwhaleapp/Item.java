@@ -5,8 +5,9 @@ import android.graphics.drawable.Drawable;
 /**
  * Created by Martina on 16-02-29.
  */
+//This is an Item(Thing). Has attributes.
 public class Item {
-    private String title;
+    protected String title;
     private String description;
     private String size;
     private Boolean availability;
@@ -68,5 +69,13 @@ public class Item {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    //This right here is to pass a string of our choosing to the view adapter in MyItemsActivity.
+    //The adapter requires something to pass to a textview, so an override here works nicely.
+    //That being said, I'm not sure of the implications of putting this here :\
+    @Override
+    public String toString() {
+        return this.title + "; " + this.size;
     }
 }

@@ -5,8 +5,11 @@ import java.util.ArrayList;
 /**
  * Created by Martina on 16-02-29.
  */
+
+//ADT for ItemList control
 public class ItemList {
-    private ArrayList<Item> itemList;
+    private ArrayList<Item> itemList = new ArrayList<>();
+    //note - if setItemList is called, then this is overwritten. Problem? Good Question.
 
     public void add(Item item) {
         itemList.add(item);

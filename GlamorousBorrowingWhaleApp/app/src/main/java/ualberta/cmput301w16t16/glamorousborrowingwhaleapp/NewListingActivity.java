@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
+/*Where the Renter creates a new entry for his/her profile.
+Has buttons and stuff to do things. Pretty neat.
+ */
 public class NewListingActivity extends AppCompatActivity {
     private ImageButton saveButton;
     private ImageButton deleteButton;
@@ -28,7 +30,7 @@ public class NewListingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_listing);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-
+        //Create the variables for EditText type so that the actual Item object may be updated below.
         final EditText name = (EditText) findViewById(R.id.name);
         final EditText owner = (EditText) findViewById(R.id.owner);
         final EditText status = (EditText) findViewById(R.id.status);
@@ -39,7 +41,7 @@ public class NewListingActivity extends AppCompatActivity {
 
         saveButton = (ImageButton) findViewById(R.id.save);
         deleteButton = (ImageButton) findViewById(R.id.delete);
-
+        //Setting up the buttons and getting user focus.
         currOwner = UserController.getUser();
 
         bids = new BidList();
@@ -47,7 +49,8 @@ public class NewListingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add lastest Item to ItemList (MyItems)
+                //Gathers all the variables used for EditText to apply to the Item object.
+                //toString for compatibility.
                 nameStr = name.getText().toString();
                 sizeStr = size.getText().toString();
                 descStr = description.getText().toString();
@@ -58,6 +61,9 @@ public class NewListingActivity extends AppCompatActivity {
                 latestItem.setAvailability(true);
                 latestItem.setBids(bids);
                 latestItem.setOwner(currOwner);
+                //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
+                //List. We'll have to sort out some terminology here.
+                currOwner.addItemRenting(latestItem);//THE MEAT AND POTATOES RIGHT HERE
                 Toast.makeText(NewListingActivity.this, "Item Saved!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -66,10 +72,11 @@ public class NewListingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO delete shit
+                //All this does atm is clear the edittext boxes.
                 name.setText("");
                 size.setText("");
                 description.setText("");
-                Toast.makeText(NewListingActivity.this, "Item Cleared!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewListingActivity.this, "View Cleared!", Toast.LENGTH_SHORT).show();
             }
         });
     }
