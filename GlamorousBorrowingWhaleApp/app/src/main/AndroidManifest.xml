@@ -33,6 +33,8 @@
         </activity>
         <activity android:name=".MyItemsActivity">
         </activity>
+        <activity android:name=".NewListingActivity">
+        </activity>
     </application>
 
 </manifest>
