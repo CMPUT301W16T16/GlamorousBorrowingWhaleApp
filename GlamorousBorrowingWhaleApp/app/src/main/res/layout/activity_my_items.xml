@@ -11,24 +11,10 @@
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyItemsActivity">
 
     <ListView
-<<<<<<< HEAD
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/myItems"
         android:layout_weight="1" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="16dp"
-        android:src="@android:drawable/ic_input_add" />
-=======
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
     </ListView>
->>>>>>> 86acab74c0ac490a65623b1f0ccce07e2809853b
 
 </LinearLayout>
