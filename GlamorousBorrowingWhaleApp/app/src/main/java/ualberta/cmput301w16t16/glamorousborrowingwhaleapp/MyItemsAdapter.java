@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Martina on 16-03-10.
+ * idk what this does??
  */
 public class MyItemsAdapter extends ArrayAdapter<Item> {
     private ArrayList<Item> objects;

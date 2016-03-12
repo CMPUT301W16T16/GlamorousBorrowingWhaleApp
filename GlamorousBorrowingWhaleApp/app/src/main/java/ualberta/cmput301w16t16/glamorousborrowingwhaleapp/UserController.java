@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 /**
  * Created by Martina on 16-03-10.
+ * Holds the current user so it can be referenced throughout the app
  */
 //Is the controller for the user. Persistent throughout the user session.
 public class UserController {
-    private static ArrayList<User> users = new ArrayList<User>();
     private static User user;
 
     //TODO will we have this ask the server for a USER?
@@ -22,21 +22,5 @@ public class UserController {
 
     public static void setUser(User user) {
         UserController.user = user;
-    }
-
-    public static void addToUsers(User user) {
-        users.add(user);
-    }
-
-    public static void removeFromUsers(User user) {
-        users.remove(user);
-    }
-
-    public static ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public static void setUsers(ArrayList<User> users) {
-        UserController.users = users;
     }
 }

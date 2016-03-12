@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 /**
  * Created by Martina on 16-02-29.
+ * This class contains a few functions for a list of bids to make it easier
+ * to control (?)
+ * @author adam, andrew, erin, laura, martina
  */
+
 public class BidList {
-    private ArrayList<Bid> bids;
+    //note: added a constructor here for testing
+    private ArrayList<Bid> bids = new ArrayList<Bid>();
 
     public void addBid(Bid bid) {
         bids.add(bid);

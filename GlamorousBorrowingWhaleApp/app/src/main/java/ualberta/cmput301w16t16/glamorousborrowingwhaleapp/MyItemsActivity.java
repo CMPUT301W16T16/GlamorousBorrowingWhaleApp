@@ -1,22 +1,37 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-/*Where the user can see the items available for RENTING.
-A listview updates via adapter on every resume.
-NEEDS WORK THOUGH AS IT DOES TOO MUCH RIGHT NOW>>>>
-And lifecycle work.
+
+/**
+ * This activity allows a user to see their items that are available to be
+ * rented out (items NOT bidded or borrowed). If the user longClicks any item on
+ * the listView, they are brought to the MyItemActivity. If the user selects
+ * the floating action plus sign, they are taken to NewListingActivity where
+ * they can add a new piece of equipment. If they swipe right they are taken to
+ * IncomingBidsActivity (tbi).
+ * @author adam, andrew, erin, laura, martina
+ * @see MyItemActivity
+ * @see NewListingActivity
+ * @see IncomingBidsActivity
  */
 
+//TODO review lifecycle code
 public class MyItemsActivity extends AppCompatActivity {
     //ListView vaguely follows in lab example LonelyTwitter
     //https://github.com/AdamGualberta/lonelyTwitter/blob/tuesday/app/src/main/java/ca/ualberta/cs/lonelytwitter/LonelyTwitterActivity.java
@@ -24,11 +39,11 @@ public class MyItemsActivity extends AppCompatActivity {
     private ItemList myItemsList;
     private ArrayList<Item> myItems;
     private ArrayAdapter<Item> adapter;
-    private ListView myItemsView;
     private User user;
 
     public ArrayAdapter<Item> getAdapter() {
         return adapter;
+        //getAdapter probably never used but that's fine.
     }
 
     @Override
@@ -36,7 +51,7 @@ public class MyItemsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_items);
-
+        ListView myItemsView;
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
 
         user = UserController.getUser();
@@ -49,6 +64,7 @@ public class MyItemsActivity extends AppCompatActivity {
         if (myItemsList == null) {
             Item firstItem = new Item();
             //Create a "First Item" to get the ItemList going.
+
             firstItem.setAvailability(false);
             firstItem.setDescription("This is your first Thing! You can delete it of course.");
             firstItem.setOwner(user);
@@ -64,9 +80,12 @@ public class MyItemsActivity extends AppCompatActivity {
             Toast.makeText(MyItemsActivity.this, "First Thing Created!", Toast.LENGTH_SHORT).show();
             //finally, set the variable to what we want.
             myItems = myItemsList.getItemList();
+            //"initialize" the itemcontroller
+            ItemController.setItem(firstItem);
         } else {
             myItems = myItemsList.getItemList();
         }
+
         //finally creating that adapter to use with the myItems
         adapter = new ArrayAdapter<Item>(this, R.layout.list_item, myItems);
         //See Item.java for how this can work (hint - the bottom)
@@ -78,11 +97,38 @@ public class MyItemsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //This sends the user to the NewListingActivity. No need to worry about
+                //the ItemController yet - that is dealt with in the NewListingActivity class.
                 Intent intent = new Intent(view.getContext(), NewListingActivity.class);
                 startActivity(intent);
             }
         });
 
+        //////////////////////////////////////////////////////////////////////////////////////////////// for user popup
+        myItemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ProfileDialog profile = new ProfileDialog(MyItemsActivity.this, getAdapter().getItem(position));
+                profile.show();
+            }
+        });
+
+        // I have no clue if the following is proper, it was Android Studio doing that autocomplete
+        // thing.
+        myItemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //This chuck is pretty neat. The ViewAdapter makes note of what is clicked in
+                //the dynamic list which is used to get the corresponding Item at that "position".
+                //Again leveraging the ItemController, we can set that Item as the current Item
+                //and send the user to the MyItemActivity with the current Item (the one
+                //that they selected!).
+                ItemController.setItem((Item) parent.getAdapter().getItem(position));
+                Intent intent = new Intent(view.getContext(), MyItemActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
     }
 
     @Override

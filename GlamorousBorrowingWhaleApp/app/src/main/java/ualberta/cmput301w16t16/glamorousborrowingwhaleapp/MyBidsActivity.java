@@ -13,6 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This class shows the user a list of their items that they have bid on and
+ * whether the bid has been accepted, rejected or is still pending. If they
+ * click an item in the listView they can then view that piece of equipment
+ * again.
+ * @author adam, andrew, laura, martina
+ */
+
 public class MyBidsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

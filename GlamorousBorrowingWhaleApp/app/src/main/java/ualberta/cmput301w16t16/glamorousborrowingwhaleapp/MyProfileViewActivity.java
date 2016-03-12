@@ -14,6 +14,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * This activity lists for the user their profile information which can then be
+ * edited (using longClick) as well as the options to view their items
+ * (MyItemsActivity), view items of theirs with bids on them (MyBidsActivity)
+ * and search for things to borrow (SearchResultsActivity).
+ * @author adam, andrew, erin, laura, martina
+ */
+
 public class MyProfileViewActivity extends AppCompatActivity {
 
     private TextView profileName;
@@ -31,9 +39,10 @@ public class MyProfileViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
-
+        //redundant intent is redundant
         Intent intent = getIntent();
 
+        //This chunk grabs the TextViews and operates on them
         profileName = (TextView) findViewById(R.id.profileName);
         profilePhone = (TextView) findViewById(R.id.profilePhone);
         profileEmail = (TextView) findViewById(R.id.profileEmail);
@@ -42,15 +51,29 @@ public class MyProfileViewActivity extends AppCompatActivity {
         profileName.setText(user.getName());
         profilePhone.setText(user.getPhoneNumber());
         profileEmail.setText(user.getEmailAddress());
-        profilePictureView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
-                R.drawable.glamorouswhale1)); //get bitmap reference from USER and set
-        //the imageView type with the bitmap. The idea is that the imageView handles the scaling and
-        //such rather than a bitmap drawable directly. Something to due with memory or something.
 
+        // get bitmap reference from USER and set
+        // the imageView type with the bitmap. The idea is that the imageView handles the scaling and
+        // such rather than a bitmap drawable directly. Something to due with memory or something.
+
+        // as per the note on SignUpActivity, I've modified this such that if the user adds a photo,
+        // the "if" path is taken. if not, the whale default is still used on the "else" path.
+
+//        if (user.getPhoto() != null) {
+            byte[] tempPhoto = user.getPhoto();
+            profilePictureView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+//        } else {
+//            profilePictureView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
+//                    R.drawable.glamorouswhale1));
+//        }
+
+        //Initialize the buttons.
         buttonMyBids = (Button) findViewById(R.id.buttonMyBids);
         buttonMyStuff = (Button) findViewById(R.id.buttonMyStuff);
         buttonSearch = (Button) findViewById(R.id.buttonBorrowSearch);
 
+        //Setting the longClickListeners for the text boxes. If a user wishes to edit something,
+        //a long click on the box will send to longClick() which brings up a popup window!
         profileName.setOnLongClickListener(
                 new View.OnLongClickListener() {
                     @Override
@@ -96,6 +119,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                 }
         );
 
+        //The button clickListeners. Each sends to its corresponding activity.
         buttonMyBids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +146,17 @@ public class MyProfileViewActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * longClick() is used in the longClickListeners for the textviews for editing profile information.
+     * A layout is inflated in an alertdialog box which allows the user to edit the name, phone
+     * number and email address fields.  If the CANCEL button is selected, no changes are made
+     * and the dialog box is closed. If the OK button is selected with empty fields, only the fields
+     * with content in them will update their corresponding attribute; the empty fields will not do
+     * anything.
+     * @author martina
+     * @return
+     */
+
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
     public boolean longClick() {
         //LayoutInflater has an issue with large size bitmap in xml for alertdialog, has
@@ -138,21 +173,30 @@ public class MyProfileViewActivity extends AppCompatActivity {
         final EditText nameInput = (EditText) editProfileView.findViewById(R.id.editProfileName);
         final EditText phoneInput = (EditText) editProfileView.findViewById(R.id.editProfilePhone);
         final EditText emailInput = (EditText) editProfileView.findViewById(R.id.editProfileEmail);
+        //Grab the existing attributes to fill in the "hint" field.
+        nameInput.setHint(user.getName());
+        phoneInput.setHint(user.getPhoneNumber());
+        emailInput.setHint(user.getEmailAddress());
         alertDialogBuilder
                 .setCancelable(false)
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                nameInput.setHint(profileName.getText());
-                                profileName.setText(nameInput.getText().toString());
-
-                                phoneInput.setHint(profilePhone.getText());
-                                profilePhone.setText(phoneInput.getText().toString());
-
-                                emailInput.setHint(profileEmail.getText());
-                                profileEmail.setText(emailInput.getText().toString());
-
+                                //Minor error checking here - if field is empty no change is made
+                                //if OK is selected.
+                                if (!nameInput.getText().toString().isEmpty()) {
+                                    profileName.setText(nameInput.getText().toString());
+                                    user.setName(nameInput.getText().toString());
+                                }
+                                if (!phoneInput.getText().toString().isEmpty()) {
+                                    profilePhone.setText(phoneInput.getText().toString());
+                                    user.setPhoneNumber(phoneInput.getText().toString());
+                                }
+                                if (!emailInput.getText().toString().isEmpty()) {
+                                    profileEmail.setText(emailInput.getText().toString());
+                                    user.setEmailAddress(emailInput.getText().toString());
+                                }
                             }
                         })
                 .setNegativeButton("Cancel",
@@ -171,11 +215,24 @@ public class MyProfileViewActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Android Lifecycle - probably not needed, placeholder.
+     * @author adam
+     * @return
+     */
+
     @Override
     protected void onPause() {
         super.onPause();
         //Do not write to storage/server here!
     }
+
+    /**
+     * Android Lifecycle - for whatever reason the user information may be updated server-side;
+     * it may be useful to update the "local" object.
+     * @author adam
+     * @return
+     */
 
     @Override
     protected void onResume() {
@@ -183,6 +240,15 @@ public class MyProfileViewActivity extends AppCompatActivity {
         //TODO maybe add refresh content in case of offsite server update, etc. + toast to notify if done or not
         //onCreate will take care of memory release
     }
+
+    /**
+     * Android Lifecycle - onStop may happen whenever, so this code should be ready for it.
+     * onStop may lead to a memory release (home button then start playing a game for example), the
+     * app should save state when stopped, maybe a push to server if possible.  Best before a destroy
+     * condition.
+     * @author adam
+     * @return
+     */
 
     @Override
     protected void onStop() {

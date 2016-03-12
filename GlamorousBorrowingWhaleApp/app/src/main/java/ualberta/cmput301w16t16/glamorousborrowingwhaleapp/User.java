@@ -13,6 +13,12 @@ import java.io.Serializable;
 
 /**
  * Created by Martina on 16-02-29.
+ * This class, like Item, contains all relevant information about a User
+ * (name,address etc). It is used to obtain information about a user in
+ * SearchResultsActivity. This class also contains a JestId for when the users
+ * information is saved to the server.
+ * @author adam, andrew, erin, laura, martina
+ * @see SearchResultsActivity
  */
 
 /*User Class contains all the information about a particular user, denoted by a USERNAME.
@@ -25,14 +31,14 @@ public class User extends AppCompatActivity implements Serializable {
     private String name;
     private String emailAddress;
     private String phoneNumber;
-    //private Drawable picture [Adam: See directly below];
+    private byte[] photo;
     //private String profilePictureRef;
     //http://developer.android.com/reference/android/graphics/Bitmap.html
     //Initialize the arrays down here because Java sucks
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
 
-    //ID is for elasticsearch server thing
+    //ID is for elasticsearch server
     @JestId
     protected String ID;
 
@@ -43,6 +49,10 @@ public class User extends AppCompatActivity implements Serializable {
         this.phoneNumber = phoneNumber;
     }
     // need to add picture getters and setters
+
+    public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
+
+    public byte[] getPhoto() { return photo; }
 
     public String getName() {
         return name;
@@ -102,13 +112,13 @@ public class User extends AppCompatActivity implements Serializable {
     }
 
     //public String getProfilePictureRef() { //temp placeholder
-        //return profilePictureRef;
+        // return profilePictureRef;
     //}
 
     //public void setProfilePictureRef(String profilePictureRef) { //temp placeholder
-        //this setter will definitely need some tweaking depending on how the bitmap/drawable/whatever
-        //we end up using plays with the type(s) set.
-        //this.profilePictureRef = profilePictureRef;
+        // this setter will definitely need some tweaking depending on how the bitmap/drawable/whatever
+        // we end up using plays with the type(s) set.
+        // this.profilePictureRef = profilePictureRef;
     //}
 
     public String getID() {
