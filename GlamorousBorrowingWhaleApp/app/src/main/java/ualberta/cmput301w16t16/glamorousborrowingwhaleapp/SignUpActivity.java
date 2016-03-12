@@ -91,22 +91,18 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     // end picture management
 
                     User latestUser = new User(username, emailAddress, phoneNumber);
-                    latestUser.setItemsBorrowing(null);
-                    latestUser.setItemsRenting(null);
 
-                    UserController.setUser(latestUser);
-
-                    //ElasticSearch.AddUserTask addUserTask = new ElasticSearch.AddUserTask();
-                    //addUserTask.execute(latestUser);
-                    setResult(RESULT_OK);
                     latestUser.setItemsBorrowing(null);
                     latestUser.setItemsRenting(null);
                     latestUser.setPhoto(photoStream);
                     users.add(latestUser);
                     UserController.setUser(latestUser);
 
-                    //AsyncTask<User, Void, Void> execute = new ElasticSearch.AddUserTask();
-                    //execute.execute(latestUser);
+                    setResult(RESULT_OK);
+
+                    // this causes the error with elastic search
+                    //ElasticSearch.AddUserTask addUserTask = new ElasticSearch.AddUserTask();
+                    //addUserTask.execute(latestUser);
 
                     Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                     //intent.putExtra("NEW_USER", latestUser);

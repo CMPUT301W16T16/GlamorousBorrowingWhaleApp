@@ -31,6 +31,7 @@ public class ElasticSearch {
     private static JestDroidClient client;
 
     /*
+    //this doesn't work yet, copied from lonelytwitter
     public static class GetUserTask extends AsyncTask<String, Void, ArrayList<User>> {
         @Override
         protected ArrayList<User> doInBackground(String... search_strings) {
@@ -75,6 +76,8 @@ public class ElasticSearch {
      * @see SignUpActivity
      */
 
+    // this doesn't cause an error anymore when the app is run without calling it in
+    // signup activity, but there is an error when calling it from sign up activity
     public static class AddUserTask extends AsyncTask<User, Void, Void> {
         @Override
         protected Void doInBackground(User... params) {
