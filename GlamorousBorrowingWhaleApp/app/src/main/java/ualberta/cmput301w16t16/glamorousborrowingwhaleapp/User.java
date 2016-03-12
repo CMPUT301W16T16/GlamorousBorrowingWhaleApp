@@ -31,8 +31,8 @@ public class User extends AppCompatActivity implements Serializable {
     //Initialize the arrays down here because Java sucks
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
-    //ID is for elasticsearch server thing
 
+    //ID is for elasticsearch server thing
     @JestId
     protected String ID;
 
