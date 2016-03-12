@@ -1,10 +1,15 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -80,6 +85,7 @@ public class MyItemsActivity extends AppCompatActivity {
         } else {
             myItems = myItemsList.getItemList();
         }
+
         //finally creating that adapter to use with the myItems
         adapter = new ArrayAdapter<Item>(this, R.layout.list_item, myItems);
         //See Item.java for how this can work (hint - the bottom)
@@ -97,6 +103,16 @@ public class MyItemsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //////////////////////////////////////////////////////////////////////////////////////////////// for user popup
+        myItemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ProfileDialog profile = new ProfileDialog(MyItemsActivity.this, getAdapter().getItem(position));
+                profile.show();
+            }
+        });
+
         // I have no clue if the following is proper, it was Android Studio doing that autocomplete
         // thing.
         myItemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

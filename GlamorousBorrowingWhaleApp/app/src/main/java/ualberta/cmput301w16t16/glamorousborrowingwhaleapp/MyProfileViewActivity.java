@@ -59,13 +59,13 @@ public class MyProfileViewActivity extends AppCompatActivity {
         // as per the note on SignUpActivity, I've modified this such that if the user adds a photo,
         // the "if" path is taken. if not, the whale default is still used on the "else" path.
 
-        if (user.getPhoto() != null) {
+//        if (user.getPhoto() != null) {
             byte[] tempPhoto = user.getPhoto();
             profilePictureView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
-        } else {
-            profilePictureView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
-                    R.drawable.glamorouswhale1));
-        }
+//        } else {
+//            profilePictureView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
+//                    R.drawable.glamorouswhale1));
+//        }
 
         //Initialize the buttons.
         buttonMyBids = (Button) findViewById(R.id.buttonMyBids);

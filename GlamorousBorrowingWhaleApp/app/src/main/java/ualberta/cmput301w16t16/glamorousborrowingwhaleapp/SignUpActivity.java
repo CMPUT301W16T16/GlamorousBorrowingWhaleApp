@@ -88,7 +88,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
                     photoStream = photosNeedToBeCompressedToThis.toByteArray();
-                    // end picture section
+                    // end picture management
 
                     User latestUser = new User(username, emailAddress, phoneNumber);
                     latestUser.setItemsBorrowing(null);
@@ -124,12 +124,12 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
     // also pictures
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
         if (requestCode == result) {
-            // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 Uri selectedImage = data.getData();
                 enteredPicture.setImageURI(selectedImage);
+            } else {
+                Toast.makeText(this, "Could not load image", Toast.LENGTH_SHORT).show();
             }
         }
     }
