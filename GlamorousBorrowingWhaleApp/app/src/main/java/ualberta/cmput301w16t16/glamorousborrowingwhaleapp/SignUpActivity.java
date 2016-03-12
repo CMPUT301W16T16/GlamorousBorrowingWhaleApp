@@ -35,11 +35,9 @@ import java.util.ArrayList;
 public class SignUpActivity extends AppCompatActivity implements Serializable {
 
     private ImageButton enteredPicture;
-   private EditText enteredUsername;
+    private EditText enteredUsername;
     private EditText enteredPhoneNumber;
     private EditText enteredEmailAddress;
-    private Button doneButton;
-    //private Bitmap profilePicture;
     private int result;
     private byte[] photoStream = new byte[65536];
 
@@ -59,9 +57,8 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
         enteredPhoneNumber = (EditText) findViewById(R.id.phone);
         enteredEmailAddress = (EditText) findViewById(R.id.email);
         enteredPicture = (ImageButton) findViewById(R.id.picture);
-        //profilePicture = BitmapFactory.decodeResource(getResources(), R.drawable.glamorouswhale1);//temp placeholder
 
-        doneButton = (Button) findViewById(R.id.done_sign_up);
+        Button doneButton = (Button) findViewById(R.id.done_sign_up);
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,18 +69,8 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     Toast.makeText(SignUpActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    ///////////////////////////////////////////////////////////////////////////////// A CONVERSATION ABOUT BITMAP METHODS
-                    // need to include picture
-                    // [FromAdamMar9 - I suggest using an adapter here to pick photo from gallery,
-                    // then pass to here and update USER with the new image, which the view control
-                    // will refresh to display the image.]
-                    // taken Feb-29-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
-                    //
-                    // pictures work, via a method largely derived from this guy: https://www.youtube.com/playlist?list=PLe60o7ed8E-Q7tqKNPnWFdUoeniqH_-A9
-                    // with this compress to bytestream method, rendering the picture anywhere requires a few lines of work, as seen in MyProfileViewActivity
-                    // buuuuuuuut, you can upload those bytestreams over elastic search, or so the internet tells me - andrew, mar 11
-                    // if this method is made satisfactory, the placeholder image "profilePicture" above can be removed. for now, the two relevant lines are commented out.
-
+                    // picture management
+                    // you can upload these photo bytestreams over elastic search, or so the internet tells me - andrew, mar 11
                     Bitmap image = ((BitmapDrawable) enteredPicture.getDrawable()).getBitmap();
                     ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
@@ -134,7 +121,6 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
             }
         }
     }
-
 
     /**
      * Converts the input given in the activity into strings that can then be

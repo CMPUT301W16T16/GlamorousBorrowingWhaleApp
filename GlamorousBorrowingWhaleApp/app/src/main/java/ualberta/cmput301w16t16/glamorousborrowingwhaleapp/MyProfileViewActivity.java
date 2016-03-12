@@ -52,17 +52,16 @@ public class MyProfileViewActivity extends AppCompatActivity {
         profilePhone.setText(user.getPhoneNumber());
         profileEmail.setText(user.getEmailAddress());
 
-        // get bitmap reference from USER and set
-        // the imageView type with the bitmap. The idea is that the imageView handles the scaling and
-        // such rather than a bitmap drawable directly. Something to due with memory or something.
 
-        // as per the note on SignUpActivity, I've modified this such that if the user adds a photo,
-        // the "if" path is taken. if not, the whale default is still used on the "else" path.
-
+// this if/else is essentially meaningless at the moment, I am keeping it for //// // / / / / / / / / / potential whalecropping debugging here
+// with that fixed, reduce to the two uncommented lines
 //        if (user.getPhoto() != null) {
             byte[] tempPhoto = user.getPhoto();
             profilePictureView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
 //        } else {
+// get bitmap reference from USER and set
+// the imageView type with the bitmap. The idea is that the imageView handles the scaling and
+// such rather than a bitmap drawable directly. Something to due with memory or something.
 //            profilePictureView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
 //                    R.drawable.glamorouswhale1));
 //        }

@@ -42,10 +42,6 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
             byte[] tempPhoto = user.getPhoto();
             userImage.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
         }
-//        } else {
-//            userImage.setImageBitmap(BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.glamorouswhale1));
-//        }
 
         TextView userName = (TextView) findViewById(R.id.userName);
         TextView userEmail = (TextView) findViewById(R.id.userEmail);
@@ -64,26 +60,3 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
         }
     }
 }
-
-    // @Override
-//    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//
-//        LayoutInflater inflater = getActivity().getLayoutInflater();
-//
-//        // Inflate and set the layout for the dialog
-//        // Pass null as the parent view because its going in the dialog layout
-//        builder.setView(inflater.inflate(R.layout.dialog_profile, null))
-//
-//                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        ProfileDialog.this.getDialog().cancel();
-//                    }
-//                });
-//
-//
-//        return builder.create();
-//    }
-
