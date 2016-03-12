@@ -146,12 +146,15 @@ public class MyProfileViewActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 nameInput.setHint(profileName.getText());
                                 profileName.setText(nameInput.getText().toString());
+                                user.setName(nameInput.getText().toString());
 
                                 phoneInput.setHint(profilePhone.getText());
                                 profilePhone.setText(phoneInput.getText().toString());
+                                user.setPhoneNumber(phoneInput.getText().toString());
 
                                 emailInput.setHint(profileEmail.getText());
                                 profileEmail.setText(emailInput.getText().toString());
+                                user.setEmailAddress(emailInput.getText().toString());
 
                             }
                         })

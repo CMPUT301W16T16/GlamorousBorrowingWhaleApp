@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyItemActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true">
+        android:background="@color/backgroundBlue"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:layout_width="170dp"
             android:layout_height="140dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:id="@+id/profilePictureView"
-            android:src="@drawable/blank_profile_picture_large"
+            android:src="@drawable/glamorouswhale1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
@@ -33,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/name"
+            android:hint="Name of the item"
             android:layout_alignTop="@+id/profilePictureView"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/profilePictureView" />
@@ -43,34 +40,54 @@
             android:id="@+id/owner"
             android:layout_below="@+id/name"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/profilePictureView" />
+            android:layout_toEndOf="@+id/profilePictureView"
+            android:hint="Owner" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/status"
-            android:layout_alignBottom="@+id/profilePictureView"
+            android:layout_below="@+id/owner"
             android:layout_alignParentEnd="true"
-            android:layout_alignStart="@+id/owner" />
+            android:layout_alignStart="@+id/owner"
+            android:hint="Status" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/size"
+            android:hint="Size"
+            android:layout_below="@+id/status"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/status" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Description"
             android:id="@+id/descriptionPrompt"
-            android:layout_below="@+id/profilePictureView"
+            android:layout_below="@+id/size"
             android:layout_alignStart="@+id/profilePictureView" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/description"
-            android:layout_below="@+id/descriptionPrompt"
             android:layout_alignStart="@+id/descriptionPrompt"
             android:layout_alignParentEnd="true"
-            android:layout_above="@+id/save" />
+            android:layout_above="@+id/comment1"
+            android:layout_below="@+id/descriptionPrompt"
+            android:hint="Add a description. The better it is, the higher chance of a borrower wanting this thing!" />
+
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/save"
+            android:src="@android:drawable/ic_menu_save"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/description"
+            android:layout_marginRight="10dp"/>
 
         <ImageButton
             android:layout_width="60dp"
@@ -78,7 +95,8 @@
             android:id="@+id/delete"
             android:src="@android:drawable/ic_menu_delete"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,7 +104,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="This is your listing, tap to edit"
             android:id="@+id/comment2"
-            android:layout_above="@+id/delete"
+            android:layout_above="@+id/save"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -125,4 +143,6 @@
             android:layout_toStartOf="@+id/rejectBid" />
 
     </RelativeLayout>
+
+
 </RelativeLayout>

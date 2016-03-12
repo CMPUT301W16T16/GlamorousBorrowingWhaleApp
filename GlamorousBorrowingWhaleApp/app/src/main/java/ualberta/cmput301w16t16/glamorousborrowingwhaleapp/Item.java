@@ -7,10 +7,11 @@ import android.graphics.drawable.Drawable;
  */
 //This is an Item(Thing). Has attributes.
 public class Item {
-    protected String title;
+    private String title;
     private String description;
     private String size;
     private Boolean availability;
+    //probs not drawable unless we can dynamically save resource ids
     private Drawable picture;
     private BidList bids;
     private User owner;

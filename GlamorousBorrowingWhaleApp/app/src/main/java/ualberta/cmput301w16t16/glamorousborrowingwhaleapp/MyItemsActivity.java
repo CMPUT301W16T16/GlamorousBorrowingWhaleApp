@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -24,8 +25,10 @@ public class MyItemsActivity extends AppCompatActivity {
     private ItemList myItemsList;
     private ArrayList<Item> myItems;
     private ArrayAdapter<Item> adapter;
-    private ListView myItemsView;
     private User user;
+
+    //probably do an if here to set the controller if null
+    private Item item = ItemController.getItem();
 
     public ArrayAdapter<Item> getAdapter() {
         return adapter;
@@ -36,6 +39,8 @@ public class MyItemsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_items);
+
+        ListView myItemsView;
 
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
 
@@ -64,6 +69,8 @@ public class MyItemsActivity extends AppCompatActivity {
             Toast.makeText(MyItemsActivity.this, "First Thing Created!", Toast.LENGTH_SHORT).show();
             //finally, set the variable to what we want.
             myItems = myItemsList.getItemList();
+            //"initialize" the itemcontroller
+            ItemController.setItem(firstItem);
         } else {
             myItems = myItemsList.getItemList();
         }
@@ -82,6 +89,20 @@ public class MyItemsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //I have no clue if the following is proper, it was Android Studio doing that autocomplete
+        //thing.
+        myItemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemController.setItem((Item) parent.getAdapter().getItem(position));
+                //Toast.makeText(MyItemsActivity.this, "You Rang?", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), MyItemActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
+
+
 
     }
 

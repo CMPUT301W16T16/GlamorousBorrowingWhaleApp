@@ -14,14 +14,14 @@ import android.widget.Toast;
 Has buttons and stuff to do things. Pretty neat.
  */
 public class NewListingActivity extends AppCompatActivity {
-    private ImageButton saveButton;
-    private ImageButton deleteButton;
-    private String nameStr;
-    private String sizeStr;
-    private String descStr;
+    private EditText name;
+    private EditText owner;
+    private EditText status;
+    private EditText size;
+    private EditText description;
     private BidList bids;
-    private User currOwner;
-    private Item latestItem;
+    private User user;
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +30,25 @@ public class NewListingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_listing);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        //Create the variables for EditText type so that the actual Item object may be updated below.
-        final EditText name = (EditText) findViewById(R.id.name);
-        final EditText owner = (EditText) findViewById(R.id.owner);
-        final EditText status = (EditText) findViewById(R.id.status);
-        final EditText size = (EditText) findViewById(R.id.size);
-        final EditText description = (EditText) findViewById(R.id.description);
+
+        name = (EditText) findViewById(R.id.name);
+        owner = (EditText) findViewById(R.id.owner);
+        status = (EditText) findViewById(R.id.status);
+        size = (EditText) findViewById(R.id.size);
+        description = (EditText) findViewById(R.id.description);
+
+        final ImageButton saveButton;
+        final ImageButton deleteButton;
+
+        user = UserController.getUser();
+
         status.setText("Available");
-        owner.setText("You");
+        owner.setText(user.getName());
 
         saveButton = (ImageButton) findViewById(R.id.save);
         deleteButton = (ImageButton) findViewById(R.id.delete);
         //Setting up the buttons and getting user focus.
-        currOwner = UserController.getUser();
+
 
         bids = new BidList();
 
@@ -51,20 +57,19 @@ public class NewListingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Gathers all the variables used for EditText to apply to the Item object.
                 //toString for compatibility.
-                nameStr = name.getText().toString();
-                sizeStr = size.getText().toString();
-                descStr = description.getText().toString();
-                latestItem = new Item();
-                latestItem.setTitle(nameStr);
-                latestItem.setDescription(descStr);
-                latestItem.setSize(sizeStr);
-                latestItem.setAvailability(true);
-                latestItem.setBids(bids);
-                latestItem.setOwner(currOwner);
+                item = new Item();
+                item.setTitle(name.getText().toString());
+                item.setDescription(description.getText().toString());
+                item.setSize(size.getText().toString());
+                item.setAvailability(true);
+                item.setBids(bids);
+                item.setOwner(user);
+                //setting controller to this item now for fun
+                ItemController.setItem(item);
                 //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
                 //List. We'll have to sort out some terminology here.
-                currOwner.addItemRenting(latestItem);//THE MEAT AND POTATOES RIGHT HERE
-                Toast.makeText(NewListingActivity.this, "Item Saved!", Toast.LENGTH_SHORT).show();
+                user.addItemRenting(item);//THE MEAT AND POTATOES RIGHT HERE
+                Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -79,5 +84,12 @@ public class NewListingActivity extends AppCompatActivity {
                 Toast.makeText(NewListingActivity.this, "View Cleared!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        name.setText("");
+        size.setText("");
+        description.setText("");
     }
 }
