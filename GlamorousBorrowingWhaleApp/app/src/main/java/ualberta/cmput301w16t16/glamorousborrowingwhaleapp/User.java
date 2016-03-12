@@ -31,14 +31,10 @@ public class User extends AppCompatActivity implements Serializable {
     //Initialize the arrays down here because Java sucks
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
-<<<<<<< HEAD
     //ID is for elasticsearch server thing
-    private String ID;
-=======
 
     @JestId
     protected String ID;
->>>>>>> f05388df0ffde64fe3db166e0d169d15015968b6
 
     // need to include picture
     public User(String name, String emailAddress, String phoneNumber) {
