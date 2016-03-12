@@ -27,7 +27,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/editProfileName"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="Name" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,7 +48,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/editProfilePhone"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="Phone#" />
     </LinearLayout>
 
 
@@ -68,7 +70,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/editProfileEmail"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:hint="Email Address" />
     </LinearLayout>
 
 </LinearLayout>

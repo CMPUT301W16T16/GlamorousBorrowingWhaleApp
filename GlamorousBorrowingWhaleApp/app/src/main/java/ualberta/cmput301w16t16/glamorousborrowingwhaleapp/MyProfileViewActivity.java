@@ -39,7 +39,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
-
+        //below intent is redundant
         Intent intent = getIntent();
 
         profileName = (TextView) findViewById(R.id.profileName);
@@ -152,24 +152,27 @@ public class MyProfileViewActivity extends AppCompatActivity {
         final EditText nameInput = (EditText) editProfileView.findViewById(R.id.editProfileName);
         final EditText phoneInput = (EditText) editProfileView.findViewById(R.id.editProfilePhone);
         final EditText emailInput = (EditText) editProfileView.findViewById(R.id.editProfileEmail);
+        nameInput.setHint(user.getName());
+        phoneInput.setHint(user.getPhoneNumber());
+        emailInput.setHint(user.getEmailAddress());
         alertDialogBuilder
                 .setCancelable(false)
                 .setPositiveButton("OK",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                nameInput.setHint(profileName.getText());
-                                profileName.setText(nameInput.getText().toString());
-                                user.setName(nameInput.getText().toString());
-
-                                phoneInput.setHint(profilePhone.getText());
-                                profilePhone.setText(phoneInput.getText().toString());
-                                user.setPhoneNumber(phoneInput.getText().toString());
-
-                                emailInput.setHint(profileEmail.getText());
-                                profileEmail.setText(emailInput.getText().toString());
-                                user.setEmailAddress(emailInput.getText().toString());
-
+                                if (!nameInput.getText().toString().isEmpty()) {
+                                    profileName.setText(nameInput.getText().toString());
+                                    user.setName(nameInput.getText().toString());
+                                }
+                                if (!phoneInput.getText().toString().isEmpty()) {
+                                    profilePhone.setText(phoneInput.getText().toString());
+                                    user.setPhoneNumber(phoneInput.getText().toString());
+                                }
+                                if (!emailInput.getText().toString().isEmpty()) {
+                                    profileEmail.setText(emailInput.getText().toString());
+                                    user.setEmailAddress(emailInput.getText().toString());
+                                }
                             }
                         })
                 .setNegativeButton("Cancel",

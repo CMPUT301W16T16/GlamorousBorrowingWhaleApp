@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
         enteredPhoneNumber = (EditText) findViewById(R.id.phone);
         enteredEmailAddress = (EditText) findViewById(R.id.email);
 
-        profilePicture = BitmapFactory.decodeResource(getResources(), R.drawable.blank_profile_picture);//temp placeholder
+        profilePicture = BitmapFactory.decodeResource(getResources(), R.drawable.glamorouswhale1);//temp placeholder
 
         doneButton = (Button) findViewById(R.id.done_sign_up);
         doneButton.setOnClickListener(new View.OnClickListener() {
