@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * @author adam, andrew, erin, laura, martina
  * @see MyProfileViewActivity
  */
-
+//TODO review redundant code studio is complaining about
 public class SignUpActivity extends AppCompatActivity implements Serializable {
 
     private ImageButton enteredPicture;
@@ -94,7 +94,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
     /**
      * Converts the input given in the activity into strings that can then be
      * added to the User class.
-     * @author adam I think?
+     * @author martina I think?
      */
 
     public void convertInputToString() {

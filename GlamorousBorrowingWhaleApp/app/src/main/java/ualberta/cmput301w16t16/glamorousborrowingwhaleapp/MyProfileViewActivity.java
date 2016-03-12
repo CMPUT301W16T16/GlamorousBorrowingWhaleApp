@@ -192,8 +192,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
     }
 
     /**
-     * I don't really know anything about these functions, Martina wrote them :\
-     * @author martina
+     * Android Lifecycle - probably not needed, placeholder.
+     * @author adam
      * @return
      */
 
@@ -204,8 +204,9 @@ public class MyProfileViewActivity extends AppCompatActivity {
     }
 
     /**
-     * I don't really know anything about these functions, Martina wrote them :\
-     * @author martina
+     * Android Lifecycle - for whatever reason the user information may be updated server-side;
+     * it may be useful to update the "local" object.
+     * @author adam
      * @return
      */
 
@@ -217,8 +218,11 @@ public class MyProfileViewActivity extends AppCompatActivity {
     }
 
     /**
-     * I don't really know anything about these functions, Martina wrote them :\
-     * @author martina
+     * Android Lifecycle - onStop may happen whenever, so this code should be ready for it.
+     * onStop may lead to a memory release (home button then start playing a game for example), the
+     * app should save state when stopped, maybe a push to server if possible.  Best before a destroy
+     * condition.
+     * @author adam
      * @return
      */
 

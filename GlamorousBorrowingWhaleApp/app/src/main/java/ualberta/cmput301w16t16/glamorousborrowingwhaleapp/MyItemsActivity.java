@@ -26,12 +26,7 @@ import java.util.ArrayList;
  * @see IncomingBidsActivity
  */
 
-/*Where the user can see the items available for RENTING.
-A listview updates via adapter on every resume.
-NEEDS WORK THOUGH AS IT DOES TOO MUCH RIGHT NOW>>>>
-And lifecycle work.
- */
-
+//TODO review lifecycle code
 public class MyItemsActivity extends AppCompatActivity {
     //ListView vaguely follows in lab example LonelyTwitter
     //https://github.com/AdamGualberta/lonelyTwitter/blob/tuesday/app/src/main/java/ca/ualberta/cs/lonelytwitter/LonelyTwitterActivity.java
@@ -41,11 +36,9 @@ public class MyItemsActivity extends AppCompatActivity {
     private ArrayAdapter<Item> adapter;
     private User user;
 
-    //probably do an if here to set the controller if null
-    private Item item = ItemController.getItem();
-
     public ArrayAdapter<Item> getAdapter() {
         return adapter;
+        //getAdapter probably never used but that's fine.
     }
 
     @Override
@@ -53,9 +46,7 @@ public class MyItemsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_items);
-
         ListView myItemsView;
-
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
 
         user = UserController.getUser();
@@ -68,6 +59,7 @@ public class MyItemsActivity extends AppCompatActivity {
         if (myItemsList == null) {
             Item firstItem = new Item();
             //Create a "First Item" to get the ItemList going.
+
             firstItem.setAvailability(false);
             firstItem.setDescription("This is your first Thing! You can delete it of course.");
             firstItem.setOwner(user);
@@ -99,6 +91,8 @@ public class MyItemsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //This sends the user to the NewListingActivity. No need to worry about
+                //the ItemController yet - that is dealt with in the NewListingActivity class.
                 Intent intent = new Intent(view.getContext(), NewListingActivity.class);
                 startActivity(intent);
             }
@@ -108,16 +102,17 @@ public class MyItemsActivity extends AppCompatActivity {
         myItemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //This chuck is pretty neat. The ViewApapter makes note of what is clicked in
+                //the dynamic list which is used to get the corresponding Item at that "position".
+                //Again leveraging the ItemController, we can set that Item as the current Item
+                //and send the user to the MyItemActivity with the current Item (the one
+                //that they selected!).
                 ItemController.setItem((Item) parent.getAdapter().getItem(position));
-                //Toast.makeText(MyItemsActivity.this, "You Rang?", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(view.getContext(), MyItemActivity.class);
                 startActivity(intent);
                 return false;
             }
         });
-
-
-
     }
 
     @Override
