@@ -25,6 +25,7 @@ public class ElasticSearch {
     private static JestDroidClient client;
 
     public static class AddUserTask extends AsyncTask<User, Void, Void> {
+        @Override
         protected Void doInBackground(User... users) {
             verifyClient();
             // Since AsyncTasks work on arrays, we need to work with arrays as well (>= 1 tweet)
