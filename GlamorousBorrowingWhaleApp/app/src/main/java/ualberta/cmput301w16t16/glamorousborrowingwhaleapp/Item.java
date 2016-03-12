@@ -4,6 +4,9 @@ import android.graphics.drawable.Drawable;
 
 /**
  * Created by Martina on 16-02-29.
+ * This object provides all the associated information for a piece of equipment
+ * and is used to access and information about some equipment.
+ * @author adam, andrew, erin, laura, martina
  */
 //This is an Item(Thing). Has attributes.
 public class Item {
@@ -72,6 +75,11 @@ public class Item {
         this.owner = owner;
     }
 
+    /**
+     * Passes a string of our choosing to the view adapter in MyItemsActivity.
+     * @author adam (?)
+     * @return the information of the item in a string
+     */
     //This right here is to pass a string of our choosing to the view adapter in MyItemsActivity.
     //The adapter requires something to pass to a textview, so an override here works nicely.
     //That being said, I'm not sure of the implications of putting this here :\

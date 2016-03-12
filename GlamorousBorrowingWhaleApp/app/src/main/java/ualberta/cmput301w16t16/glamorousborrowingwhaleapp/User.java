@@ -13,6 +13,12 @@ import java.io.Serializable;
 
 /**
  * Created by Martina on 16-02-29.
+ * This class, like Item, contains all relevant information about a User
+ * (name,address etc). It is used to obtain information about a user in
+ * SearchResultsActivity. This class also contains a JestId for when the users
+ * information is saved to the server.
+ * @author adam, andrew, erin, laura, martina
+ * @see SearchResultsActivity
  */
 
 /*User Class contains all the information about a particular user, denoted by a USERNAME.
@@ -32,7 +38,7 @@ public class User extends AppCompatActivity implements Serializable {
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
 
-    //ID is for elasticsearch server thing
+    //ID is for elasticsearch server
     @JestId
     protected String ID;
 

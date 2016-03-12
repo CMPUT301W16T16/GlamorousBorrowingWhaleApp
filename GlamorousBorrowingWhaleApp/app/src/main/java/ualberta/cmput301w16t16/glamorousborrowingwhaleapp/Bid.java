@@ -4,6 +4,10 @@ import java.util.Date;
 
 /**
  * Created by Martina on 16-02-29.
+ * This class keeps track of all the information relating to a bid and is
+ * used by a few activities (IncomingBidsActivity, MyBidsactivity) to display
+ * a bids information
+ * @author adam, andrew, erin, laura, martina
  */
 public class Bid {
     // expiry of a bid?

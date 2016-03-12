@@ -11,6 +11,16 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
+/**
+ * This activity is the fist one the user sees. It allows them to enter their
+ * username and password (to be added) to login (which takes them to
+ * MyProfileViewActivity) or a new user can click the sign up button to create
+ * an account (takes them to SignUpActivity).
+ * @author adam, andrew, erin, laura, martina
+ * @see SignUpActivity
+ * @see MyProfileViewActivity
+ */
+
 public class SignInActivity extends AppCompatActivity implements Serializable {
 
     private EditText enteredUsername;

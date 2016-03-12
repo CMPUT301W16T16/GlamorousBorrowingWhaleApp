@@ -10,9 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-/*Where the Renter creates a new entry for his/her profile.
-Has buttons and stuff to do things. Pretty neat.
+
+/**
+ * This activity allows the user to enter all the necessary information about a
+ * piece of equipment and save it to their repository of equipment. It also has
+ * the option to cancel creating equipment.
+ * @author adam, andrew, erin, laura, martina
  */
+
 public class NewListingActivity extends AppCompatActivity {
     private EditText name;
     private EditText owner;

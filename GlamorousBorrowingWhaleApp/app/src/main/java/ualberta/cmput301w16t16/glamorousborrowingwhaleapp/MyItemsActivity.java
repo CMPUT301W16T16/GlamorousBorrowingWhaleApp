@@ -12,6 +12,20 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+/**
+ * This activity allows a user to see their items that are available to be
+ * rented out (items NOT bidded or borrowed). If the user selects any item on
+ * the listView, they are brought to the MyItemActivity. If the user selects
+ * the floating action plus sign, they are taken to NewListingActivity where
+ * they can add a new piece of equipment. If they swipe right they are taken to
+ * IncomingBidsActivity
+ * @author adam, andrew, erin, laura, martina
+ * @see MyItemActivity
+ * @see NewListingActivity
+ * @see IncomingBidsActivity
+ */
+
 /*Where the user can see the items available for RENTING.
 A listview updates via adapter on every resume.
 NEEDS WORK THOUGH AS IT DOES TOO MUCH RIGHT NOW>>>>

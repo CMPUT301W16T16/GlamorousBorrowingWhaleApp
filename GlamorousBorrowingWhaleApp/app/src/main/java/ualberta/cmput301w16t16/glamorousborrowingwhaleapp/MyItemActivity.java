@@ -7,6 +7,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+/**
+ * This activity lists ONE of the users available items. It gives the user the
+ * chance to edit any of the information associated with the item (size, sport,
+ * status etc). This class also allows the user to delete an item if they want.
+ * @author adam, andrew, erin, laura, martina
+ */
+
 public class MyItemActivity extends AppCompatActivity {
     private Item item;
     private EditText owner;
