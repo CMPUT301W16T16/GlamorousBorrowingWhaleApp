@@ -1,5 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -68,10 +69,18 @@ public class MyItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TODO delete shit
                 //All this does atm is clear the edittext boxes.
-                name.setText("");
-                size.setText("");
-                description.setText("");
-                Toast.makeText(MyItemActivity.this, "View Cleared!", Toast.LENGTH_SHORT).show();
+                user.removeItemRenting(item);
+                Toast.makeText(MyItemActivity.this, Integer.toString(user.getItemsRenting().getItemList().size()), Toast.LENGTH_SHORT).show();
+                //below is pretty flaky, needs error check for no items in list
+                if(user.getItemsRenting().getItemList().size() != 0) {
+                    ItemController.setItem(user.getItemsRenting().getItemList().get(0));
+                } else{
+                    ItemController.setEmpty();
+                }
+                //recommend implementing some sort of undo mechanism
+                Toast.makeText(MyItemActivity.this, "Thing Deleted!", Toast.LENGTH_SHORT).show();
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         });
 

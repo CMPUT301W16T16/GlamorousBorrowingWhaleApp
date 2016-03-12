@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
  * and is used to access and information about some equipment.
  * @author adam, andrew, erin, laura, martina
  */
-//This is an Item(Thing). Has attributes.
 public class Item {
     private String title;
     private String description;
@@ -61,23 +60,27 @@ public class Item {
 
     public BidList getBids() {
         return bids;
+        //Hi note that this is a BidList type!!!!!
     }
 
     public void setBids(BidList bids) {
         this.bids = bids;
+        //Hi note that this is a BidList type!!!!!
     }
 
     public User getOwner() {
         return owner;
+        //Hi note that this is a User type!!!!!
     }
 
     public void setOwner(User owner) {
         this.owner = owner;
+        //Hi note that this is a User type!!!!!
     }
 
     /**
      * Passes a string of our choosing to the view adapter in MyItemsActivity.
-     * @author adam (?)
+     * @author adam
      * @return the information of the item in a string
      */
     //This right here is to pass a string of our choosing to the view adapter in MyItemsActivity.
