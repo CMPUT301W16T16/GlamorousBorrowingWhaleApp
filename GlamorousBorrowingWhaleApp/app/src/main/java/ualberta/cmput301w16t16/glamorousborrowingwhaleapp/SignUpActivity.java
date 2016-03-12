@@ -69,7 +69,6 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     UserController.setUser(latestUser);
                     //intent.putExtra("NEW_USER", user);
 
-                    //adapter.notifyDataSetChanged();
                     AsyncTask<User, Void, Void> execute = new ElasticSearch.AddUserTask();
                     execute.execute(latestUser);
 
