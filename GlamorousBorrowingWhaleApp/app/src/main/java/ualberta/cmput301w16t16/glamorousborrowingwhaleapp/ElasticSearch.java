@@ -18,11 +18,23 @@ import io.searchbox.core.SearchResult;
 
 /**
  * Created by erin on 11/03/16.
+ * This class performs elastic search methods such as saving a user, saving an
+ * item and searching for things. We used Jestdroid and got most of the code
+ * from lonelyTwitter (CMPUT301 lab app)
+ * @author adam, andrew, erin, laura, martina
  */
+
 public class ElasticSearch {
     //tossed a final in here since we should only have to have one of these
     private final static String clientAddress = "http://cmput301.softwareprocess.es:8080";
     private static JestDroidClient client;
+
+    /**
+     * This class adds a user when they sign up for the app in the
+     * SignUpActivity.
+     * @author adam, andrew, erin, laura, martina
+     * @see SignUpActivity
+     */
 
     public static class AddUserTask extends AsyncTask<User, Void, Void> {
         @Override
@@ -49,6 +61,13 @@ public class ElasticSearch {
             return null;
         }
     }
+
+    /**
+     * This class checks that anytime the client is being accessed, there is
+     * one that has been saved and is available (so we're actually writing to
+     * a real server
+     * @author adam, andrew, erin, laura, martina
+     */
 
     public static void verifyClient() {
         if(client == null) {

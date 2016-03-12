@@ -2,6 +2,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 /**
  * Created by Martina on 16-03-10.
+ * Honestly idk what this does
  */
 //Is the controller for the user. Persistent throughout the user session.
 public class UserController {

@@ -14,6 +14,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * This activity lists for the user their profile information which can then be
+ * edited (using longClick) as well as the options to view their items
+ * (MyItemsActivity), view items of theirs with bids on them (MyBidsActivity)
+ * and search for things to borrow (SearchResultsActivity).
+ * @author adam, andrew, erin, laura, martina
+ */
+
 public class MyProfileViewActivity extends AppCompatActivity {
 
     private TextView profileName;
@@ -122,6 +130,12 @@ public class MyProfileViewActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * I don't really know anything about these functions, Martina wrote them :\
+     * @author martina
+     * @return
+     */
+
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
     public boolean longClick() {
         //LayoutInflater has an issue with large size bitmap in xml for alertdialog, has
@@ -171,11 +185,23 @@ public class MyProfileViewActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * I don't really know anything about these functions, Martina wrote them :\
+     * @author martina
+     * @return
+     */
+
     @Override
     protected void onPause() {
         super.onPause();
         //Do not write to storage/server here!
     }
+
+    /**
+     * I don't really know anything about these functions, Martina wrote them :\
+     * @author martina
+     * @return
+     */
 
     @Override
     protected void onResume() {
@@ -183,6 +209,12 @@ public class MyProfileViewActivity extends AppCompatActivity {
         //TODO maybe add refresh content in case of offsite server update, etc. + toast to notify if done or not
         //onCreate will take care of memory release
     }
+
+    /**
+     * I don't really know anything about these functions, Martina wrote them :\
+     * @author martina
+     * @return
+     */
 
     @Override
     protected void onStop() {

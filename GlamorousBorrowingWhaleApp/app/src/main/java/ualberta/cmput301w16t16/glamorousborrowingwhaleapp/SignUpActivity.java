@@ -17,9 +17,16 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// page where the user can create a new account with a name, phone number email and username
-// that they can use to access their account again in the future
-// after the user creates an account they are brought to the profile view activity / page
+
+/**
+ * This activity allows the user to create a new account with a name, phone
+ * number email and username that they can use to access their account again in
+ * the future. Once they click the done button, their information is saved and
+ * they're taken to MyProfileViewActivity
+ * @author adam, andrew, erin, laura, martina
+ * @see MyProfileViewActivity
+ */
+
 public class SignUpActivity extends AppCompatActivity implements Serializable {
 
     private ImageButton enteredPicture;
@@ -83,6 +90,12 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
             }
         });
     }
+
+    /**
+     * Converts the input given in the activity into strings that can then be
+     * added to the User class.
+     * @author adam I think?
+     */
 
     public void convertInputToString() {
         username = enteredUsername.getText().toString();
