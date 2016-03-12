@@ -35,12 +35,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
 
     private ArrayList<User> users = new ArrayList<User>();
 
-    private ArrayAdapter<User> adapter;
-    public ArrayAdapter<User> getAdapter() {
-        return adapter;
-    }
-
-        @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
@@ -68,16 +63,22 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     //will refresh to display the image.]
                     // taken Feb-29-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
                     User latestUser = new User(username, emailAddress, phoneNumber);
+                    latestUser.setItemsBorrowing(null);
+                    latestUser.setItemsRenting(null);
+                    users.add(latestUser);
                     UserController.setUser(latestUser);
-                    Intent intent = new Intent(SignUpActivity.this, SignUpActivity.class);
                     //intent.putExtra("NEW_USER", user);
 
+<<<<<<< HEAD
                     users.add(latestUser);
                     //adapter.notifyDataSetChanged();
                     //Toast.makeText(SignUpActivity.this, latestUser.getName(), Toast.LENGTH_SHORT).show();
+=======
+>>>>>>> f05388df0ffde64fe3db166e0d169d15015968b6
                     AsyncTask<User, Void, Void> execute = new ElasticSearch.AddUserTask();
                     execute.execute(latestUser);
 
+                    Intent intent = new Intent(SignUpActivity.this, SignUpActivity.class);
                     setResult(Activity.RESULT_OK, intent);
                     //Toast.makeText(SignUpActivity.this, "New User Created!", Toast.LENGTH_SHORT).show();
                     finish();
