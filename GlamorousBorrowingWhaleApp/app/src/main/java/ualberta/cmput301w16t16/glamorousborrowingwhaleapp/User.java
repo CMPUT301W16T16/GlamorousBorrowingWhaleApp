@@ -31,7 +31,7 @@ public class User extends AppCompatActivity implements Serializable {
     private String name;
     private String emailAddress;
     private String phoneNumber;
-    //private Drawable picture [Adam: See directly below];
+    private byte[] photo;
     //private String profilePictureRef;
     //http://developer.android.com/reference/android/graphics/Bitmap.html
     //Initialize the arrays down here because Java sucks
@@ -49,6 +49,10 @@ public class User extends AppCompatActivity implements Serializable {
         this.phoneNumber = phoneNumber;
     }
     // need to add picture getters and setters
+
+    public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
+
+    public byte[] getPhoto() { return photo; }
 
     public String getName() {
         return name;
@@ -108,13 +112,13 @@ public class User extends AppCompatActivity implements Serializable {
     }
 
     //public String getProfilePictureRef() { //temp placeholder
-        //return profilePictureRef;
+        // return profilePictureRef;
     //}
 
     //public void setProfilePictureRef(String profilePictureRef) { //temp placeholder
-        //this setter will definitely need some tweaking depending on how the bitmap/drawable/whatever
-        //we end up using plays with the type(s) set.
-        //this.profilePictureRef = profilePictureRef;
+        // this setter will definitely need some tweaking depending on how the bitmap/drawable/whatever
+        // we end up using plays with the type(s) set.
+        // this.profilePictureRef = profilePictureRef;
     //}
 
     public String getID() {

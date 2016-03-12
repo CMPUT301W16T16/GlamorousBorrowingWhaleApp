@@ -2,6 +2,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
@@ -35,6 +36,39 @@ public class ElasticSearch {
      * @author adam, andrew, erin, laura, martina
      * @see SignUpActivity
      */
+
+
+//    // i strongly recommend deleting this if you understand ES at all - andrew
+//    // because i do not, and it did not work
+//    public static class GetUserTask extends AsyncTask<String, Void, User> {
+//
+//        @Override
+//        protected User doInBackground(String... searchStrings) {
+//            verifyClient();
+//
+//            // start our initial array list
+//            ArrayList<User> user = new ArrayList<>();
+//
+//            // assuming only the first search term will be used
+//            Search search = new Search.Builder(searchStrings[0]).addIndex("testing").addType("user").build();
+//
+//            try {
+//                SearchResult results = client.execute(search);
+//                if (results.getTotal() > 0) {
+//                    Log.e("user found", "user found");
+//                    // TODO: return user somehow
+//                } else {
+//                    // TODO: add an error
+//                    // todo: this will trigger if our search fails
+//                    Log.e("user not found", "user not found");
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//    }
+
 
     public static class AddUserTask extends AsyncTask<User, Void, Void> {
         @Override

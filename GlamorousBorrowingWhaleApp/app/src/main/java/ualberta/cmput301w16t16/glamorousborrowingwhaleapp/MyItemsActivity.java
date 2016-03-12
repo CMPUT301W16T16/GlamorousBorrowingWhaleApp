@@ -97,12 +97,12 @@ public class MyItemsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //I have no clue if the following is proper, it was Android Studio doing that autocomplete
-        //thing.
+        // I have no clue if the following is proper, it was Android Studio doing that autocomplete
+        // thing.
         myItemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //This chuck is pretty neat. The ViewApapter makes note of what is clicked in
+                //This chuck is pretty neat. The ViewAdapter makes note of what is clicked in
                 //the dynamic list which is used to get the corresponding Item at that "position".
                 //Again leveraging the ItemController, we can set that Item as the current Item
                 //and send the user to the MyItemActivity with the current Item (the one

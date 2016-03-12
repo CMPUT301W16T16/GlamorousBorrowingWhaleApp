@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.concurrent.ExecutionException;
 
 /**
  * This activity is the fist one the user sees. It allows them to enter their
@@ -59,8 +60,20 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 } else {
                     UserController.setUser(user);
                     Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
+
+                    // an attempt at getting the user via ES
+//                    ElasticSearch.GetUserTask getUserTask = new ElasticSearch.GetUserTask();
+//                    try {
+//                        getUserTask.execute(user.getName());
+//                        user = getUserTask.get();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    } catch (ExecutionException e) {
+//                        e.printStackTrace();
+//                    }
+
                     // TODO fetch user from username, and put the user as extra instead of username
-                    //intent.putExtra("USERNAME", user);
+                    intent.putExtra("USERNAME", user);
                     startActivity(intent);
                 }
 
