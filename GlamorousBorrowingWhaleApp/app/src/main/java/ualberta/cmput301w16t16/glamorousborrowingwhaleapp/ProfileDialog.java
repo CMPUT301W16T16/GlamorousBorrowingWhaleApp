@@ -26,7 +26,7 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
     public ProfileDialog(Activity a, Item item) {
         super(a);
         this.activity = a;
-        this.itemThatBroughtUsHere = item;
+        this.itemThatBroughtUsHere = item; //this part should be handled by the ItemController
     }
 
     @Override

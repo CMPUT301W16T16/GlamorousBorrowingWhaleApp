@@ -17,6 +17,7 @@ public class Bid {
     private User owner;
     private User renter;
     private Item item;
+    private double bidAmount = 0; //bid of 0 for no bids yet
 
     public Date getStartDate() {
         return startDate;
@@ -56,6 +57,14 @@ public class Bid {
 
     public void setRenter(User renter) {
         this.renter = renter;
+    }
+
+    public void setBidAmount(long bidAmount) {
+        this.bidAmount = bidAmount;
+    }
+
+    public double getBidAmount() {
+        return bidAmount;
     }
 
     public Item getItem() {
