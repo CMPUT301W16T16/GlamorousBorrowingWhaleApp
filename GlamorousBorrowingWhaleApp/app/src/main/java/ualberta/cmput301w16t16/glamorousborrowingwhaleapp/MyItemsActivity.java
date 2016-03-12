@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 /**
  * This activity allows a user to see their items that are available to be
- * rented out (items NOT bidded or borrowed). If the user selects any item on
+ * rented out (items NOT bidded or borrowed). If the user longClicks any item on
  * the listView, they are brought to the MyItemActivity. If the user selects
  * the floating action plus sign, they are taken to NewListingActivity where
  * they can add a new piece of equipment. If they swipe right they are taken to
- * IncomingBidsActivity
+ * IncomingBidsActivity (tbi).
  * @author adam, andrew, erin, laura, martina
  * @see MyItemActivity
  * @see NewListingActivity

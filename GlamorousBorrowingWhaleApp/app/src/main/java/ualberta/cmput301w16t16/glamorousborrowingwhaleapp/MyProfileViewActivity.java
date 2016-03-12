@@ -39,9 +39,10 @@ public class MyProfileViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
-        //below intent is redundant
+        //redundant intent is redundant
         Intent intent = getIntent();
 
+        //This chunk grabs the TextViews and operates on them
         profileName = (TextView) findViewById(R.id.profileName);
         profilePhone = (TextView) findViewById(R.id.profilePhone);
         profileEmail = (TextView) findViewById(R.id.profileEmail);
@@ -55,10 +56,13 @@ public class MyProfileViewActivity extends AppCompatActivity {
         //the imageView type with the bitmap. The idea is that the imageView handles the scaling and
         //such rather than a bitmap drawable directly. Something to due with memory or something.
 
+        //Initialize the buttons.
         buttonMyBids = (Button) findViewById(R.id.buttonMyBids);
         buttonMyStuff = (Button) findViewById(R.id.buttonMyStuff);
         buttonSearch = (Button) findViewById(R.id.buttonBorrowSearch);
 
+        //Setting the longClickListeners for the text boxes. If a user wishes to edit something,
+        //a long click on the box will send to longClick() which brings up a popup window!
         profileName.setOnLongClickListener(
                 new View.OnLongClickListener() {
                     @Override
@@ -104,6 +108,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                 }
         );
 
+        //The button clickListeners. Each sends to its corresponding activity.
         buttonMyBids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +136,12 @@ public class MyProfileViewActivity extends AppCompatActivity {
     }
 
     /**
-     * I don't really know anything about these functions, Martina wrote them :\
+     * longClick() is used in the longClickListeners for the textviews for editing profile information.
+     * A layout is inflated in an alertdialog box which allows the user to edit the name, phone
+     * number and email address fields.  If the CANCEL button is selected, no changes are made
+     * and the dialog box is closed. If the OK button is selected with empty fields, only the fields
+     * with content in them will update their corresponding attribute; the empty fields will not do
+     * anything.
      * @author martina
      * @return
      */
@@ -152,6 +162,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         final EditText nameInput = (EditText) editProfileView.findViewById(R.id.editProfileName);
         final EditText phoneInput = (EditText) editProfileView.findViewById(R.id.editProfilePhone);
         final EditText emailInput = (EditText) editProfileView.findViewById(R.id.editProfileEmail);
+        //Grab the existing attributes to fill in the "hint" field.
         nameInput.setHint(user.getName());
         phoneInput.setHint(user.getPhoneNumber());
         emailInput.setHint(user.getEmailAddress());
@@ -161,6 +172,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                //Minor error checking here - if field is empty no change is made
+                                //if OK is selected.
                                 if (!nameInput.getText().toString().isEmpty()) {
                                     profileName.setText(nameInput.getText().toString());
                                     user.setName(nameInput.getText().toString());
