@@ -30,7 +30,8 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
             public void onClick(View view) {
                 setResult(RESULT_OK);
                 Intent logIntent = new Intent(view.getContext(), SignUpActivity.class);
-                startActivityForResult(logIntent, SIGN_UP);
+                //startActivityForResult(logIntent, SIGN_UP);
+                startActivity(logIntent);
             }
         });
 
@@ -58,6 +59,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
         });
     }
 
+    /*
     // the sign up activity returns the new user and starts the ViewProfileActivity
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -77,5 +79,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 break;
             }
         }
+
     }
+    */
 }

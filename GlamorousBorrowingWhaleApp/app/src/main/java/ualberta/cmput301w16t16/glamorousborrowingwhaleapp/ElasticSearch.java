@@ -24,23 +24,57 @@ public class ElasticSearch {
     private final static String clientAddress = "http://cmput301.softwareprocess.es:8080";
     private static JestDroidClient client;
 
-    public static class AddUserTask extends AsyncTask<User, Void, Void> {
-        @Override
-        protected Void doInBackground(User... users) {
-            verifyClient();
-            // Since AsyncTasks work on arrays, we need to work with arrays as well (>= 1 tweet)
-            for(int i = 0; i < users.length; i++) {
-                User user = users[i];
 
-                Index index = new Index.Builder(user).index("cmput301w16t16").type("user").build();
+    public static class GetUserTask extends AsyncTask<String, Void, ArrayList<User>> {
+        @Override
+        protected ArrayList<User> doInBackground(String... search_strings) {
+            verifyConfig();
+
+            // Start our initial array list (empty)
+            ArrayList<User> users = new ArrayList<User>();
+
+            // NOTE: I'm a making a huge assumption here, that only the first search term
+            // will be used.
+            String query = "{\n \"query\": {\n \"filtered\": {\n \"query\"";
+
+            Search search = new Search.Builder(query)
+                    // multiple index or types can be added.
+                    .addIndex("cmput301w16t16")
+                    .addIndex("User")
+                    .build();
+            try {
+                SearchResult execute = client.execute(search);
+                if(execute.isSucceeded()) {
+                    // Return our list of users
+                    List<User> returned_users = execute.getSourceAsObjectList(User.class);
+                    users.addAll(returned_users);
+                } else {
+                    // TODO: Add an error message, because that other thing was puzzling.
+                    // TODO: Right here it will trigger if the search fails
+                    Log.i("TODO", "We actually failed here, searching for tweets");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return users;
+        }
+    }
+
+    public static class AddUserTask extends AsyncTask<User,Void,Void> {
+        @Override
+        protected Void doInBackground(User... params) {
+            verifyConfig();
+
+            for(User user : params) {
+                Index index = new Index.Builder(user).index("cmput301w16t16").type("User").build();
+
                 try {
-                    DocumentResult result = client.execute(index);
-                    if (result.isSucceeded()) {
-                        user.setID(result.getId());
+                    DocumentResult execute = client.execute(index);
+                    if(execute.isSucceeded()) {
+                        user.setID(execute.getId());
                     } else {
-                        // TODO: Add an error message, because this was puzzling.
-                        // TODO: Right here it will trigger if the insert fails
-                        Log.i("TODO", "We actually failed here, adding a user");
+                        Log.e("TODO", "Our insert of user failed, oh no!");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -50,10 +84,9 @@ public class ElasticSearch {
         }
     }
 
-    public static void verifyClient() {
+    // If no client, add one
+    public static void verifyConfig() {
         if(client == null) {
-            // TODO: Put this URL somewhere it makes sense (e.g. class variable?)
-            //Adam - we could toss in the strings xml ^^^^^^^^^^^
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
             DroidClientConfig config = builder.build();
 

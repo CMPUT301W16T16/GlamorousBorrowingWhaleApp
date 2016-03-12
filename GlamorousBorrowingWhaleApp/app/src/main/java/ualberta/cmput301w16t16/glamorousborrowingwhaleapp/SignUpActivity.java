@@ -33,7 +33,8 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
     private String phoneNumber;
     private String emailAddress;
 
-    private ArrayList<User> users = new ArrayList<User>();
+    // martina: added arraylist of users to userController
+    //private ArrayList<User> users = new ArrayList<User>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,22 +64,20 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     //will refresh to display the image.]
                     // taken Feb-29-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
                     User latestUser = new User(username, emailAddress, phoneNumber);
-                    latestUser.setItemsBorrowing(null);
-                    latestUser.setItemsRenting(null);
-                    users.add(latestUser);
+                    //latestUser.setItemsBorrowing(null);
+                    //latestUser.setItemsRenting(null);
+
+                    UserController.addToUsers(latestUser);
                     UserController.setUser(latestUser);
 
+                    //ElasticSearch.AddUserTask addUserTask = new ElasticSearch.AddUserTask();
+                    //addUserTask.execute(latestUser);
+                    setResult(RESULT_OK);
 
-                    users.add(latestUser);
-                    //adapter.notifyDataSetChanged();
-                    //AsyncTask<User, Void, Void> execute = new ElasticSearch.AddUserTask();
-                    //execute.execute(latestUser);
-
-                    Intent intent = new Intent(SignUpActivity.this, SignUpActivity.class);
+                    Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                     //intent.putExtra("NEW_USER", latestUser);
-                    setResult(Activity.RESULT_OK, intent);
+                    startActivity(intent);
                     //Toast.makeText(SignUpActivity.this, "New User Created!", Toast.LENGTH_SHORT).show();
-                    finish();
                 }
             }
         });
