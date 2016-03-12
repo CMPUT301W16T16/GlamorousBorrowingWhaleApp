@@ -24,15 +24,13 @@ public class ElasticSearch {
         @Override
         protected Void doInBackground(User... users) {
             verifyClient();
-
-            for(int i = 0; i < users.length; i++) {
+            for (int i = 0; i < users.length; i++) {
                 User user = users[i];
 
                 Index index = new Index.Builder(user).index("cmput301w16t16").type("User").build();
                 try {
                     DocumentResult result = client.execute(index);
-                    if(result.isSucceeded()) {
-                        // Set the ID to tweet that elasticsearch told me it was
+                    if (result.isSucceeded()) {
                         user.setID(result.getId());
                     } else {
                         // TODO: Add an error message, because this was puzzling.

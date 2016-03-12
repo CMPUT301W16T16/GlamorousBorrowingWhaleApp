@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import io.searchbox.annotations.JestId;
 
 import java.io.Serializable;
 
@@ -25,11 +26,13 @@ public class User extends AppCompatActivity implements Serializable {
     private String emailAddress;
     private String phoneNumber;
     //private Drawable picture [Adam: See directly below];
-    private String profilePictureRef;
+    //private String profilePictureRef;
     //http://developer.android.com/reference/android/graphics/Bitmap.html
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
-    private String ID;
+
+    @JestId
+    protected String ID;
 
     // need to include picture
     public User(String name, String emailAddress, String phoneNumber) {
@@ -96,15 +99,15 @@ public class User extends AppCompatActivity implements Serializable {
         itemsRenting.remove(item);
     }
 
-    public String getProfilePictureRef() { //temp placeholder
-        return profilePictureRef;
-    }
+    //public String getProfilePictureRef() { //temp placeholder
+        //return profilePictureRef;
+    //}
 
-    public void setProfilePictureRef(String profilePictureRef) { //temp placeholder
+    //public void setProfilePictureRef(String profilePictureRef) { //temp placeholder
         //this setter will definitely need some tweaking depending on how the bitmap/drawable/whatever
         //we end up using plays with the type(s) set.
-        this.profilePictureRef = profilePictureRef;
-    }
+        //this.profilePictureRef = profilePictureRef;
+    //}
 
     public String getID() {
         return ID;
