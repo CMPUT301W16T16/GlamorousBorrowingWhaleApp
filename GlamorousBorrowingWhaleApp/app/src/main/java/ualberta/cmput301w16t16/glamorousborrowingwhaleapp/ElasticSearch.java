@@ -20,7 +20,7 @@ public class ElasticSearch {
     private static String clientAddress = "http://cmput301.softwareprocess.es:8080";
     private static JestDroidClient client;
 
-    public static class AddUserTask extends AsyncTask<User, Void, ArrayList<User>> {
+    public static class AddUserTask extends AsyncTask<User, Void, Void> {
         @Override
         protected Void doInBackground(User... users) {
             verifyClient();
