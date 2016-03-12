@@ -34,7 +34,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
             }
         });
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
         enteredUsername = (EditText) findViewById(R.id.username);
         Button loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +67,11 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
             // converts it into an entry and adds it to the list of entries
             case (SIGN_UP) : {
                 if (resultCode == Activity.RESULT_OK) {
-                    User user = (User) data.getSerializableExtra("NEW_USER");
+                    //User user = (User) data.getSerializableExtra("NEW_USER");
                     Intent intent = new Intent(this, MyProfileViewActivity.class);
-                    intent.putExtra("USER", (Serializable) user);
+                    //intent.putExtra("USER", (Serializable) user);
                     //TODO investigate the "redundant" Serializable studio complains about
+                    Toast.makeText(getApplicationContext(), "New User Created!", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 }
                 break;

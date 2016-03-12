@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
         enteredUsername = (EditText) findViewById(R.id.username);
         enteredPhoneNumber = (EditText) findViewById(R.id.phone);
         enteredEmailAddress = (EditText) findViewById(R.id.email);
@@ -67,14 +67,15 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     latestUser.setItemsRenting(null);
                     users.add(latestUser);
                     UserController.setUser(latestUser);
-                    //intent.putExtra("NEW_USER", user);
+
 
                     users.add(latestUser);
                     //adapter.notifyDataSetChanged();
-                    AsyncTask<User, Void, Void> execute = new ElasticSearch.AddUserTask();
-                    execute.execute(latestUser);
+                    //AsyncTask<User, Void, Void> execute = new ElasticSearch.AddUserTask();
+                    //execute.execute(latestUser);
 
                     Intent intent = new Intent(SignUpActivity.this, SignUpActivity.class);
+                    //intent.putExtra("NEW_USER", latestUser);
                     setResult(Activity.RESULT_OK, intent);
                     //Toast.makeText(SignUpActivity.this, "New User Created!", Toast.LENGTH_SHORT).show();
                     finish();
