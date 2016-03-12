@@ -46,25 +46,16 @@ public class MyProfileViewActivity extends AppCompatActivity {
         profileName = (TextView) findViewById(R.id.profileName);
         profilePhone = (TextView) findViewById(R.id.profilePhone);
         profileEmail = (TextView) findViewById(R.id.profileEmail);
-        profilePictureView = (ImageView) findViewById(R.id.profilePictureView);
+        profilePictureView = (ImageView) findViewById(R.id.pictureView);
 
         profileName.setText(user.getName());
         profilePhone.setText(user.getPhoneNumber());
         profileEmail.setText(user.getEmailAddress());
 
-
-// this if/else is essentially meaningless at the moment, I am keeping it for //// // / / / / / / / / / potential whalecropping debugging here
-// with that fixed, reduce to the two uncommented lines
-//        if (user.getPhoto() != null) {
+        if (user.getPhoto() != null) {
             byte[] tempPhoto = user.getPhoto();
             profilePictureView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
-//        } else {
-// get bitmap reference from USER and set
-// the imageView type with the bitmap. The idea is that the imageView handles the scaling and
-// such rather than a bitmap drawable directly. Something to due with memory or something.
-//            profilePictureView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
-//                    R.drawable.glamorouswhale1));
-//        }
+        }
 
         //Initialize the buttons.
         buttonMyBids = (Button) findViewById(R.id.buttonMyBids);

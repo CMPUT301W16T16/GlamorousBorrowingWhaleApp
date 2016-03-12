@@ -14,7 +14,7 @@ public class Item {
     private String size;
     private Boolean availability;
     //probs not drawable unless we can dynamically save resource ids
-    private Drawable picture;
+    private byte[] photo;
     private BidList bids;
     private User owner;
 
@@ -50,13 +50,9 @@ public class Item {
         this.availability = availability;
     }
 
-    public Drawable getPicture() {
-        return picture;
-    }
+    public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
 
-    public void setPicture(Drawable picture) {
-        this.picture = picture;
-    }
+    public byte[] getPhoto() { return photo; }
 
     public BidList getBids() {
         return bids;

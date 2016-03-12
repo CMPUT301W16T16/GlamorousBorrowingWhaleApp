@@ -14,14 +14,15 @@
         android:layout_margin="10dp"
         android:id="@+id/profileInfoLayout">
 
-        <ImageView
+        <ImageButton
             android:layout_width="140dp"
             android:layout_height="match_parent"
-            android:id="@+id/profilePictureView"
+            android:id="@+id/pictureView"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_margin="10dp"
-            android:src="@drawable/glamorouswhale1" />
+            android:src="@drawable/glamorouswhale1"
+            android:scaleType="fitCenter"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -29,8 +30,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/name"
             android:id="@+id/profileHeadName"
-            android:layout_alignTop="@+id/profilePictureView"
-            android:layout_toEndOf="@+id/profilePictureView"
+            android:layout_alignTop="@+id/pictureView"
+            android:layout_toEndOf="@+id/pictureView"
             android:textColor="#000000" />
 
         <TextView

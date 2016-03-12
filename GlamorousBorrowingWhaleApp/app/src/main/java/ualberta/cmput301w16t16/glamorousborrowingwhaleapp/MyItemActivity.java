@@ -1,12 +1,21 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * This activity shows ONE of the current user's available items. It gives the user the
@@ -23,8 +32,11 @@ public class MyItemActivity extends AppCompatActivity {
     private EditText name;
     private EditText size;
     private EditText description;
+    private ImageView photo;
     private User user;
     private BidList bids;
+    private int result;
+    private byte[] photoStream = new byte[65536];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +52,7 @@ public class MyItemActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.name);
         size = (EditText) findViewById(R.id.size);
         description = (EditText) findViewById(R.id.description);
+        photo = (ImageView) findViewById(R.id.pictureView);
 
         //Initialize the Buttons!
         ImageButton saveButton = (ImageButton) findViewById(R.id.save);
@@ -51,8 +64,19 @@ public class MyItemActivity extends AppCompatActivity {
         name.setText(item.getTitle());
         description.setText(item.getDescription());
         size.setText(item.getSize());
+
+        if (item.getPhoto() != null) {
+            byte[] tempPhoto = item.getPhoto();
+            photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+        }
         //Bids is not implemented yet.
         bids = item.getBids();
+
+        // picture management
+        Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
+        ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
+        photoStream = photosNeedToBeCompressedToThis.toByteArray();
 
         //saveButton is onClick and leverages the ItemController for its item.
         //The item's attributes are then set from the EditText boxes.
@@ -68,6 +92,7 @@ public class MyItemActivity extends AppCompatActivity {
                 item.setAvailability(true);
                 item.setBids(bids);
                 item.setOwner(user);
+                item.setPhoto(photoStream);
                 //NO MEAT AND POTATOES HERE
                 Toast.makeText(MyItemActivity.this, "Thing Saved!", Toast.LENGTH_SHORT).show();
             }
@@ -102,6 +127,28 @@ public class MyItemActivity extends AppCompatActivity {
             }
         });
 
+        // this is the gallery selection method for pictures
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent bringTheGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(bringTheGallery, result);
+            }
+
+        });
+    }
+
+    // also pictures
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == result) {
+            if (resultCode == RESULT_OK) {
+                Uri selectedImage = data.getData();
+                photo.setImageURI(selectedImage);
+            } else {
+                Toast.makeText(this, "Could not load image", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override

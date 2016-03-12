@@ -75,10 +75,8 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
                     photoStream = photosNeedToBeCompressedToThis.toByteArray();
-                    // end picture management
 
                     User latestUser = new User(username, emailAddress, phoneNumber);
-
                     latestUser.setItemsBorrowing(null);
                     latestUser.setItemsRenting(null);
                     latestUser.setPhoto(photoStream);
