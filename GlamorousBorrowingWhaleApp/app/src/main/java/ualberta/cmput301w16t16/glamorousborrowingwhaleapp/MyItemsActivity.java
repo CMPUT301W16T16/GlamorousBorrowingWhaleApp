@@ -62,17 +62,17 @@ public class MyItemsActivity extends AppCompatActivity {
         //If the user has no items at all, the class does not auto-intialize a ItemsList.
         //Naturally, this throws a null if one tries to access or add or do stuff with it.
         if (myItemsList == null) {
-            Item firstItem = new Item();
+            Item item = new Item();
             //Create a "First Item" to get the ItemList going.
 
-            firstItem.setAvailability(false);
-            firstItem.setDescription("This is your first Thing! You can delete it of course.");
-            firstItem.setOwner(user);
-            firstItem.setSize("Medium");
-            firstItem.setTitle("First Thing!");
+            item.setAvailability(false);
+            item.setDescription("This is your first Thing! You can delete it of course.");
+            item.setOwner(user);
+            item.setSize("Medium");
+            item.setTitle("First Thing!");
             //Actually initialize the itemList.
             myItemsList = new ItemList();
-            myItemsList.add(firstItem);
+            myItemsList.add(item);
             //diiirrrtttyy programming right here - will have to fix. Just as a proof of concept.
             user.setItemsRenting(myItemsList);
             //redundant but for "testing"
@@ -81,7 +81,10 @@ public class MyItemsActivity extends AppCompatActivity {
             //finally, set the variable to what we want.
             myItems = myItemsList.getItemList();
             //"initialize" the itemcontroller
-            ItemController.setItem(firstItem);
+            ItemController.setItem(item);
+            //Now that the item is created and "in use", lets create a bidlist to use with it!
+            BidList bids = new BidList();
+            setFirstBids(bids, item);
         } else {
             myItems = myItemsList.getItemList();
         }
@@ -118,7 +121,7 @@ public class MyItemsActivity extends AppCompatActivity {
         myItemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //This chuck is pretty neat. The ViewAdapter makes note of what is clicked in
+                //This chunk is pretty neat. The ViewAdapter makes note of what is clicked in
                 //the dynamic list which is used to get the corresponding Item at that "position".
                 //Again leveraging the ItemController, we can set that Item as the current Item
                 //and send the user to the MyItemActivity with the current Item (the one
@@ -140,5 +143,10 @@ public class MyItemsActivity extends AppCompatActivity {
         myItemsList = user.getItemsRenting();
         myItems = myItemsList.getItemList();
         adapter.notifyDataSetChanged();
+    }
+
+    //Sets the "first item" with a bid list for fun.
+    private void setFirstBids(BidList bids, Item item) {
+        item.setBids(bids);
     }
 }
