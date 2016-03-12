@@ -74,10 +74,12 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
 
                     users.add(latestUser);
                     //adapter.notifyDataSetChanged();
+                    //Toast.makeText(SignUpActivity.this, latestUser.getName(), Toast.LENGTH_SHORT).show();
                     AsyncTask<User, Void, Void> execute = new ElasticSearch.AddUserTask();
                     execute.execute(latestUser);
 
                     setResult(Activity.RESULT_OK, intent);
+                    //Toast.makeText(SignUpActivity.this, "New User Created!", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

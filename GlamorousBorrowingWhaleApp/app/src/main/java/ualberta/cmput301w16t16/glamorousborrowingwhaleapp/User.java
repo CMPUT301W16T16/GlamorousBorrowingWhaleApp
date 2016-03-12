@@ -27,8 +27,10 @@ public class User extends AppCompatActivity implements Serializable {
     //private Drawable picture [Adam: See directly below];
     private String profilePictureRef;
     //http://developer.android.com/reference/android/graphics/Bitmap.html
+    //Initialize the arrays down here because Java sucks
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
+    //ID is for elasticsearch server thing
     private String ID;
 
     // need to include picture

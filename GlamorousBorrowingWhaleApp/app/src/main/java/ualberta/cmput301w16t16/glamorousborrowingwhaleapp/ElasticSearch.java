@@ -17,14 +17,15 @@ import io.searchbox.core.Index;
  * Created by erin on 11/03/16.
  */
 public class ElasticSearch {
-    private static String clientAddress = "http://cmput301.softwareprocess.es:8080";
+    //tossed a final in here since we should only have to have one of these
+    private final static String clientAddress = "http://cmput301.softwareprocess.es:8080";
     private static JestDroidClient client;
 
     public static class AddUserTask extends AsyncTask<User, Void, Void> {
-        @Override
         protected Void doInBackground(User... users) {
             verifyClient();
 
+            // Since AsyncTasks work on arrays, we need to work with arrays as well (>= 1 tweet)
             for(int i = 0; i < users.length; i++) {
                 User user = users[i];
 
@@ -52,6 +53,7 @@ public class ElasticSearch {
         if(client == null) {
             // 2. If it doesn't, make it.
             // TODO: Put this URL somewhere it makes sense (e.g. class variable?)
+            //Adam - we could toss in the strings xml ^^^^^^^^^^^
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder(clientAddress);
             DroidClientConfig config = builder.build();
 
