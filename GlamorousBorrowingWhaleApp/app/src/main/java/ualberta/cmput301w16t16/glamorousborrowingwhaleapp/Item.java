@@ -68,6 +68,14 @@ public class Item {
         //Hi note that this is a BidList type!!!!!
     }
 
+    public Bid getHighestBid() {
+        return this.bids.getHighestBid();
+    }
+
+    public double getHighestBidAmount() {
+        return this.bids.getHighestBid().getBidAmount();
+    }
+
     public User getOwner() {
         return owner;
         //Hi note that this is a User type!!!!!

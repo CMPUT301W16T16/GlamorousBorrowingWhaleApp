@@ -1,5 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -11,27 +12,36 @@ import java.util.Date;
  */
 public class Bid {
     // expiry of a bid?
-    private Date startDate;
-    private Date endDate;
+    //switched Date to Calendar type for ease of use.
+    private Calendar startDate;
+    private Calendar endDate;
     private Boolean isAccepted;
     private User owner;
     private User renter;
     private Item item;
     private double bidAmount = 0; //bid of 0 for no bids yet
 
-    public Date getStartDate() {
+    //This Bid must have an item passed to it (the item being bidded on)
+    public Bid(Item item) {
+        //Constructing a new Bid
+        this.item = item;
+        this.owner = item.getOwner();
+        this.renter = UserController.getUser();
+    }
+
+    public Calendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Calendar getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Calendar endDate) {
         this.endDate = endDate;
     }
 
@@ -59,7 +69,7 @@ public class Bid {
         this.renter = renter;
     }
 
-    public void setBidAmount(long bidAmount) {
+    public void setBidAmount(double bidAmount) {
         this.bidAmount = bidAmount;
     }
 

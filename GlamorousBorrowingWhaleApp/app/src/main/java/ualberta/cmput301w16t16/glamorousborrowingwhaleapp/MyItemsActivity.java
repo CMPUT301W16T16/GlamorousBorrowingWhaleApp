@@ -83,8 +83,7 @@ public class MyItemsActivity extends AppCompatActivity {
             //"initialize" the itemcontroller
             ItemController.setItem(item);
             //Now that the item is created and "in use", lets create a bidlist to use with it!
-            BidList bids = new BidList();
-            setFirstBids(bids, item);
+            setFirstBids(item);
         } else {
             myItems = myItemsList.getItemList();
         }
@@ -146,7 +145,10 @@ public class MyItemsActivity extends AppCompatActivity {
     }
 
     //Sets the "first item" with a bid list for fun.
-    private void setFirstBids(BidList bids, Item item) {
+    private void setFirstBids(Item item) {
+        BidList bids = new BidList();
+        Bid bid = new Bid(item);
         item.setBids(bids);
+
     }
 }
