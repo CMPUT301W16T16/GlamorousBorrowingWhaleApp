@@ -40,9 +40,10 @@ public class ElasticSearch {
 
     // private final static String clientAddress = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/_search?&pretty";
 
-    // JSONGet.execute(URL) takes in a URL (/User or /Item)
-    // and retrieves all items on either ElasticSearch list, adding them to .
-    public static class elasticGet extends AsyncTask<String, String, String> {
+    // elasticGetItems.execute(URL) takes in a URL (with /Item)... but it probably doesn't need to...
+    // and retrieves all items on the ElasticSearch list, adding them to the returned ItemList.
+    // Used in SearchResultsActivity, which also should sort somehow?
+    public static class elasticGetItems extends AsyncTask<String, String, ItemList> {
 
         @Override
         protected void onPreExecute() {
@@ -50,7 +51,7 @@ public class ElasticSearch {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected ItemList doInBackground(String... params) {
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
@@ -79,12 +80,7 @@ public class ElasticSearch {
                     JSONObject thingInList = hitsList.getJSONObject(i);
                     // convert thing to its Type
                 }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
 
@@ -104,13 +100,13 @@ public class ElasticSearch {
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(ItemList result) {
             super.onPostExecute(result);
         }
     }
 
-    // these will not take in URLs, so the first String should change
-    public static class elasticAdd extends AsyncTask<String, String, String> {
+    // Used in NewListingActivity
+    public static class elasticAddItem extends AsyncTask<Item, String, String> {
 
         // the following worked:
         // http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/ in the URL and  {"name":"mouse", "size":"tiny"} in the body
@@ -121,14 +117,14 @@ public class ElasticSearch {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(Item... params) {
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             URL url;
 
             try {
-                url = new URL(params[0]);
+                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/");
                 connection = (HttpURLConnection) url.openConnection();
                 // this hanging while loop ironically speeds the process up dramatically
                 // and suppresses warnings, i think w/o it it retries the line after indefinitely
@@ -138,22 +134,12 @@ public class ElasticSearch {
 
                 // actually write to that output stream here
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            // ugly "closing down shop" section
             if (connection != null)
                 connection.disconnect();
-            try{
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             return null;
         }
@@ -165,8 +151,11 @@ public class ElasticSearch {
 
     }
 
-    // these will not take in URLs, so the first String should change
-    public static class elasticDelete extends AsyncTask<String, String, String> {
+    // used in SignUpActivity
+    public static class elasticAddUser extends AsyncTask<User, String, String> {
+
+        // the following worked:
+        // http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/ in the URL and  {"name":"mouse", "size":"tiny"} in the body
 
         @Override
         protected void onPreExecute() {
@@ -174,12 +163,78 @@ public class ElasticSearch {
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(User... params) {
+
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            URL url;
+
+            try {
+                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/");
+                connection = (HttpURLConnection) url.openConnection();
+                // this hanging while loop ironically speeds the process up dramatically
+                // and suppresses warnings, i think w/o it it retries the line after indefinitely
+                while (connection == null) {}
+                connection.connect();
+                OutputStream stream = connection.getOutputStream();
+
+                // actually write to that output stream here
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // ugly "closing down shop" section
+            if (connection != null)
+                connection.disconnect();
+
             return null;
         }
 
         @Override
         protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
+
+    }
+
+    // used in MyItemActivity
+    public static class elasticDelete extends AsyncTask<Item, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(Item... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
+
+    }
+
+    // PROBLEM:
+    // this should NOT be Asynchronous (result is needed immediately)...
+    // used in SignInActivity
+    public static class elasticFind extends AsyncTask<String, String, User> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected User doInBackground(String... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(User result) {
             super.onPostExecute(result);
         }
 

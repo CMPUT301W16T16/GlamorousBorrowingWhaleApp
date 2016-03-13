@@ -115,7 +115,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
                     public boolean onLongClick(View v) {
                         longClick();
                         //TODO implement the photo chooser in the AlertDialog
-                        //involves another intent to the photo chooser thing MAYBE
                         return false;
                     }
                 }
@@ -142,17 +141,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // these are calls to the elasticGet method. they shouldn't go here.
-                // user option
-                new ElasticSearch.elasticGet().execute("http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/_search?");
-
-                // item option
-                new ElasticSearch.elasticGet().execute("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?");
-
-                // the following two lines SHOULD go here
-                //Intent intent = new Intent(v.getContext(), SearchResultsActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(v.getContext(), SearchResultsActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -62,16 +62,9 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                     UserController.setUser(user);
                     Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
 
-                    // an attempt at getting the user via ES
-//                    ElasticSearch.GetUserTask getUserTask = new ElasticSearch.GetUserTask();
-//                    try {
-//                        getUserTask.execute(user.getName());
-//                        user = getUserTask.get();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    } catch (ExecutionException e) {
-//                        e.printStackTrace();
-//                    }
+                    // TODO ES CALL: use the following to check the entered string against ES
+                    // does not work yet, because the core function idea is flawed: it should not be synchronous
+                    // new ElasticSearch.elasticFind().execute(username);
 
                     // TODO fetch user from username, and put the user as extra instead of username
                     intent.putExtra("USERNAME", user);
