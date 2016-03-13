@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -32,6 +33,7 @@ public class MyItemActivity extends AppCompatActivity {
     private EditText name;
     private EditText size;
     private EditText description;
+    private TextView highestBid;
     private ImageView photo;
     private User user;
     private BidList bids;
@@ -52,6 +54,7 @@ public class MyItemActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.name);
         size = (EditText) findViewById(R.id.size);
         description = (EditText) findViewById(R.id.description);
+        highestBid = (TextView) findViewById(R.id.highestBid);
         photo = (ImageView) findViewById(R.id.pictureView);
 
         //Initialize the Buttons!
@@ -64,13 +67,15 @@ public class MyItemActivity extends AppCompatActivity {
         name.setText(item.getTitle());
         description.setText(item.getDescription());
         size.setText(item.getSize());
+        highestBid.setText(Double.toString(item.getHighestBidAmount()));
 
         if (item.getPhoto() != null) {
             byte[] tempPhoto = item.getPhoto();
             photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
         }
         //Bids is not implemented yet.
-        bids = item.getBids();
+        //Removing setBids activities for now.
+        //bids = item.getBids();
 
         // picture management
         Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
@@ -90,7 +95,7 @@ public class MyItemActivity extends AppCompatActivity {
                 item.setDescription(description.getText().toString());
                 item.setSize(size.getText().toString());
                 item.setAvailability(true);
-                item.setBids(bids);
+                //item.setBids(bids);
                 item.setOwner(user);
                 item.setPhoto(photoStream);
                 //NO MEAT AND POTATOES HERE

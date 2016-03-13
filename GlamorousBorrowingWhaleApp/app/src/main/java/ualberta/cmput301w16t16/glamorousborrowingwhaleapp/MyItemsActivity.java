@@ -112,6 +112,7 @@ public class MyItemsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProfileDialog profile = new ProfileDialog(MyItemsActivity.this, getAdapter().getItem(position));
                 profile.show();
+                //android says memory leak error here.
             }
         });
 
@@ -147,8 +148,14 @@ public class MyItemsActivity extends AppCompatActivity {
     //Sets the "first item" with a bid list for fun.
     private void setFirstBids(Item item) {
         BidList bids = new BidList();
-        Bid bid = new Bid(item);
+        Bid bid1 = new Bid(item, 0.30);
+        Bid bid2 = new Bid(item, 0.50);
+        Bid bid3 = new Bid(item, 1.20);
+        Bid bid4 = new Bid(item, 0.25);
         item.setBids(bids);
-
+        item.addBid(bid1);
+        item.addBid(bid2);
+        item.addBid(bid3);
+        item.addBid(bid4);
     }
 }

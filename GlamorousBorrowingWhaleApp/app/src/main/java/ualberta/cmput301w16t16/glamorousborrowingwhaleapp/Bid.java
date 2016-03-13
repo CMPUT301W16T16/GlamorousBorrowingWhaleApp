@@ -19,14 +19,16 @@ public class Bid {
     private User owner;
     private User renter;
     private Item item;
-    private double bidAmount = 0; //bid of 0 for no bids yet
+    private double bidAmount;
 
     //This Bid must have an item passed to it (the item being bidded on)
-    public Bid(Item item) {
+    public Bid(Item item, double bidAmount) {
         //Constructing a new Bid
+        //no ItemController maybe?
         this.item = item;
         this.owner = item.getOwner();
-        this.renter = UserController.getUser();
+        this.renter = UserController.getUser();//current user is the renter
+        this.bidAmount = bidAmount;
     }
 
     public Calendar getStartDate() {

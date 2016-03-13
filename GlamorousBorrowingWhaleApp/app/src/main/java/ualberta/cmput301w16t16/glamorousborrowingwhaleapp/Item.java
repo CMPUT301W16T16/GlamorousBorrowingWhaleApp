@@ -82,6 +82,10 @@ public class Item {
         //Hi note that this is a User type!!!!!
     }
 
+    public void addBid(Bid bid){
+        this.bids.addBid(bid);
+    }
+
     /**
      * Passes a string of our choosing to the view adapter in MyItemsActivity.
      * @author adam
