@@ -86,8 +86,12 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     setResult(RESULT_OK);
 
                     // this causes the error with elastic search
-                    //ElasticSearch.AddUserTask addUserTask = new ElasticSearch.AddUserTask();
-                    //addUserTask.execute(latestUser);
+                    ElasticSearch.AddUserTask addUserTask = new ElasticSearch.AddUserTask();
+                    try {
+                        addUserTask.execute(latestUser);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
 
                     Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                     //intent.putExtra("NEW_USER", latestUser);

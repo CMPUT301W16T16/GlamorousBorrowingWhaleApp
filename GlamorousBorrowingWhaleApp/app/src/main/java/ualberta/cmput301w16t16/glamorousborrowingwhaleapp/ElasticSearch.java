@@ -110,7 +110,7 @@ public class ElasticSearch {
     // If no client, add one
     public static void verifyConfig() {
         if(client == null) {
-            DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
+            DroidClientConfig.Builder builder = new DroidClientConfig.Builder(clientAddress);
             DroidClientConfig config = builder.build();
 
             JestClientFactory factory = new JestClientFactory();
