@@ -32,9 +32,6 @@ public class User extends AppCompatActivity implements Serializable {
     private String emailAddress;
     private String phoneNumber;
     private byte[] photo;
-    //private String profilePictureRef;
-    //http://developer.android.com/reference/android/graphics/Bitmap.html
-    //Initialize the arrays down here because Java sucks
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
 

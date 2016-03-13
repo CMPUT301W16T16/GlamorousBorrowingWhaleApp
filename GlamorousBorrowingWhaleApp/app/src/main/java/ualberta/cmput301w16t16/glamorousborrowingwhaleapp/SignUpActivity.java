@@ -85,6 +85,8 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
 
                     setResult(RESULT_OK);
 
+                    // /////////////////////////////////////////////////////////////////////////////////// TODO: ES ADD USER
+
                     // this causes the error with elastic search
                     /*
                     ElasticSearch.AddUserTask addUserTask = new ElasticSearch.AddUserTask();

@@ -82,7 +82,8 @@
             android:id="@+id/profileEmail"
             android:layout_alignStart="@+id/profileHeadName"
             android:layout_below="@+id/profileHeadEmail"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
     <RelativeLayout

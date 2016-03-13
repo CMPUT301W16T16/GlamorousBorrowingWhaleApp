@@ -8,7 +8,17 @@ import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,95 +37,117 @@ import io.searchbox.core.SearchResult;
 
 public class ElasticSearch {
     //tossed a final in here since we should only have to have one of these
-    private final static String clientAddress = "http://cmput301.softwareprocess.es:8080";
+    private final static String clientAddress = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/_search?&pretty";
     private static JestDroidClient client;
 
-    /*
-    //this doesn't work yet, copied from lonelytwitter
-    public static class GetUserTask extends AsyncTask<String, Void, ArrayList<User>> {
+
+    // JSONGet.execute(URL) takes in a URL (/User or /Item)
+    // and retrieves all items on either ElasticSearch list, adding them to .
+    public static class elasticGet extends AsyncTask<String, String, String> {
+
         @Override
-        protected ArrayList<User> doInBackground(String... search_strings) {
-            verifyConfig();
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
-            // Start our initial array list (empty)
-            ArrayList<User> users = new ArrayList<User>();
+        @Override
+        protected String doInBackground(String... params) {
 
-            // NOTE: I'm a making a huge assumption here, that only the first search term
-            // will be used.
-            String query = "{\n \"query\": {\n \"filtered\": {\n \"query\"";
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            URL url;
 
-            Search search = new Search.Builder(query)
-                    // multiple index or types can be added.
-                    .addIndex("cmput301w16t16")
-                    .addIndex("User")
-                    .build();
             try {
-                SearchResult execute = client.execute(search);
-                if(execute.isSucceeded()) {
-                    // Return our list of users
-                    List<User> returned_users = execute.getSourceAsObjectList(User.class);
-                    users.addAll(returned_users);
-                } else {
-                    // TODO: Add an error message, because that other thing was puzzling.
-                    // TODO: Right here it will trigger if the search fails
-                    Log.i("TODO", "We actually failed here, searching for tweets");
+                url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                // this hanging while loop ironically speeds the process up dramatically
+                // and suppresses warnings, i think w/o it it retries the line after indefinitely
+                while (connection == null) {}
+                connection.connect();
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuffer buffer = new StringBuffer();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                String longStringOfJSON = buffer.toString();
+                JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
+                JSONObject subsetOfTheJSON = allOfTheJSON.getJSONObject("hits");
+                JSONArray hitsList = subsetOfTheJSON.getJSONArray("hits");
+                // each thing in this list should become its own User or Item
+                for (int i = 0; i < hitsList.length(); i++) {
+                    JSONObject thingInList = hitsList.getJSONObject(i);
+                    // convert thing to its Type
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            // ugly "closing down shop" section
+            if (connection != null)
+                connection.disconnect();
+            try{
+                if (reader != null) {
+                    reader.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            return users;
-        }
-    }
-    */
-
-    /**
-     * This class adds a user when they sign up for the app in the
-     * SignUpActivity.
-     * @author adam, andrew, erin, laura, martina
-     * @see SignUpActivity
-     */
-
-    // this doesn't cause an error anymore when the app is run without calling it in
-    // signup activity, but there is an error when calling it from sign up activity
-    public static class AddUserTask extends AsyncTask<User, Void, Void> {
-        @Override
-        protected Void doInBackground(User... params) {
-            verifyConfig();
-
-            for(User user : params) {
-                Index index = new Index.Builder(user).index("cmput301w16t16").type("User").build();
-
-                try {
-                    DocumentResult execute = client.execute(index);
-                    if(execute.isSucceeded()) {
-                        user.setID(execute.getId());
-                    } else {
-                        Log.e("TODO", "Our insert of user failed");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            // the returned item is passed on to onPostExecute as "result"
             return null;
         }
-    }
 
-    /**
-     * This class checks that anytime the client is being accessed, there is
-     * one that has been saved and is available (so we're actually writing to
-     * a real server
-     * @author adam, andrew, erin, laura, martina
-     */
-    // If no client, add one
-    public static void verifyConfig() {
-        if(client == null) {
-            DroidClientConfig.Builder builder = new DroidClientConfig.Builder(clientAddress);
-            DroidClientConfig config = builder.build();
-
-            JestClientFactory factory = new JestClientFactory();
-            factory.setDroidClientConfig(config);
-            client = (JestDroidClient) factory.getObject();
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
         }
     }
+
+    // these will not take in URLs, so the first String should change
+    public static class elasticAdd extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
+
+    }
+
+    // these will not take in URLs, so the first String should change
+    public static class elasticDelete extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+        }
+
+    }
+
 }
