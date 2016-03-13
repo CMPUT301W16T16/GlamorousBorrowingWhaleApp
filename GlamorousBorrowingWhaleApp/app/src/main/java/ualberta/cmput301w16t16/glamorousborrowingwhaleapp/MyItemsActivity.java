@@ -51,6 +51,9 @@ public class MyItemsActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_items);
+        //taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
+        setTitle("My Items");
+        //END
         ListView myItemsView;
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
 

@@ -39,6 +39,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
+        setTitle("Your Profile");
         //redundant intent is redundant
         Intent intent = getIntent();
 

@@ -43,6 +43,9 @@ public class MyItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item);
+        //taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
+        setTitle("My Item");
+        //END
 
         //This chunk sets the user and item for this activity
         //and grabs the EditText things for use.
@@ -151,7 +154,14 @@ public class MyItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!item.getBids().getBids().isEmpty()) {
                     item.getBids().getHighestBid().setIsAccepted(true);
+                    Toast.makeText(MyItemActivity.this, "Bid Accepted!", Toast.LENGTH_SHORT).show();
                     //TODO: insert code here to delete the other bids and notify users that their bid has been declined.
+                    //TODO: insert code here to refresh the view?
+                    //The rationale behind deleting all bids is if you don't want to honour the
+                    //highest bid, why would you want to select a lower one? Future idea - click bid
+                    //to show dates, you may be able to go off of that. Then the next highest bid wil show.
+                    //Remember Bid amounts are per hour - maybe have the per hour value and the total
+                    //amount calculated by the time requested.
                 } else {
                     Toast.makeText(MyItemActivity.this, "No Bids!", Toast.LENGTH_SHORT).show();
                 }
@@ -163,7 +173,9 @@ public class MyItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!item.getBids().getBids().isEmpty()) {
                     item.getBids().getHighestBid().setIsAccepted(false);
+                    Toast.makeText(MyItemActivity.this, "Bid Rejected!", Toast.LENGTH_SHORT).show();
                     //TODO: insert code here to delete all bids??
+                    //TODO: insert code to refresh the view.
                 } else {
                     Toast.makeText(MyItemActivity.this, "No Bids!", Toast.LENGTH_SHORT).show();
                 }
