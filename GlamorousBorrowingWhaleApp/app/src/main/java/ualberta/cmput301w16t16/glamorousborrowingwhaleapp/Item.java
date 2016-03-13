@@ -69,7 +69,12 @@ public class Item {
     }
 
     public double getHighestBidAmount() {
-        return this.bids.getHighestBid().getBidAmount();
+        //Need to catch that null if empty
+        if(bids.getBids().isEmpty()) {
+            return 0;
+        } else {
+            return this.bids.getHighestBid().getBidAmount();
+        }
     }
 
     public User getOwner() {
