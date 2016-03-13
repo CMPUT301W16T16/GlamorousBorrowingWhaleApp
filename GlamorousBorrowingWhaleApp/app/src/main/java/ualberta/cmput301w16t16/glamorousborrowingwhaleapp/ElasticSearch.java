@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,10 +37,8 @@ import io.searchbox.core.SearchResult;
  */
 
 public class ElasticSearch {
-    //tossed a final in here since we should only have to have one of these
-    private final static String clientAddress = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/_search?&pretty";
-    private static JestDroidClient client;
 
+    // private final static String clientAddress = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/_search?&pretty";
 
     // JSONGet.execute(URL) takes in a URL (/User or /Item)
     // and retrieves all items on either ElasticSearch list, adding them to .
@@ -113,6 +112,9 @@ public class ElasticSearch {
     // these will not take in URLs, so the first String should change
     public static class elasticAdd extends AsyncTask<String, String, String> {
 
+        // the following worked:
+        // http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/ in the URL and  {"name":"mouse", "size":"tiny"} in the body
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -120,6 +122,39 @@ public class ElasticSearch {
 
         @Override
         protected String doInBackground(String... params) {
+
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            URL url;
+
+            try {
+                url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                // this hanging while loop ironically speeds the process up dramatically
+                // and suppresses warnings, i think w/o it it retries the line after indefinitely
+                while (connection == null) {}
+                connection.connect();
+                OutputStream stream = connection.getOutputStream();
+
+                // actually write to that output stream here
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // ugly "closing down shop" section
+            if (connection != null)
+                connection.disconnect();
+            try{
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return null;
         }
 
