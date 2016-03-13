@@ -36,7 +36,6 @@ public class MyItemActivity extends AppCompatActivity {
     private TextView highestBid;
     private ImageView photo;
     private User user;
-    private BidList bids;
     private int result;
     private byte[] photoStream = new byte[65536];
 
@@ -60,6 +59,8 @@ public class MyItemActivity extends AppCompatActivity {
         //Initialize the Buttons!
         ImageButton saveButton = (ImageButton) findViewById(R.id.save);
         ImageButton deleteButton = (ImageButton) findViewById(R.id.delete);
+        ImageButton acceptBidButton = (ImageButton) findViewById(R.id.acceptBid);
+        ImageButton rejectBidButton = (ImageButton) findViewById(R.id.rejectBid);
 
         //The view is updated by asking the user object for its information.
         status.setText(Boolean.toString(item.getAvailability()));
@@ -144,6 +145,32 @@ public class MyItemActivity extends AppCompatActivity {
             }
 
         });
+
+        acceptBidButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!item.getBids().getBids().isEmpty()) {
+                    item.getBids().getHighestBid().setIsAccepted(true);
+                    //TODO: insert code here to delete the other bids and notify users that their bid has been declined.
+                } else {
+                    Toast.makeText(MyItemActivity.this, "No Bids!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        rejectBidButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!item.getBids().getBids().isEmpty()) {
+                    item.getBids().getHighestBid().setIsAccepted(false);
+                    //TODO: insert code here to delete all bids??
+                } else {
+                    Toast.makeText(MyItemActivity.this, "No Bids!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
     }
 
     // also pictures
