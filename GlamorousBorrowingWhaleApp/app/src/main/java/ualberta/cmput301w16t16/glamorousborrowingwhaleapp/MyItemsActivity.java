@@ -105,16 +105,18 @@ public class MyItemsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //Hi - Adam - I don't believe this popup should be here. It would be better used where the
+        //view for items that are not owned by you but being borrowed by you and the view for browsing other
+        //peoples stuff.
         //////////////////////////////////////////////////////////////////////////////////////////////// for user popup
-        myItemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*myItemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProfileDialog profile = new ProfileDialog(MyItemsActivity.this, getAdapter().getItem(position));
                 profile.show();
                 //android says memory leak error here.
             }
-        });
+        });*/
 
         // I have no clue if the following is proper, it was Android Studio doing that autocomplete
         // thing.

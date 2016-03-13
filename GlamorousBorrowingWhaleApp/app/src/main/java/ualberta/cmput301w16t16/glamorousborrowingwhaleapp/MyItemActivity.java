@@ -114,8 +114,11 @@ public class MyItemActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!item.getBids().getBids().isEmpty()){
+                    //TODO: put an alertdialog box in this spot.
+                    Toast.makeText(MyItemActivity.this, "This Item Has Bids!", Toast.LENGTH_SHORT).show();
+                }
                 user.removeItemRenting(item);
-                Toast.makeText(MyItemActivity.this, Integer.toString(user.getItemsRenting().getItemList().size()), Toast.LENGTH_SHORT).show();
                 //below is pretty flaky, needs error check for no items in list
                 if(user.getItemsRenting().getItemList().size() != 0) {
                     ItemController.setItem(user.getItemsRenting().getItemList().get(0));
