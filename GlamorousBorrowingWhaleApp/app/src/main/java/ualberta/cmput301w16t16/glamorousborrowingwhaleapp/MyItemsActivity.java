@@ -34,11 +34,13 @@ import java.util.ArrayList;
  * @see IncomingBids
  */
 
+/**
+ * I think at this point though this activity may have to be deleted to deal with the fragments?
+ */
+
 //TODO review lifecycle code
 public class MyItemsActivity extends AppCompatActivity {
-    //ListView vaguely follows in lab example LonelyTwitter
-    //https://github.com/AdamGualberta/lonelyTwitter/blob/tuesday/app/src/main/java/ca/ualberta/cs/lonelytwitter/LonelyTwitterActivity.java
-    //lol that's my github oh well.
+
     private ItemList myItemsList;
     private ArrayList<Item> myItems;
     private ArrayAdapter<Item> adapter;
@@ -111,10 +113,8 @@ public class MyItemsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //Hi - Adam - I don't believe this popup should be here. It would be better used where the
-        //view for items that are not owned by you but being borrowed by you and the view for browsing other
-        //peoples stuff.
-        //////////////////////////////////////////////////////////////////////////////////////////////// for user popup
+
+        // user popup: this should be moved to the Borrow page.
         /*myItemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

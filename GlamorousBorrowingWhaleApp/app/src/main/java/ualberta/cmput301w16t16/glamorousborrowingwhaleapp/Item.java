@@ -13,7 +13,6 @@ public class Item {
     private String description;
     private String size;
     private Boolean availability;
-    //probs not drawable unless we can dynamically save resource ids
     private byte[] photo;
     private BidList bids;
     private User owner;

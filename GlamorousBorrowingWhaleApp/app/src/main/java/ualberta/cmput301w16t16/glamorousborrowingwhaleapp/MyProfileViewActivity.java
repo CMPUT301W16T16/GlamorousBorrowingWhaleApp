@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * This activity lists for the user their profile information which can then be
@@ -40,8 +53,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_view);
         setTitle("Your Profile");
-        //redundant intent is redundant
-        Intent intent = getIntent();
 
         //This chunk grabs the TextViews and operates on them
         profileName = (TextView) findViewById(R.id.profileName);
@@ -104,7 +115,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
                     public boolean onLongClick(View v) {
                         longClick();
                         //TODO implement the photo chooser in the AlertDialog
-                        //involves another intent to the photo chooser thing MAYBE
                         return false;
                     }
                 }
@@ -136,6 +146,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
             }
         });
     }
+
 
     /**
      * longClick() is used in the longClickListeners for the textviews for editing profile information.
