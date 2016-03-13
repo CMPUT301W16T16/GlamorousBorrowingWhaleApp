@@ -1,41 +1,34 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
- * This activity allows a user to see their items that are available to be
- * rented out (items NOT bidded or borrowed). If the user longClicks any item on
- * the listView, they are brought to the MyItemActivity. If the user selects
- * the floating action plus sign, they are taken to NewListingActivity where
- * they can add a new piece of equipment. If they swipe right they are taken to
- * IncomingBids (tbi).
- * @author adam, andrew, erin, laura, martina
- * @see MyItemActivity
- * @see NewListingActivity
- * @see IncomingBids
+ * Created by erin on 13/03/16.
  */
-
-//TODO review lifecycle code
-public class MyItemsActivity extends AppCompatActivity {
+public class MyItems extends FragmentActivity {
     //ListView vaguely follows in lab example LonelyTwitter
     //https://github.com/AdamGualberta/lonelyTwitter/blob/tuesday/app/src/main/java/ca/ualberta/cs/lonelytwitter/LonelyTwitterActivity.java
     //lol that's my github oh well.
@@ -49,11 +42,9 @@ public class MyItemsActivity extends AppCompatActivity {
         //getAdapter probably never used but that's fine.
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_items);
+        View view = inflater.inflate(R.layout.activity_my_items, null);
         //taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
         setTitle("My Items");
         //END
@@ -83,7 +74,7 @@ public class MyItemsActivity extends AppCompatActivity {
             user.setItemsRenting(myItemsList);
             //redundant but for "testing"
             myItemsList = user.getItemsRenting();
-            Toast.makeText(MyItemsActivity.this, "First Thing Created!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyItems.this, "First Thing Created!", Toast.LENGTH_SHORT).show();
             //finally, set the variable to what we want.
             myItems = myItemsList.getItemList();
             //"initialize" the itemcontroller
@@ -140,6 +131,7 @@ public class MyItemsActivity extends AppCompatActivity {
                 return false;
             }
         });
+        return view;
     }
 
     @Override

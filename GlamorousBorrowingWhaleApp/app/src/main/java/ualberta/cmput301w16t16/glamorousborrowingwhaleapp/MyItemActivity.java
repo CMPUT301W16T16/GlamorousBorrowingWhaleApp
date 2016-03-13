@@ -71,7 +71,11 @@ public class MyItemActivity extends AppCompatActivity {
         name.setText(item.getTitle());
         description.setText(item.getDescription());
         size.setText(item.getSize());
-        highestBid.setText(Double.toString(item.getHighestBidAmount()));
+        if (item.getHighestBidAmount() > 0) {
+            highestBid.setText(Double.toString(item.getHighestBidAmount()));
+        } else {
+            highestBid.setText("No bids yet. Bummer :(");
+        }
 
         if (item.getPhoto() != null) {
             byte[] tempPhoto = item.getPhoto();

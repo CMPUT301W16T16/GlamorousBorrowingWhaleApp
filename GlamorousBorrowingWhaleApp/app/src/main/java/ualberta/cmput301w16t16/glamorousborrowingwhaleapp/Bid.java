@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by Martina on 16-02-29.
  * This class keeps track of all the information relating to a bid and is
- * used by a few activities (IncomingBidsActivity, MyBidsactivity) to display
+ * used by a few activities (IncomingBids, MyBidsActivity) to display
  * a bids information
  * @author adam, andrew, erin, laura, martina
  */
