@@ -42,7 +42,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 //        itemsListView.setAdapter(adapter);
 //        adapter.notifyDataSetChanged();
 
-        // user popup: this should be moved to the Borrow page.
         itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -52,15 +51,15 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
         });
 
-        itemsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ItemController.setItem((Item) parent.getAdapter().getItem(position));
-                Intent intent = new Intent(view.getContext(), TheirItemActivity.class);
-                startActivity(intent);
-                return false;
-            }
-        });
+//        itemsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                ItemController.setItem((Item) parent.getAdapter().getItem(position));
+//                Intent intent = new Intent(view.getContext(), TheirItemActivity.class);
+//                startActivity(intent);
+//                return false;
+//            }
+//        });
 
     }
 
