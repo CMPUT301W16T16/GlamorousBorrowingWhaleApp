@@ -11,6 +11,8 @@ import java.util.Iterator;
  */
 
 public class BidList {
+    private User user;
+    private Item item;
     //note: added a constructor here for testing
     private ArrayList<Bid> bids = new ArrayList<Bid>();
     private Bid highestBid;

@@ -86,4 +86,6 @@ public class Bid {
     public void setItem(Item item) {
         this.item = item;
     }
+
+    public String toString() { return this.getItem() + ";" +  this.bidAmount; }
 }

@@ -1,8 +1,14 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,24 +46,32 @@ import io.searchbox.core.SearchResult;
  * @author adam, andrew, erin, laura, martina
  */
 
-public class ElasticSearch {
-
+public class ElasticSearch extends Application{
+    public Context context;
     // private final static String clientAddress = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/_search?&pretty";
 
     // elasticGetItems.execute(URL) takes in a URL (with /Item)... but it probably doesn't need to...
     // and retrieves all items on the ElasticSearch list, adding them to the returned ItemList.
     // Used in SearchResultsActivity, which also should sort somehow?
-    public static class elasticGetItems extends AsyncTask<TextView, String, ItemList> {
+    public static class elasticGetItems extends AsyncTask<ListView, String, ItemList> {
 
         TextView tv;
+        ListView itemsListView;
+        ArrayAdapter<Item> adapter;
+        Context context;
+
+        public elasticGetItems(Context context){
+            this.context = context;
+        }
+
 
         @Override
-        protected ItemList doInBackground(TextView... params) {
+        protected ItemList doInBackground(ListView... params) {
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             URL url;
-            tv = params[0];
+            itemsListView = params[0];
 
             try {
                 url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&pretty");
@@ -119,10 +133,16 @@ public class ElasticSearch {
         protected void onPostExecute(ItemList items) {
             super.onPostExecute(items);
             if (items != null) {
-                ArrayList<Item> itemsRelist = items.getItemList();
-                tv.setText("you did get an item list!! " + itemsRelist.get(0).getSize() + " " + itemsRelist.get(0).getTitle() + " " + itemsRelist.get(1).getSize() + " " + itemsRelist.get(1).getTitle());
+                //ArrayList<Item> itemsRelist = items.getItemList();
+                adapter = new ArrayAdapter<Item>(context, R.layout.list_item, items.getItemList());
+                itemsListView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                ItemController.setItemList(items);
+                Toast.makeText(context, "Search Finished!", Toast.LENGTH_SHORT).show();
+                //tv.setText("you did get an item list!! " + itemsRelist.get(0).getSize() + " " + itemsRelist.get(0).getTitle() + " " + itemsRelist.get(1).getSize() + " " + itemsRelist.get(1).getTitle());
             } else {
-                tv.setText("sorry bro");
+                //tv.setText("sorry bro");
+                Toast.makeText(context, "Sorry Bro, nothing here.", Toast.LENGTH_SHORT).show();
             }
         }
     }

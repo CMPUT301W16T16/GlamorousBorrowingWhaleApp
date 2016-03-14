@@ -17,6 +17,13 @@ public class Item {
     private BidList bids;
     private User owner;
 
+    public void Item() {
+        this.title = "";
+        this.description = "";
+        this.size = "";
+        this.availability = false;
+    }
+
     public String getTitle() {
         return title;
     }

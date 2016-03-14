@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -34,9 +35,15 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_profile);
+        User user;
 
-        User user = itemThatBroughtUsHere.getOwner();
-
+        // this should be removed by final
+        if (itemThatBroughtUsHere != null) {
+            user = itemThatBroughtUsHere.getOwner();
+        } else {
+            user = UserController.getUser();
+            Log.v("asd", user.toString());
+        }
         ImageView userImage = (ImageView) findViewById(R.id.userImage);
         if (user.getPhoto() != null) {
             byte[] tempPhoto = user.getPhoto();
