@@ -35,7 +35,7 @@ import java.util.ArrayList;
  */
 
 /**
- * I think at this point though this activity may have to be deleted to deal with the fragments?
+ * It's very possible that activity may have to be deleted to deal with the fragments
  */
 
 //TODO review lifecycle code

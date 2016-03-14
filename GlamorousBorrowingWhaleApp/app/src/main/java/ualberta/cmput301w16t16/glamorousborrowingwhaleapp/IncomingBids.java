@@ -11,7 +11,11 @@ import android.view.ViewGroup;
 
 /**
  * Created by erin on 13/03/16.
+ * Temporary class that might be used later to swipe left/right between two
+ * activites
+ * @author adam, andrew, erin, laura, martina
  */
+
 public class IncomingBids extends FragmentActivity {
 
     /*

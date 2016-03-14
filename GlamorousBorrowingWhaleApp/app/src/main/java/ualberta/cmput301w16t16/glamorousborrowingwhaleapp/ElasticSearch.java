@@ -283,8 +283,11 @@ public class ElasticSearch {
 
     }
 
-    // this will retrieve the user from elastic search using the username
-    // (at login and when viewing another user's item)
+    /**
+     * Retieves the user frmo elastic search using the username (at login and
+     * when viewing another user's item)
+     * @author adam, andrew, erin, laura, martina
+     */
     public static class elasticGetUser extends AsyncTask<String, String, User> {
 
         @Override

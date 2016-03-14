@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by andrew on 14/03/16.
+ * This page shows the bids the user has recieved on all their items in a list
+ * format.
+ * @author adam, andrew, erin, laura, martina
 */
 
 public class IncomingBidsActivity extends AppCompatActivity {

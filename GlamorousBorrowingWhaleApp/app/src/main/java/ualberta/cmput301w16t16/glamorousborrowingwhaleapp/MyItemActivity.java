@@ -48,8 +48,8 @@ public class MyItemActivity extends AppCompatActivity {
         // END
 
         /**
-         * sets the user and item for this activity and grabs the EditText things for use.
-          */
+         * Sets the user and item for this activity and grabs the EditText things for use.
+         */
         item = ItemController.getItem();
         user = UserController.getUser();
         owner = (EditText) findViewById(R.id.owner);
@@ -92,8 +92,11 @@ public class MyItemActivity extends AppCompatActivity {
         image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
         photoStream = photosNeedToBeCompressedToThis.toByteArray();
 
-        //saveButton is onClick and leverages the ItemController for its item.
-        //The item's attributes are then set from the EditText boxes.
+        /**
+         * saveButton is onClick and leverages the ItemController for its item.
+         * The item's attributes are then set from the EditText boxes.
+         */
+
         //TODO needs error checking and type check etc.
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +144,6 @@ public class MyItemActivity extends AppCompatActivity {
                 } else{
                     ItemController.setEmpty();
                 }
-
-
 
                 //recommend implementing some sort of undo mechanism
                 Toast.makeText(MyItemActivity.this, "Thing Deleted!", Toast.LENGTH_SHORT).show();
