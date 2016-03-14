@@ -16,6 +16,12 @@ public class MyBorrowedItemActivityUITest extends ActivityInstrumentationTestCas
     Activity activity = getActivity();
     EditText textInput;
 
+    protected void setUp() throws Exception {
+        super.setUp();
+        instrumentation = getInstrumentation();
+        activity = getActivity();
+    }
+
     // assert that the activity exists
     public void testActivityExists() {
         assertNotNull(activity);

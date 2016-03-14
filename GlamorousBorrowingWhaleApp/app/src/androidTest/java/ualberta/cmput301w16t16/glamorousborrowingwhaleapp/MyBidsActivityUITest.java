@@ -22,6 +22,12 @@ public class MyBidsActivityUITest extends ActivityInstrumentationTestCase2<MyBid
         super(MyBidsActivity.class);
     }
 
+    protected void setUp() throws Exception {
+        super.setUp();
+        instrumentation = getInstrumentation();
+        activity = getActivity();
+    }
+
     // assert that the activity exists
     public void testActivityExists() {
         assertNotNull(activity);

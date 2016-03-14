@@ -8,6 +8,8 @@ import android.widget.ListView;
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
+
+// many of these are scattered into the model class tests (UserTest, ItemTest, etc..)
 public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);
@@ -204,18 +206,9 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         Item equipment = new Item();
         equipment.setTitle("toboggan");
         owner.getItemsRenting().add(equipment);
-        assertEquals(owner.getItemsRenting().getItem("Hockey stick").getStatus() == "Available");
         Bid bid = new Bid(equipment, 5.00);
         equipment.addBid(bid);
-        owner.addIncomingBid(bid);
-        owner.getItem(equipment).setStatus("Bidded");
-        assertEquals(equipment.getStatus = "Bidded");
-        assertTrue(owner.hasIncomingBid(bid));
-        assertTrue(borrower1.hasBid(bid));
-        assertFalse(borrower2.hasBid(bid));
-
-        assertTrue(owner.getIncomingBid(bid).getStatus() == "Bidded");
-        assertTrue(borrower1.getBid(bid).getStatus() == "Bidded");
+        assertFalse(equipment.getBids().isEmpty());
     }
 
     // assert that an item set as borrowed will be displayed as borrowed to the owner and the borrower
