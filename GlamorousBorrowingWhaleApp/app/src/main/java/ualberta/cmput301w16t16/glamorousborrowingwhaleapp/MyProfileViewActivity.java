@@ -42,10 +42,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
     private TextView profileEmail;
     private ImageView profilePictureView;
 
-    private Button buttonMyBids;
-    private Button buttonMyStuff;
-    private Button buttonSearch;
-
     private User user = UserController.getUser();
 
     @Override
@@ -70,9 +66,11 @@ public class MyProfileViewActivity extends AppCompatActivity {
         }
 
         //Initialize the buttons.
-        buttonMyBids = (Button) findViewById(R.id.buttonMyBids);
-        buttonMyStuff = (Button) findViewById(R.id.buttonMyStuff);
-        buttonSearch = (Button) findViewById(R.id.buttonBorrowSearch);
+        Button buttonMyBids = (Button) findViewById(R.id.buttonMyBids);
+        Button buttonMyStuff = (Button) findViewById(R.id.buttonMyStuff);
+        Button buttonSearch = (Button) findViewById(R.id.buttonBorrowSearch);
+        Button buttonIncomingBids = (Button) findViewById(R.id.buttonIncomingBids);
+        Button buttonMyBorrowing = (Button) findViewById(R.id.buttonMyBorrowing);
 
         //Setting the longClickListeners for the text boxes. If a user wishes to edit something,
         //a long click on the box will send to longClick() which brings up a popup window!
@@ -124,7 +122,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         buttonMyBids.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MyBorrowedItemsActivity.class);
+                Intent intent = new Intent(v.getContext(), MyBidsActivity.class);
                 startActivity(intent);
             }
         });
@@ -135,6 +133,23 @@ public class MyProfileViewActivity extends AppCompatActivity {
                 Intent intent = new Intent(v.getContext(), MyItemsActivity.class);
                 startActivity(intent);
                 setResult(Activity.RESULT_OK, intent);
+            }
+        });
+
+        //The button clickListeners. Each sends to its corresponding activity.
+        buttonIncomingBids.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), IncomingBidsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonMyBorrowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MyBorrowedItemsActivity.class);
+                startActivity(intent);
             }
         });
 

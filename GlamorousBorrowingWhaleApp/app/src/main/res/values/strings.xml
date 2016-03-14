@@ -10,10 +10,12 @@
     <string name="title_activity_view_my_item">ViewMyItemActivity</string>
     <string name="my_stuff">My Stuff</string>
     <string name="my_bids">My Bids</string>
-    <string name="borrow">Borrow</string>
+    <string name="borrow">Search</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="phone">Phone</string>
     <string name="confirm">Confirm</string>
     <string name="title_activity_my_items_incoming_bids">MyItemsIncomingBidsActivity</string>
+    <string name="incoming_bids">Incoming Bids</string>
+    <string name="borrowed_items">Borrowed Items</string>
 </resources>

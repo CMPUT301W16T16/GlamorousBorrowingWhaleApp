@@ -27,10 +27,10 @@
         <activity android:name=".TheirItemActivity"></activity>
         <activity android:name=".MyItemsActivity"></activity>
         <activity android:name=".NewListingActivity"></activity>
-        <activity
-            android:name=".MyItemsIncomingBidsActivity"
-            android:label="@string/title_activity_my_items_incoming_bids"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".IncomingBidsActivity"></activity>
+            <!--android:name=".MyItemsIncomingBidsActivity"-->
+            <!--android:label="@string/title_activity_my_items_incoming_bids"-->
+            <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->
     </application>
 
 </manifest>
