@@ -10,7 +10,7 @@ import android.widget.TextView;
  * format.
  * @author adam, andrew, erin, laura, martina
 */
-
+gone
 public class IncomingBidsActivity extends AppCompatActivity {
 
     @Override
@@ -34,5 +34,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
             }
         }
         // TODO make these actually human readable
+        tv.setText("really neat jacket, 90.85");
     }
 }
