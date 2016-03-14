@@ -36,7 +36,7 @@
         android:layout_alignEnd="@+id/username"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewForTesting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:text="sign up"
         android:id="@+id/sign_up_button"
-        android:layout_alignBottom="@+id/textView"
+        android:layout_alignBottom="@+id/textViewForTesting"
         android:layout_alignEnd="@+id/login_button"/>
 
     <ImageView
