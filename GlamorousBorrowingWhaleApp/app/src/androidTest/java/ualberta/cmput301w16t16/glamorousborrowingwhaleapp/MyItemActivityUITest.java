@@ -20,7 +20,11 @@ public class MyItemActivityUITest extends ActivityInstrumentationTestCase2 {
         super.setUp();
         instrumentation = getInstrumentation();
         activity = getActivity();
-        textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
+    }
+
+    // assert that the activity exists
+    public void testActivityExists() {
+        assertNotNull(activity);
     }
 
     public void onActivityResultTest() {
