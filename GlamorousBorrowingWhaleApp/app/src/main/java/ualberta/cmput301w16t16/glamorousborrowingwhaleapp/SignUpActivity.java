@@ -82,6 +82,12 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     latestUser.setPhoto(photoStream);
                     users.add(latestUser);
                     UserController.setUser(latestUser);
+                    //*****Hi There - Fake User Creation Here!!*****
+                    User otherUser = new User("Michelangelo Ferdinand", "ilikepizza2321@aol.com",
+                            "18002672001");
+                    otherUser.setItemsBorrowing(null);
+                    otherUser.setItemsRenting(null);
+                    UserController.setOtherUser(otherUser);
 
                     setResult(RESULT_OK);
 
@@ -107,6 +113,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
 
         });
     }
+
     // also pictures
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -123,6 +130,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
     /**
      * Converts the input given in the activity into strings that can then be
      * added to the User class.
+     *
      * @author Martina
      */
     public void convertInputToString() {

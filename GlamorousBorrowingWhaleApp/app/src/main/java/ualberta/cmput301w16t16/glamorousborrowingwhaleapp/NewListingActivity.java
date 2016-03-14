@@ -137,6 +137,7 @@ public class NewListingActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        //this also clears on home button press. Issue for sure.
         super.onPause();
         name.setText("");
         size.setText("");
