@@ -8,6 +8,10 @@ import android.test.ApplicationTestCase;
 /**
  * Created by erin on 13/03/16.
  */
+
+/*
+this activity is not currently in use
+
 public class ProfileDialogUITest extends ActivityInstrumentationTestCase2<ProfileDialog> {
     public ProfileDialogUITest() { super(ProfileDialog.class); }
 
@@ -26,3 +30,4 @@ public class ProfileDialogUITest extends ActivityInstrumentationTestCase2<Profil
         assertNotNull(activity);
     }
 }
+*/

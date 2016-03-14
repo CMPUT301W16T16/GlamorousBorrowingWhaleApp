@@ -7,6 +7,10 @@ import android.test.ApplicationTestCase;
 /**
  * Created by erin on 13/03/16.
  */
+
+/*
+this activity is not currently in use
+
 public class MyItemsIncomingBidsActivityUITest extends ActivityInstrumentationTestCase2<MyItemsIncomingBidsActivity> {
     public MyItemsIncomingBidsActivityUITest() { super(MyItemsIncomingBidsActivity.class); }
 
@@ -17,3 +21,4 @@ public class MyItemsIncomingBidsActivityUITest extends ActivityInstrumentationTe
         assertNotNull(activity);
     }
 }
+*/
