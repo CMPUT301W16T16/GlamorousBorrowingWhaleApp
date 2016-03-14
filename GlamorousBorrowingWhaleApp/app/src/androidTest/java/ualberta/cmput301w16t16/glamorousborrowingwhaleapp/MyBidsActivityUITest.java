@@ -8,11 +8,11 @@ import android.widget.EditText;
 /**
  * Created by Martina on 16-02-12.
  */
-public class MyBidsActivityTest extends ActivityInstrumentationTestCase2 {
+public class MyBidsActivityUITest extends ActivityInstrumentationTestCase2 {
     Instrumentation instrumentation;
     Activity activity;
     EditText textInput;
-    public MyBidsActivityTest() {
+    public MyBidsActivityUITest() {
         super(MyBidsActivity.class);
     }
 

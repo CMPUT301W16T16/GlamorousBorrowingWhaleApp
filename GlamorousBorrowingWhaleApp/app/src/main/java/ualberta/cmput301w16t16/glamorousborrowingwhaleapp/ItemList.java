@@ -61,4 +61,19 @@ public class ItemList implements Iterable<Item> {
         };
         return it;
     }
+
+    // clears everything in the itemList (mostly used in testing)
+    public void clear() {
+        itemList.clear();
+    }
+
+    // checks to see if an item is in the itemList (mostly used in testing)
+    public Boolean hasItem(Item item) {
+        return itemList.contains(item);
+    }
+
+    // checks to see if the itemList is empty
+    public Boolean isEmpty() {
+        return itemList.isEmpty();
+    }
 }

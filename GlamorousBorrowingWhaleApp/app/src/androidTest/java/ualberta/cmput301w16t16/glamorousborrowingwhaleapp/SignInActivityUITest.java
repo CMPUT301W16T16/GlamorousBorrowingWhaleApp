@@ -3,16 +3,15 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.EditText;
+import android.widget.Button;
 
 /**
  * Created by Martina on 16-02-12.
  */
-public class SignInActivityTest extends ActivityInstrumentationTestCase2 {
+public class SignInActivityUITest extends ActivityInstrumentationTestCase2 {
     Instrumentation instrumentation;
     Activity activity;
-    EditText textInput;
-    public SignInActivityTest() {
+    public SignInActivityUITest() {
         super(SignInActivity.class);
     }
 
@@ -20,5 +19,6 @@ public class SignInActivityTest extends ActivityInstrumentationTestCase2 {
         super.setUp();
         instrumentation = getInstrumentation();
         activity = getActivity();
+
     }
 }

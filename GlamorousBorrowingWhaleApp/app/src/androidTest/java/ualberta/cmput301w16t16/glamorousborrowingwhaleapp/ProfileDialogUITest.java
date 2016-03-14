@@ -6,6 +6,6 @@ import android.test.ApplicationTestCase;
 /**
  * Created by erin on 13/03/16.
  */
-public class ProfileDialogTest extends ApplicationTestCase<Application> {
-    public ProfileDialogTest() { super(Application.class); }
+public class ProfileDialogUITest extends ApplicationTestCase<Application> {
+    public ProfileDialogUITest() { super(Application.class); }
 }

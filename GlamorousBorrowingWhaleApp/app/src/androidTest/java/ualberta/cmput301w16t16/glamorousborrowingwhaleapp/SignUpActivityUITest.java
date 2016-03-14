@@ -8,12 +8,13 @@ import android.widget.EditText;
 /**
  * Created by Martina on 16-02-12.
  */
-public class SearchResultsActivityTest extends ActivityInstrumentationTestCase2 {
+public class SignUpActivityUITest extends ActivityInstrumentationTestCase2 {
     Instrumentation instrumentation;
     Activity activity;
     EditText textInput;
-    public SearchResultsActivityTest() {
-        super(SearchResultsActivity.class);
+
+    public SignUpActivityUITest() {
+        super(SignUpActivity.class);
     }
 
     protected void setUp() throws Exception {
@@ -23,3 +24,4 @@ public class SearchResultsActivityTest extends ActivityInstrumentationTestCase2 
         textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
     }
 }
+

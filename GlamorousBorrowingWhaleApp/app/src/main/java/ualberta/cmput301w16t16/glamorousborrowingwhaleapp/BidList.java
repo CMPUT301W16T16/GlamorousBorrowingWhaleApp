@@ -51,4 +51,8 @@ public class BidList {
     public Boolean hasBid(Bid bid) {
         return this.bids.contains(bid);
     }
+
+    public Boolean isEmpty() {
+        return bids.isEmpty();
+    }
 }
