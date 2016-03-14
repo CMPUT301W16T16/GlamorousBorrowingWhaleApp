@@ -35,7 +35,10 @@ public class ItemList implements Iterable<Item> {
         return itemList.size();
     }
 
-    // this method allows you to iterate over item list
+    /**
+     * This method allows you to iterate over item list
+     */
+
     // (useful when converting to JSON when writing to ElasticSearch)
     // taken Mar-13-2016 from http://stackoverflow.com/questions/5849154/can-we-write-our-own-iterator-in-java
     @Override

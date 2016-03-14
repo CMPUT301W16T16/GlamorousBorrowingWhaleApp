@@ -27,7 +27,11 @@ import java.util.ArrayList;
 
 /**
  * Created by erin on 13/03/16.
+ * Temporary class that might be used later to swipe left/right between two
+ * activites.
+ * @author adam, andrew, erin, laura, martina
  */
+
 public class MyItems extends FragmentActivity {
     //ListView vaguely follows in lab example LonelyTwitter
     //https://github.com/AdamGualberta/lonelyTwitter/blob/tuesday/app/src/main/java/ca/ualberta/cs/lonelytwitter/LonelyTwitterActivity.java

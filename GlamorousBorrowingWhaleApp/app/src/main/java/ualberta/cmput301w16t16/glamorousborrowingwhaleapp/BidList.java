@@ -27,6 +27,12 @@ public class BidList {
         return bids;
     }
 
+    /**
+     * This function returns the highest bid which is displayed in an item page
+     * so the user can decide which bid they want to accept
+     * @author adam, andrew, erin, laura, martina
+     * @return the highest bid in an items bid list
+     */
     public Bid getHighestBid() {
         //TODO implement a check if the bidlist has been touched - if not, don't bother doing this loop
         //If this bidlist is not empty, do this loop to find the highest bid.

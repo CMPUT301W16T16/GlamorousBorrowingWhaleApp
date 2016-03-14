@@ -6,7 +6,9 @@ import java.util.ArrayList;
 /**
  * Created by Martina on 16-03-10.
  * Holds the current + another user so it can be referenced throughout the app
+ * @author martina
  */
+
 //Is the controller for the user. Persistent throughout the user session.
 public class UserController {
     private static User user;
