@@ -4,6 +4,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 /**
  * This activity, much like MyItemsActivity, lists the items that the user is
@@ -21,6 +22,8 @@ public class MyBorrowedItemsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_borrowed_items);
-        setTitle("Items I've Borrowed");
+        setTitle("Items You've Borrowed");
+        TextView tv = (TextView) findViewById(R.id.borrowingList);
+        tv.setText("You have borrowed no items.");
     }
 }
