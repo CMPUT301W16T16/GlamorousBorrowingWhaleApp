@@ -7,13 +7,13 @@ import android.test.ApplicationTestCase;
 /**
  * Created by erin on 13/03/16.
  */
-public class MyItemsIncomingBidsActivityUITest extends ActivityInstrumentationTestCase2<MyItemsIncomingBidsActivity> {
-    public MyItemsIncomingBidsActivityUITest() { super(MyItemsIncomingBidsActivity.class); }
-
-    MyItemsIncomingBidsActivity activity = getActivity();
-
-    // assert that the activity exists
-    public void testActivityExists() {
-        assertNotNull(activity);
-    }
-}
+//public class MyItemsIncomingBidsActivityUITest extends ActivityInstrumentationTestCase2<MyItemsIncomingBidsActivity> {
+//    public MyItemsIncomingBidsActivityUITest() { super(MyItemsIncomingBidsActivity.class); }
+//
+//    MyItemsIncomingBidsActivity activity = getActivity();
+//
+//    // assert that the activity exists
+//    public void testActivityExists() {
+//        assertNotNull(activity);
+//    }
+//}
