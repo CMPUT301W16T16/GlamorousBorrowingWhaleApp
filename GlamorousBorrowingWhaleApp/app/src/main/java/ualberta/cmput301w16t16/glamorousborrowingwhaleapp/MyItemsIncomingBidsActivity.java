@@ -14,7 +14,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MyItemsIncomingBidsActivity extends AppCompatActivity {
+
     public static final int FRAGMENT_ONE = 0;
     public static final int FRAGMENT_TWO = 1;
     public static final int FRAGMENTS = 2;
@@ -57,4 +59,5 @@ public class MyItemsIncomingBidsActivity extends AppCompatActivity {
     }
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+
 }

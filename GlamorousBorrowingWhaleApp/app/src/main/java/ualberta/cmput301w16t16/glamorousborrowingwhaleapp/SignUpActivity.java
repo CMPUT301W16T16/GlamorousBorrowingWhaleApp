@@ -86,10 +86,11 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     setResult(RESULT_OK);
 
                     // TODO ES CALL: use the following to add the new user to ES
-                    // new ElasticSearch.elasticAddUser().execute(latestUser);
+                    // the user is not currently ending up in the elasticsearch, but the app doesn't crash here
+                    new ElasticSearch.elasticAddUser().execute(latestUser);
 
                     Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
-                    //intent.putExtra("NEW_USER", latestUser);
+
                     startActivity(intent);
                     //Toast.makeText(SignUpActivity.this, "New User Created!", Toast.LENGTH_SHORT).show();
                 }
@@ -122,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
     /**
      * Converts the input given in the activity into strings that can then be
      * added to the User class.
-     * @author martina I think?
+     * @author Martina
      */
     public void convertInputToString() {
         username = enteredUsername.getText().toString();

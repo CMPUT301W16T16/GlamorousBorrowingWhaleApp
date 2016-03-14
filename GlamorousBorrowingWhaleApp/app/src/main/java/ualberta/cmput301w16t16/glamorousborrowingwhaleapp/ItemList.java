@@ -1,6 +1,8 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Martina on 16-02-29.
@@ -8,9 +10,10 @@ import java.util.ArrayList;
  * to control. Also benefits as a sort of ADT to the app.
  * @author adam, andrew, erin, laura, martina
  */
-public class ItemList {
-    private ArrayList<Item> itemList = new ArrayList<>();
+public class ItemList implements Iterable<Item> {
+    private ArrayList<Item> itemList = new ArrayList<Item>();
     //note - if setItemList is called, then this is overwritten. Problem? Good Question.
+    private int currentSize = itemList.size();
 
     public void add(Item item) {
         itemList.add(item);
@@ -26,5 +29,36 @@ public class ItemList {
 
     public void setItemList(ArrayList<Item> itemList) {
         this.itemList = itemList;
+    }
+
+    public int getLength() {
+        return itemList.size();
+    }
+
+    // this method allows you to iterate over item list
+    // (useful when converting to JSON when writing to ElasticSearch)
+    // taken Mar-13-2016 from http://stackoverflow.com/questions/5849154/can-we-write-our-own-iterator-in-java
+    @Override
+    public Iterator<Item> iterator() {
+        Iterator<Item> it = new Iterator<Item>() {
+
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < currentSize && itemList.get(currentIndex) != null;
+            }
+
+            @Override
+            public Item next() {
+                return itemList.get(currentIndex++);
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+        return it;
     }
 }

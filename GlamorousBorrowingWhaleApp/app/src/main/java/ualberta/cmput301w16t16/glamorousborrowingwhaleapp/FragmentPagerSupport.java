@@ -21,7 +21,9 @@ import android.widget.TextView;
  * Created by erin on 13/03/16.
  */
 
+
 public class FragmentPagerSupport extends FragmentActivity {
+
     static final int NUM_ITEMS = 10;
 
     MyAdapter mAdapter;
@@ -62,6 +64,8 @@ public class FragmentPagerSupport extends FragmentActivity {
          * Create a new instance of CountingFragment, providing "num"
          * as an argument.
          */
+
+
         static ArrayListFragment newInstance(int num) {
             ArrayListFragment f = new ArrayListFragment();
 
@@ -76,6 +80,8 @@ public class FragmentPagerSupport extends FragmentActivity {
         /**
          * When creating, retrieve this instance's number from its arguments.
          */
+
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -86,6 +92,8 @@ public class FragmentPagerSupport extends FragmentActivity {
          * The Fragment's UI is just a simple text view showing its
          * instance number.
          */
+
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.fragment_pager_list, container, false);
@@ -106,4 +114,6 @@ public class FragmentPagerSupport extends FragmentActivity {
             Log.i("FragmentList", "Item clicked: " + id);
         }
     }
+
+
 }

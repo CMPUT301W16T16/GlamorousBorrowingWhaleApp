@@ -1,9 +1,11 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
@@ -20,6 +22,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,6 +160,7 @@ public class ElasticSearch {
         // the following worked:
         // http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/ in the URL and  {"name":"mouse", "size":"tiny"} in the body
 
+        User user = UserController.getUser();
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -166,7 +170,7 @@ public class ElasticSearch {
         protected String doInBackground(User... params) {
 
             HttpURLConnection connection = null;
-            BufferedReader reader = null;
+            BufferedReader writer = null;
             URL url;
 
             try {
@@ -178,9 +182,48 @@ public class ElasticSearch {
                 connection.connect();
                 OutputStream stream = connection.getOutputStream();
 
+                // this isn't currently working, although it isn't causing a crash either
+                // the json created below looks like {"username":<the user's name>, "emailAddress":<the user's email address>, etc... }
+                // and I'm not sure if that's exactly the thing we're supposed to be writing to the output stream
+                // taken Mar-13-2016 from http://stackoverflow.com/questions/18983185/how-to-create-correct-jsonarray-in-java-using-jsonobject
+                JSONObject jo = new JSONObject();
+                jo.put("username", user.getName());
+                jo.put("emailAddress", user.getEmailAddress());
+                jo.put("phoneNumber", user.getPhoneNumber());
+                // when getting photo back there is an extra step to convert back to byte
+                jo.put("photo", user.getPhoto());
+
+                // array containing the items in itemsBorrowing
+                // will all be separate when getting them back to they will have to be put
+                // into an array and then set as the user's items borrowing
+                JSONArray ib = new JSONArray();
+                for(Item item: user.getItemsBorrowing()) {
+                    // this should probably be serialized to JSON?
+                    ib.put(item);
+                }
+                jo.put("itemsBorrowing", ib);
+
+                // array containing the items in itemsRenting
+                // same notes as with items borrowing
+                JSONArray ir = new JSONArray();
+                for(Item item: user.getItemsRenting()) {
+                    ir.put(item);
+                }
+                jo.put("itemsRenting", ir);
+
+                // ja is the array containing the entire message
+                JSONArray ja = new JSONArray();
+                ja.put(jo);
+
+                JSONObject mainObj = new JSONObject();
+                mainObj.put("", ja);
+
                 // actually write to that output stream here
+                stream.write(mainObj.toString().getBytes());
 
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
