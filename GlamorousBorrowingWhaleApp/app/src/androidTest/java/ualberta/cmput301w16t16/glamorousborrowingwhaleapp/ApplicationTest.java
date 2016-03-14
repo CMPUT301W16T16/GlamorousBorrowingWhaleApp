@@ -25,10 +25,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // add the equipment item to the second user's list of equipment
         // check that the equipment item is in the user's list of equipment
 
-        User owner = new User();
-        Equipment equipment = new Equipment();
-        owner.addEquipment(equipment);
-        assertTrue(owner.hasEquipment(equipment));
+        User owner = new User("name", "email", "phone");
+        Item equipment = new Item();
+        owner.addItemRenting(equipment);
+        assertTrue(owner.hasItem(equipment));
     }
 
     // assert that the add button starts the AddItem activity and returns all the inputted
@@ -57,8 +57,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that each item has description and status visible
 
         User owner = new User();
-        Equipment equipment = newEquipment();
-        owner.addEquipment(equipment);
+        Item equipment = newEquipment();
+        owner.addItemRenting(equipment);
     }
 
     // assert that there will be nothing in the ListView if the owner owns no equipment

@@ -22,4 +22,16 @@ public class MyItemActivityUITest extends ActivityInstrumentationTestCase2 {
         activity = getActivity();
         textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
     }
+
+    public void onActivityResultTest() {
+
+    }
+
+    public void onResumeTest() {
+
+    }
+
+    public void onStopTest() {
+
+    }
 }

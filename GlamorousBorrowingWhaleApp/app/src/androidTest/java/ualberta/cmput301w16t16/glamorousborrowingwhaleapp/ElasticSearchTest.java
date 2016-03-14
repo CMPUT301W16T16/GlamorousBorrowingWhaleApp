@@ -1,7 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Application;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.ApplicationTestCase;
 
 /**
@@ -32,7 +31,5 @@ public class ElasticSearchTest extends ApplicationTestCase<Application> {
         user.setItemsRenting(ir);
 
         new ElasticSearch.elasticAddUser().execute(user);
-
     }
-
 }
