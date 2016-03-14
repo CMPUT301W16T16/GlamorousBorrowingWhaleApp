@@ -34,7 +34,5 @@ public class IncomingBidsActivity extends AppCompatActivity {
             }
         }
         // TODO make these actually human readable
-        tv.setText(bidsToShow.getBids().toString());
     }
-
 }
