@@ -1,7 +1,12 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.test.ApplicationTestCase;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by erin on 13/03/16.
@@ -15,52 +20,7 @@ public class UserTest extends ApplicationTestCase<Application> {
     public void testGetPhoto() {
 
     }
-    public void testSetName() {
-
-    }
-    public void testGetName() {
-
-    }
-    public  void testSetEmailAddress() {
-
-    }
-    public void testGetEmailAddress() {
-
-    }
-    public void testSetPhoneNumber() {
-
-    }
-    public void testGetPhoneNumber() {
-
-    }
-    public void testGetItemsBorrowing() {
-
-    }
-    public void testSetItemsBorrowing() {
-
-    }
-    public void testGetItemsRenting() {
-
-    }
-    public void testSetItemsRenting() {
-
-    }
-    public void testAddItemBorrowing() {
-
-    }
-    public void testRemoveItemBorrowing() {
-
-    }
-    public void testAddItemRenting() {
-
-    }
-    public void testRemoveItemRenting() {
-
-    }
-    public void testSetId() {
-
-    }
-    public void testGetId() {
+    public void testAddItem() {
 
     }
 }
