@@ -46,4 +46,9 @@ public class BidList {
         }
         return highestBid;
     }
+
+    // checks to see if the current bid is in the bidlist (mainly for testing)
+    public Boolean hasBid(Bid bid) {
+        return this.bids.contains(bid);
+    }
 }

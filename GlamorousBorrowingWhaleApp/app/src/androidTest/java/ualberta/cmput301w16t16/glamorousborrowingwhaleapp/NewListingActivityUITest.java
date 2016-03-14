@@ -1,5 +1,7 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.Application;
+import android.test.ApplicationTestCase;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -7,8 +9,8 @@ import java.util.ArrayList;
 /**
  * Created by erin on 13/03/16.
  */
-public class NewListingActivityUITest {
-    public void NewListingActivityUITest() { super(NewListingActivity.class); }
+public class NewListingActivityUITest extends ApplicationTestCase<Application> {
+    public NewListingActivityUITest() { super(Application.class); }
 
     protected void setUp() throws Exception {
         super.setUp();

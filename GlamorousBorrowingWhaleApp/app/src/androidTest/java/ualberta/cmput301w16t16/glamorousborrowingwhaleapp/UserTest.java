@@ -1,63 +1,66 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.Application;
+import android.test.ApplicationTestCase;
+
 /**
  * Created by erin on 13/03/16.
  */
-public class UserTest {
-    public UserTest() { super(User.class); }
+public class UserTest extends ApplicationTestCase<Application> {
+    public UserTest() { super(Application.class); }
 
-    public void setPhotoTest() {
-
-    }
-    public void getPhotoTest() {
+    public void testSetPhoto() {
 
     }
-    public void setNameTest() {
+    public void testGetPhoto() {
 
     }
-    public void getNameTest() {
+    public void testSetName() {
 
     }
-    public  void setEmailAddressTest() {
+    public void testGetName() {
 
     }
-    public void getEmailAddressTest() {
+    public  void testSetEmailAddress() {
 
     }
-    public void setPhoneNumberTest() {
+    public void testGetEmailAddress() {
 
     }
-    public void getPhoneNumberTest() {
+    public void testSetPhoneNumber() {
 
     }
-    public void getItemsBorrowingTest() {
+    public void testGetPhoneNumber() {
 
     }
-    public void setItemsBorrowingTest() {
+    public void testGetItemsBorrowing() {
 
     }
-    public void getItemsRentingTest() {
+    public void testSetItemsBorrowing() {
 
     }
-    public void setItemsRentingTest() {
+    public void testGetItemsRenting() {
 
     }
-    public void addItemBorrowingTest() {
+    public void testSetItemsRenting() {
 
     }
-    public void removeItemBorrowingTest() {
+    public void testAddItemBorrowing() {
 
     }
-    public void addItemRentingTest() {
+    public void testRemoveItemBorrowing() {
 
     }
-    public void removeItemRentingTest() {
+    public void testAddItemRenting() {
 
     }
-    public void setId() {
+    public void testRemoveItemRenting() {
 
     }
-    public void getId() {
+    public void testSetId() {
+
+    }
+    public void testGetId() {
 
     }
 }
