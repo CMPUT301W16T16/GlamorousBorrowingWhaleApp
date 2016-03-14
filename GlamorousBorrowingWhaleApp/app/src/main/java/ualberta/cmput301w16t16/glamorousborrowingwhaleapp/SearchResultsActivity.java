@@ -37,26 +37,30 @@ public class SearchResultsActivity extends AppCompatActivity {
         //adapter = new ArrayAdapter<Item>(SearchResultsActivity.this, R.layout.list_item, items.getItemList());
         //itemsListView.setAdapter(adapter);
         new ElasticSearch.elasticGetItems(getApplicationContext()).execute(itemsListView);
-        // I have no clue if the following is proper, it was Android Studio doing that autocomplete
-        // thing.
-        /* Doesn't work atm, IDK why yet.*/
-        /*adapter = new ArrayAdapter<Item>(this, R.layout.list_item, ItemController.getItemList().getItemList());
-        itemsListView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+
+//        adapter = new ArrayAdapter<Item>(this, R.layout.list_item, ItemController.getItemList().getItemList());
+//        itemsListView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+
+        // user popup: this should be moved to the Borrow page.
+        itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ProfileDialog profile = new ProfileDialog(SearchResultsActivity.this, null);
+                profile.show();
+                //android says memory leak error here.
+            }
+        });
+
         itemsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //This chunk is pretty neat. The ViewAdapter makes note of what is clicked in
-                //the dynamic list which is used to get the corresponding Item at that "position".
-                //Again leveraging the ItemController, we can set that Item as the current Item
-                //and send the user to the MyItemActivity with the current Item (the one
-                //that they selected!).
                 ItemController.setItem((Item) parent.getAdapter().getItem(position));
                 Intent intent = new Intent(view.getContext(), TheirItemActivity.class);
                 startActivity(intent);
                 return false;
             }
-        });*/
+        });
 
     }
 

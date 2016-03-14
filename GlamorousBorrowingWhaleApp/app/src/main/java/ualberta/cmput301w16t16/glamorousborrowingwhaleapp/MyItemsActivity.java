@@ -114,18 +114,6 @@ public class MyItemsActivity extends AppCompatActivity {
             }
         });
 
-        // user popup: this should be moved to the Borrow page.
-        /*myItemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ProfileDialog profile = new ProfileDialog(MyItemsActivity.this, getAdapter().getItem(position));
-                profile.show();
-                //android says memory leak error here.
-            }
-        });*/
-
-        // I have no clue if the following is proper, it was Android Studio doing that autocomplete
-        // thing.
         myItemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
