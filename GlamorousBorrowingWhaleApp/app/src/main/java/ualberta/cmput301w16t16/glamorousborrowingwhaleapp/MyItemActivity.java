@@ -43,12 +43,13 @@ public class MyItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item);
-        //taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
+        // Taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
         setTitle("My Item");
-        //END
+        // END
 
-        //This chunk sets the user and item for this activity
-        //and grabs the EditText things for use.
+        /**
+         * sets the user and item for this activity and grabs the EditText things for use.
+          */
         item = ItemController.getItem();
         user = UserController.getUser();
         owner = (EditText) findViewById(R.id.owner);
@@ -111,14 +112,17 @@ public class MyItemActivity extends AppCompatActivity {
             }
         });
 
-        //deleteButton deletes the item in the current view. (Recall the ItemController has the
-        //item object).
-        //Involves legit removing the item from the user's itemsRenting list. This can have a negative
-        //impact as it may set the list to null (or worse) - to combat this we control it.
-        //If an action will set the list to null, we leverage the ItemController and set that to
-        //null, essentially "bypassing" the null list and it's many issues. Since the ItemController
-        //is in a "controlled" null state, code may be implemented elsewhere that can handle this
-        //simple condition.
+        /**
+         * deleteButton deletes the item in the current view. (Recall the ItemController has the
+         * item object).
+         * Involves legit removing the item from the user's itemsRenting list. This can have a negative
+         * impact as it may set the list to null (or worse) - to combat this we control it.
+         * If an action will set the list to null, we leverage the ItemController and set that to
+         * null, essentially "bypassing" the null list and it's many issues. Since the ItemController
+         * is in a "controlled" null state, code may be implemented elsewhere that can handle this
+         * simple condition.
+         */
+
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

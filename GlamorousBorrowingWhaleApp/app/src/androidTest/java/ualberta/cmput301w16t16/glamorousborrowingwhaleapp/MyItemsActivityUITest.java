@@ -41,6 +41,12 @@ public class MyItemsActivityUITest extends ActivityInstrumentationTestCase2 {
         assertTrue(owner.hasEquipment(equipment));
     }
 
+    public void onResumeTest() {
 
+    }
+
+    public void setFirstBidsTest() {
+        // This is just a temporary function
+    }
 
 }
