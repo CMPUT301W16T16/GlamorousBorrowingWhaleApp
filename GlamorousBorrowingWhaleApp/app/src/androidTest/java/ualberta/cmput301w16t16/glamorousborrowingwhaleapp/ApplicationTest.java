@@ -28,7 +28,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         User owner = new User("name", "email", "phone");
         Item equipment = new Item();
         owner.addItemRenting(equipment);
-        assertTrue(owner.hasItem(equipment));
+        assertTrue(owner.getItemsRenting().hasItem(equipment));
     }
 
     // assert that the add button starts the AddItem activity and returns all the inputted
@@ -56,8 +56,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that all items are visible in the main activity view
         // check that each item has description and status visible
 
-        User owner = new User();
-        Item equipment = newEquipment();
+        User owner = new User("mary", "mary@gmail.com", "123-456-7890");
+        Item equipment = new Item();
         owner.addItemRenting(equipment);
     }
 
@@ -82,24 +82,6 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     public void testEmptyViewOneItem() {
         // create equipment manager
         // assert that the ListView is not clickable
-    }
-
-    // 01.04.01 As an owner of equipment, I want to edit a piece of equipment in my list of owned equipment
-
-    // assert that changing the value of an item updates the item
-    public void testEditItem() {
-        // create equipment manager
-        // create an equipment item that belongs to the equipment manager
-        // change an aspect of the items description
-        // check that the description has been changed accurately
-
-        User owner = new User();
-        Equipment equipment = new Equipment("Hockey stick", "Child", "New");
-        owner.addEquipment(equipment);
-
-        assertTrue(owner.getEquipment("Hockey stick").getSize == "Child");
-        owner.getEquipment("Hockey Stick").editSize("Adult");
-        assertTrue(owner.getEquipment("Hockey stick").getSize == "Adult");
     }
 
     // assert that tapping on an item allows the item to be edited
@@ -139,12 +121,12 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the item is not in the list of the equipment manager's items
         // check that the item is not displayed in the main activity view
 
-        User owner = new User();
-        Equipment equipment = new Equipment("Hockey stick", "Adult", "New");
-        owner.addEquipment(equipment);
-        assertTrue(owner.hasEquipment(equipment));
-        owner.removeEquipment(equipment);
-        assertFalse(owner.hasEquipment(equipment));
+        User owner = new User("sally", "sally@gmail.com", "123");
+        Item equipment = new Item();
+        owner.addItemRenting(equipment);
+        assertTrue(owner.getItemsRenting().hasItem(equipment));
+        owner.getItemsRenting().remove(equipment);
+        assertFalse(owner.getItemsRenting().hasItem(equipment));
     }
 
     // assert that removing one of the user's items but leaving the rest removes
@@ -162,16 +144,18 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the removed item is no longer in the main activity view
         // check that the other item is still in the main activity view
 
-        User owner = new User();
-        Equipment equipment1 = new Equipment("Hockey stick", "Adult", "New");
-        Equipment equipment2 = new Equipment("Skates", "US 8", "New");
-        owner.addEquipment(equipment1);
-        owner.addEquipment(equipment2);
-        assertTrue(owner.hasEquipment(equipment1));
-        assertTrue(owner.hasEquipment(equipment2));
-        owner.removeEquipment(equipment1);
-        assertFalse(owner.hasEquipment(equipment1));
-        assertTrue(owner.hasEquipment(equipment2));
+        User owner = new User("joe", "joe@gmail.com", "123-456-7890");
+        Item equipment1 = new Item();
+        equipment1.setTitle("hockey stick");
+        Item equipment2 = new Item();
+        equipment2.setTitle("skates");
+        owner.getItemsRenting().add(equipment1);
+        owner.getItemsRenting().add(equipment2);
+        assertTrue(owner.getItemsRenting().hasItem(equipment1));
+        assertTrue(owner.getItemsRenting().hasItem(equipment2));
+        owner.getItemsRenting().remove(equipment1);
+        assertFalse(owner.getItemsRenting().hasItem(equipment1));
+        assertTrue(owner.getItemsRenting().hasItem(equipment2));
     }
 
     // assert that an item that does not belong to the owner cannot be removed from the
@@ -195,10 +179,11 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // set the status of the item to available
         // check that the item is visible to the user
 
-        User owner = new User();
-        Equipment equipment = new Equipment("Hockey stick", "Adult", "New");
-        owner.addEquipment(equipment);
-        assertEquals(equipment.getStatus() == "Available");
+        User owner = new User("billy bob", "bb@gmail.com", "123-456-7890");
+        Item equipment = new Item();
+        equipment.setTitle("hockey stick");
+        owner.getItemsRenting().add(equipment);
+        assertTrue(equipment.getAvailability());
     }
 
     // assert that an item set as bidded will be displayed as bidded to the owner and the bidder
@@ -213,16 +198,17 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         // check that the status of the item appears as "bidded" to owner
         // check that the status of the item appears as "available" to user2
 
-        User owner = new User();
-        User borrower1 = new Borrower();
-        User borrower2 = new Borrower();
-        Equipment equipment = new Equipment("Hockey stick", "Adult", "New");
-        owner.addEquipment(equipment);
-        assertEquals(owner.getEquipment("Hockey stick").getStatus() == "Available");
-        Bid bid = new Bid(equipment, 5);
-        borrower1.addBid(bid);
+        User owner = new User("arrow", "arrow@gmail.com", "1234567");
+        User borrower1 = new User("buster", "buster@gmail.com", "123");
+        User borrower2 = new User("rosey", "rosey@gmail.com", "456");
+        Item equipment = new Item();
+        equipment.setTitle("toboggan");
+        owner.getItemsRenting().add(equipment);
+        assertEquals(owner.getItemsRenting().getItem("Hockey stick").getStatus() == "Available");
+        Bid bid = new Bid(equipment, 5.00);
+        equipment.addBid(bid);
         owner.addIncomingBid(bid);
-        owner.getEquipment(equipment).setStatus("Bidded");
+        owner.getItem(equipment).setStatus("Bidded");
         assertEquals(equipment.getStatus = "Bidded");
         assertTrue(owner.hasIncomingBid(bid));
         assertTrue(borrower1.hasBid(bid));
@@ -355,7 +341,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     // of equipment not currently borrowed with its description, owner username, and status.
 
     //
-    public void testSearchUnborrowedEquipment() {
+    public void testSearchUnborrowedItem() {
 
     }
 
@@ -510,7 +496,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     // 05.05.01 As an owner of equipment, I want to view the bids on one of my pieces of equipment.
 
     // assert that bids can be viewed if there are bids
-    public void testViewBidsOnMyEquipment() {
+    public void testViewBidsOnMyItem() {
         // create first user
         // create second user
         // create equipment item that belongs to second user
@@ -520,7 +506,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     // assert that no bids will be seen if there are no bids
-    public void testViewNoBidsOnMyEquipment() {
+    public void testViewNoBidsOnMyItem() {
         // create user
         // check user can not see any incoming bids in ListView
     }
@@ -627,7 +613,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
     // 08.01.01 As an owner of equipment, I want to define new pieces of equipment while offline,
     // and push the additions once I get connectivity.
-    public void testDefineEquipmentOffline() {
+    public void testDefineItemOffline() {
         // make first user
         // make second user
 

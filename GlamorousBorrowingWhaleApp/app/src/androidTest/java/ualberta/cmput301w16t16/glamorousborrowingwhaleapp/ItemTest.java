@@ -65,11 +65,27 @@ public class ItemTest extends ApplicationTestCase<Application> {
 
     public void toStringTest() {
         Item item = new Item();
+
+        // assert that the returned string is empty since the item has no data yet;
+        assertEquals(item.toString(), "");
+
+        // adding data to the item
         item.setTitle("skates");
         item.setSize("women's US 8");
 
-        // assert the the returned string is as expected
+        // assert that the returned string is as expected
         assertEquals(item.toString(), "skates; women's US 8");
+    }
 
+    // testing that when an item is changed, it is updated everywhere
+    public void testEditItem() {
+        Item item = new Item();
+        item.setTitle("baseball glove");
+
+        User user = new User("billy", "billy@gmail.com", "123-456-7890");
+        user.getItemsRenting().add(item);
+
+        // assert that the item is currently correct for the user
+        assertTrue(user.getItemsRenting().hasItem(item));
     }
 }

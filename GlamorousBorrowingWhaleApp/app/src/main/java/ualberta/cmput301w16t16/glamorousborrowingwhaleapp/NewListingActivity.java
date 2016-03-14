@@ -93,7 +93,8 @@ public class NewListingActivity extends AppCompatActivity {
                 //List. We'll have to sort out some terminology here.
                 user.addItemRenting(item);//THE MEAT AND POTATOES RIGHT HERE
                 // TODO ES CALL: use the following to add the item to ES
-                new ElasticSearch.elasticAddItem().execute(item);
+                /* broken for some reason
+                new ElasticSearch.elasticAddItem().execute(item);*/
 
                 Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
                 finish();

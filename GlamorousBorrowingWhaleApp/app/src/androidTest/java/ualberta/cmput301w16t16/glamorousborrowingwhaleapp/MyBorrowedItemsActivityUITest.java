@@ -10,8 +10,7 @@ import android.widget.EditText;
  */
 public class MyBorrowedItemsActivityUITest extends ActivityInstrumentationTestCase2 {
     Instrumentation instrumentation;
-    Activity activity;
-    EditText textInput;
+    Activity activity = getActivity();
     public MyBorrowedItemsActivityUITest() {
         super(MyBorrowedItemsActivity.class);
     }
@@ -20,6 +19,10 @@ public class MyBorrowedItemsActivityUITest extends ActivityInstrumentationTestCa
         super.setUp();
         instrumentation = getInstrumentation();
         activity = getActivity();
-        textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
+    }
+
+    // assert that the activity exists
+    public void testActivityExists() {
+        assertNotNull(activity);
     }
 }

@@ -8,7 +8,7 @@ import android.widget.EditText;
 /**
  * Created by Martina on 16-02-12.
  */
-public class SignUpActivityUITest extends ActivityInstrumentationTestCase2 {
+public class SignUpActivityUITest extends ActivityInstrumentationTestCase2<SignUpActivity> {
     Instrumentation instrumentation;
     Activity activity;
     EditText textInput;
@@ -21,7 +21,11 @@ public class SignUpActivityUITest extends ActivityInstrumentationTestCase2 {
         super.setUp();
         instrumentation = getInstrumentation();
         activity = getActivity();
-        textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.body));
+    }
+
+    // assert that the activity exists
+    public void testActivityExists() {
+        assertNotNull(activity);
     }
 }
 

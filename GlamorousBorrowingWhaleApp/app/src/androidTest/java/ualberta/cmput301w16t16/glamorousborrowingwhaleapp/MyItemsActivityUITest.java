@@ -24,25 +24,16 @@ public class MyItemsActivityUITest extends ActivityInstrumentationTestCase2 {
         textInput = ((EditText) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.description));
     }
 
+    // assert that the activity exists
+    public void testActivityExists() {
+        assertNotNull(activity);
+    }
+
     // fills in the text field and clicks the save button
     public void makeItem(String text) {
         assertNotNull(activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.save));
         textInput.setText(text);
         ((Button) activity.findViewById(ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R.id.save)).performClick();
-    }
-    // 01.01.01
-    public void testAddItem() {
-        User owner = new User();
-        Equipment equipment = new Equipment();
-
-        assertFalse(owner.hasEquipment(equipment));
-        owner.addEquipment(equipment);
-
-        assertTrue(owner.hasEquipment(equipment));
-    }
-
-    public void onResumeTest() {
-
     }
 
     public void setFirstBidsTest() {
