@@ -1,4 +1,4 @@
-package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
+package ualberta.cmput301w16t16.glamorousborrowingwhaleapp.unused;
 
 import android.app.Fragment;
 import android.os.Bundle;

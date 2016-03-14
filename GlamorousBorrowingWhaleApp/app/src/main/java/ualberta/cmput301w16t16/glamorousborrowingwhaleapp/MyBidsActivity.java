@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 
 /**
@@ -23,6 +24,12 @@ public class MyBidsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_bids);
         setTitle("My Bids");
 
+        User user = UserController.getUser();
+        TextView tv = (TextView) findViewById(R.id.test_text_view);
+
+        BidList bidsToShow = new BidList();
+
+        tv.setText("No bids.");
     }
 }
 

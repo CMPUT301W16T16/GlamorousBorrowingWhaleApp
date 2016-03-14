@@ -35,7 +35,6 @@ public class User extends AppCompatActivity implements Serializable {
     private ItemList itemsRenting;
 
     //ID is for elasticsearch server
-    @JestId
     protected String ID;
 
     // need to include picture

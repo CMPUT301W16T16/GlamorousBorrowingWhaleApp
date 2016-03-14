@@ -165,6 +165,7 @@ public class ElasticSearch extends Application{
                 // and suppresses warnings, i think w/o it it retries the line after indefinitely
                 while (connection == null) {}
                 connection.connect();
+                connection.setDoOutput(true);
                 OutputStream stream = connection.getOutputStream();
 
                 // actually write to that output stream here

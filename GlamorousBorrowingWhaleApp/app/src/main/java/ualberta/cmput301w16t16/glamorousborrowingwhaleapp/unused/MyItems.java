@@ -1,13 +1,7 @@
-package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
+package ualberta.cmput301w16t16.glamorousborrowingwhaleapp.unused;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -15,15 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.Bid;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.BidList;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.Item;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.ItemController;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.ItemList;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyItemActivity;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.NewListingActivity;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.User;
+import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.UserController;
 
 /**
  * Created by erin on 13/03/16.
