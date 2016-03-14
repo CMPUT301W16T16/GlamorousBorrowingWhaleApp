@@ -138,9 +138,11 @@ public class ElasticSearch extends Application{
                 itemsListView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 ItemController.setItemList(items);
+                Toast.makeText(context, "Search Finished!", Toast.LENGTH_SHORT).show();
                 //tv.setText("you did get an item list!! " + itemsRelist.get(0).getSize() + " " + itemsRelist.get(0).getTitle() + " " + itemsRelist.get(1).getSize() + " " + itemsRelist.get(1).getTitle());
             } else {
                 //tv.setText("sorry bro");
+                Toast.makeText(context, "Sorry Bro, nothing here.", Toast.LENGTH_SHORT).show();
             }
         }
     }
