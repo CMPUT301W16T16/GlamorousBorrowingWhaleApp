@@ -3,6 +3,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -46,22 +47,20 @@ public class ElasticSearch {
     // elasticGetItems.execute(URL) takes in a URL (with /Item)... but it probably doesn't need to...
     // and retrieves all items on the ElasticSearch list, adding them to the returned ItemList.
     // Used in SearchResultsActivity, which also should sort somehow?
-    public static class elasticGetItems extends AsyncTask<String, String, ItemList> {
+    public static class elasticGetItems extends AsyncTask<TextView, String, ItemList> {
+
+        TextView tv;
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected ItemList doInBackground(String... params) {
+        protected ItemList doInBackground(TextView... params) {
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             URL url;
+            tv = params[0];
 
             try {
-                url = new URL(params[0]);
+                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&pretty");
                 connection = (HttpURLConnection) url.openConnection();
                 // this hanging while loop ironically speeds the process up dramatically
                 // and suppresses warnings, i think w/o it it retries the line after indefinitely
@@ -74,15 +73,29 @@ public class ElasticSearch {
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line);
                 }
+
                 String longStringOfJSON = buffer.toString();
+                Log.v("LONG STRING", longStringOfJSON);
                 JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
+                Log.v("ALL JSON", allOfTheJSON.toString());
                 JSONObject subsetOfTheJSON = allOfTheJSON.getJSONObject("hits");
+                Log.v("SUBSET JSON", subsetOfTheJSON.toString());
                 JSONArray hitsList = subsetOfTheJSON.getJSONArray("hits");
+                Log.v("JUST HITS", hitsList.toString());
+
+                ItemList itemList = new ItemList();
+                Gson gson = new Gson();
                 // each thing in this list should become its own User or Item
                 for (int i = 0; i < hitsList.length(); i++) {
                     JSONObject thingInList = hitsList.getJSONObject(i);
+                    JSONObject actualThingInListData = thingInList.getJSONObject("_source");
+                    Item item = new Item();
                     // convert thing to its Type
+                    item.setTitle(actualThingInListData.getString("name"));
+                    item.setSize(actualThingInListData.getString("size"));
+                    itemList.add(item);
                 }
+                return itemList;
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
@@ -90,7 +103,7 @@ public class ElasticSearch {
             // ugly "closing down shop" section
             if (connection != null)
                 connection.disconnect();
-            try{
+            try {
                 if (reader != null) {
                     reader.close();
                 }
@@ -103,8 +116,14 @@ public class ElasticSearch {
         }
 
         @Override
-        protected void onPostExecute(ItemList result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(ItemList items) {
+            super.onPostExecute(items);
+            if (items != null) {
+                ArrayList<Item> itemsRelist = items.getItemList();
+                tv.setText("you did get an item list!! " + itemsRelist.get(0).getSize() + " " + itemsRelist.get(0).getTitle() + " " + itemsRelist.get(1).getSize() + " " + itemsRelist.get(1).getTitle());
+            } else {
+                tv.setText("sorry bro");
+            }
         }
     }
 
@@ -113,11 +132,6 @@ public class ElasticSearch {
 
         // the following worked:
         // http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/ in the URL and  {"name":"mouse", "size":"tiny"} in the body
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected String doInBackground(Item... params) {
@@ -147,11 +161,6 @@ public class ElasticSearch {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-        }
-
     }
 
     // used in SignUpActivity
@@ -161,10 +170,6 @@ public class ElasticSearch {
         // http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/ in the URL and  {"name":"mouse", "size":"tiny"} in the body
 
         User user = UserController.getUser();
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected String doInBackground(User... params) {
@@ -221,9 +226,7 @@ public class ElasticSearch {
                 // actually write to that output stream here
                 stream.write(mainObj.toString().getBytes());
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
 
@@ -234,29 +237,15 @@ public class ElasticSearch {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-        }
-
     }
 
     // used in MyItemActivity
     public static class elasticDelete extends AsyncTask<Item, String, String> {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
         @Override
         protected String doInBackground(Item... params) {
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
         }
 
     }
@@ -267,18 +256,8 @@ public class ElasticSearch {
     public static class elasticFind extends AsyncTask<String, String, User> {
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
         protected User doInBackground(String... params) {
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(User result) {
-            super.onPostExecute(result);
         }
 
     }

@@ -2,10 +2,8 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
-import java.net.URL;
-
-import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.ElasticSearch.elasticGetItems;
 
 /**
  * This activity displays to the user all the items that match their entered
@@ -17,15 +15,18 @@ import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.ElasticSearch.elasticG
 
 public class SearchResultsActivity extends AppCompatActivity {
 
-    // TODO ES CALL: get items to populate list
-    // new ElasticSearch.elasticGetItems().execute( // URL // );
-    // use ElasticSearch.elasticGetItems()... somehow.
+    TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+        tv = (TextView) findViewById(R.id.textViewForTesting);
         setTitle("Search Results: All");
+        // TODO ES CALL: get items to populate list
+        new ElasticSearch.elasticGetItems().execute(tv);
+
     }
+
 
 }
