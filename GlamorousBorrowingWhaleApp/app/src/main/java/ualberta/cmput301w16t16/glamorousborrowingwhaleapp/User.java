@@ -33,17 +33,17 @@ public class User extends AppCompatActivity implements Serializable {
     private byte[] photo;
     private ItemList itemsBorrowing;
     private ItemList itemsRenting;
-
-    //ID is for elasticsearch server
     protected String ID;
 
-    // need to include picture
+    public User() {
+
+    }
+
     public User(String name, String emailAddress, String phoneNumber) {
         this.name = name;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
     }
-    // need to add picture getters and setters
 
     public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
 

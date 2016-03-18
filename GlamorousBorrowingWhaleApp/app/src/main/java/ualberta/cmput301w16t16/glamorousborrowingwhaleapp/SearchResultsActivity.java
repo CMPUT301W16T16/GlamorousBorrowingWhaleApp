@@ -23,7 +23,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     TextView tv;
     ListView itemsListView;
-    ArrayAdapter<Item> adapter;
     ItemList items;
 
     @Override
@@ -33,15 +32,10 @@ public class SearchResultsActivity extends AppCompatActivity {
         tv = (TextView) findViewById(R.id.textViewForTesting);
         itemsListView = (ListView) findViewById(R.id.myItemsListView);
         setTitle("Search Results: All");
-        // TODO ES CALL: get items to populate list
-        //adapter = new ArrayAdapter<Item>(SearchResultsActivity.this, R.layout.list_item, items.getItemList());
-        //itemsListView.setAdapter(adapter);
+
         new ElasticSearch.elasticGetItems(getApplicationContext()).execute(itemsListView);
 
-//        adapter = new ArrayAdapter<Item>(this, R.layout.list_item, ItemController.getItemList().getItemList());
-//        itemsListView.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-
+        // Opens pop up for user info
         itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -51,6 +45,7 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
         });
 
+        // Takes you to TheirItem page
 //        itemsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //            @Override
 //            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

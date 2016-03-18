@@ -42,7 +42,6 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
             user = itemThatBroughtUsHere.getOwner();
         } else {
             user = UserController.getUser();
-            Log.v("asd", user.toString());
         }
         ImageView userImage = (ImageView) findViewById(R.id.userImage);
         if (user.getPhoto() != null) {

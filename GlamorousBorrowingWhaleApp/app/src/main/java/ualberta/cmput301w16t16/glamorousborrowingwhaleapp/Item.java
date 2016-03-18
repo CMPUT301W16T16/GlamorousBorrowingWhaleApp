@@ -1,7 +1,5 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Created by Martina on 16-02-29.
  * This object provides all the associated information for a piece of equipment
@@ -16,6 +14,8 @@ public class Item {
     private byte[] photo;
     private BidList bids;
     private User owner;
+    private String ownerID;
+    protected String ID;
 
     public void Item() {
         this.title = "";
@@ -59,6 +59,14 @@ public class Item {
     public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
 
     public byte[] getPhoto() { return photo; }
+
+    public String getID() { return ID; }
+
+    public void setID(String ID) { this.ID = ID; }
+
+    public String getOwnerID() { return ownerID; }
+
+    public void setOwnerID(String ownerID) { this.ownerID = ownerID; }
 
     public BidList getBids() {
         return bids;

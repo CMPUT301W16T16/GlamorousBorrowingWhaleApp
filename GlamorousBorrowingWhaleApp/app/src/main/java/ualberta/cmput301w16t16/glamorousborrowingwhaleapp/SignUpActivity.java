@@ -82,17 +82,9 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     latestUser.setPhoto(photoStream);
                     users.add(latestUser);
                     UserController.setUser(latestUser);
-                    //*****Hi There - Fake User Creation Here!!*****
-                    User otherUser = new User("Michelangelo Ferdinand", "ilikepizza2321@aol.com",
-                            "18002672001");
-                    otherUser.setItemsBorrowing(null);
-                    otherUser.setItemsRenting(null);
-                    UserController.setOtherUser(otherUser);
 
                     setResult(RESULT_OK);
 
-                    // TODO ES CALL: use the following to add the new user to ES
-                    // the user is not currently ending up in the elasticsearch, but the app doesn't crash here
                     new ElasticSearch.elasticAddUser().execute(latestUser);
 
                     Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);

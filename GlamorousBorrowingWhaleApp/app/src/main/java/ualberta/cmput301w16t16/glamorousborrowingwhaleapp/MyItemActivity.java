@@ -136,8 +136,7 @@ public class MyItemActivity extends AppCompatActivity {
                 user.removeItemRenting(item);
                 //below is pretty flaky, needs error check for no items in list
 
-                // TODO ES CALL: use the following to remove the item from ES
-                // new ElasticSearch.elasticDelete().execute(item);
+                new ElasticSearch.elasticDeleteItem().execute(item);
 
                 if(user.getItemsRenting().getItemList().size() != 0) {
                     ItemController.setItem(user.getItemsRenting().getItemList().get(0));

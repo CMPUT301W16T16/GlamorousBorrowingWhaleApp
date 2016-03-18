@@ -97,7 +97,7 @@ public class MyItemsActivity extends AppCompatActivity {
         }
 
         //finally creating that adapter to use with the myItems
-        adapter = new ArrayAdapter<Item>(this, R.layout.list_item, myItems);
+        adapter = new CustomAdapter(this, myItems);
         //See Item.java for how this can work (hint - the bottom)
         myItemsView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
