@@ -46,15 +46,15 @@ public class SearchResultsActivity extends AppCompatActivity {
         });
 
         // Takes you to TheirItem page
-//        itemsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                ItemController.setItem((Item) parent.getAdapter().getItem(position));
-//                Intent intent = new Intent(view.getContext(), TheirItemActivity.class);
-//                startActivity(intent);
-//                return false;
-//            }
-//        });
+        itemsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemController.setItem((Item) parent.getAdapter().getItem(position));
+                Intent intent = new Intent(view.getContext(), TheirItemActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
 
     }
 

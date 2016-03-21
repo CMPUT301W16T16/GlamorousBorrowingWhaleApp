@@ -111,6 +111,7 @@ public class MyItemActivity extends AppCompatActivity {
                 item.setOwner(user);
                 item.setPhoto(photoStream);
                 //NO MEAT AND POTATOES HERE
+                new ElasticSearch.elasticUpdateItem().execute(item);//I LIED IT'S HERE
                 Toast.makeText(MyItemActivity.this, "Thing Saved!", Toast.LENGTH_SHORT).show();
             }
         });

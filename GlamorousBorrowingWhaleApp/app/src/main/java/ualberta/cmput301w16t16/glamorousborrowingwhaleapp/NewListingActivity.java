@@ -93,7 +93,7 @@ public class NewListingActivity extends AppCompatActivity {
                 //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
                 //List. We'll have to sort out some terminology here.
                 user.addItemRenting(item); //THE MEAT AND POTATOES RIGHT HERE
-                new ElasticSearch.elasticAddItem().execute(item);
+                new ElasticSearch.elasticAddItem().execute(item);//AND HERE. MORESO HERE. EXTRA GRAVY.
                 Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
                 finish();
             }

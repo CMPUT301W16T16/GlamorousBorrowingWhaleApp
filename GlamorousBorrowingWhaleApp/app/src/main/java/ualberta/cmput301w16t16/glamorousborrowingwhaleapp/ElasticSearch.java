@@ -295,6 +295,65 @@ public class ElasticSearch extends Application {
 
         }
     }
+    //much copied from existing elasticAddItem class here
+    public static class elasticUpdateItem extends AsyncTask<Item, String, String> {
+
+        Item item;
+        BufferedWriter writer;
+
+        @Override
+        protected String doInBackground(Item... params) {
+
+            item = params[0];
+            HttpURLConnection connection = null;
+            URL url;
+
+            try {
+                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/" + item.getID());
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                OutputStream stream = new BufferedOutputStream(connection.getOutputStream());
+
+                JSONObject jo = new JSONObject();
+                jo.put("_id", item.getID());
+                jo.put("title", item.getTitle());
+                jo.put("description", item.getDescription());
+                jo.put("size", item.getSize());
+                jo.put("availability", item.getAvailability());
+                jo.put("photo", item.getPhoto());
+                jo.put("owner", item.getOwner());
+                // this last one probably won't work the same
+                jo.put("bids", item.getBids());
+
+                writer = new BufferedWriter(new OutputStreamWriter(stream));
+                writer.write(jo.toString());
+                writer.flush();
+                writer.close();
+                stream.close();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String output;
+                JSONObject ESResponse;
+                while ((output = br.readLine()) != null) {
+                    Log.e("website returned", output);
+                    ESResponse = new JSONObject(output);
+                    if (ESResponse.getString("_id") != null) {
+                        item.setID(ESResponse.getString("_id"));
+                    }
+                }
+                Log.e("item ID", item.getID());
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (connection != null)
+                connection.disconnect();
+
+            return null;
+        }
+    }
 
     public static class elasticGetUserByID extends AsyncTask<Item, String, User> {
 

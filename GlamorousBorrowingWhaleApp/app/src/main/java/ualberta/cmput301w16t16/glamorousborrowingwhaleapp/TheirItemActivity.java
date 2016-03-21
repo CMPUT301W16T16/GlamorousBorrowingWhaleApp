@@ -67,15 +67,24 @@ public class TheirItemActivity extends AppCompatActivity {
 
         //The view is updated by asking the user object for its information.
         status.setText(Boolean.toString(item.getAvailability()));
-        owner.setText(item.getOwner().getName());
+        if (item.getOwner() == null) {
+            owner.setText("Oops!");
+        } else {
+            owner.setText(item.getOwner().getName());
+        }
         name.setText(item.getTitle());
         description.setText(item.getDescription());
         size.setText(item.getSize());
-        if (item.getHighestBidAmount() > 0) {
-            highestBid.setText(Double.toString(item.getHighestBidAmount()));
+        if (item.getBids() != null) {
+            if (item.getHighestBidAmount() > 0) {
+                highestBid.setText(Double.toString(item.getHighestBidAmount()));
+            } else {
+                highestBid.setText("No bids yet. Bummer :(");
+            }
         } else {
-            highestBid.setText("No bids yet. Bummer :(");
+            highestBid.setText("Oops!");
         }
+
 
         if (item.getPhoto() != null) {
             byte[] tempPhoto = item.getPhoto();
@@ -86,10 +95,11 @@ public class TheirItemActivity extends AppCompatActivity {
         //bids = item.getBids();
 
         // picture management
-        Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
+        /*Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
         ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
-        photoStream = photosNeedToBeCompressedToThis.toByteArray();
+        photoStream = photosNeedToBeCompressedToThis.toByteArray();*/
+
 
         /**
          * saveButton is onClick and leverages the ItemController for its item.

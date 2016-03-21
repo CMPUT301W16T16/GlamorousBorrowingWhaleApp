@@ -92,6 +92,7 @@ public class MyItemsActivity extends AppCompatActivity {
             ItemController.setItem(item);
             //Now that the item is created and "in use", lets create a bidlist to use with it!
             setFirstBids(item);
+            new ElasticSearch.elasticAddItem().execute(item);
         } else {
             myItems = myItemsList.getItemList();
         }
