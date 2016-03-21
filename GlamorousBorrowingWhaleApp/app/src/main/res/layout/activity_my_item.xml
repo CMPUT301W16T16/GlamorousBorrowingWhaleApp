@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundBlue"
+        android:background="@color/colorPrimary"
         android:layout_alignParentStart="true">
 
         <ImageButton
@@ -23,13 +23,14 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:background="@layout/mybutton"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/name"
-            android:hint="Name of the item"
+            android:hint="Name"
             android:layout_alignTop="@+id/pictureView"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/pictureView" />
@@ -76,9 +77,9 @@
             android:id="@+id/description"
             android:layout_alignStart="@+id/descriptionPrompt"
             android:layout_alignParentEnd="true"
-            android:layout_above="@+id/comment1"
             android:layout_below="@+id/descriptionPrompt"
-            android:hint="Add a description. The better it is, the higher chance of a borrower wanting this thing!" />
+            android:hint="Add a description. The better it is, the higher chance of a borrower wanting this thing!"
+            android:layout_above="@+id/rejectBid" />
 
         <ImageButton
             android:layout_width="60dp"
@@ -87,35 +88,31 @@
             android:src="@android:drawable/ic_menu_save"
             android:layout_alignParentBottom="true"
             android:layout_alignEnd="@+id/description"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@layout/mybutton"/>
 
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/delete"
             android:src="@android:drawable/ic_menu_delete"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="This is your listing, tap to edit"
-            android:id="@+id/comment2"
-            android:layout_above="@+id/save"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@layout/mybutton"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/highestBid"
-            android:layout_above="@+id/comment2"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/acceptBid"
-            android:layout_below="@+id/comment1" />
+            android:layout_below="@+id/description"
+            android:layout_toEndOf="@+id/descriptionPrompt"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBottom="@+id/rejectBid" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -123,24 +120,29 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Highest Bid"
             android:id="@+id/comment1"
-            android:layout_above="@+id/acceptBid"
-            android:layout_alignStart="@+id/description" />
+            android:layout_alignTop="@+id/highestBid"
+            android:layout_toStartOf="@+id/highestBid"
+            android:layout_alignBottom="@+id/rejectBid" />
 
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/rejectBid"
             android:src="@android:drawable/ic_delete"
-            android:layout_above="@+id/comment2"
-            android:layout_alignEnd="@+id/description" />
+            android:background="@layout/mybutton"
+            android:layout_above="@+id/delete"
+            android:layout_toStartOf="@+id/acceptBid"
+            android:layout_marginRight="10dp"/>
 
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/acceptBid"
             android:src="@android:drawable/ic_input_add"
-            android:layout_above="@+id/comment2"
-            android:layout_toStartOf="@+id/rejectBid" />
+            android:background="@layout/mybutton"
+            android:layout_alignTop="@+id/rejectBid"
+            android:layout_alignStart="@+id/save"
+            android:layout_marginBottom="10dp"/>
 
     </RelativeLayout>
 

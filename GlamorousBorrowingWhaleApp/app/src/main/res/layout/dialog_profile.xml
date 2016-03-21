@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="350dp"
     android:layout_height="200dp"
+    android:background="@color/colorPrimary"
     android:gravity="center_horizontal">
 
     <TextView
@@ -50,9 +51,11 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="CLOSE DIALOG"
-        android:id="@+id/confirm_button"/>
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:text="ok"
+        android:id="@+id/confirm_button"
+        android:background="@layout/mybutton"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>
