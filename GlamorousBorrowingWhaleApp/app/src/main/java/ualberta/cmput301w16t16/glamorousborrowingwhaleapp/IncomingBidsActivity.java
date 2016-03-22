@@ -96,6 +96,12 @@ public class IncomingBidsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Custom adapter that allows the ListView to display custom rows
+     * @author andrew, martina
+     */
+
+    // copied from CustomAdapter class
     public class CustomIncomingBidsAdapter extends ArrayAdapter<Bid> {
 
         public CustomIncomingBidsAdapter(Context context, ArrayList<Bid> bids) {
