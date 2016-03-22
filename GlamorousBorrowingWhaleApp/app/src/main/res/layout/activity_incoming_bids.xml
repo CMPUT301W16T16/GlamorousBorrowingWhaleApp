@@ -4,9 +4,15 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <TextView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/test_text_view"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/incomingBidsListView"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="#ececec"
+        android:dividerHeight="3dp"
+        android:divider="@color/colorPrimary"
+        android:padding="0dp"/>
 
 </LinearLayout>

@@ -401,7 +401,7 @@ public class ElasticSearch extends Application {
 
     // PROBLEM:
     // this should NOT be Asynchronous (the result is needed immediately)...
-    // used in SignInActivity
+    // used in SignInActivity (and sign up activity to check if username is taken)
     public static class elasticGetUserByName extends AsyncTask<String, String, User> {
 
         @Override
