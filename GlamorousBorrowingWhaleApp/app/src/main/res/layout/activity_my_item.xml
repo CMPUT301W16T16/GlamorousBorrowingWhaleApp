@@ -33,7 +33,12 @@
             android:hint="Name"
             android:layout_alignTop="@+id/pictureView"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/pictureView" />
+            android:layout_toEndOf="@+id/pictureView"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            />
 
         <EditText
             android:layout_width="wrap_content"
@@ -42,25 +47,34 @@
             android:layout_below="@+id/name"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/pictureView"
-            android:hint="Owner" />
+            android:hint="Owner"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_alignStart="@+id/name"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/status"
+            android:hint="Status"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_below="@+id/owner"
-            android:layout_alignParentEnd="true"
-            android:layout_alignStart="@+id/owner"
-            android:hint="Status" />
+            android:layout_alignStart="@+id/name"
+            android:layout_alignParentEnd="true"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/size"
             android:hint="Size"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_below="@+id/status"
-            android:layout_alignParentEnd="true"
-            android:layout_alignStart="@+id/status" />
+            android:layout_alignStart="@+id/name"
+            android:layout_alignParentEnd="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,11 +89,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/description"
-            android:layout_alignStart="@+id/descriptionPrompt"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/descriptionPrompt"
             android:hint="Add a description. The better it is, the higher chance of a borrower wanting this thing!"
-            android:layout_above="@+id/rejectBid" />
+            android:layout_above="@+id/rejectBid"
+            android:background="#ececec"
+            android:textColor="#000000"
+            android:padding="5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_alignParentStart="true"/>
 
         <ImageButton
             android:layout_width="60dp"

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/incomingBidsItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="23dp"
+        android:layout_margin="5dp"
+        android:textColor="#000000"
+        android:text="This is the title"/>
+
+    <TextView
+        android:id="@+id/incomingBidsAmountBid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="#000000"
+        android:text="This is the amount"
+        android:layout_below="@id/incomingBidsItemTitle"/>
+
+    <ImageButton
+        android:id="@+id/incomingBidsCheckmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/checkmark"
+        android:background="#00ffffff"
+        android:layout_alignTop="@+id/incomingBidsXmark"
+        android:layout_toStartOf="@+id/incomingBidsXmark"/>
+
+    <ImageButton
+        android:id="@+id/incomingBidsXmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/xmark"
+        android:background="#00ffffff"
+        android:layout_alignTop="@+id/incomingBidsItemTitle"
+        android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

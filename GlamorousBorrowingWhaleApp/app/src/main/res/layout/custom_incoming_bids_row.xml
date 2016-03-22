@@ -19,4 +19,11 @@
         android:layout_margin="5dp"
         android:textColor="#000000"/>
 
+    <RelativeLayout
+        android:id="@+id/rl_inflate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        />
+
+
 </LinearLayout>

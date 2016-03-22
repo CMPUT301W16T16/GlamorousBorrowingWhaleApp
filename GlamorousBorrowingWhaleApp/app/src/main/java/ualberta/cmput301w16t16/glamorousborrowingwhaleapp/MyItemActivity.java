@@ -73,7 +73,7 @@ public class MyItemActivity extends AppCompatActivity {
         description.setText(item.getDescription());
         size.setText(item.getSize());
         if (item.getHighestBidAmount() > 0) {
-            highestBid.setText(Double.toString(item.getHighestBidAmount()));
+            highestBid.setText("$"+String.format("%.2f", item.getHighestBidAmount()));
         } else {
             highestBid.setText("No bids yet. Bummer :(");
         }

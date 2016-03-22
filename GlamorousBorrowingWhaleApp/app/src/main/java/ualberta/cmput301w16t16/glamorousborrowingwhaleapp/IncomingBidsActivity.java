@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.security.acl.Owner;
@@ -84,14 +87,53 @@ public class IncomingBidsActivity extends AppCompatActivity {
         // taken Mar-21-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
         incomingBidsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
-                                           long id) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Bid bid = bidArray.get(position);
                 ItemController.setItem(bid.getItem());
                 BidController.setBid(bid);
                 Intent intent = new Intent(IncomingBidsActivity.this, MyItemActivity.class);
                 startActivity(intent);
                 return false;
+            }
+        });
+
+        // referenced Mar-21-2016 from http://stackoverflow.com/questions/18841650/replacing-listview-row-with-another-layout-onclick
+        // this doesn't work very well, although the buttons do show up when you click on one of the bids once
+        // the buttons don't lead any where yet and the replaced view has the wrong text
+        //TODO: the inflated layout doesn't retain the item (bid) information since the text views have different IDs
+        incomingBidsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // removing the old views
+                TextView incomingBidsItemTitle = (TextView) findViewById(R.id.incomingBidsItemTitle);
+                TextView incomingBidsAmountBid = (TextView) findViewById(R.id.incomingBidsAmountBid);
+                incomingBidsItemTitle.setVisibility(View.GONE);
+                incomingBidsAmountBid.setVisibility(View.GONE);
+
+                RelativeLayout rl_inflate = (RelativeLayout) view.findViewById(R.id.rl_inflate);
+                View child = getLayoutInflater().inflate(R.layout.incoming_bids_inflate, null);
+                rl_inflate.addView(child);
+
+                ImageButton checkmarkButton = (ImageButton) child.findViewById(R.id.incomingBidsCheckmark);
+                ImageButton xmarkButton = (ImageButton) child.findViewById(R.id.incomingBidsXmark);
+
+                checkmarkButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        //TODO: accept this bid
+                    }
+                });
+
+                xmarkButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        //TODO: reject this bid
+                    }
+                });
             }
         });
     }
