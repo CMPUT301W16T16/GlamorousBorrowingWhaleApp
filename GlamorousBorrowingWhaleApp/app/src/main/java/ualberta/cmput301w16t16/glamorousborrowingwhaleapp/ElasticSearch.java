@@ -137,26 +137,6 @@ public class ElasticSearch extends Application {
         Context context;
         User user = UserController.getUser();
 
-        //////////////////////////////////////////////////////////////////////////////////////////////// fake bid data
-// TODO get rid of this when we don't need fake bid data any more
-//        User owner = new User("billy", "billy@abc.com", "123");
-//        Item testItem = new Item();
-//        testItem.setTitle("Snowshoes");
-//        testItem.setAvailability(true);
-//        testItem.setOwner(owner);
-//        testItem.setDescription("Nice pair of snowshoes. Worth about $20.00 to borrow");
-//        BidList testBidList = new BidList();
-//        Bid testBid = new Bid(testItem, 15.00);
-//        testBidList.addBid(testBid);
-//        testItem.setBids(testBidList);
-//        bidsToShow.addBid(testBid);
-//        Item testItem2 = new Item();
-//        testItem2.setTitle("Golf Clubs - don't click this one (not enough data to display)");
-//        testItem2.setAvailability(true);
-//        Bid testBid2 = new Bid(testItem2, 30.00);
-//        bidsToShow.addBid(testBid2);
-        ////////////////////////////////////////////////////////////////////////////////////////////// end fake bid data
-
         public elasticGetIncomingBids(Context context){
             this.context = context;
         }
@@ -202,7 +182,25 @@ public class ElasticSearch extends Application {
                             tempBid.setIsAccepted(currentBid.getBoolean("isAccepted"));
                             bidsToShow.addBid(tempBid);
                         }
-
+                        //////////////////////////////////////////////////////////////////////////////////////////////// fake bid data
+// TODO get rid of this when we don't need fake bid data any more
+//                        User owner = new User("billy", "billy@abc.com", "123");
+//                        Item testItem = new Item();
+//                        testItem.setTitle("Snowshoes");
+//                        testItem.setAvailability(true);
+//                        //testItem.setOwner(owner);
+//                        testItem.setDescription("Nice pair of snowshoes. Worth about $20.00 to borrow");
+//                        BidList testBidList = new BidList();
+//                        Bid testBid = new Bid(testItem, 15.00);
+//                        testBidList.addBid(testBid);
+//                        testItem.setBids(testBidList);
+//                        bidsToShow.addBid(testBid);
+//                        Item testItem2 = new Item();
+//                        testItem2.setTitle("Golf Clubs - don't click this one (not enough data to display)");
+//                        testItem2.setAvailability(true);
+//                        Bid testBid2 = new Bid(testItem2, 30.00);
+//                        bidsToShow.addBid(testBid2);
+                        ////////////////////////////////////////////////////////////////////////////////////////////// end fake bid data
                         return bidsToShow;
 
                     } catch (IOException | JSONException e) {
@@ -253,7 +251,8 @@ public class ElasticSearch extends Application {
             URL url;
 
             try {
-                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/");
+                String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + user.getName();
+                url = new URL(urlString);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
@@ -296,7 +295,9 @@ public class ElasticSearch extends Application {
                     Log.e("website returned", output);
                     ESResponse = new JSONObject(output);
                     if (ESResponse.getString("_id") != null) {
-                        user.setID(ESResponse.getString("_id"));
+                        if (ESResponse.getString("_id") != user.getName()) {
+                            user.setID(ESResponse.getString("_id"));
+                        }
                     }
                 }
                 Log.e("user ID", user.getID());
@@ -472,51 +473,6 @@ public class ElasticSearch extends Application {
             return null;
         }
     }
-
-
-//    public static class elasticGetUserByID extends AsyncTask<Item, String, User> {
-//
-//        @Override
-//        protected User doInBackground(Item... params) {
-//            HttpURLConnection connection = null;
-//            BufferedReader reader = null;
-//            URL url;
-//            Item item = params[0];
-//            User user = null;
-//
-//            try {
-//                String urlText = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + item.getOwnerID();
-//                url = new URL(urlText);
-//                connection = (HttpURLConnection) url.openConnection();
-//                InputStream stream = connection.getInputStream();
-//                reader = new BufferedReader(new InputStreamReader(stream));
-//                StringBuilder buffer = new StringBuilder();
-//                String line = "";
-//                while ((line = reader.readLine()) != null) {
-//                    buffer.append(line);
-//                }
-//                String longStringOfJSON = buffer.toString();
-//                JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
-//                JSONObject userFromES = allOfTheJSON.getJSONObject("_source");
-//
-//                user = new User(null, null, null);
-//                user.setName(userFromES.getString("username"));
-//                user.setEmailAddress(userFromES.getString("emailAddress"));
-//                user.setPhoneNumber(userFromES.getString("phoneNumber"));
-//                user.setPhoto(userFromES.getString("photo").getBytes());
-//
-//
-//            } catch (IOException | JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (connection != null)
-//                connection.disconnect();
-//
-//            return user;
-//        }
-//    }
-
 
     public static class elasticGetUserByName extends AsyncTask<Activity, String, User> {
 
