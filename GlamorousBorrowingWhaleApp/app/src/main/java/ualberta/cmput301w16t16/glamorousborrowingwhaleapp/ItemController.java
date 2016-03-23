@@ -8,10 +8,8 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
  * @author adam, andrew, erin, laura, martina
  */
 public class ItemController {
-    //Please note this is a temporary band-aid solution, and an item may not be in the itemlist,
-    //Just a thing to keep focus throughout the app.
+
     private static Item item;
-    private static ItemList itemlist;
 
     public ItemController(Item item) {
         ItemController.item = item;
@@ -25,22 +23,4 @@ public class ItemController {
         ItemController.item = item;
     }
 
-    public static void deleteItem(Item item) {
-        //TODO implement a way to delete an item
-    }
-
-    public static void setEmpty() {
-        ItemController.item = null;
-        ItemController.itemlist = null;
-        //This sets the item to null for use throughout the other classes.
-        //Hopefully they all have methods to watch for null.
-    }
-
-    public static void setItemList(ItemList itemlist) {
-        ItemController.itemlist = itemlist;
-    }
-
-    public static ItemList getItemList() {
-        return ItemController.itemlist;
-    }
 }

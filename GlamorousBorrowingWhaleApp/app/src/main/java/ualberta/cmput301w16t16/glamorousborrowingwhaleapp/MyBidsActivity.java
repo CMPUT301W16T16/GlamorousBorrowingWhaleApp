@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * This class shows the user a list of their items that they have bid on and
@@ -24,8 +26,14 @@ public class MyBidsActivity extends AppCompatActivity {
 
         User user = UserController.getUser();
         TextView tv = (TextView) findViewById(R.id.test_text_view);
+        ArrayList<String> itemIDsWithRelevantBids = user.getItemsBidOn();
 
-        BidList bidsToShow = new BidList();
+        // TODO: using list of ItemIDs, get all bids on those items with RenterID == UserID
+        // how? not sure. would have to be asynchronous
+        // for (String itemID : itemIDsWithRelevantBids) {
+        //    itemID
+        // }
+        // BidList bidsToShow = user.getItemsBidOn();
 
         tv.setText("No bids.");
     }

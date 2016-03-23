@@ -25,6 +25,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile files('src/include/jest-droid-2.0.1-SNAPSHOT.jar')
     compile files('src/include/AndroidSwipeLayout-v1.1.8.jar')
 }

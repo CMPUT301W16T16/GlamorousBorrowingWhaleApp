@@ -9,42 +9,30 @@ import java.util.Calendar;
  * a bids information
  * @author adam, andrew, erin, laura, martina
  */
+
 public class Bid {
-    // expiry of a bid?
-    //switched Date to Calendar type for ease of use.
-    private Calendar startDate;
-    private Calendar endDate;
+
+// expiry of a bid?
+// switched Date to Calendar type for ease of use.
+//    private Calendar startDate;
+//    private Calendar endDate;
+
     private Boolean isAccepted;
-    private User owner;
-    private User renter;
-    private Item item;
+    private String ownerID;
+    private String renterID;
+    private String itemID;
     private double bidAmount;
+
+    public Bid() {}
 
     //This Bid must have an item passed to it (the item being bidded on)
     public Bid(Item item, double bidAmount) {
-        //Constructing a new Bid
-        //no ItemController maybe?
-        this.item = item;
-        this.owner = item.getOwner();
-        this.renter = UserController.getUser();//current user is the renter
+        this.itemID = item.getID();
+        this.ownerID = item.getOwnerID();
+        this.renterID = UserController.getUser().getID(); //current user is the renter
         this.bidAmount = bidAmount;
     }
 
-    public Calendar getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Calendar startDate) {
-        this.startDate = startDate;
-    }
-
-    public Calendar getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
-    }
 
     public Boolean getIsAccepted() {
         return isAccepted;
@@ -54,20 +42,18 @@ public class Bid {
         this.isAccepted = isAccepted;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwnerID() { return ownerID; }
+
+    public void setOwnerID(String ownerID) {
+        this.ownerID = ownerID;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public String getRenterID() {
+        return renterID;
     }
 
-    public User getRenter() {
-        return renter;
-    }
-
-    public void setRenter(User renter) {
-        this.renter = renter;
+    public void setRenterID(String renterID) {
+        this.renterID = renterID;
     }
 
     public void setBidAmount(double bidAmount) {
@@ -78,13 +64,32 @@ public class Bid {
         return bidAmount;
     }
 
-    public Item getItem() {
-        return item;
-    }
+    public String getItemID() { return itemID; }
 
-    public void setItem(Item item) {
-        this.item = item;
-    }
+    public void setItemID(String itemID) { this.itemID = itemID; }
 
-    public String toString() { return this.getItem() + ";" +  this.bidAmount; }
+    // can this be commented out?
+    //public String toString() { return this.getItem() + ";" +  this.bidAmount; }
+
+
+
+
+    ////////////////////////////////////////////////////// maybe later
+
+
+//    public Calendar getStartDate() {
+//        return startDate;
+//    }
+//
+//    public void setStartDate(Calendar startDate) {
+//        this.startDate = startDate;
+//    }
+//
+//    public Calendar getEndDate() {
+//        return endDate;
+//    }
+//
+//    public void setEndDate(Calendar endDate) {
+//        this.endDate = endDate;
+//    }
 }

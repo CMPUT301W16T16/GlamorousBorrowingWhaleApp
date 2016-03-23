@@ -13,7 +13,7 @@ public class Item {
     private Boolean availability;
     private byte[] photo;
     private BidList bids;
-    private User owner;
+    //private User owner;
     private String ownerID;
     protected String ID;
 
@@ -91,15 +91,13 @@ public class Item {
         }
     }
 
-    public User getOwner() {
-        return owner;
-        //Hi note that this is a User type!!!!!
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-        //Hi note that this is a User type!!!!!
-    }
+//    public User getOwner() {
+//        return owner;
+//    }
+//
+//    public void setOwner(User owner) {
+//        this.owner = owner;
+//    }
 
     public void addBid(Bid bid){
         this.bids.addBid(bid);

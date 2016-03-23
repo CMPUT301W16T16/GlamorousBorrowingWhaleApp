@@ -80,15 +80,14 @@ public class NewListingActivity extends AppCompatActivity {
                 item.setSize(size.getText().toString());
                 item.setAvailability(true);
                 item.setBids(bids);
-                item.setOwner(user);
+                item.setOwnerID(user.getID());
                 item.setPhoto(photoStream);
                 item.setOwnerID(user.getID());
                 //setting controller to this item now for fun
                 ItemController.setItem(item);
                 //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
                 //List. We'll have to sort out some terminology here.
-                user.addItemRenting(item); //THE MEAT AND POTATOES RIGHT HERE
-                new ElasticSearch.elasticAddItem().execute(item);//AND HERE. MORESO HERE. EXTRA GRAVY.
+                new ElasticSearch.elasticAddItem().execute(item);
                 Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
                 finish();
             }

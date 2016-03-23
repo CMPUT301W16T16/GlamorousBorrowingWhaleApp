@@ -30,11 +30,13 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_profile);
-        User user;
+        User user = null;
 
-        // this should be removed by final
+        // this else should be removed by final
         if (itemThatBroughtUsHere != null) {
-            user = itemThatBroughtUsHere.getOwner();
+            // how to get this?
+            // have to pass into an Async
+            //user = itemThatBroughtUsHere.getOwner();
         } else {
             user = UserController.getUser();
         }

@@ -24,7 +24,6 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
 
     private EditText enteredUsername;
     private String username;
-    private String profilePictureRef;
 
     private static final int SIGN_UP = 1;
 
@@ -39,12 +38,10 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
             public void onClick(View view) {
                 setResult(RESULT_OK);
                 Intent logIntent = new Intent(view.getContext(), SignUpActivity.class);
-                //startActivityForResult(logIntent, SIGN_UP);
                 startActivity(logIntent);
             }
         });
 
-        //Intent intent = getIntent();
         enteredUsername = (EditText) findViewById(R.id.username);
         Button loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -58,14 +55,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                     Toast.makeText(SignInActivity.this, "You must enter your username.", Toast.LENGTH_SHORT).show();
                 } else {
                     UserController.setUser(user);
-                    Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
-
-                    // TODO ES CALL: use the following to check the entered string against ES, retrieve user info
-                    // does not work yet, because the core function idea is flawed: it should not be synchronous
-                    // new ElasticSearch.elasticGetUserByName().execute(username);
-
-                    intent.putExtra("USERNAME", user);
-                    startActivity(intent);
+                    new ElasticSearch.elasticGetUserByName(getApplicationContext()).execute(SignInActivity.this);
                 }
 
             }

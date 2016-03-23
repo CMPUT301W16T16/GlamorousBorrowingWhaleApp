@@ -29,7 +29,7 @@ public class TheirItemActivity extends AppCompatActivity {
     private EditText description;
     private TextView highestBid;
     private ImageView photo;
-    private User user;
+    private String userID;
     private int result;
     private byte[] photoStream = new byte[65536];
 
@@ -37,15 +37,13 @@ public class TheirItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item);
-        // Taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
         setTitle("Their Item");
-        // END
 
         /**
          * Sets the user and item for this activity and grabs the EditText things for use.
          */
         item = ItemController.getItem();
-        user = ItemController.getItem().getOwner();
+        userID = ItemController.getItem().getOwnerID();
         owner = (EditText) findViewById(R.id.owner);
         status = (EditText) findViewById(R.id.status);
         name = (EditText) findViewById(R.id.name);
@@ -62,10 +60,10 @@ public class TheirItemActivity extends AppCompatActivity {
 
         //The view is updated by asking the user object for its information.
         status.setText(Boolean.toString(item.getAvailability()));
-        if (item.getOwner() == null) {
+        if (item.getOwnerID() == null) {
             owner.setText("Oops!");
         } else {
-            owner.setText(item.getOwner().getName());
+            owner.setText(item.getOwnerID());
         }
         name.setText(item.getTitle());
         description.setText(item.getDescription());
@@ -74,7 +72,7 @@ public class TheirItemActivity extends AppCompatActivity {
             if (item.getHighestBidAmount() > 0) {
                 highestBid.setText(Double.toString(item.getHighestBidAmount()));
             } else {
-                highestBid.setText("No bids yet. Bummer :(");
+                highestBid.setText("No bids yet.");
             }
         } else {
             highestBid.setText("Oops!");
@@ -85,6 +83,7 @@ public class TheirItemActivity extends AppCompatActivity {
             byte[] tempPhoto = item.getPhoto();
             photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
         }
+
         //Bids is not implemented yet.
         //Removing setBids activities for now.
         //bids = item.getBids();
@@ -150,7 +149,6 @@ public class TheirItemActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 }

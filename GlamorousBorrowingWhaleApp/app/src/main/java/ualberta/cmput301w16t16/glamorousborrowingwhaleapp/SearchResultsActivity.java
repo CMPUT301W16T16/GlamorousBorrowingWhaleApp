@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
-    TextView tv;
     ListView itemsListView;
     ItemList items;
 
@@ -27,7 +26,6 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
-        tv = (TextView) findViewById(R.id.textViewForTesting);
         itemsListView = (ListView) findViewById(R.id.myItemsListView);
         setTitle("Search Results: All");
 

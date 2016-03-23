@@ -9,9 +9,14 @@ import java.util.Iterator;
  * to control. Also benefits as a sort of ADT to the app.
  * @author adam, andrew, erin, laura, martina
  */
-public class ItemList implements Iterable<Item> {
+public class ItemList {
+
+//public class ItemList implements Iterable<Item> {
+// does it?
+
     private ArrayList<Item> itemList = new ArrayList<Item>();
     //note - if setItemList is called, then this is overwritten. Problem? Good Question.
+
     private int currentSize = itemList.size();
 
     public void add(Item item) {
@@ -38,31 +43,31 @@ public class ItemList implements Iterable<Item> {
      * This method allows you to iterate over item list
      */
 
-    // (useful when converting to JSON when writing to ElasticSearch)
-    // taken Mar-13-2016 from http://stackoverflow.com/questions/5849154/can-we-write-our-own-iterator-in-java
-    @Override
-    public Iterator<Item> iterator() {
-        Iterator<Item> it = new Iterator<Item>() {
-
-            private int currentIndex = 0;
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex < currentSize && itemList.get(currentIndex) != null;
-            }
-
-            @Override
-            public Item next() {
-                return itemList.get(currentIndex++);
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
-        return it;
-    }
+//    // (useful when converting to JSON when writing to ElasticSearch)
+//    // taken Mar-13-2016 from http://stackoverflow.com/questions/5849154/can-we-write-our-own-iterator-in-java
+//    @Override
+//    public Iterator<Item> iterator() {
+//        Iterator<Item> it = new Iterator<Item>() {
+//
+//            private int currentIndex = 0;
+//
+//            @Override
+//            public boolean hasNext() {
+//                return currentIndex < currentSize && itemList.get(currentIndex) != null;
+//            }
+//
+//            @Override
+//            public Item next() {
+//                return itemList.get(currentIndex++);
+//            }
+//
+//            @Override
+//            public void remove() {
+//                throw new UnsupportedOperationException();
+//            }
+//        };
+//        return it;
+//    }
 
     // clears everything in the itemList (mostly used in testing)
     public void clear() {

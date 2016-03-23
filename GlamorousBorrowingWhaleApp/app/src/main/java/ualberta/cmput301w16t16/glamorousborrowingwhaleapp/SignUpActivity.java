@@ -41,8 +41,6 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
     private String phoneNumber;
     private String emailAddress;
 
-    private ArrayList<User> users = new ArrayList<User>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,17 +64,13 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                 } else {
 
                     // picture management
-                    // you can upload these photo bytestreams over elastic search, or so the internet tells me - andrew, mar 11
                     Bitmap image = ((BitmapDrawable) enteredPicture.getDrawable()).getBitmap();
                     ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
                     photoStream = photosNeedToBeCompressedToThis.toByteArray();
 
                     User latestUser = new User(username, emailAddress, phoneNumber);
-                    latestUser.setItemsBorrowing(null);
-                    latestUser.setItemsRenting(null);
                     latestUser.setPhoto(photoStream);
-                    users.add(latestUser);
                     UserController.setUser(latestUser);
 
                     setResult(RESULT_OK);

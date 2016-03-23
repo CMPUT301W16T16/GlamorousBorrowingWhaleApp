@@ -17,8 +17,7 @@ import java.util.ArrayList;
  * rented out (items NOT bidded or borrowed). If the user longClicks any item on
  * the listView, they are brought to the MyItemActivity. If the user selects
  * the floating action plus sign, they are taken to NewListingActivity where
- * they can add a new piece of equipment. If they swipe right they are taken to
- * IncomingBids (tbi).
+ * they can add a new piece of equipment.
  * @author adam, andrew, erin, laura, martina
  * @see MyItemActivity
  * @see NewListingActivity
@@ -54,42 +53,44 @@ public class MyItemsActivity extends AppCompatActivity {
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
 
         user = UserController.getUser();
-        myItemsList = user.getItemsRenting();
+
+
+        //TODO: this is no longer how this is done: it needs to fetch from ES
+        //myItemsList = user.getItemsRenting();
+
+
+
         //a different class should probably handle this part - say when a new user is created
         //there is a whole bunch of stuff that is initiated. Anyways, the reason for this next
         //part of code is to catch the nullpointerexception without actually firing the exception.
-        //If the user has no items at all, the class does not auto-intialize a ItemsList.
+        //If the user has no items at all, the class does not auto-initialize a ItemsList.
         //Naturally, this throws a null if one tries to access or add or do stuff with it.
-        if (myItemsList == null) {
-            Item item = new Item();
-            //Create a "First Item" to get the ItemList going.
+        myItemsList = new ItemList();
+        myItems = myItemsList.getItemList();
 
-            item.setAvailability(false);
-            item.setDescription("This is your first Thing! You can delete it of course.");
-            item.setOwner(user);
-            item.setSize("Medium");
-            item.setTitle("First Thing!");
-            //Actually initialize the itemList.
-            myItemsList = new ItemList();
-            myItemsList.add(item);
-            //diiirrrtttyy programming right here - will have to fix. Just as a proof of concept.
-            user.setItemsRenting(myItemsList);
-            //redundant but for "testing"
-            myItemsList = user.getItemsRenting();
-            Toast.makeText(MyItemsActivity.this, "First Thing Created!", Toast.LENGTH_SHORT).show();
-            //finally, set the variable to what we want.
-            myItems = myItemsList.getItemList();
-            //"initialize" the itemcontroller
-            ItemController.setItem(item);
-            //Now that the item is created and "in use", lets create a bidlist to use with it!
-            setFirstBids(item);
-            new ElasticSearch.elasticAddItem().execute(item);
-        } else {
-            myItems = myItemsList.getItemList();
-        }
+            //////////////////////////////////////////////////////////////////////// this should be deleted because no more ItemController
+//            Item item = new Item();
+//            //Create a "First Item" to get the ItemList going.
+//            item.setAvailability(false);
+//            item.setDescription("This is your first Thing! You can delete it of course.");
+//            item.setOwnerID(user.getID());
+//            item.setSize("Medium");
+//            item.setTitle("First Thing!");
+//            myItemsList.add(item);
+//            //user.addMyItem(item.getID());
+//            Toast.makeText(MyItemsActivity.this, "First Thing Created!", Toast.LENGTH_SHORT).show();
+//
+//            //"initialize" the itemcontroller
+//            ItemController.setItem(item);
+//            //add some fake bids
+//            setFirstBids(item);
+//            //if you wanna add it to elastic search for some reason
+//            //new ElasticSearch.elasticAddItem().execute(item);
+            /////////////////////////////////////////////////////////////////////////// up through here
 
+        myItems = myItemsList.getItemList();
         //finally creating that adapter to use with the myItems
-        adapter = new CustomAdapter(this, myItems);
+        adapter = new CustomSearchResultsAdapter(this, myItems);
         //See Item.java for how this can work (hint - the bottom)
         myItemsView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -128,7 +129,12 @@ public class MyItemsActivity extends AppCompatActivity {
         //needs error correction
         //refreshes (I think) the adapter so the view is refreshed. (Think press back button after
         //editing something somewhere)
-        myItemsList = user.getItemsRenting();
+
+        //TODO: this is no longer how this is done: it needs to fetch from ES
+        //myItemsList = user.getItemsRenting();
+
+
+
         myItems = myItemsList.getItemList();
         adapter.notifyDataSetChanged();
     }

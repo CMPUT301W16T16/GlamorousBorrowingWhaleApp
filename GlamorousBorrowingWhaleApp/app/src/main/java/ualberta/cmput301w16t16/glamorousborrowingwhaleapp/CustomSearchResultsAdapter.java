@@ -14,9 +14,9 @@ import java.util.ArrayList;
 /**
  * Created by andrew on 18/03/16.
  */
-public class CustomAdapter extends ArrayAdapter<Item> {
+public class CustomSearchResultsAdapter extends ArrayAdapter<Item> {
 
-    public CustomAdapter(Context context, ArrayList<Item> items) {
+    public CustomSearchResultsAdapter(Context context, ArrayList<Item> items) {
         super(context, R.layout.custom_row, items);
     }
 
@@ -33,6 +33,7 @@ public class CustomAdapter extends ArrayAdapter<Item> {
             byte[] tempPhoto = item.getPhoto();
             imageView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
         }
+
         return view;
     }
 }

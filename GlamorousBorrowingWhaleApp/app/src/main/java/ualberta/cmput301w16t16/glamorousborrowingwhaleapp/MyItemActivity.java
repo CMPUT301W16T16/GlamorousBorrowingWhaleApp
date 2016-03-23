@@ -68,7 +68,7 @@ public class MyItemActivity extends AppCompatActivity {
 
         //The view is updated by asking the user object for its information.
         status.setText(Boolean.toString(item.getAvailability()));
-        owner.setText(item.getOwner().getName());
+        owner.setText(UserController.getUser().getName()); // shouldn't be on this page unless current user = owner
         name.setText(item.getTitle());
         description.setText(item.getDescription());
         size.setText(item.getSize());
@@ -108,7 +108,7 @@ public class MyItemActivity extends AppCompatActivity {
                 item.setSize(size.getText().toString());
                 item.setAvailability(true);
                 //item.setBids(bids);
-                item.setOwner(user);
+                item.setOwnerID(user.getID());
                 item.setPhoto(photoStream);
                 //NO MEAT AND POTATOES HERE
                 new ElasticSearch.elasticUpdateItem().execute(item);//I LIED IT'S HERE
@@ -127,31 +127,27 @@ public class MyItemActivity extends AppCompatActivity {
          * simple condition.
          */
 
+        // TODO: this should really pop up an ARE YOU SURE regardless of empty BidList or no.
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!item.getBids().getBids().isEmpty()){
-                    //TODO: put an alertdialog box in this spot.
                     Toast.makeText(MyItemActivity.this, "This Item Has Bids!", Toast.LENGTH_SHORT).show();
                 }
-                user.removeItemRenting(item);
-                //below is pretty flaky, needs error check for no items in list
-
+                user.removeMyItem(item.getID());
                 new ElasticSearch.elasticDeleteItem().execute(item);
 
-                if(user.getItemsRenting().getItemList().size() != 0) {
-                    ItemController.setItem(user.getItemsRenting().getItemList().get(0));
-                } else{
-                    ItemController.setEmpty();
-                }
+                // TODO: remove ItemController
+//                if(user.getMyItems().size() != 0) {
+//                    ItemController.setItem(user.getMyItems().get(0));
+//                } else{
+//                    ItemController.setEmpty();
+//                }
 
-                //recommend implementing some sort of undo mechanism
                 Toast.makeText(MyItemActivity.this, "Thing Deleted!", Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_OK);
                 finish();
-                //finish() because once the item is deleted, the view has nothing to go on
-                //and really why would the user want to stare at a blank page they can just push
-                //the plus button on the myitems page.
+                //finish() because once the item is deleted, there's nothing to show
             }
         });
 

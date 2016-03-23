@@ -17,7 +17,7 @@
         android:layout_height="50dp"
         android:id="@+id/text_view"
         android:padding="15dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15sp"
         android:text="EXAMPLE" />
 
 </LinearLayout>

@@ -10,8 +10,6 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 public class UserController {
     private static User user;
 
-    //TODO will we have this ask the server for a USER?
-
     public UserController(User user) {
         UserController.user = user;
     }
