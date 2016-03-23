@@ -23,7 +23,9 @@ import java.io.Serializable;
 public class SignInActivity extends AppCompatActivity implements Serializable {
 
     private EditText enteredUsername;
+    private EditText enteredPassword;
     private String username;
+    private String password;
 
     private static final int SIGN_UP = 1;
 
@@ -43,15 +45,18 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
         });
 
         enteredUsername = (EditText) findViewById(R.id.username);
+        enteredPassword = (EditText) findViewById(R.id.password);
         Button loginButton = (Button) findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 username = enteredUsername.getText().toString();
-                User user = new User(username, "temporary", "temporary");
+                password = enteredPassword.getText().toString();
+                // TODO: We need to do an es call here and check that the username and password match
+                User user = new User(username, password, "temporary", "temporary");
 
                 // prevents user from leaving the username field empty
-                if (username.isEmpty()) {
+                if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(SignInActivity.this, "You must enter your username.", Toast.LENGTH_SHORT).show();
                 } else {
                     UserController.setUser(user);

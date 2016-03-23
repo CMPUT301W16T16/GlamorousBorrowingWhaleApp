@@ -251,7 +251,7 @@ public class ElasticSearch extends Application {
             URL url;
 
             try {
-                String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + user.getName();
+                String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + user.getUsername();
                 url = new URL(urlString);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
@@ -260,7 +260,7 @@ public class ElasticSearch extends Application {
 
                 // JSON assist from Mar-13-2016 from http://stackoverflow.com/questions/18983185/how-to-create-correct-jsonarray-in-java-using-jsonobject
                 JSONObject jo = new JSONObject();
-                jo.put("username", user.getName());
+                jo.put("username", user.getUsername());
                 jo.put("emailAddress", user.getEmailAddress());
                 jo.put("phoneNumber", user.getPhoneNumber());
                 jo.put("photo", user.getPhoto());
@@ -295,7 +295,7 @@ public class ElasticSearch extends Application {
                     Log.e("website returned", output);
                     ESResponse = new JSONObject(output);
                     if (ESResponse.getString("_id") != null) {
-                        if (ESResponse.getString("_id") != user.getName()) {
+                        if (ESResponse.getString("_id") != user.getUsername()) {
                             user.setID(ESResponse.getString("_id"));
                         }
                     }
@@ -493,7 +493,7 @@ public class ElasticSearch extends Application {
             User user = null;
 
             try {
-                String urlText = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + UserController.getUser().getName();
+                String urlText = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + UserController.getUser().getUsername();
                 url = new URL(urlText);
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream stream = connection.getInputStream();
@@ -508,7 +508,7 @@ public class ElasticSearch extends Application {
                 JSONObject userFromES = allOfTheJSON.getJSONObject("_source");
 
                 user = UserController.getUser();
-                user.setName(userFromES.getString("username"));
+                user.setUsername(userFromES.getString("username"));
                 user.setEmailAddress(userFromES.getString("emailAddress"));
                 user.setPhoneNumber(userFromES.getString("phoneNumber"));
                 user.setPhoto(userFromES.getString("photo").getBytes());

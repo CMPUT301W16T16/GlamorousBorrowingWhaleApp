@@ -55,7 +55,7 @@ public class NewListingActivity extends AppCompatActivity {
         user = UserController.getUser();
 
         status.setText("Available");
-        owner.setText(user.getName());
+        owner.setText(user.getUsername());
 
         saveButton = (ImageButton) findViewById(R.id.save);
         deleteButton = (ImageButton) findViewById(R.id.delete);

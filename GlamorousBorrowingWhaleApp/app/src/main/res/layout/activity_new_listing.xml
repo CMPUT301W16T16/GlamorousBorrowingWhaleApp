@@ -77,8 +77,7 @@
             android:layout_alignStart="@+id/descriptionPrompt"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/descriptionPrompt"
-            android:hint="Add a description. The better it is, the higher chance of a borrower wanting this thing!"
-            android:layout_above="@+id/save" />
+            android:hint="Add a description. The better it is, the higher chance of a borrower wanting this thing!" />
 
         <ImageButton
             android:layout_width="60dp"

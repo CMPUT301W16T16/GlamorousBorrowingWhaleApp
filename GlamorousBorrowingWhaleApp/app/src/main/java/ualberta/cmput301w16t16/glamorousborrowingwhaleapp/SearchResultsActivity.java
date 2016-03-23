@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
 /**
  * This activity displays to the user all the items that match their entered
  * search criteria (by using elastic search). A user can then select an item
@@ -18,7 +17,6 @@ import android.widget.TextView;
  */
 
 public class SearchResultsActivity extends AppCompatActivity {
-
     ListView itemsListView;
     ItemList items;
 
@@ -28,7 +26,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_results);
         itemsListView = (ListView) findViewById(R.id.myItemsListView);
         setTitle("Search Results: All");
-
         new ElasticSearch.elasticGetItems(getApplicationContext()).execute(itemsListView);
 
         // Opens pop up for user info
@@ -51,10 +48,5 @@ public class SearchResultsActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
-
-
-
-
 }

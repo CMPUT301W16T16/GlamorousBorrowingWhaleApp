@@ -68,7 +68,7 @@ public class MyItemActivity extends AppCompatActivity {
 
         //The view is updated by asking the user object for its information.
         status.setText(Boolean.toString(item.getAvailability()));
-        owner.setText(UserController.getUser().getName()); // shouldn't be on this page unless current user = owner
+        owner.setText(UserController.getUser().getUsername()); // shouldn't be on this page unless current user = owner
         name.setText(item.getTitle());
         description.setText(item.getDescription());
         size.setText(item.getSize());

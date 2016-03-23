@@ -49,7 +49,7 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
         TextView userName = (TextView) findViewById(R.id.userName);
         TextView userEmail = (TextView) findViewById(R.id.userEmail);
 
-        userName.setText(user.getName());
+        userName.setText(user.getUsername());
         userEmail.setText(user.getEmailAddress());
 
         confirmButton = (Button) findViewById(R.id.confirm_button);

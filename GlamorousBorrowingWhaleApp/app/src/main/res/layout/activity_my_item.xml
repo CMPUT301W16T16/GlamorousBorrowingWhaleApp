@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="700dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentStart="true">
 
@@ -24,21 +24,20 @@
             android:layout_marginTop="10dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:background="@layout/mybutton"/>
+            android:background="@layout/mybutton"
+            android:layout_alignParentEnd="true" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/name"
             android:hint="Name"
-            android:layout_alignTop="@+id/pictureView"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/pictureView"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            />
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/pictureView"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -46,35 +45,43 @@
             android:id="@+id/owner"
             android:layout_below="@+id/name"
             android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/pictureView"
             android:hint="Owner"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_alignStart="@+id/name"/>
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/status"
             android:hint="Status"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_below="@+id/owner"
-            android:layout_alignStart="@+id/name"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/size"
             android:hint="Size"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_below="@+id/status"
-            android:layout_alignStart="@+id/name"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sport"
+            android:hint="Sport"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/size"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,28 +89,28 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Description"
             android:id="@+id/descriptionPrompt"
-            android:layout_below="@+id/size"
-            android:layout_alignStart="@+id/pictureView" />
+            android:layout_below="@+id/sport"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/description"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/descriptionPrompt"
-            android:hint="Add a description. The better it is, the higher chance of a borrower wanting this thing!"
-            android:layout_above="@+id/rejectBid"
+            android:hint="Add a description. The better the description, the more likely this item will be rented!"
             android:background="#ececec"
             android:textColor="#000000"
             android:padding="5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_alignParentStart="true"/>
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/descriptionPrompt"
+            android:layout_alignParentStart="true" />
 
         <ImageButton
-            android:layout_width="60dp"
+            android:layout_width="150dp"
             android:layout_height="60dp"
             android:id="@+id/save"
             android:src="@android:drawable/ic_menu_save"
@@ -114,7 +121,7 @@
             android:background="@layout/mybutton"/>
 
         <ImageButton
-            android:layout_width="60dp"
+            android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:id="@+id/delete"
@@ -133,39 +140,40 @@
             android:layout_below="@+id/description"
             android:layout_toEndOf="@+id/descriptionPrompt"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
             android:layout_alignBottom="@+id/rejectBid" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Highest Bid"
+            android:text="Highest Bid:"
             android:id="@+id/comment1"
             android:layout_alignTop="@+id/highestBid"
-            android:layout_toStartOf="@+id/highestBid"
-            android:layout_alignBottom="@+id/rejectBid" />
+            android:layout_alignStart="@+id/description"
+            android:layout_alignBottom="@+id/highestBid" />
 
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/rejectBid"
-            android:src="@android:drawable/ic_delete"
+            android:src="@mipmap/xmark"
             android:background="@layout/mybutton"
-            android:layout_above="@+id/delete"
-            android:layout_toStartOf="@+id/acceptBid"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="37dp"
+            android:layout_below="@+id/description"
+            android:layout_toStartOf="@+id/acceptBid" />
 
         <ImageButton
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/acceptBid"
-            android:src="@android:drawable/ic_input_add"
+            android:src="@mipmap/checkmark"
             android:background="@layout/mybutton"
             android:layout_alignTop="@+id/rejectBid"
-            android:layout_alignStart="@+id/save"
-            android:layout_marginBottom="10dp"/>
+            android:layout_alignEnd="@+id/save" />
 
     </RelativeLayout>
 
 
-</RelativeLayout>
+</ScrollView>

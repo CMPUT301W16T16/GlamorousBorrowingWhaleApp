@@ -43,7 +43,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         profileEmail = (TextView) findViewById(R.id.profileEmail);
         profilePictureView = (ImageView) findViewById(R.id.pictureView);
 
-        profileName.setText(user.getName());
+        profileName.setText(user.getUsername());
         profilePhone.setText(user.getPhoneNumber());
         profileEmail.setText(user.getEmailAddress());
 
@@ -178,7 +178,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         final EditText phoneInput = (EditText) editProfileView.findViewById(R.id.editProfilePhone);
         final EditText emailInput = (EditText) editProfileView.findViewById(R.id.editProfileEmail);
         //Grab the existing attributes to fill in the "hint" field.
-        nameInput.setHint(user.getName());
+        nameInput.setHint(user.getUsername());
         phoneInput.setHint(user.getPhoneNumber());
         emailInput.setHint(user.getEmailAddress());
         alertDialogBuilder
@@ -191,7 +191,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                                 //if OK is selected.
                                 if (!nameInput.getText().toString().isEmpty()) {
                                     profileName.setText(nameInput.getText().toString());
-                                    user.setName(nameInput.getText().toString());
+                                    user.setUsername(nameInput.getText().toString());
                                 }
                                 if (!phoneInput.getText().toString().isEmpty()) {
                                     profilePhone.setText(phoneInput.getText().toString());

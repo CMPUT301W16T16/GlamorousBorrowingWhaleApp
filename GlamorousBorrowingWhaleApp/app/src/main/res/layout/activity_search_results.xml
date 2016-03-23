@@ -18,19 +18,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/myItemsListView"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:clickable="false" />
-<!--
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:clickable="false"
+        android:layout_below="@+id/searchView" />
+
+    <SearchView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/plus_for_action_add"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/searchView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
--->
+    <!--
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/plus_for_action_add"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true" />
+    -->
 </RelativeLayout>

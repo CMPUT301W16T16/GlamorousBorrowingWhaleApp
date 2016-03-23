@@ -32,12 +32,14 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
 
     private ImageButton enteredPicture;
     private EditText enteredUsername;
+    private EditText enteredPassword;
     private EditText enteredPhoneNumber;
     private EditText enteredEmailAddress;
     private int result;
     private byte[] photoStream = new byte[65536];
 
     private String username;
+    private String password;
     private String phoneNumber;
     private String emailAddress;
 
@@ -48,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
 
         //Intent intent = getIntent();
         enteredUsername = (EditText) findViewById(R.id.username);
+        enteredPassword = (EditText) findViewById(R.id.password);
         enteredPhoneNumber = (EditText) findViewById(R.id.phone);
         enteredEmailAddress = (EditText) findViewById(R.id.email);
         enteredPicture = (ImageButton) findViewById(R.id.picture);
@@ -59,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                 convertInputToString();
 
                 // prevents user from leaving any fields empty
-                if (username.isEmpty() || phoneNumber.isEmpty() || emailAddress.isEmpty()) {
+                if (username.isEmpty() || password.isEmpty() || phoneNumber.isEmpty() || emailAddress.isEmpty()) {
                     Toast.makeText(SignUpActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -69,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
                     photoStream = photosNeedToBeCompressedToThis.toByteArray();
 
-                    User latestUser = new User(username, emailAddress, phoneNumber);
+                    User latestUser = new User(username, password, emailAddress, phoneNumber);
                     latestUser.setPhoto(photoStream);
                     UserController.setUser(latestUser);
 
@@ -117,6 +120,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
      */
     public void convertInputToString() {
         username = enteredUsername.getText().toString();
+        password = enteredPassword.getText().toString();
         phoneNumber = enteredPhoneNumber.getText().toString();
         emailAddress = enteredEmailAddress.getText().toString();
     }

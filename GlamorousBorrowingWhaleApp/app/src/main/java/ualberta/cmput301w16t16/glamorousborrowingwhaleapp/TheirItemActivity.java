@@ -38,10 +38,6 @@ public class TheirItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item);
         setTitle("Their Item");
-
-        /**
-         * Sets the user and item for this activity and grabs the EditText things for use.
-         */
         item = ItemController.getItem();
         userID = ItemController.getItem().getOwnerID();
         owner = (EditText) findViewById(R.id.owner);
@@ -51,8 +47,6 @@ public class TheirItemActivity extends AppCompatActivity {
         description = (EditText) findViewById(R.id.description);
         highestBid = (TextView) findViewById(R.id.highestBid);
         photo = (ImageView) findViewById(R.id.pictureView);
-
-        //Initialize the Buttons!
         ImageButton saveButton = (ImageButton) findViewById(R.id.save);
         ImageButton deleteButton = (ImageButton) findViewById(R.id.delete);
         ImageButton acceptBidButton = (ImageButton) findViewById(R.id.acceptBid);

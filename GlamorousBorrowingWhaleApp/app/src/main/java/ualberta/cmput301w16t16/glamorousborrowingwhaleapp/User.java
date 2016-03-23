@@ -8,30 +8,24 @@ import java.util.ArrayList;
 /**
  * Created by Martina on 16-02-29.
  * This class, like Item, contains all relevant information about a User
- * (name,address etc). It is used to obtain information about a user in
- * SearchResultsActivity. This class also contains a JestId for when the users
- * information is saved to the server.
+ * (name, address etc). It is used to obtain information about a user in
+ * SearchResultsActivity. A user is denoted by a username.
+ * What can be serialized into JSON will be stored in the object directly, what cannot will have
+ * a reference stored into the object, and the content will be retrieved when needed (eg.
+ * Thing Pictures from the server). UserController is the controller for interaction by the app.
  * @author adam, andrew, erin, laura, martina
  * @see SearchResultsActivity
  */
 
-/* User Class contains all the information about a particular user, denoted by a USERNAME.
- * What can be serialized into JSON will be stored in the object directly, what cannot will have
- * a reference stored into the object, and the content will be retrieved when needed (eg.
- * Thing Pictures from the server). UserController is the controller for interaction by the app.
- */
 public class User extends AppCompatActivity implements Serializable {
-
-
-
-    private String name;
+    private String username;
+    private String password;
     private String emailAddress;
     private String phoneNumber;
     private byte[] photo;
     protected String ID;
 
-
-    //                                                              working on
+    //working on
     private ArrayList<String> itemsBidOn;
     //private ItemList itemsBorrowing;
     // i want to switch the ItemList over into a String[]
@@ -41,14 +35,14 @@ public class User extends AppCompatActivity implements Serializable {
     private ArrayList<String> myItems;
     //                                                              end
 
-
 //    public User() {
 //        this.myItems = new ArrayList<>();
 //        this.itemsBorrowed = new ArrayList<>();
 //    }
 
-    public User(String name, String emailAddress, String phoneNumber) {
-        this.name = name;
+    public User(String username, String password, String emailAddress, String phoneNumber) {
+        this.username = username;
+        this.password = password;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
         this.myItems = new ArrayList<>();
@@ -59,12 +53,12 @@ public class User extends AppCompatActivity implements Serializable {
 
     public byte[] getPhoto() { return photo; }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmailAddress() {
@@ -92,8 +86,6 @@ public class User extends AppCompatActivity implements Serializable {
     }
 
 
-
-
     public ArrayList<String> getItemsBorrowed() {
         return itemsBorrowed;
     }
@@ -109,7 +101,6 @@ public class User extends AppCompatActivity implements Serializable {
     public void removeItemBorrowed(String item) {
         itemsBorrowed.remove(item);
     }
-
 
 
     public ArrayList<String> getMyItems() {
@@ -129,7 +120,6 @@ public class User extends AppCompatActivity implements Serializable {
     }
 
 
-
     public ArrayList<String> getItemsBidOn() {
         return itemsBidOn;
     }
@@ -145,6 +135,4 @@ public class User extends AppCompatActivity implements Serializable {
     public void removeItemBidOn(String item) {
         this.itemsBidOn.remove(item);
     }
-
-
 }
