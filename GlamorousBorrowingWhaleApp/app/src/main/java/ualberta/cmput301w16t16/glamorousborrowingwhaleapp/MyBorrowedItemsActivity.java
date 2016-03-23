@@ -1,9 +1,7 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 /**

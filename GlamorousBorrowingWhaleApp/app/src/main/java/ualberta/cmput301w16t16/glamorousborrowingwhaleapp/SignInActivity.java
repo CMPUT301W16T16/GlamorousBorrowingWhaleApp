@@ -1,6 +1,5 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.Serializable;
-import java.util.concurrent.ExecutionException;
 
 /**
  * This activity is the fist one the user sees. It allows them to enter their

@@ -1,6 +1,5 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 /**

@@ -1,9 +1,7 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -11,18 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.security.acl.Owner;
 import java.util.ArrayList;
-import java.util.List;
-
-import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.unused.IncomingBids;
 
 /**
  * Created by andrew on 14/03/16.

@@ -2,7 +2,6 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Created by Martina on 16-02-29.

@@ -28,6 +28,11 @@
         <activity android:name=".MyItemsActivity"></activity>
         <activity android:name=".NewListingActivity"></activity>
         <activity android:name=".IncomingBidsActivity"></activity>
+        <activity android:name=".MyBorrowedItemActivity"></activity>
+        <activity android:name=".User"></activity>
+        <activity android:name=".PersistentToolbar"></activity>
+        <activity android:name=".unused.IncomingBids"></activity>
+        <activity android:name=".unused.MyItems"></activity>
             <!--android:name=".MyItemsIncomingBidsActivity"-->
             <!--android:label="@string/title_activity_my_items_incoming_bids"-->
             <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->

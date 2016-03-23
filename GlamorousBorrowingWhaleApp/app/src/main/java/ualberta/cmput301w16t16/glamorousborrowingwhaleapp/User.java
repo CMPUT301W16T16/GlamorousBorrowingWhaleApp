@@ -1,13 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import io.searchbox.annotations.JestId;
 
 import java.io.Serializable;
 

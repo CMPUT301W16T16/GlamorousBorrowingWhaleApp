@@ -21,7 +21,6 @@ import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.ItemController;
 import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.ItemList;
 import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyItemActivity;
 import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.NewListingActivity;
-import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.R;
 import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.User;
 import ualberta.cmput301w16t16.glamorousborrowingwhaleapp.UserController;
 

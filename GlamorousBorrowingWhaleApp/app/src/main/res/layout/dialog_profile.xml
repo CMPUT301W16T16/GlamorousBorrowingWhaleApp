@@ -21,7 +21,8 @@
             android:layout_height="100dp"
             android:background="#ffffff"
             android:id="@+id/userImage"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,7 +36,8 @@
                 android:text="default name"
                 android:textSize="20sp"
                 android:gravity="center_vertical"
-                android:paddingLeft="15dp" />
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -44,7 +46,8 @@
                 android:text="default email"
                 android:textSize="20sp"
                 android:gravity="center_vertical"
-                android:paddingLeft="15dp"/>
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"/>
 
         </LinearLayout>
 

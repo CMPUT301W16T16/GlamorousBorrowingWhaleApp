@@ -61,7 +61,7 @@ public class ElasticSearch extends Application {
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                 String line = "";
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line);
@@ -91,7 +91,9 @@ public class ElasticSearch extends Application {
                     itemList.add(item);
                 }
                 return itemList;
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -189,7 +191,9 @@ public class ElasticSearch extends Application {
                 }
                 Log.e("user ID", user.getID());
 
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -249,7 +253,9 @@ public class ElasticSearch extends Application {
                 }
                 Log.e("item ID", item.getID());
 
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -278,7 +284,7 @@ public class ElasticSearch extends Application {
                 connection.setRequestMethod("DELETE");
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                 String line = "";
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line);
@@ -344,7 +350,9 @@ public class ElasticSearch extends Application {
                 }
                 Log.e("item ID", item.getID());
 
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -371,7 +379,7 @@ public class ElasticSearch extends Application {
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                 String line = "";
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line);
@@ -387,7 +395,9 @@ public class ElasticSearch extends Application {
                 user.setPhoto(userFromES.getString("photo").getBytes());
 
 
-            } catch (IOException | JSONException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 

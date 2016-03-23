@@ -1,7 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Martina on 16-02-29.
@@ -39,7 +38,7 @@ public class BidList {
     public Bid getHighestBid() {
         //TODO implement a check if the bidlist has been touched - if not, don't bother doing this loop
         //If this bidlist is not empty, do this loop to find the highest bid.
-        //NOTE possible performace hog for a lot of bids. Perhaps an autocheck as a bid comes in
+        //NOTE possible performance hog for a lot of bids. Perhaps an autocheck as a bid comes in
         //check against the current highest bid?
         if(!this.bids.isEmpty()) {
             int bidsSize = this.bids.size();
