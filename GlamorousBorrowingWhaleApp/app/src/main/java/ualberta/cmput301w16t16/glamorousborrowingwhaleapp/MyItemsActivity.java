@@ -65,6 +65,9 @@ public class MyItemsActivity extends AppCompatActivity {
         adapter = new CustomSearchResultsAdapter(this, myItems);
 
         //TODO: Use fetch from ES
+        // this doesn't currently update immediately since after an item is created, the user's list
+        // of items doesn't add the id of the newest item since elasticUpdateUser isn't working right
+        // at the moment
         myItemsView.setAdapter(adapter);
         //new ElasticSearch.elasticGetItems(getApplicationContext()).execute(myItemsView);
         adapter.notifyDataSetChanged();

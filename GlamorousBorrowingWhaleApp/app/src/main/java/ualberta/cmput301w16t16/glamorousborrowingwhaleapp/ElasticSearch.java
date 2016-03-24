@@ -251,30 +251,6 @@ public class ElasticSearch extends Application {
                 jo.put("phoneNumber", user.getPhoneNumber());
                 jo.put("photo", user.getPhoto());
 
-                // the following two in AddUser will never trigger... move them somewhere logical
-                if (user.getMyItems() != null) {
-                    JSONArray myItemsIDArray = new JSONArray();
-                    for (String itemID : user.getMyItems()) {
-                        myItemsIDArray.put(itemID);
-                    }
-                    jo.put("myItems", myItemsIDArray);
-                }
-
-                if (user.getItemsBorrowed() != null) {
-                    JSONArray itemsBorrowedIDArray = new JSONArray();
-                    for (String itemID : user.getItemsBorrowed()) {
-                        itemsBorrowedIDArray.put(itemID);
-                    }
-                    jo.put("itemsBorrowed", itemsBorrowedIDArray);
-                }
-                if (user.getItemsBidOn() != null) {
-                    JSONArray itemsBidOnIDArray = new JSONArray();
-                    for (String itemID : user.getItemsBidOn()) {
-                        itemsBidOnIDArray.put(itemID);
-                    }
-                    jo.put("itemsBidOn", itemsBidOnIDArray);
-                }
-
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
                 writer.flush();
@@ -308,6 +284,9 @@ public class ElasticSearch extends Application {
     }
 
     // pretty much copied from elasticAddUser
+    // updates the current user using UserController, no need to pass in the user to be updated
+    // currently seems to have a problem writing to the elastic search although i'm fairly sure the
+    // jo that I'm trying to write out is correct
     public static class elasticUpdateUser extends AsyncTask<Void, String, String> {
 
         User user = UserController.getUser();
@@ -615,7 +594,7 @@ public class ElasticSearch extends Application {
                 user.setPhoto(userFromES.getString("photo").getBytes());
                 user.setID(user.getUsername());
 
-                // getting the items back from JSON
+                // getting the item lists back from JSON and continuing to store them as lists of IDs
                 ArrayList<String> myItemsIds = new ArrayList<String>();
                 JSONArray myItems = userFromES.getJSONArray("myItems");
                 for (int i = 0; i < myItems.length(); i++) {
@@ -663,10 +642,12 @@ public class ElasticSearch extends Application {
 
 
     // very similar to elasticGetItems
-    // getting a list of actual items from their IDs and setting the current
+    // getting a list of actual item objects from their IDs and setting the current
     // itemList in ItemController as that itemList
-    // have to give it an arrayList<String> of item IDs (so you can ask for borrowed, or bidded, etc
+    // have to give it a String[] of item IDs (so you can ask for borrowed, or bidded, etc
     // as long as you have the list of IDs)
+    // the item lists in user are stored as ArrayList<String> right now, so once that is changed to
+    // String[], this will not need to be updated
     public static class elasticGetItemsByID extends AsyncTask<String[], String, ItemList> {
 
         Context context;
