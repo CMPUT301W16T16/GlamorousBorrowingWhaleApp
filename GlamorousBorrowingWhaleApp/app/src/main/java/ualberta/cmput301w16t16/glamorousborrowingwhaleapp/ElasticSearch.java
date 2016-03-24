@@ -165,7 +165,6 @@ public class ElasticSearch extends Application {
                         while ((line = reader.readLine()) != null) {
                             buffer.append(line);
                         }
-
                         String longStringOfJSON = buffer.toString();
                         JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
                         JSONObject itemFromES = allOfTheJSON.getJSONObject("_source");
@@ -201,6 +200,7 @@ public class ElasticSearch extends Application {
 //                        Bid testBid2 = new Bid(testItem2, 30.00);
 //                        bidsToShow.addBid(testBid2);
                         ////////////////////////////////////////////////////////////////////////////////////////////// end fake bid data
+                        BidController.setBidList(bidsToShow);
                         return bidsToShow;
 
                     } catch (IOException | JSONException e) {
@@ -219,21 +219,7 @@ public class ElasticSearch extends Application {
                     }
                 }
             }
-            // the returned item is passed on to onPostExecute as "result"
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(BidList bids) {
-            super.onPostExecute(bids);
-            if (bids != null) {
-                adapter = new CustomIncomingBidsAdapter(context, bids.getBids());
-                incomingBidsListView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                Toast.makeText(context, "Search finished!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "Sorry, nothing here.", Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
@@ -281,6 +267,13 @@ public class ElasticSearch extends Application {
                     }
                     jo.put("itemsBorrowed", itemsBorrowedIDArray);
                 }
+                if (user.getItemsBidOn() != null) {
+                    JSONArray itemsBidOnIDArray = new JSONArray();
+                    for (String itemID : user.getItemsBidOn()) {
+                        itemsBidOnIDArray.put(itemID);
+                    }
+                    jo.put("itemsBidOn", itemsBidOnIDArray);
+                }
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -314,6 +307,86 @@ public class ElasticSearch extends Application {
 
     }
 
+    // pretty much copied from elasticAddUser
+    public static class elasticUpdateUser extends AsyncTask<Void, String, String> {
+
+        User user = UserController.getUser();
+        BufferedWriter writer;
+
+        @Override
+        protected String doInBackground(Void... params) {
+            HttpURLConnection connection = null;
+            URL url;
+
+            try {
+                String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + user.getUsername();
+                url = new URL(urlString);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("PUT");
+                connection.setDoOutput(true);
+                OutputStream stream = new BufferedOutputStream(connection.getOutputStream());
+
+                // JSON assist from Mar-13-2016 from http://stackoverflow.com/questions/18983185/how-to-create-correct-jsonarray-in-java-using-jsonobject
+                JSONObject jo = new JSONObject();
+                jo.put("username", user.getUsername());
+                jo.put("emailAddress", user.getEmailAddress());
+                jo.put("phoneNumber", user.getPhoneNumber());
+                jo.put("photo", user.getPhoto());
+
+                // the following two in AddUser will never trigger... move them somewhere logical
+                // <they will work here>
+                if (user.getMyItems() != null) {
+                    JSONArray myItemsIDArray = new JSONArray();
+                    for (String itemID : user.getMyItems()) {
+                        myItemsIDArray.put(itemID);
+                    }
+                    jo.put("myItems", myItemsIDArray);
+                }
+
+                if (user.getItemsBorrowed() != null) {
+                    JSONArray itemsBorrowedIDArray = new JSONArray();
+                    for (String itemID : user.getItemsBorrowed()) {
+                        itemsBorrowedIDArray.put(itemID);
+                    }
+                    jo.put("itemsBorrowed", itemsBorrowedIDArray);
+                }
+
+                if (user.getItemsBidOn() != null) {
+                    JSONArray itemsBidOnIDArray = new JSONArray();
+                    for (String itemID : user.getItemsBidOn()) {
+                        itemsBidOnIDArray.put(itemID);
+                    }
+                    jo.put("itemsBidOn", itemsBidOnIDArray);
+                }
+
+                Log.d("TEST", "this is jo: "+jo.toString());
+                writer = new BufferedWriter(new OutputStreamWriter(stream));
+                writer.write(jo.toString());
+                writer.flush();
+                writer.close();
+                stream.close();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String output;
+                JSONObject ESResponse;
+                while ((output = br.readLine()) != null) {
+                    Log.e("website returned", output);
+                    ESResponse = new JSONObject(output);
+                    Log.d("TEST", "es reponse "+ESResponse.toString());
+                }
+                Log.e("user ID", user.getID());
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (connection != null)
+                connection.disconnect();
+
+            return null;
+        }
+
+    }
 
     // Used in NewListingActivity
     public static class elasticAddItem extends AsyncTask<Item, String, String> {
@@ -345,7 +418,21 @@ public class ElasticSearch extends Application {
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
                 // this last one probably won't work the same
-                jo.put("bids", item.getBids());
+                //jo.put("bids", item.getBids());
+
+                // changed it to this
+                JSONArray ja = new JSONArray();
+                for (int i = 0; i < item.getBids().getBids().size(); i++) {
+                    Bid bid = item.getBids().getBids().get(i);
+                    JSONObject joBid = new JSONObject();
+                    joBid.put("isAccepted", bid.getIsAccepted());
+                    joBid.put("ownerID", bid.getOwnerID());
+                    joBid.put("renterID", bid.getRenterID());
+                    joBid.put("itemID", bid.getItemID());
+                    joBid.put("bidAmount", bid.getBidAmount());
+                    ja.put(joBid);
+                }
+                jo.put("bids", ja);
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -443,7 +530,21 @@ public class ElasticSearch extends Application {
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
                 // this last one probably won't work the same
-                jo.put("bids", item.getBids());
+                //jo.put("bids", item.getBids());
+
+                // changed it to this
+                JSONArray ja = new JSONArray();
+                for (int i = 0; i < item.getBids().getBids().size(); i++) {
+                    Bid bid = item.getBids().getBids().get(i);
+                    JSONObject joBid = new JSONObject();
+                    joBid.put("isAccepted", bid.getIsAccepted());
+                    joBid.put("ownerID", bid.getOwnerID());
+                    joBid.put("renterID", bid.getRenterID());
+                    joBid.put("itemID", bid.getItemID());
+                    joBid.put("bidAmount", bid.getBidAmount());
+                    ja.put(joBid);
+                }
+                jo.put("bids", ja);
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -512,6 +613,29 @@ public class ElasticSearch extends Application {
                 user.setEmailAddress(userFromES.getString("emailAddress"));
                 user.setPhoneNumber(userFromES.getString("phoneNumber"));
                 user.setPhoto(userFromES.getString("photo").getBytes());
+                user.setID(user.getUsername());
+
+                // getting the items back from JSON
+                ArrayList<String> myItemsIds = new ArrayList<String>();
+                JSONArray myItems = userFromES.getJSONArray("myItems");
+                for (int i = 0; i < myItems.length(); i++) {
+                    myItemsIds.add(myItems.getString(i));
+                }
+                user.setMyItems(myItemsIds);
+
+                ArrayList<String> itemsBidOnIds = new ArrayList<>();
+                JSONArray itemsBidOn = userFromES.getJSONArray("itemsBidOn");
+                for (int i = 0; i < itemsBidOn.length(); i++) {
+                    itemsBidOnIds.add(itemsBidOn.getString(i));
+                }
+                user.setItemsBidOn(itemsBidOnIds);
+
+                ArrayList<String> itemsBorrowedIds = new ArrayList<>();
+                JSONArray itemsBorrowed = userFromES.getJSONArray("itemsBorrowed");
+                for (int i = 0; i < itemsBorrowed.length(); i++) {
+                    itemsBorrowedIds.add(itemsBorrowed.getString(i));
+                }
+                user.setItemsBorrowed(itemsBorrowedIds);
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -529,10 +653,103 @@ public class ElasticSearch extends Application {
             if (user != null) {
                 Intent intent = new Intent(activity, MyProfileViewActivity.class);
                 intent.putExtra("USERNAME", user);
+                UserController.setUser(user);
                 activity.startActivity(intent);
             } else {
                 Toast.makeText(context, "User search returned null", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+
+    // very similar to elasticGetItems
+    // getting a list of actual items from their IDs and setting the current
+    // itemList in ItemController as that itemList
+    // have to give it an arrayList<String> of item IDs (so you can ask for borrowed, or bidded, etc
+    // as long as you have the list of IDs)
+    public static class elasticGetItemsByID extends AsyncTask<String[], String, ItemList> {
+
+        Context context;
+
+        public elasticGetItemsByID(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected ItemList doInBackground(String[]... params) {
+
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            URL url;
+            String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/";
+            String[] itemIDList = params[0];
+
+            ItemList itemList = new ItemList();
+
+            if (itemIDList != null) {
+                for (String ID : itemIDList) {
+                    urlString = urlString + ID;
+                    try {
+                        url = new URL(urlString);
+                        connection = (HttpURLConnection) url.openConnection();
+                        InputStream stream = connection.getInputStream();
+                        reader = new BufferedReader(new InputStreamReader(stream));
+                        StringBuilder buffer = new StringBuilder();
+                        String line = "";
+                        while ((line = reader.readLine()) != null) {
+                            buffer.append(line);
+                        }
+
+                        String longStringOfJSON = buffer.toString();
+                        JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
+                        JSONObject itemFromES = allOfTheJSON.getJSONObject("_source");
+
+                        // getting all of the information for that item
+                        Item tempItem = new Item();
+
+                        tempItem.setTitle(itemFromES.getString("title"));
+                        tempItem.setDescription(itemFromES.getString("description"));
+                        tempItem.setAvailability(itemFromES.getBoolean("availability"));
+                        tempItem.setPhoto(itemFromES.getString("photo").getBytes());
+                        tempItem.setOwnerID(itemFromES.getString("owner"));
+
+                        BidList bids = new BidList();
+                        JSONArray bidList = itemFromES.getJSONArray("bids");
+                        for (int i = 0; i < bidList.length(); i++) {
+                            JSONObject currentBid = bidList.getJSONObject(i);
+                            Bid tempBid = new Bid();
+                            tempBid.setOwnerID(currentBid.getString("owner"));
+                            tempBid.setRenterID(currentBid.getString("renterID"));
+                            tempBid.setItemID(currentBid.getString("itemID"));
+                            tempBid.setBidAmount(currentBid.getDouble("bidAmount"));
+                            tempBid.setIsAccepted(currentBid.getBoolean("isAccepted"));
+
+                            bids.addBid(tempBid);
+                        }
+
+                        tempItem.setBids(bids);
+                        itemList.add(tempItem);
+
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // ugly "closing down shop" section
+                    if (connection != null)
+                        connection.disconnect();
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                ItemController.setItemList(itemList);
+            }
+            // the returned item is passed on to onPostExecute as "result"
+            return null;
         }
     }
 }

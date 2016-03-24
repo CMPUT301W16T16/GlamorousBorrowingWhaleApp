@@ -18,10 +18,6 @@ public class Item {
     protected String ID;
 
     public void Item() {
-        this.title = "";
-        this.description = "";
-        this.size = "";
-        this.availability = false;
     }
 
     public String getTitle() {

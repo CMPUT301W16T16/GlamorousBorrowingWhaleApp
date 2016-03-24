@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -88,6 +89,10 @@ public class NewListingActivity extends AppCompatActivity {
                 //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
                 //List. We'll have to sort out some terminology here.
                 new ElasticSearch.elasticAddItem().execute(item);
+
+                // update the user to include the new item in its list
+                new ElasticSearch.elasticUpdateUser().execute();
+
                 Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
                 finish();
             }

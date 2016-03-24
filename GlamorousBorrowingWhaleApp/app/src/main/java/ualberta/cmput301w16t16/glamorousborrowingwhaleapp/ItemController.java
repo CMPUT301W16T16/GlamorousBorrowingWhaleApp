@@ -10,6 +10,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 public class ItemController {
 
     private static Item item;
+    private static ItemList itemList;
 
     public ItemController(Item item) {
         ItemController.item = item;
@@ -23,4 +24,11 @@ public class ItemController {
         ItemController.item = item;
     }
 
+    public static ItemList getItemList() {
+        return itemList;
+    }
+
+    public static void setItemList(ItemList itemList) {
+        ItemController.itemList = itemList;
+    }
 }

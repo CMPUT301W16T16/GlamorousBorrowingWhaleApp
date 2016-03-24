@@ -1,5 +1,7 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.util.Log;
+
 /**
  * Created by Martina on 16-03-21.
  * This class is a controller for the current persistent bid in the app.
@@ -10,18 +12,17 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 public class BidController {
 
-    private static Bid bid;
+    private static BidList bidList;
 
     public BidController(Bid bid) {
-        BidController.bid = bid;
+        BidController.bidList = bidList;
     }
 
-    public static Bid getBid() {
-        return BidController.bid;
+    public static BidList getBidList() {
+        return BidController.bidList;
     }
 
-    public static void setBid(Bid bid) {
-        BidController.bid = bid;
+    public static void setBidList(BidList bidList) {
+        BidController.bidList = bidList;
     }
-
 }

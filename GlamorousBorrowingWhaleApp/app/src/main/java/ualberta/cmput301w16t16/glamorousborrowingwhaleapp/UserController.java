@@ -9,6 +9,9 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 //Is the controller for the user. Persistent throughout the user session.
 public class UserController {
     private static User user;
+    // I created this to be able to use UserController with other users and pass them around like
+    // we use ItemController. This may not be the best place for it though
+    private static User secondaryUser;
 
     public UserController(User user) {
         UserController.user = user;
@@ -22,4 +25,11 @@ public class UserController {
         UserController.user = user;
     }
 
+    public static User getSecondaryUser() {
+        return secondaryUser;
+    }
+
+    public static void setSecondaryUser(User secondaryUser) {
+        UserController.secondaryUser = secondaryUser;
+    }
 }

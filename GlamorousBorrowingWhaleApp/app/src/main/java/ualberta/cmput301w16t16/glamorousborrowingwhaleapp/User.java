@@ -35,10 +35,14 @@ public class User extends AppCompatActivity implements Serializable {
     private ArrayList<String> myItems;
     //                                                              end
 
+
 //    public User() {
 //        this.myItems = new ArrayList<>();
 //        this.itemsBorrowed = new ArrayList<>();
 //    }
+
+
+    public User() { }
 
     public User(String username, String password, String emailAddress, String phoneNumber) {
         this.username = username;

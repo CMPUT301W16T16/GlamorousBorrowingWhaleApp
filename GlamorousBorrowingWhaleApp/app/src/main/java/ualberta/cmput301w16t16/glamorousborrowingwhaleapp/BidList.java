@@ -1,5 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +27,10 @@ public class BidList {
 
     public ArrayList<Bid> getBids() {
         return bids;
+    }
+
+    public void setBids(ArrayList<Bid> bids) {
+        this.bids = bids;
     }
 
     /**

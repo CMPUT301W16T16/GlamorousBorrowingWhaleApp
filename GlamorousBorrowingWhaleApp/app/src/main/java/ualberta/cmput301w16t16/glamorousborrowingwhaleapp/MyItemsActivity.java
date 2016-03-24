@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * This activity allows a user to see their items that are available to be
@@ -25,10 +29,10 @@ import java.util.ArrayList;
 
 //TODO: Review lifecycle code
 public class MyItemsActivity extends AppCompatActivity {
-    private ItemList myItemsList;
-    private ArrayList<String> myItems;
+    //private ItemList myItemsList;
+    private ArrayList<Item> myItems;
     private ArrayAdapter<Item> adapter;
-    private User user;
+    private User user = UserController.getUser();
     // Probably never used
     public ArrayAdapter<Item> getAdapter() {
         return adapter;
@@ -42,20 +46,35 @@ public class MyItemsActivity extends AppCompatActivity {
         //taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
         setTitle("My Items");
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
-        user = UserController.getUser();
-        myItems = user.getMyItems();
+        ArrayList<String> myItemsArray = user.getMyItems();
+
+        // here we will have to make myItems into actual items instead of IDs
+        // this is a pretty lame way to do it
+        //TODO: can stop converting the items list into String[] once that's it's actual type
+        String[] myItemsList = new String[myItemsArray.size()];
+        myItemsList = myItemsArray.toArray(myItemsList);
+        try {
+            new ElasticSearch.elasticGetItemsByID(getApplicationContext()).execute(myItemsList).get(1000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            Log.e("EXCEPTION", "problem while waiting for items to be retrieved in MyItemsActivity");
+            e.printStackTrace();
+        }
+
+        myItems = ItemController.getItemList().getItemList();
+
         adapter = new CustomSearchResultsAdapter(this, myItems);
 
         //TODO: Use fetch from ES
         myItemsView.setAdapter(adapter);
-        new ElasticSearch.elasticGetItems(getApplicationContext()).execute(myItemsView);
+        //new ElasticSearch.elasticGetItems(getApplicationContext()).execute(myItemsView);
         adapter.notifyDataSetChanged();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MyItemActivity.class);
+                // changed this from MyItemActivity.class to NewListingActivity.class
+                Intent intent = new Intent(view.getContext(), NewListingActivity.class);
                 startActivity(intent);
             }
         });
@@ -81,9 +100,16 @@ public class MyItemsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        new ElasticSearch.elasticUpdateUser().execute();
         //TODO: Use fetch from ES
-        //myItemsList = user.getItemsRenting();
-        myItems = myItemsList.getItemList();
+        ArrayList<String> myItemsArray = user.getMyItems();
+        // here we will have to make myItems into actual items instead of IDs
+        // this is a pretty lame way to do it
+        //TODO: can stop converting the items list into String[] once that's it's actual type
+        String[] myItemsList = new String[myItemsArray.size()];
+        myItemsList = myItemsArray.toArray(myItemsList);
+        new ElasticSearch.elasticGetItemsByID(getApplicationContext()).execute(myItemsList);
+        myItems = ItemController.getItemList().getItemList();
         adapter.notifyDataSetChanged();
     }
 
