@@ -295,6 +295,8 @@ public class ElasticSearch extends Application {
 
         @Override
         protected String doInBackground(Void... params) {
+
+            Log.d("TEST", "elasticUpdateUser start");
             HttpURLConnection connection = null;
             URL url;
 
@@ -339,7 +341,6 @@ public class ElasticSearch extends Application {
                     jo.put("itemsBidOn", itemsBidOnIDArray);
                 }
 
-                Log.d("TEST", "this is jo: "+jo.toString());
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
                 writer.flush();
@@ -363,6 +364,7 @@ public class ElasticSearch extends Application {
             if (connection != null)
                 connection.disconnect();
 
+            Log.d("TEST", "elasticUpdateUser end");
             return null;
         }
 
@@ -377,6 +379,8 @@ public class ElasticSearch extends Application {
 
         @Override
         protected String doInBackground(Item... params) {
+
+            Log.d("TEST", "elasticAddItem start");
 
             user = UserController.getUser();
             item = params[0];
@@ -440,6 +444,7 @@ public class ElasticSearch extends Application {
             if (connection != null)
                 connection.disconnect();
 
+            Log.d("TEST", "elasticAddItem end");
             return null;
         }
     }
@@ -489,6 +494,8 @@ public class ElasticSearch extends Application {
 
         @Override
         protected String doInBackground(Item... params) {
+
+            Log.d("TEST", "elasticUpdateItem start");
 
             item = params[0];
             HttpURLConnection connection = null;
@@ -551,6 +558,7 @@ public class ElasticSearch extends Application {
             if (connection != null)
                 connection.disconnect();
 
+            Log.d("TEST", "elasticUpdateItem end");
             return null;
         }
     }
@@ -659,6 +667,7 @@ public class ElasticSearch extends Application {
 
         @Override
         protected ItemList doInBackground(String[]... params) {
+            Log.d("TEST", "elasticGetItemsByID start");
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
@@ -671,7 +680,6 @@ public class ElasticSearch extends Application {
 
             if (itemIDList != null) {
                 for (String ID : itemIDList) {
-                    Log.d("TEST", ID);
                     urlStringComplete = urlStringBase + ID;
                     try {
                         url = new URL(urlStringComplete);
@@ -733,6 +741,8 @@ public class ElasticSearch extends Application {
                 ItemController.setItemList(itemList);
             }
             // the returned item is passed on to onPostExecute as "result"
+
+            Log.d("TEST", "elasticGetItemsByID end");
             return null;
         }
     }

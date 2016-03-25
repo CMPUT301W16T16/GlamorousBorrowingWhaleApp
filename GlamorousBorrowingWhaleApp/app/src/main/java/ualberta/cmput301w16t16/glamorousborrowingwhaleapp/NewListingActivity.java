@@ -29,7 +29,7 @@ public class NewListingActivity extends AppCompatActivity {
     private EditText status;
     private EditText size;
     private EditText description;
-    private ImageView photo = null;
+    private ImageView photo;
     private BidList bids;
     private User user;
     private Item item;
@@ -67,34 +67,45 @@ public class NewListingActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // picture management
-                Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
-                ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
-                image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
-                photoStream = photosNeedToBeCompressedToThis.toByteArray();
+                // checking that something was inputted in each field
+                if (name.getText().toString().isEmpty() ||
+                        owner.getText().toString().isEmpty() ||
+                        status.getText().toString().isEmpty() ||
+                        size.getText().toString().isEmpty() ||
+                        description.getText().toString().isEmpty() ||
+                        photo.toString().isEmpty()) {
+                    Toast.makeText(NewListingActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // picture management
 
-                //Gathers all the variables used for EditText to apply to the Item object.
-                //toString for compatibility.
-                item = new Item();
-                item.setTitle(name.getText().toString());
-                item.setDescription(description.getText().toString());
-                item.setSize(size.getText().toString());
-                item.setAvailability(true);
-                item.setBids(bids);
-                item.setOwnerID(user.getID());
-                item.setPhoto(photoStream);
-                item.setOwnerID(user.getID());
-                //setting controller to this item now for fun
-                ItemController.setItem(item);
-                //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
-                //List. We'll have to sort out some terminology here.
-                new ElasticSearch.elasticAddItem().execute(item);
+                    Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
+                    ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
+                    image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
+                    photoStream = photosNeedToBeCompressedToThis.toByteArray();
 
-                // update the user to include the new item in its list
-                new ElasticSearch.elasticUpdateUser().execute();
+                    //Gathers all the variables used for EditText to apply to the Item object.
+                    //toString for compatibility.
+                    item = new Item();
+                    item.setTitle(name.getText().toString());
+                    item.setDescription(description.getText().toString());
+                    item.setSize(size.getText().toString());
+                    item.setAvailability(true);
+                    item.setBids(bids);
+                    item.setOwnerID(user.getID());
+                    item.setPhoto(photoStream);
+                    item.setOwnerID(user.getID());
+                    //setting controller to this item now for fun
+                    ItemController.setItem(item);
+                    //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
+                    //List. We'll have to sort out some terminology here.
+                    new ElasticSearch.elasticAddItem().execute(item);
 
-                Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
-                finish();
+                    // update the user to include the new item in its list
+                    new ElasticSearch.elasticUpdateUser().execute();
+
+                    Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
 
