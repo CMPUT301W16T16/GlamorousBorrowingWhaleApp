@@ -77,6 +77,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/glamorouswhale1"
-        android:paddingTop="30dp" />
+        android:paddingTop="30dp"/>
 
 </RelativeLayout>

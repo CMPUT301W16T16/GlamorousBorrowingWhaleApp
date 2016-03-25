@@ -106,6 +106,10 @@ public class IncomingBidsActivity extends AppCompatActivity {
 
                 ImageButton checkmarkButton = (ImageButton) child.findViewById(R.id.incomingBidsCheckmark);
                 ImageButton xmarkButton = (ImageButton) child.findViewById(R.id.incomingBidsXmark);
+                TextView incomingBidsItemTitleInflate = (TextView) findViewById(R.id.incomingBidsItemTitleInflate);
+                TextView incomingBidsAmountBidInflate = (TextView) findViewById(R.id.incomingBidsAmountBidInflate);
+                incomingBidsAmountBidInflate.setText(incomingBidsAmountBid.getText());
+                incomingBidsItemTitleInflate.setText(incomingBidsItemTitle.getText());
 
                 checkmarkButton.setOnClickListener(new View.OnClickListener() {
 

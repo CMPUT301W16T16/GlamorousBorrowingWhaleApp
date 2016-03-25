@@ -81,16 +81,16 @@ public class MyItemActivity extends AppCompatActivity {
         if (item.getPhoto() != null) {
             byte[] tempPhoto = item.getPhoto();
             photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+
+            // picture management
+            Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
+            ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
+            photoStream = photosNeedToBeCompressedToThis.toByteArray();
         }
         //Bids is not implemented yet.
         //Removing setBids activities for now.
         //bids = item.getBids();
-
-        // picture management
-        Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
-        ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
-        photoStream = photosNeedToBeCompressedToThis.toByteArray();
 
         /**
          * saveButton is onClick and leverages the ItemController for its item.

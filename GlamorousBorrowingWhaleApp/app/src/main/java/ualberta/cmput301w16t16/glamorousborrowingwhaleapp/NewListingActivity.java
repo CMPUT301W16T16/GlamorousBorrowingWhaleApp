@@ -29,7 +29,7 @@ public class NewListingActivity extends AppCompatActivity {
     private EditText status;
     private EditText size;
     private EditText description;
-    private ImageView photo;
+    private ImageView photo = null;
     private BidList bids;
     private User user;
     private Item item;
