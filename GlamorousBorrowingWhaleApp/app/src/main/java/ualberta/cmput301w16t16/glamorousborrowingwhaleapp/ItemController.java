@@ -12,8 +12,11 @@ public class ItemController {
     private static Item item;
     private static ItemList itemList;
 
-    public ItemController(Item item) {
+    public ItemController() { }
+
+    public ItemController(Item item, ItemList itemList) {
         ItemController.item = item;
+        ItemController.itemList = itemList;
     }
 
     public static Item getItem() {

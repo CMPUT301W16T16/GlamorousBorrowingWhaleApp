@@ -33,7 +33,6 @@ public class Bid {
         this.bidAmount = bidAmount;
     }
 
-
     public Boolean getIsAccepted() {
         return isAccepted;
     }

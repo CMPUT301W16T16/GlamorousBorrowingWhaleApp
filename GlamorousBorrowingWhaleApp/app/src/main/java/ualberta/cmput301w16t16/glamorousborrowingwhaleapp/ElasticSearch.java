@@ -148,15 +148,16 @@ public class ElasticSearch extends Application {
             BufferedReader reader = null;
             URL url;
             incomingBidsListView = params[0];
-            String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/";
+            String urlStringBase = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/";
+            String urlStringComplete;
 
             BidList bidsToShow = new BidList();
             ArrayList<String> itemIDList = user.getMyItems();
             if (itemIDList != null) {
                 for (String ID : itemIDList) {
-                    urlString = urlString + ID;
+                    urlStringComplete = urlStringBase + ID;
                     try {
-                        url = new URL(urlString);
+                        url = new URL(urlStringComplete);
                         connection = (HttpURLConnection) url.openConnection();
                         InputStream stream = connection.getInputStream();
                         reader = new BufferedReader(new InputStreamReader(stream));
@@ -662,16 +663,18 @@ public class ElasticSearch extends Application {
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             URL url;
-            String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/";
+            String urlStringBase = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/";
+            String urlStringComplete;
             String[] itemIDList = params[0];
 
             ItemList itemList = new ItemList();
 
             if (itemIDList != null) {
                 for (String ID : itemIDList) {
-                    urlString = urlString + ID;
+                    Log.d("TEST", ID);
+                    urlStringComplete = urlStringBase + ID;
                     try {
-                        url = new URL(urlString);
+                        url = new URL(urlStringComplete);
                         connection = (HttpURLConnection) url.openConnection();
                         InputStream stream = connection.getInputStream();
                         reader = new BufferedReader(new InputStreamReader(stream));

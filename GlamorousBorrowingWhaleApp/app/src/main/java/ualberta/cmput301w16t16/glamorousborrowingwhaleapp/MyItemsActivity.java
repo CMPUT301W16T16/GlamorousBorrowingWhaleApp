@@ -54,7 +54,7 @@ public class MyItemsActivity extends AppCompatActivity {
         String[] myItemsList = new String[myItemsArray.size()];
         myItemsList = myItemsArray.toArray(myItemsList);
         try {
-            new ElasticSearch.elasticGetItemsByID(getApplicationContext()).execute(myItemsList).get(1000, TimeUnit.MILLISECONDS);
+            new ElasticSearch.elasticGetItemsByID(getApplicationContext()).execute(myItemsList).get(1, TimeUnit.MINUTES);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             Log.e("EXCEPTION", "problem while waiting for items to be retrieved in MyItemsActivity");
             e.printStackTrace();
