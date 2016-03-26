@@ -200,7 +200,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                                     profileEmail.setText(emailInput.getText().toString());
                                     user.setEmailAddress(emailInput.getText().toString());
                                 }
-                                new ElasticSearch.elasticUpdateUser().execute();
+                                UserController.updateUserElasticSearch(user);
                             }
                         })
                 .setNegativeButton("Cancel",

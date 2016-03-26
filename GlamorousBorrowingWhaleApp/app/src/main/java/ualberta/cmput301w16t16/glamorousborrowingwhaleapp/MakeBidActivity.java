@@ -53,8 +53,15 @@ public class MakeBidActivity extends AppCompatActivity {
                 // adding the bid to the item
                 item.addBid(newBid);
 
+                // removing the item as it was from owner's item list
+                owner.removeMyItem(item.getID());
+
                 // updating the item's elastic search data to include the bid
+                // the item now has a new ID
                 ItemController.updateItemElasticSearch(item);
+
+                // adding the item as it now is into the owner's item list
+                owner.addMyItem(item.getID());
 
                 // updating the bidder to include the item
                 UserController.getUser().addItemBidOn(item.getID());

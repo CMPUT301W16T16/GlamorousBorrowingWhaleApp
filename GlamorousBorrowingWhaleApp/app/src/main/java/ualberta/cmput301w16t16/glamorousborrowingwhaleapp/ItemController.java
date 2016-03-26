@@ -41,10 +41,12 @@ public class ItemController {
     }
 
     // hand this method an item and it will update the item's data on Elastic Search
+    // there is a problem with elasticAddItemUsingID at the moment so it's deleting but not
+    // adding back in
     public static void updateItemElasticSearch(Item item) {
         try {
             new ElasticSearch.elasticDeleteItem().execute(item).get(1, TimeUnit.DAYS);
-            new ElasticSearch.elasticAddItemUsingID().execute(item).get(1, TimeUnit.DAYS);
+            new ElasticSearch.elasticAddItem().execute(item).get(1, TimeUnit.DAYS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }
