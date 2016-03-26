@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="350dp"
-    android:layout_height="250dp"
+    android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:gravity="center_horizontal"
               android:weightSum="1">
@@ -32,7 +32,10 @@
             android:id="@+id/userImage"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:layout_margin="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="30dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +49,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/userName"
                 android:text="default name"
-                android:textSize="20sp"
+                android:textSize="15dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="20dp"
@@ -65,6 +68,19 @@
                 android:background="#FFFFFF"
                 android:layout_margin="5dp"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/userPhoneNumber"
+                android:text="default number"
+                android:textSize="15dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="20dp"
+                android:background="#FFFFFF"
+                android:layout_margin="5dp"/>
+
+
         </LinearLayout>
 
     </LinearLayout>
@@ -76,6 +92,7 @@
         android:id="@+id/confirm_button"
         android:background="@color/colorPrimaryDark"
         android:layout_marginTop="10dp"
-        android:textColor="#FFFFFF"/>
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="10dp"/>
 
 </LinearLayout>
