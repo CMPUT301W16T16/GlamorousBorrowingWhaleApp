@@ -78,11 +78,12 @@ public class MyItemActivity extends AppCompatActivity {
         } else {
             highestBid.setText("No bids yet. Bummer :(");
         }
-
+        /*
         if (item.getPhoto() != null) {
             byte[] tempPhoto = item.getPhoto();
             photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
         }
+
         //Bids is not implemented yet.
         //Removing setBids activities for now.
         //bids = item.getBids();
@@ -91,14 +92,8 @@ public class MyItemActivity extends AppCompatActivity {
         Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
         ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
-        try {
-            Log.d("TEST", "waiting...");
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         photoStream = photosNeedToBeCompressedToThis.toByteArray();
-
+        */
         /**
          * saveButton is onClick and leverages the ItemController for its item.
          * The item's attributes are then set from the EditText boxes.
@@ -116,7 +111,7 @@ public class MyItemActivity extends AppCompatActivity {
                 item.setAvailability(true);
                 //item.setBids(bids);
                 item.setOwnerID(user.getID());
-                item.setPhoto(photoStream);
+                //item.setPhoto(photoStream);
                 //NO MEAT AND POTATOES HERE
                 new ElasticSearch.elasticUpdateItem().execute(item);//I LIED IT'S HERE
                 Toast.makeText(MyItemActivity.this, "Thing Saved!", Toast.LENGTH_SHORT).show();

@@ -8,11 +8,15 @@
     tools:context=".MyProfileViewActivity"
     android:weightSum="1">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:layout_margin="10dp"
-        android:id="@+id/profileInfoLayout">
+        android:id="@+id/profileInfoLayout"
+        android:background="@layout/mybutton"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp">
 
         <ImageButton
             android:layout_width="140dp"
@@ -20,97 +24,131 @@
             android:id="@+id/pictureView"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:layout_margin="10dp"
             android:src="@drawable/glamorouswhale1"
-            android:scaleType="fitCenter"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/profileName"
-            android:text="Name of User"
+            android:scaleType="fitCenter"
             android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@+id/pictureView"
-            android:layout_alignTop="@+id/pictureView" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="5dp"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="User Phone Number"
-            android:id="@+id/profilePhone"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/pictureView" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/profileName"
+                android:text="Name of User"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:background="#ececec"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="User Email"
-            android:id="@+id/profileEmail"
-            android:layout_marginLeft="10dp"
-            android:layout_alignBottom="@+id/pictureView"
-            android:layout_toEndOf="@+id/pictureView" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="User Phone Number"
+                android:id="@+id/profilePhone"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:background="#ececec"
+                android:paddingLeft="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="User Email"
+                android:id="@+id/profileEmail"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:background="#ececec"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:id="@+id/profileActionLayout"
-        android:layout_margin="10dp"
-        android:layout_weight="1.50">
+        android:layout_weight="1.50"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
 
         <Button
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
             android:text="@string/my_stuff"
             android:id="@+id/buttonMyStuff"
             android:background="@layout/mybutton"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
 
         <Button
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
             android:text="@string/my_bids"
             android:id="@+id/buttonMyBids"
             android:background="@layout/mybutton"
             android:layout_below="@+id/buttonMyStuff"
-            android:layout_marginTop="15dp"
-            android:layout_alignStart="@+id/buttonMyStuff" />
+            android:layout_marginTop="5dp"
+            android:layout_alignStart="@+id/buttonMyStuff"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
 
         <Button
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
             android:text="@string/incoming_bids"
             android:id="@+id/buttonIncomingBids"
             android:background="@layout/mybutton"
             android:layout_below="@+id/buttonMyBids"
-            android:layout_marginTop="15dp"
-            android:layout_alignStart="@+id/buttonMyBids" />
+            android:layout_marginTop="5dp"
+            android:layout_alignStart="@+id/buttonMyBids"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
 
         <Button
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
             android:text="@string/borrowed_items"
             android:id="@+id/buttonMyBorrowing"
             android:background="@layout/mybutton"
             android:layout_below="@+id/buttonIncomingBids"
-            android:layout_marginTop="15dp"
-            android:layout_alignStart="@+id/buttonIncomingBids" />
+            android:layout_marginTop="5dp"
+            android:layout_alignStart="@+id/buttonIncomingBids"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
 
         <Button
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
             android:text="@string/borrow"
             android:id="@+id/buttonBorrowSearch"
             android:background="@layout/mybutton"
             android:layout_below="@+id/buttonMyBorrowing"
-            android:layout_marginTop="15dp"
-            android:layout_alignStart="@+id/buttonMyBorrowing" />
+            android:layout_marginTop="5dp"
+            android:layout_alignStart="@+id/buttonMyBorrowing"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"/>
     </RelativeLayout>
 </LinearLayout>

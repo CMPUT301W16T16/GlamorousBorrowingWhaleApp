@@ -7,14 +7,16 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyItemActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="700dp"
         android:background="@color/colorPrimary"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <ImageButton
-            android:layout_width="170dp"
+            android:layout_width="match_parent"
             android:layout_height="140dp"
             android:scaleType="fitCenter"
             android:id="@+id/pictureView"
@@ -25,155 +27,222 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:background="@layout/mybutton"
-            android:layout_alignParentEnd="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/name"
-            android:hint="Name"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/pictureView"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/owner"
-            android:layout_below="@+id/name"
             android:layout_alignParentEnd="true"
-            android:hint="Owner"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentStart="true" />
+            android:layout_weight="0.96"
+            android:padding="10dp"/>
 
-        <EditText
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/status"
-            android:hint="Status"
+            android:orientation="vertical"
+            android:layout_below="@+id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:background="@layout/mybutton"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/owner"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/size"
-            android:hint="Size"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/status"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sport"
-            android:hint="Sport"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/size"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Description"
-            android:id="@+id/descriptionPrompt"
-            android:layout_below="@+id/sport"
-            android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="0dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/name"
+                android:hint="Name"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/pictureView"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="#ececec"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"/>
 
-        <EditText
-            android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/owner"
+                android:layout_below="@+id/name"
+                android:layout_alignParentEnd="true"
+                android:hint="Owner"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentStart="true"
+                android:background="#ececec"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/status"
+                android:hint="Status"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/owner"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:background="#ececec"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/size"
+                android:hint="Size"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/status"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:background="#ececec"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/sport"
+                android:hint="Sport"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/size"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="#ececec"
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/description"
-            android:hint="Add a description. The better the description, the more likely this item will be rented!"
-            android:background="#ececec"
-            android:textColor="#000000"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"
+            android:background="@layout/mybutton"
+            android:orientation="vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_below="@+id/descriptionPrompt"
-            android:layout_alignParentStart="true" />
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Description"
+                android:id="@+id/descriptionPrompt"
+                android:layout_below="@+id/sport"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
 
-        <ImageButton
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/description"
+                android:hint="Add a description. The better the description, the more likely this item will be rented!"
+                android:textColor="#000000"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@+id/descriptionPrompt"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="10dp"
+                android:background="#FFFFFF"
+                android:layout_marginTop="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/linearLayout"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_above="@+id/delete"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="5dp"
+            android:background="@layout/mybutton"
+            android:weightSum="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Highest Bid:"
+                android:id="@+id/comment1"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/highestBid"
+                android:layout_marginLeft="10dp"
+                android:text="No Bids Yet"
+                android:layout_marginBottom="10dp"
+                android:textSize="18dp"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/rejectBid"
+                android:src="@mipmap/xmark"
+                android:background="@layout/mybutton"
+                />
+
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:id="@+id/acceptBid"
+                android:src="@mipmap/checkmark"
+                android:background="@layout/mybutton"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
             android:layout_width="150dp"
             android:layout_height="60dp"
-            android:id="@+id/save"
-            android:src="@android:drawable/ic_menu_save"
-            android:layout_alignParentBottom="true"
-            android:layout_alignEnd="@+id/description"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@layout/mybutton"/>
-
-        <ImageButton
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
             android:id="@+id/delete"
             android:src="@android:drawable/ic_menu_delete"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@layout/mybutton"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/highestBid"
-            android:layout_below="@+id/description"
-            android:layout_toEndOf="@+id/descriptionPrompt"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_alignBottom="@+id/rejectBid" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Highest Bid:"
-            android:id="@+id/comment1"
-            android:layout_alignTop="@+id/highestBid"
-            android:layout_alignStart="@+id/description"
-            android:layout_alignBottom="@+id/highestBid" />
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/rejectBid"
-            android:src="@mipmap/xmark"
             android:background="@layout/mybutton"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="37dp"
-            android:layout_below="@+id/description"
-            android:layout_toStartOf="@+id/acceptBid" />
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"/>
 
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/acceptBid"
-            android:src="@mipmap/checkmark"
-            android:background="@layout/mybutton"
-            android:layout_alignTop="@+id/rejectBid"
-            android:layout_alignEnd="@+id/save" />
+            <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:id="@+id/save"
+                android:src="@android:drawable/ic_menu_save"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@layout/mybutton"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </ScrollView>
