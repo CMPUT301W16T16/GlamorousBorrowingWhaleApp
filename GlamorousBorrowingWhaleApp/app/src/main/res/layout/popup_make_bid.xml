@@ -36,20 +36,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/dollarsPerHour"
-                android:text="default amount"
                 android:textSize="20sp"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="20dp"
                 android:background="#FFFFFF"
                 android:layout_margin="5dp"
+                android:inputType="numberDecimal"
                 android:hint="$/Hour"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/numberOfHours"
-                android:text="default hours"
                 android:textSize="20sp"
                 android:gravity="center_vertical"
                 android:paddingLeft="15dp"

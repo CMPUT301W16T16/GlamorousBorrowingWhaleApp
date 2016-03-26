@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ualberta.cmput301w16t16.glamorousborrowingwhaleapp">
+<manifest package="ualberta.cmput301w16t16.glamorousborrowingwhaleapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -13,27 +13,29 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SignInActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity"></activity>
-        <activity android:name=".MyItemActivity"></activity>
-        <activity android:name=".SearchResultsActivity"></activity>
-        <activity android:name=".MyBorrowedItemsActivity"></activity>
-        <activity android:name=".MyBidsActivity"></activity>
-        <activity android:name=".MyProfileViewActivity"></activity>
-        <activity android:name=".TheirItemActivity"></activity>
-        <activity android:name=".MyItemsActivity"></activity>
-        <activity android:name=".NewListingActivity"></activity>
-        <activity android:name=".IncomingBidsActivity"></activity>
-        <activity android:name=".MyBorrowedItemActivity"></activity>
-        <activity android:name=".User"></activity>
-        <activity android:name=".PersistentToolbar"></activity>
-        <!--android:name=".MyItemsIncomingBidsActivity"-->
-            <!--android:label="@string/title_activity_my_items_incoming_bids"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->
+        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".MyItemActivity"/>
+        <activity android:name=".SearchResultsActivity"/>
+        <activity android:name=".MyBorrowedItemsActivity"/>
+        <activity android:name=".MyBidsActivity"/>
+        <activity android:name=".MyProfileViewActivity"/>
+        <activity android:name=".TheirItemActivity"/>
+        <activity android:name=".MyItemsActivity"/>
+        <activity android:name=".NewListingActivity"/>
+        <activity android:name=".IncomingBidsActivity"/>
+        <activity android:name=".MyBorrowedItemActivity"/>
+        <activity android:name=".User"/>
+        <activity android:name=".PersistentToolbar"/>
+        <!-- android:name=".MyItemsIncomingBidsActivity" -->
+        <!-- android:label="@string/title_activity_my_items_incoming_bids" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"></activity> -->
+        <activity android:name=".MakeBidActivity">
+        </activity>
     </application>
 
 </manifest>

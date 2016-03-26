@@ -92,8 +92,8 @@ public class TheirItemActivity extends AppCompatActivity {
         makeBid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MakeBidPopup makeBidPopup = new MakeBidPopup(TheirItemActivity.this, null);
-                makeBidPopup.show();
+                Intent intent = new Intent(TheirItemActivity.this, MakeBidActivity.class);
+                startActivity(intent);
             }
         });
 

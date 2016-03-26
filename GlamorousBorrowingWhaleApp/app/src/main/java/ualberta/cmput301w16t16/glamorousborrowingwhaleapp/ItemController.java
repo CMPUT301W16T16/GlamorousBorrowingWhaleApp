@@ -1,5 +1,10 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import java.sql.Time;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 /**
  * Created by Adam on 16-03-11.
  * This class is a controller for the current persistent item in the app.
@@ -33,5 +38,15 @@ public class ItemController {
 
     public static void setItemList(ItemList itemList) {
         ItemController.itemList = itemList;
+    }
+
+    // hand this method an item and it will update the item's data on Elastic Search
+    public static void updateItemElasticSearch(Item item) {
+        try {
+            new ElasticSearch.elasticDeleteItem().execute(item).get(1, TimeUnit.DAYS);
+            new ElasticSearch.elasticAddItemUsingID().execute(item).get(1, TimeUnit.DAYS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+        }
     }
 }

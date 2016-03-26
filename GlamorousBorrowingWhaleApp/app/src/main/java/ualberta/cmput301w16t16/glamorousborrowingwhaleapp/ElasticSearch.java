@@ -489,6 +489,82 @@ public class ElasticSearch extends Application {
         }
     }
 
+    // this is here so we can update the item and keep the previous ID (since elasticUpdateItem is not working)
+    public static class elasticAddItemUsingID extends AsyncTask<Item, String, String> {
+
+        User user;
+        Item item;
+        BufferedWriter writer;
+
+        @Override
+        protected String doInBackground(Item... params) {
+
+            user = UserController.getUser();
+            item = params[0];
+            HttpURLConnection connection = null;
+            URL url;
+
+            try {
+                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/" + item.getID());
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("PUT");
+                connection.setDoOutput(true);
+                OutputStream stream = new BufferedOutputStream(connection.getOutputStream());
+
+                JSONObject jo = new JSONObject();
+                jo.put("title", item.getTitle());
+                jo.put("description", item.getDescription());
+                jo.put("size", item.getSize());
+                jo.put("availability", item.getAvailability());
+                jo.put("photo", item.getPhoto());
+                jo.put("owner", item.getOwnerID());
+                jo.put("sport", item.getSport());
+                // this last one probably won't work the same
+                //jo.put("bids", item.getBids());
+
+                // changed it to this
+                JSONArray ja = new JSONArray();
+                for (int i = 0; i < item.getBids().getBids().size(); i++) {
+                    Bid bid = item.getBids().getBids().get(i);
+                    JSONObject joBid = new JSONObject();
+                    joBid.put("isAccepted", bid.getIsAccepted());
+                    joBid.put("ownerID", bid.getOwnerID());
+                    joBid.put("renterID", bid.getRenterID());
+                    joBid.put("itemID", bid.getItemID());
+                    joBid.put("bidAmount", bid.getBidAmount());
+                    ja.put(joBid);
+                }
+                jo.put("bids", ja);
+
+                writer = new BufferedWriter(new OutputStreamWriter(stream));
+                writer.write(jo.toString());
+                writer.flush();
+                writer.close();
+                stream.close();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String output;
+                JSONObject ESResponse;
+                while ((output = br.readLine()) != null) {
+                    Log.e("website returned", output);
+                    ESResponse = new JSONObject(output);
+                    Log.d("TEST", ESResponse.toString());
+                }
+
+                Log.e("item ID", item.getID());
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (connection != null)
+                connection.disconnect();
+
+            Log.d("TEST", "elasticAddItem end");
+            return null;
+        }
+    }
+
     public static class elasticDeleteUser extends AsyncTask<User, String, Void> {
 
         @Override
@@ -554,7 +630,6 @@ public class ElasticSearch extends Application {
                 connection.disconnect();
 
             return null;
-
         }
     }
 
