@@ -3,6 +3,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +18,8 @@ public class MakeBidPopup extends Dialog implements android.view.View.OnClickLis
     public Button bidButton;
     private User owner;
     private Item item;
+    EditText dollarsPerHour;
+    EditText userEmail
 
     public MakeBidPopup(Activity a, User owner) {
         super(a);
@@ -29,7 +32,7 @@ public class MakeBidPopup extends Dialog implements android.view.View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_profile);
+        setContentView(R.layout.popup_make_bid);
         User user = owner;
 
         //TODO: images are causing problems
@@ -41,17 +44,18 @@ public class MakeBidPopup extends Dialog implements android.view.View.OnClickLis
         }
         */
 
-        EditText dollarsPerHour = (EditText) findViewById(R.id.dollarsPerHour);
-        EditText userEmail = (EditText) findViewById(R.id.numberOfHours);
+        dollarsPerHour = (EditText) findViewById(R.id.dollarsPerHour);
+        userEmail = (EditText) findViewById(R.id.numberOfHours);
 
         bidButton = (Button) findViewById(R.id.bid_button);
-        bidButton.setOnClickListener(this);
+        bidButton.setOnClickListener(MakeBidPopup.this);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.bid_button) {
             //TODO: make a bid on the item, needs error checking and type check etc.
+            
             activity.finish();
         }
     }

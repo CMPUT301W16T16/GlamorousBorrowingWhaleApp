@@ -78,56 +78,118 @@
                 android:textColor="#000000"
                 android:gravity="center_vertical|center_horizontal"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:id="@+id/theirItemOwner"
-                android:layout_below="@+id/name"
-                android:layout_alignParentEnd="true"
-                android:text="Owner"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_alignParentStart="true"
-                android:background="@drawable/rounded_corners_grey"
-                android:layout_marginBottom="5dp"
-                android:paddingLeft="10dp"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:autoText="false"/>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/theirItemOwnerTitle"
+                    android:layout_below="@+id/name"
+                    android:layout_alignParentEnd="true"
+                    android:text="OWNER"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:autoText="false"
+                    android:textAlignment="viewEnd"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/theirItemOwner"
+                    android:layout_below="@+id/name"
+                    android:layout_alignParentEnd="true"
+                    android:text="Owner"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/rounded_corners_dark"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:autoText="false"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:id="@+id/theirItemSport"
-                android:text="Sport"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/size"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/rounded_corners_grey"
-                android:layout_marginBottom="5dp"
-                android:paddingLeft="10dp"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:autoText="false"/>
+                android:layout_height="wrap_content">
 
-            <TextView
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/theirItemSportTitle"
+                    android:text="SPORT"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_below="@+id/size"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:autoText="false"
+                    android:textAlignment="viewEnd"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/theirItemSport"
+                    android:text="Sport"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/size"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:autoText="false"
+                    android:background="@drawable/rounded_corners_grey"
+                    android:layout_marginRight="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:id="@+id/theirItemSize"
-                android:text="Size"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/sport"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:background="@drawable/rounded_corners_grey"
-                android:layout_marginBottom="15dp"
-                android:paddingLeft="10dp"
-                android:textColor="#000000"
-                android:gravity="center_vertical"
-                android:autoText="false"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/theirItemSizeTitle"
+                    android:text="SIZE"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/sport"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="15dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:autoText="false"
+                    android:textAlignment="viewEnd"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/theirItemSize"
+                    android:text="Size"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/sport"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/rounded_corners_grey"
+                    android:layout_marginBottom="15dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:autoText="false"/>
+            </LinearLayout>
 
         </LinearLayout>
 
