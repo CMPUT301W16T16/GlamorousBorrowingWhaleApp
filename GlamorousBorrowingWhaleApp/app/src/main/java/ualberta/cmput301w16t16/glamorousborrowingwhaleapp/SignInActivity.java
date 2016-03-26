@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * This activity is the fist one the user sees. It allows them to enter their
@@ -27,6 +30,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
     private EditText enteredPassword;
     private String username;
     private String password;
+    private User user;
 
     private static final int SIGN_UP = 1;
 
@@ -42,6 +46,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 setResult(RESULT_OK);
                 Intent logIntent = new Intent(view.getContext(), SignUpActivity.class);
                 startActivity(logIntent);
+                finish();
             }
         });
 
@@ -54,14 +59,38 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 username = enteredUsername.getText().toString();
                 password = enteredPassword.getText().toString();
                 // TODO: We need to do an es call here and check that the username and password match
-                User user = new User(username, password, "temporary", "temporary");
 
                 // prevents user from leaving the username field empty
                 if (username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(SignInActivity.this, "You must enter your username.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, "You must enter your username and password.", Toast.LENGTH_SHORT).show();
                 } else {
-                    UserController.setUser(user);
-                    new ElasticSearch.elasticGetUserByName(getApplicationContext()).execute(SignInActivity.this);
+                    // using elastic search to check for the user name
+                    // resulting user will be set to (UserController.secondaryUser)
+                    try {
+                        UserController.setSecondaryUser(null);
+                        new ElasticSearch.elasticGetUserByID(getApplicationContext()).execute(username).get(1, TimeUnit.DAYS);
+
+                        // elasticsearch sets the secondary user, so we check the secondary user's password
+                        // with the provided password after checking that the user exists
+                        user = UserController.getSecondaryUser();
+                        if (user != null) {
+                            Log.d("TEST", user.getUsername());
+                            if (UserController.checkPassword(password)) {
+                                Log.d("TEST", user.getUsername());
+                                UserController.setUser(user);
+                                Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(view.getContext(), "Incorrect Password", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(view.getContext(), "There is no user with that username", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                        Log.d("ElasticSearch", "Failed while retrieving user from ElasticSearch");
+                        e.printStackTrace();
+                    }
                 }
 
             }

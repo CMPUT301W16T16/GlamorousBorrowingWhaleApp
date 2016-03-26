@@ -62,7 +62,7 @@ public class TheirItemActivity extends AppCompatActivity {
         // setting the TextViews
         name.setText(item.getTitle());
         owner.setText(item.getOwnerID());
-        status.setText(Boolean.toString(item.getAvailability()));
+        status.setText(item.printAvailability());
         size.setText(item.getSize());
         sport.setText(item.getSport());
         description.setText(item.getDescription());

@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="Done"
-            android:background="@drawable/rounded_corners"
+            android:background="@drawable/rounded_corners_dark"
             android:textColor="#FFFFFF"/>
     </LinearLayout>
 

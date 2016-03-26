@@ -42,7 +42,11 @@ public class User extends AppCompatActivity implements Serializable {
 //    }
 
 
-    public User() { }
+    public User() {
+        this.itemsBidOn = new ArrayList<>();
+        this.itemsBorrowed = new ArrayList<>();
+        this.myItems = new ArrayList<>();
+    }
 
     public User(String username, String password, String emailAddress, String phoneNumber) {
         this.username = username;
@@ -51,6 +55,15 @@ public class User extends AppCompatActivity implements Serializable {
         this.phoneNumber = phoneNumber;
         this.myItems = new ArrayList<>();
         this.itemsBorrowed = new ArrayList<>();
+        this.itemsBidOn = new ArrayList<>();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }

@@ -32,4 +32,10 @@ public class UserController {
     public static void setSecondaryUser(User secondaryUser) {
         UserController.secondaryUser = secondaryUser;
     }
+
+    // checks given password against secondary user's password since secondary user
+    // is returned from elastic search
+    public static boolean checkPassword(String password) {
+        return secondaryUser.getPassword().equals(password);
+    }
 }

@@ -106,11 +106,6 @@ public class ElasticSearch extends Application {
                     }
                     item.setBids(bids);
 
-                    // the following are ???
-                    /*
-                    item.setBids(itemFromES.get("bids"));
-                    item.setOwner(itemFromES.get("owner"));
-                    */
                     itemList.add(item);
                 }
                 ItemController.setItemList(itemList);
@@ -273,6 +268,29 @@ public class ElasticSearch extends Application {
                 jo.put("emailAddress", user.getEmailAddress());
                 jo.put("phoneNumber", user.getPhoneNumber());
                 jo.put("photo", user.getPhoto());
+                jo.put("password", user.getPassword());
+
+                // adding items even though it is an empty array so you can still sign in even if
+                // you have never created any items
+                JSONArray myItemsIDArray = new JSONArray();
+                for (String itemID : user.getMyItems()) {
+                    myItemsIDArray.put(itemID);
+                }
+                jo.put("myItems", myItemsIDArray);
+
+
+                JSONArray itemsBorrowedIDArray = new JSONArray();
+                for (String itemID : user.getItemsBorrowed()) {
+                    itemsBorrowedIDArray.put(itemID);
+                }
+                jo.put("itemsBorrowed", itemsBorrowedIDArray);
+
+                Log.d("TEST", jo.toString());
+                JSONArray itemsBidOnIDArray = new JSONArray();
+                for (String itemID : user.getItemsBidOn()) {
+                    itemsBidOnIDArray.put(itemID);
+                }
+                jo.put("itemsBidOn", itemsBidOnIDArray);
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -336,32 +354,31 @@ public class ElasticSearch extends Application {
                 jo.put("emailAddress", user.getEmailAddress());
                 jo.put("phoneNumber", user.getPhoneNumber());
                 jo.put("photo", user.getPhoto());
+                jo.put("password", user.getPassword());
 
-                // the following two in AddUser will never trigger... move them somewhere logical
-                // <they will work here>
-                if (user.getMyItems() != null) {
-                    JSONArray myItemsIDArray = new JSONArray();
-                    for (String itemID : user.getMyItems()) {
-                        myItemsIDArray.put(itemID);
-                    }
-                    jo.put("myItems", myItemsIDArray);
+                // adding items even though it is an empty array so you can still sign in even if
+                // you have never created any items
+                JSONArray myItemsIDArray = new JSONArray();
+                for (String itemID : user.getMyItems()) {
+                    myItemsIDArray.put(itemID);
                 }
+                jo.put("myItems", myItemsIDArray);
 
-                if (user.getItemsBorrowed() != null) {
-                    JSONArray itemsBorrowedIDArray = new JSONArray();
-                    for (String itemID : user.getItemsBorrowed()) {
-                        itemsBorrowedIDArray.put(itemID);
-                    }
-                    jo.put("itemsBorrowed", itemsBorrowedIDArray);
-                }
 
-                if (user.getItemsBidOn() != null) {
-                    JSONArray itemsBidOnIDArray = new JSONArray();
-                    for (String itemID : user.getItemsBidOn()) {
-                        itemsBidOnIDArray.put(itemID);
-                    }
-                    jo.put("itemsBidOn", itemsBidOnIDArray);
+                JSONArray itemsBorrowedIDArray = new JSONArray();
+                for (String itemID : user.getItemsBorrowed()) {
+                    itemsBorrowedIDArray.put(itemID);
                 }
+                jo.put("itemsBorrowed", itemsBorrowedIDArray);
+
+
+
+                JSONArray itemsBidOnIDArray = new JSONArray();
+                for (String itemID : user.getItemsBidOn()) {
+                    itemsBidOnIDArray.put(itemID);
+                }
+                jo.put("itemsBidOn", itemsBidOnIDArray);
+
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -626,6 +643,7 @@ public class ElasticSearch extends Application {
                 user.setEmailAddress(userFromES.getString("emailAddress"));
                 user.setPhoneNumber(userFromES.getString("phoneNumber"));
                 user.setPhoto(userFromES.getString("photo").getBytes());
+                user.setPassword(userFromES.getString("password"));
                 user.setID(user.getUsername());
 
                 // getting the item lists back from JSON and continuing to store them as lists of IDs
@@ -690,7 +708,7 @@ public class ElasticSearch extends Application {
         @Override
         protected Void doInBackground(String... params) {
             username = params[0];
-            Log.d("TEST", "username"+username);
+            Log.d("TEST", "username "+username);
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
@@ -711,14 +729,16 @@ public class ElasticSearch extends Application {
                 String longStringOfJSON = buffer.toString();
                 JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
                 JSONObject userFromES = allOfTheJSON.getJSONObject("_source");
-                Log.d("TEST", "userFromES");
+                Log.d("TEST", userFromES.toString());
 
                 user.setUsername(userFromES.getString("username"));
                 user.setEmailAddress(userFromES.getString("emailAddress"));
                 user.setPhoneNumber(userFromES.getString("phoneNumber"));
                 user.setPhoto(userFromES.getString("photo").getBytes());
+                user.setPassword(userFromES.getString("password"));
                 user.setID(user.getUsername());
 
+                Log.d("TEST", "aaa");
                 // getting the item lists back from JSON and continuing to store them as lists of IDs
                 ArrayList<String> myItemsIds = new ArrayList<String>();
                 JSONArray myItems = userFromES.getJSONArray("myItems");
@@ -727,6 +747,7 @@ public class ElasticSearch extends Application {
                 }
                 user.setMyItems(myItemsIds);
 
+                Log.d("TEST", "bbb");
                 ArrayList<String> itemsBidOnIds = new ArrayList<>();
                 JSONArray itemsBidOn = userFromES.getJSONArray("itemsBidOn");
                 for (int i = 0; i < itemsBidOn.length(); i++) {
@@ -740,6 +761,8 @@ public class ElasticSearch extends Application {
                     itemsBorrowedIds.add(itemsBorrowed.getString(i));
                 }
                 user.setItemsBorrowed(itemsBorrowedIds);
+                Log.d("TEST", user.getUsername());
+                UserController.setSecondaryUser(user);
 
             } catch (IOException | JSONException e) {
                 Log.e("ElasticSearch", "There was an error retrieving the user from ID");
@@ -749,7 +772,6 @@ public class ElasticSearch extends Application {
             if (connection != null)
                 connection.disconnect();
 
-            UserController.setSecondaryUser(user);
             return null;
         }
     }

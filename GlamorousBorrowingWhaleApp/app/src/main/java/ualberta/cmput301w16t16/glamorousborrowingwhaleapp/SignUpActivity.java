@@ -81,7 +81,6 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                     new ElasticSearch.elasticAddUser().execute(latestUser);
 
                     Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
-
                     startActivity(intent);
                     finish();
                     //Toast.makeText(SignUpActivity.this, "New User Created!", Toast.LENGTH_SHORT).show();

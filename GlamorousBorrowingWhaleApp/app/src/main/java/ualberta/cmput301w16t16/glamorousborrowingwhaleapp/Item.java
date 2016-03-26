@@ -108,6 +108,14 @@ public class Item {
         this.bids.addBid(bid);
     }
 
+    public String printAvailability() {
+        if (availability) {
+            return "Available";
+        } else {
+            return "Not Available";
+        }
+    }
+
     /**
      * Passes a string of our choosing to the view adapter in MyItemsActivity.
      * @author adam
