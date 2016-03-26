@@ -38,6 +38,8 @@ public class MyItemsActivity extends AppCompatActivity {
         return adapter;
     }
     ListView myItemsView;
+    ArrayList<String> myItemsArray;
+    String[] myItemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +48,12 @@ public class MyItemsActivity extends AppCompatActivity {
         //taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
         setTitle("My Items");
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
-        ArrayList<String> myItemsArray = user.getMyItems();
 
         // here we will have to make myItems into actual items instead of IDs
         // this is a pretty lame way to do it
+        myItemsArray = user.getMyItems();
         //TODO: can stop converting the items list into String[] once that's it's actual type
-        String[] myItemsList = new String[myItemsArray.size()];
+        myItemsList = new String[myItemsArray.size()];
         myItemsList = myItemsArray.toArray(myItemsList);
         try {
             new ElasticSearch.elasticGetItemsByID(getApplicationContext()).execute(myItemsList).get(1, TimeUnit.MINUTES);
@@ -60,16 +62,10 @@ public class MyItemsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        // myItems contains actual items, not IDs
         myItems = ItemController.getItemList().getItemList();
-
         adapter = new CustomSearchResultsAdapter(this, myItems);
-
-        //TODO: Use fetch from ES
-        // this doesn't currently update immediately since after an item is created, the user's list
-        // of items doesn't add the id of the newest item since elasticUpdateUser isn't working right
-        // at the moment
         myItemsView.setAdapter(adapter);
-        //new ElasticSearch.elasticGetItems(getApplicationContext()).execute(myItemsView);
         adapter.notifyDataSetChanged();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -79,7 +75,6 @@ public class MyItemsActivity extends AppCompatActivity {
                 // changed this from MyItemActivity.class to NewListingActivity.class
                 Intent intent = new Intent(view.getContext(), NewListingActivity.class);
                 startActivity(intent);
-                adapter.notifyDataSetChanged();
             }
         });
 
@@ -104,17 +99,10 @@ public class MyItemsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new ElasticSearch.elasticUpdateUser().execute();
-        //TODO: Use fetch from ES
-        ArrayList<String> myItemsArray = user.getMyItems();
-        // here we will have to make myItems into actual items instead of IDs
-        // this is a pretty lame way to do it
-        //TODO: can stop converting the items list into String[] once that's it's actual type
-        String[] myItemsList = new String[myItemsArray.size()];
-        myItemsList = myItemsArray.toArray(myItemsList);
-        new ElasticSearch.elasticGetItemsByID(getApplicationContext()).execute(myItemsList);
-        myItems = ItemController.getItemList().getItemList();
-        adapter.notifyDataSetChanged();
+        if (ItemController.getItem() != null) {
+            myItems.add(ItemController.getItem());
+            adapter.notifyDataSetChanged();
+        }
     }
 
     // Gonna delete this once we get elastic search working with bids

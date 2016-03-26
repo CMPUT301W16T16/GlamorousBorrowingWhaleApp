@@ -16,6 +16,9 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 /**
@@ -65,25 +68,38 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                 if (username.isEmpty() || password.isEmpty() || phoneNumber.isEmpty() || emailAddress.isEmpty()) {
                     Toast.makeText(SignUpActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
                 } else {
+                    UserController.setSecondaryUser(null);
+                    try {
+                        new ElasticSearch.elasticGetUserByID(getApplicationContext()).execute(username).get(1, TimeUnit.DAYS);
+                        User user = UserController.getSecondaryUser();
 
-                    // picture management
-                    Bitmap image = ((BitmapDrawable) enteredPicture.getDrawable()).getBitmap();
-                    ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
-                    image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
-                    photoStream = photosNeedToBeCompressedToThis.toByteArray();
+                        // this user doesn't already exist
+                        if (user == null) {
+                            // picture management
+                            Bitmap image = ((BitmapDrawable) enteredPicture.getDrawable()).getBitmap();
+                            ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
+                            image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
+                            photoStream = photosNeedToBeCompressedToThis.toByteArray();
 
-                    User latestUser = new User(username, password, emailAddress, phoneNumber);
-                    latestUser.setPhoto(photoStream);
-                    UserController.setUser(latestUser);
+                            User latestUser = new User(username, password, emailAddress, phoneNumber);
+                            latestUser.setPhoto(photoStream);
+                            UserController.setUser(latestUser);
 
-                    setResult(RESULT_OK);
+                            setResult(RESULT_OK);
 
-                    new ElasticSearch.elasticAddUser().execute(latestUser);
+                            new ElasticSearch.elasticAddUser().execute(latestUser);
 
-                    Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
-                    startActivity(intent);
-                    finish();
-                    //Toast.makeText(SignUpActivity.this, "New User Created!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
+                            startActivity(intent);
+                            finish();
+                            //Toast.makeText(SignUpActivity.this, "New User Created!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SignUpActivity.this, "That username is already in use", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

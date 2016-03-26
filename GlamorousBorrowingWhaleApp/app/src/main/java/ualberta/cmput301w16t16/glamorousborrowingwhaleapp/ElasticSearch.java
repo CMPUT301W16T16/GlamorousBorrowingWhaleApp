@@ -285,7 +285,6 @@ public class ElasticSearch extends Application {
                 }
                 jo.put("itemsBorrowed", itemsBorrowedIDArray);
 
-                Log.d("TEST", jo.toString());
                 JSONArray itemsBidOnIDArray = new JSONArray();
                 for (String itemID : user.getItemsBidOn()) {
                     itemsBidOnIDArray.put(itemID);
@@ -380,6 +379,7 @@ public class ElasticSearch extends Application {
                 jo.put("itemsBidOn", itemsBidOnIDArray);
 
 
+                Log.d("TEST", jo.toString());
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
                 writer.flush();
@@ -394,7 +394,7 @@ public class ElasticSearch extends Application {
                     ESResponse = new JSONObject(output);
                     Log.d("TEST", "es reponse "+ESResponse.toString());
                 }
-                Log.e("user ID", user.getID());
+                Log.e("user ID ", user.getID());
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -489,6 +489,39 @@ public class ElasticSearch extends Application {
         }
     }
 
+    public static class elasticDeleteUser extends AsyncTask<User, String, Void> {
+
+        @Override
+        protected Void doInBackground(User... params) {
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            URL url;
+            User user = params[0];
+
+            try {
+                String urlText = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + user.getID();
+                url = new URL(urlText);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("DELETE");
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder buffer = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                return null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (connection != null)
+                connection.disconnect();
+
+            return null;
+
+        }
+    }
 
     // used in MyItemActivity
     public static class elasticDeleteItem extends AsyncTask<Item, String, Void> {

@@ -5,14 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context="ualberta.cmput301w16t16.glamorousborrowingwhaleapp"
-    android:background="@layout/mybutton">
+    android:background="@layout/mybutton"
+              android:padding="3dp">
 
     <!-- this image "mipmap checkmark" will probably need to be changed -->
     <ImageView
         android:layout_width="63dp"
         android:layout_height="63dp"
         android:src="@drawable/glamorouswhale1"
-        android:id="@+id/image_view"/>
+        android:id="@+id/image_view"
+        android:layout_margin="5dp"/>
 
 
     <LinearLayout

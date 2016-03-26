@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Time;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * This activity allows the user to enter all the necessary information about a
@@ -95,10 +99,14 @@ public class NewListingActivity extends AppCompatActivity {
                     new ElasticSearch.elasticAddItem().execute(item);
 
                     // update the user to include the new item in its list
-                    new ElasticSearch.elasticUpdateUser().execute();
-
-                    Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
-                    finish();
+                    new ElasticSearch.elasticDeleteUser().execute(user);
+                    try {
+                        new ElasticSearch.elasticAddUser().execute(user).get(1, TimeUnit.DAYS);
+                        Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
