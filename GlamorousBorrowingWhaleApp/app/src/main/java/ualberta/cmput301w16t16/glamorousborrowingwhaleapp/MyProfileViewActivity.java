@@ -177,11 +177,11 @@ public class MyProfileViewActivity extends AppCompatActivity {
 
         alertDialogBuilder.setView(editProfileView);
 
-        final EditText nameInput = (EditText) editProfileView.findViewById(R.id.editProfileName);
+        final TextView nameView = (TextView) editProfileView.findViewById(R.id.editProfileName);
         final EditText phoneInput = (EditText) editProfileView.findViewById(R.id.editProfilePhone);
         final EditText emailInput = (EditText) editProfileView.findViewById(R.id.editProfileEmail);
         //Grab the existing attributes to fill in the "hint" field.
-        nameInput.setHint(user.getUsername());
+        nameView.setText(user.getUsername());
         phoneInput.setHint(user.getPhoneNumber());
         emailInput.setHint(user.getEmailAddress());
         alertDialogBuilder
@@ -192,10 +192,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Minor error checking here - if field is empty no change is made
                                 //if OK is selected.
-                                if (!nameInput.getText().toString().isEmpty()) {
-                                    profileName.setText(nameInput.getText().toString());
-                                    user.setUsername(nameInput.getText().toString());
-                                }
                                 if (!phoneInput.getText().toString().isEmpty()) {
                                     profilePhone.setText(phoneInput.getText().toString());
                                     user.setPhoneNumber(phoneInput.getText().toString());
@@ -204,15 +200,16 @@ public class MyProfileViewActivity extends AppCompatActivity {
                                     profileEmail.setText(emailInput.getText().toString());
                                     user.setEmailAddress(emailInput.getText().toString());
                                 }
+                                new ElasticSearch.elasticUpdateUser().execute();
                             }
                         })
                 .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
 

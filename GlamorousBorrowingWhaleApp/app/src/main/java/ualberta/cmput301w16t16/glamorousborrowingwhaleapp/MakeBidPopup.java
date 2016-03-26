@@ -2,28 +2,28 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.EditText;
 
 /**
- * Created by andrew on 12/03/16.
+ * Created by Martina on 16-03-25.
  */
-public class ProfileDialog extends Dialog implements android.view.View.OnClickListener {
+public class MakeBidPopup extends Dialog implements android.view.View.OnClickListener {
 
     public Activity activity;
-    public Button confirmButton;
+    public Button bidButton;
     private User owner;
+    private Item item;
 
-    public ProfileDialog(Activity a, User owner) {
+    public MakeBidPopup(Activity a, User owner) {
         super(a);
         this.activity = a;
         this.owner = UserController.getSecondaryUser();
-    }
+        this.item = ItemController.getItem();
+        }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +41,17 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
         }
         */
 
-        TextView userName = (TextView) findViewById(R.id.userName);
-        TextView userEmail = (TextView) findViewById(R.id.userEmail);
+        EditText dollarsPerHour = (EditText) findViewById(R.id.dollarsPerHour);
+        EditText userEmail = (EditText) findViewById(R.id.numberOfHours);
 
-        userName.setText(user.getUsername());
-        userEmail.setText(user.getEmailAddress());
-
-        confirmButton = (Button) findViewById(R.id.confirm_button);
-        confirmButton.setOnClickListener(this);
+        bidButton = (Button) findViewById(R.id.bid_button);
+        bidButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.confirm_button) {
+        if (v.getId() == R.id.bid_button) {
+            //TODO: make a bid on the item, needs error checking and type check etc.
             activity.finish();
         }
     }

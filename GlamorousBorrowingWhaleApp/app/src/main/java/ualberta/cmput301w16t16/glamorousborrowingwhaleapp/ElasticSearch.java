@@ -60,7 +60,7 @@ public class ElasticSearch extends Application {
             itemsListView = params[0];
 
             try {
-                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?");
+                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=50");
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
@@ -80,12 +80,32 @@ public class ElasticSearch extends Application {
                 for (int i = 0; i < hitsList.length(); i++) {
                     JSONObject thingInList = hitsList.getJSONObject(i);
                     JSONObject itemFromES = thingInList.getJSONObject("_source");
+
+                    // filling in the information for the item
                     Item item = new Item();
+                    item.setID(thingInList.getString("_id"));
                     item.setTitle(itemFromES.getString("title"));
                     item.setDescription(itemFromES.getString("description"));
                     item.setSize(itemFromES.getString("size"));
                     item.setAvailability(itemFromES.getBoolean("availability"));
                     item.setPhoto(itemFromES.getString("photo").getBytes());
+                    item.setOwnerID(itemFromES.getString("owner"));
+                    item.setSport(itemFromES.getString("sport"));
+
+                    BidList bids = new BidList();
+                    JSONArray bidList = itemFromES.getJSONArray("bids");
+                    for (int j = 0; j < bidList.length(); j++) {
+                        JSONObject currentBid = bidList.getJSONObject(j);
+                        Bid tempBid = new Bid();
+                        tempBid.setOwnerID(currentBid.getString("owner"));
+                        tempBid.setRenterID(currentBid.getString("renterID"));
+                        tempBid.setItemID(currentBid.getString("itemID"));
+                        tempBid.setBidAmount(currentBid.getDouble("bidAmount"));
+                        tempBid.setIsAccepted(currentBid.getBoolean("isAccepted"));
+                        bids.addBid(tempBid);
+                    }
+                    item.setBids(bids);
+
                     // the following are ???
                     /*
                     item.setBids(itemFromES.get("bids"));
@@ -93,6 +113,7 @@ public class ElasticSearch extends Application {
                     */
                     itemList.add(item);
                 }
+                ItemController.setItemList(itemList);
                 return itemList;
 
             } catch (IOException | JSONException e) {
@@ -113,7 +134,7 @@ public class ElasticSearch extends Application {
             // the returned item is passed on to onPostExecute as "result"
             return null;
         }
-
+/*
         @Override
         protected void onPostExecute(ItemList items) {
             super.onPostExecute(items);
@@ -121,11 +142,12 @@ public class ElasticSearch extends Application {
                 adapter = new CustomSearchResultsAdapter(context, items.getItemList());
                 itemsListView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                ItemController.setItemList(items);
                 Toast.makeText(context, "Search Finished!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(context, "Sorry, nothing here.", Toast.LENGTH_SHORT).show();
             }
-        }
+        }*/
     }
 
 
@@ -401,6 +423,7 @@ public class ElasticSearch extends Application {
                 jo.put("availability", item.getAvailability());
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
+                jo.put("sport", item.getSport());
                 // this last one probably won't work the same
                 //jo.put("bids", item.getBids());
 
@@ -516,6 +539,8 @@ public class ElasticSearch extends Application {
                 jo.put("availability", item.getAvailability());
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
+                jo.put("sport", item.getSport());
+
                 // this last one probably won't work the same
                 //jo.put("bids", item.getBids());
 
@@ -643,9 +668,89 @@ public class ElasticSearch extends Application {
                 intent.putExtra("USERNAME", user);
                 UserController.setUser(user);
                 activity.startActivity(intent);
+                activity.finish();
             } else {
                 Toast.makeText(context, "User search returned null", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    // I know the name is the same as the ID but we needed one of these that
+    // takes in another user's name as a parameter to display in TheirActivityView
+    public static class elasticGetUserByID extends AsyncTask<String, String, Void> {
+
+        String username;
+        Context context;
+        User user = new User();
+
+        public elasticGetUserByID(Context context){
+            this.context = context;
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            username = params[0];
+            Log.d("TEST", "username"+username);
+
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            URL url;
+
+            try {
+                String urlText = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + username;
+                url = new URL(urlText);
+                Log.d("TEST", "url: "+url);
+                connection = (HttpURLConnection) url.openConnection();
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder buffer = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                String longStringOfJSON = buffer.toString();
+                JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
+                JSONObject userFromES = allOfTheJSON.getJSONObject("_source");
+                Log.d("TEST", "userFromES");
+
+                user.setUsername(userFromES.getString("username"));
+                user.setEmailAddress(userFromES.getString("emailAddress"));
+                user.setPhoneNumber(userFromES.getString("phoneNumber"));
+                user.setPhoto(userFromES.getString("photo").getBytes());
+                user.setID(user.getUsername());
+
+                // getting the item lists back from JSON and continuing to store them as lists of IDs
+                ArrayList<String> myItemsIds = new ArrayList<String>();
+                JSONArray myItems = userFromES.getJSONArray("myItems");
+                for (int i = 0; i < myItems.length(); i++) {
+                    myItemsIds.add(myItems.getString(i));
+                }
+                user.setMyItems(myItemsIds);
+
+                ArrayList<String> itemsBidOnIds = new ArrayList<>();
+                JSONArray itemsBidOn = userFromES.getJSONArray("itemsBidOn");
+                for (int i = 0; i < itemsBidOn.length(); i++) {
+                    itemsBidOnIds.add(itemsBidOn.getString(i));
+                }
+                user.setItemsBidOn(itemsBidOnIds);
+
+                ArrayList<String> itemsBorrowedIds = new ArrayList<>();
+                JSONArray itemsBorrowed = userFromES.getJSONArray("itemsBorrowed");
+                for (int i = 0; i < itemsBorrowed.length(); i++) {
+                    itemsBorrowedIds.add(itemsBorrowed.getString(i));
+                }
+                user.setItemsBorrowed(itemsBorrowedIds);
+
+            } catch (IOException | JSONException e) {
+                Log.e("ElasticSearch", "There was an error retrieving the user from ID");
+                e.printStackTrace();
+            }
+
+            if (connection != null)
+                connection.disconnect();
+
+            UserController.setSecondaryUser(user);
+            return null;
         }
     }
 
@@ -704,6 +809,7 @@ public class ElasticSearch extends Application {
                         tempItem.setAvailability(itemFromES.getBoolean("availability"));
                         tempItem.setPhoto(itemFromES.getString("photo").getBytes());
                         tempItem.setOwnerID(itemFromES.getString("owner"));
+                        tempItem.setSport(itemFromES.getString("sport"));
 
                         BidList bids = new BidList();
                         JSONArray bidList = itemFromES.getJSONArray("bids");

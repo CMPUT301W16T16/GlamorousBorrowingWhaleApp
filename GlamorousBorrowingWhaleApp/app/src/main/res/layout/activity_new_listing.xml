@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,23 +21,25 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            >
+            android:orientation="vertical">
             <ImageButton
-                android:layout_width="170dp"
+                android:layout_width="wrap_content"
                 android:layout_height="140dp"
                 android:scaleType="fitCenter"
                 android:id="@+id/pictureView"
                 android:src="@drawable/glamorouswhale1"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:layout_weight="13.75"/>
 
             <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -53,19 +55,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:id="@+id/owner"
-                    android:hint="Owner"
-                    android:layout_weight="1"
-                    android:textColor="#000000"
-                    android:background="#ececec"
-                    android:paddingLeft="10dp"
-                    android:layout_marginBottom="5dp"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:id="@+id/status"
-                    android:hint="Status"
+                    android:id="@+id/sport"
+                    android:hint="Sport"
                     android:layout_weight="1"
                     android:textColor="#000000"
                     android:background="#ececec"
@@ -151,4 +142,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</ScrollView>

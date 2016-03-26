@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:id="@+id/profileInfoLayout"
-        android:background="@layout/mybutton"
+        android:background="@color/colorPrimaryDark"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -27,9 +27,11 @@
             android:src="@drawable/glamorouswhale1"
             android:scaleType="fitCenter"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginRight="5dp"
+            android:background="#FFFFFF"
+            android:padding="5dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,9 +50,10 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:textColor="#000000"
-                android:background="#ececec"
+                android:background="#FFFFFF"
                 android:layout_marginBottom="5dp"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:textSize="15dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -62,8 +65,9 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:textColor="#000000"
-                android:background="#ececec"
-                android:paddingLeft="10dp"/>
+                android:background="#FFFFFF"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -75,9 +79,10 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:textColor="#000000"
-                android:background="#ececec"
+                android:background="#FFFFFF"
                 android:layout_marginTop="5dp"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:textSize="15dp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -96,59 +101,64 @@
             android:layout_height="61dp"
             android:text="@string/my_stuff"
             android:id="@+id/buttonMyStuff"
-            android:background="@layout/mybutton"
+            android:background="#FFFFFF"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="0dp"
             android:paddingRight="5dp"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="61dp"
             android:text="@string/my_bids"
             android:id="@+id/buttonMyBids"
-            android:background="@layout/mybutton"
+            android:background="#FFFFFF"
             android:layout_below="@+id/buttonMyStuff"
             android:layout_marginTop="5dp"
             android:layout_alignStart="@+id/buttonMyStuff"
             android:paddingRight="5dp"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="61dp"
             android:text="@string/incoming_bids"
             android:id="@+id/buttonIncomingBids"
-            android:background="@layout/mybutton"
+            android:background="#FFFFFF"
             android:layout_below="@+id/buttonMyBids"
             android:layout_marginTop="5dp"
             android:layout_alignStart="@+id/buttonMyBids"
             android:paddingRight="5dp"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="61dp"
             android:text="@string/borrowed_items"
             android:id="@+id/buttonMyBorrowing"
-            android:background="@layout/mybutton"
+            android:background="#FFFFFF"
             android:layout_below="@+id/buttonIncomingBids"
             android:layout_marginTop="5dp"
             android:layout_alignStart="@+id/buttonIncomingBids"
             android:paddingRight="5dp"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="61dp"
             android:text="@string/borrow"
             android:id="@+id/buttonBorrowSearch"
-            android:background="@layout/mybutton"
+            android:background="#FFFFFF"
             android:layout_below="@+id/buttonMyBorrowing"
             android:layout_marginTop="5dp"
             android:layout_alignStart="@+id/buttonMyBorrowing"
             android:paddingRight="5dp"
-            android:paddingLeft="5dp"/>
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorPrimaryDark"/>
     </RelativeLayout>
 </LinearLayout>

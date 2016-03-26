@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,8 +24,7 @@ import java.io.ByteArrayOutputStream;
 
 public class NewListingActivity extends AppCompatActivity {
     private EditText name;
-    private EditText owner;
-    private EditText status;
+    private EditText sport;
     private EditText size;
     private EditText description;
     private ImageView photo;
@@ -44,8 +42,7 @@ public class NewListingActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         name = (EditText) findViewById(R.id.name);
-        owner = (EditText) findViewById(R.id.owner);
-        status = (EditText) findViewById(R.id.status);
+        sport = (EditText) findViewById(R.id.sport);
         size = (EditText) findViewById(R.id.size);
         description = (EditText) findViewById(R.id.description);
         photo = (ImageView) findViewById(R.id.pictureView);
@@ -54,9 +51,6 @@ public class NewListingActivity extends AppCompatActivity {
         final ImageButton deleteButton;
 
         user = UserController.getUser();
-
-        status.setText("Available");
-        owner.setText(user.getUsername());
 
         saveButton = (ImageButton) findViewById(R.id.save);
         deleteButton = (ImageButton) findViewById(R.id.delete);
@@ -69,8 +63,7 @@ public class NewListingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // checking that something was inputted in each field
                 if (name.getText().toString().isEmpty() ||
-                        owner.getText().toString().isEmpty() ||
-                        status.getText().toString().isEmpty() ||
+                        sport.getText().toString().isEmpty() ||
                         size.getText().toString().isEmpty() ||
                         description.getText().toString().isEmpty() ||
                         photo.toString().isEmpty()) {
@@ -94,6 +87,7 @@ public class NewListingActivity extends AppCompatActivity {
                     item.setOwnerID(user.getID());
                     item.setPhoto(photoStream);
                     item.setOwnerID(user.getID());
+                    item.setSport(sport.getText().toString());
                     //setting controller to this item now for fun
                     ItemController.setItem(item);
                     //Adding the latestItem to the current user's (Controlled by UserController) RentedItem

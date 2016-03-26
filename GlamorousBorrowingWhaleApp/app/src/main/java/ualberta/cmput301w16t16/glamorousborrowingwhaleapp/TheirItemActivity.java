@@ -6,11 +6,14 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 /**
  * This class is used to display someone elses entry and the owner information
@@ -22,56 +25,47 @@ import android.widget.Toast;
 public class TheirItemActivity extends AppCompatActivity {
 
     private Item item;
-    private EditText owner;
-    private EditText status;
-    private EditText name;
-    private EditText size;
-    private EditText description;
-    private TextView highestBid;
+    private User ownerUser;
+
+    private TextView name;
+    private TextView owner;
+    private TextView status;
+    private TextView size;
+    private TextView description;
+    private TextView sport;
     private ImageView photo;
-    private String userID;
+    private Button makeBid;
+
     private int result;
     private byte[] photoStream = new byte[65536];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_item);
+        setContentView(R.layout.activity_their_item);
         setTitle("Their Item");
+
+        // getting item and the owner
         item = ItemController.getItem();
-        userID = ItemController.getItem().getOwnerID();
-        owner = (EditText) findViewById(R.id.owner);
-        status = (EditText) findViewById(R.id.status);
-        name = (EditText) findViewById(R.id.name);
-        size = (EditText) findViewById(R.id.size);
-        description = (EditText) findViewById(R.id.description);
-        highestBid = (TextView) findViewById(R.id.highestBid);
+        ownerUser = UserController.getUser();
+
+        // getting the TextViews
+        name = (TextView) findViewById(R.id.theirItemName);
+        owner = (TextView) findViewById(R.id.theirItemOwner);
+        status = (TextView) findViewById(R.id.theirItemStatus);
+        size = (TextView) findViewById(R.id.theirItemSize);
+        sport = (TextView) findViewById(R.id.theirItemSport);
+        description = (TextView) findViewById(R.id.theirItemDescription);
         photo = (ImageView) findViewById(R.id.pictureView);
-        ImageButton saveButton = (ImageButton) findViewById(R.id.save);
-        ImageButton deleteButton = (ImageButton) findViewById(R.id.delete);
-        ImageButton acceptBidButton = (ImageButton) findViewById(R.id.acceptBid);
-        ImageButton rejectBidButton = (ImageButton) findViewById(R.id.rejectBid);
+        makeBid = (Button) findViewById(R.id.theirItemMakeBid);
 
-        //The view is updated by asking the user object for its information.
-        status.setText(Boolean.toString(item.getAvailability()));
-        if (item.getOwnerID() == null) {
-            owner.setText("Oops!");
-        } else {
-            owner.setText(item.getOwnerID());
-        }
+        // setting the TextViews
         name.setText(item.getTitle());
-        description.setText(item.getDescription());
+        owner.setText(item.getOwnerID());
+        status.setText(Boolean.toString(item.getAvailability()));
         size.setText(item.getSize());
-        if (item.getBids() != null) {
-            if (item.getHighestBidAmount() > 0) {
-                highestBid.setText(Double.toString(item.getHighestBidAmount()));
-            } else {
-                highestBid.setText("No bids yet.");
-            }
-        } else {
-            highestBid.setText("Oops!");
-        }
-
+        sport.setText(item.getSport());
+        description.setText(item.getDescription());
 
         if (item.getPhoto() != null) {
             byte[] tempPhoto = item.getPhoto();
@@ -94,31 +88,15 @@ public class TheirItemActivity extends AppCompatActivity {
          * The item's attributes are then set from the EditText boxes.
          */
 
-        //TODO needs error checking and type check etc.
-        saveButton.setOnClickListener(new View.OnClickListener() {
+
+        makeBid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TheirItemActivity.this, "This isn't your item!", Toast.LENGTH_SHORT).show();
+                MakeBidPopup makeBidPopup = new MakeBidPopup(TheirItemActivity.this, null);
+                makeBidPopup.show();
             }
         });
 
-        /**
-         * deleteButton deletes the item in the current view. (Recall the ItemController has the
-         * item object).
-         * Involves legit removing the item from the user's itemsRenting list. This can have a negative
-         * impact as it may set the list to null (or worse) - to combat this we control it.
-         * If an action will set the list to null, we leverage the ItemController and set that to
-         * null, essentially "bypassing" the null list and it's many issues. Since the ItemController
-         * is in a "controlled" null state, code may be implemented elsewhere that can handle this
-         * simple condition.
-         */
-
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(TheirItemActivity.this, "This isn't your Item!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         // this is the gallery selection method for pictures
         photo.setOnClickListener(new View.OnClickListener() {
@@ -128,20 +106,6 @@ public class TheirItemActivity extends AppCompatActivity {
                 startActivityForResult(bringTheGallery, result);
             }
 
-        });
-
-        acceptBidButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(TheirItemActivity.this, "No Bid Adding yet. Stay tuned!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        rejectBidButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
         });
 
     }

@@ -3,63 +3,64 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+              android:weightSum="1">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="171dp"
         android:src="@drawable/glamorouswhale1"
         android:id="@+id/pictureView"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:layout_weight="0.14"
+        android:layout_marginTop="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:background="@color/colorPrimaryDark">
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:id="@+id/editProfileName"
             android:layout_weight="1"
             android:hint="Name"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+            android:layout_marginLeft="10dp"
+            android:textColor="#FFFFFF"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="20dp"
+            android:text="Name"/>
         <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/editProfilePhone"
             android:layout_weight="1"
             android:hint="Phone"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+            android:layout_marginLeft="10dp"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="10dp"/>
         <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/editProfileEmail"
             android:layout_weight="1"
             android:hint="Email"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

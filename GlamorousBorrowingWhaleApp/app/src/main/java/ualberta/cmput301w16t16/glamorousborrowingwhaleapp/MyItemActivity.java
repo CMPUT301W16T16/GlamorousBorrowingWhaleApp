@@ -2,22 +2,16 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  * This activity shows ONE of the current user's available items. It gives the user the
@@ -54,7 +48,7 @@ public class MyItemActivity extends AppCompatActivity {
         item = ItemController.getItem();
         user = UserController.getUser();
         owner = (EditText) findViewById(R.id.owner);
-        status = (EditText) findViewById(R.id.status);
+        status = (EditText) findViewById(R.id.sport);
         name = (EditText) findViewById(R.id.name);
         size = (EditText) findViewById(R.id.size);
         description = (EditText) findViewById(R.id.description);
@@ -88,6 +82,7 @@ public class MyItemActivity extends AppCompatActivity {
         //Removing setBids activities for now.
         //bids = item.getBids();
 
+        //TODO: images are causing problems
         // picture management
         Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
         ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();

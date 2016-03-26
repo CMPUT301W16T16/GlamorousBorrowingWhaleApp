@@ -13,6 +13,7 @@ public class Item {
     private Boolean availability;
     private byte[] photo;
     private BidList bids;
+    private String sport;
     //private User owner;
     private String ownerID;
     protected String ID;
@@ -85,6 +86,14 @@ public class Item {
         } else {
             return this.bids.getHighestBid().getBidAmount();
         }
+    }
+
+    public String getSport() {
+        return sport;
+    }
+
+    public void setSport(String sport) {
+        this.sport = sport;
     }
 
 //    public User getOwner() {
