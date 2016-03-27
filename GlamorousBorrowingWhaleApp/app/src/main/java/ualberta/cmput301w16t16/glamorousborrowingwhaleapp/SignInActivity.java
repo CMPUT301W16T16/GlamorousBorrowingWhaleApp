@@ -9,7 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -26,17 +41,36 @@ import java.util.concurrent.TimeoutException;
 
 public class SignInActivity extends AppCompatActivity implements Serializable {
 
+    private static final String FILENAME = "file.sav";
     private EditText enteredUsername;
     private EditText enteredPassword;
     private String username;
     private String password;
     private User user;
-
-    private static final int SIGN_UP = 1;
+    private boolean logged_in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // check if the user is already logged in
+        if (UserController.getLoggedIn(this) != null) {
+            // if yes, then move straight to MyProfileActivity
+            try {
+                // should probably move this sort of thing into the controller.
+                new ElasticSearch.elasticGetUserByID(this).execute(UserController.getLoggedIn(this))
+                        .get(1, TimeUnit.DAYS);
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                e.printStackTrace();
+            }
+            // set the user as the saved user
+            UserController.setUser(UserController.getSecondaryUser());
+            Intent intent = new Intent(SignInActivity.this, MyProfileViewActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        // the user is not already logged in
         setContentView(R.layout.activity_sign_in);
 
         // sign up button starts the sign up activity and the sign up view
@@ -50,6 +84,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
             }
         });
 
+        // allows the user to log in with their username and passwords and saves them as logged in
         enteredUsername = (EditText) findViewById(R.id.username);
         enteredPassword = (EditText) findViewById(R.id.password);
         Button loginButton = (Button) findViewById(R.id.login_button);
@@ -78,6 +113,10 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                             if (UserController.checkPassword(password)) {
                                 Log.d("TEST", user.getUsername());
                                 UserController.setUser(user);
+
+                                // save the user as being logged in
+                                UserController.setLoggedIn(view.getContext(), true);
+
                                 Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -92,32 +131,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                         e.printStackTrace();
                     }
                 }
-
             }
         });
     }
-
-    /*
-    // the sign up activity returns the new user and starts the ViewProfileActivity
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            // receives the information from the AddEntryActivity,
-            // converts it into an entry and adds it to the list of entries
-            case (SIGN_UP) : {
-                if (resultCode == Activity.RESULT_OK) {
-                    //User user = (User) data.getSerializableExtra("NEW_USER");
-                    Intent intent = new Intent(this, MyProfileViewActivity.class);
-                    //intent.putExtra("USER", (Serializable) user);
-                    //TODO investigate the "redundant" Serializable studio complains about
-                    Toast.makeText(getApplicationContext(), "New User Created!", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
-                }
-                break;
-            }
-        }
-
-    }
-    */
 }

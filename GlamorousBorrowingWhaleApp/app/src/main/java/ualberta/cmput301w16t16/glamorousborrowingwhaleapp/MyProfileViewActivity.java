@@ -32,7 +32,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
 
     private User user = UserController.getUser();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +60,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         Button buttonSearch = (Button) findViewById(R.id.buttonBorrowSearch);
         Button buttonIncomingBids = (Button) findViewById(R.id.buttonIncomingBids);
         Button buttonMyBorrowing = (Button) findViewById(R.id.buttonMyBorrowing);
+        Button logoutButton = (Button) findViewById(R.id.logoutButton);
 
         //Setting the longClickListeners for the text boxes. If a user wishes to edit something,
         //a long click on the box will send to longClick() which brings up a popup window!
@@ -148,6 +148,28 @@ public class MyProfileViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), SearchResultsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // clear all of the current items in the controllers
+                UserController.setUser(null);
+                UserController.setSecondaryUser(null);
+                ItemController.setItem(null);
+                ItemController.setItemList(null);
+
+                // set logged in as false so sign in activity will not automatically sign the user in
+                UserController.setLoggedIn(v.getContext(), false);
+
+                // go back to the sign in activity
+                Intent intent = new Intent(MyProfileViewActivity.this, SignInActivity.class);
+
+                // make sure the user cannot press the back button to go back into another activity
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
             }
         });
     }

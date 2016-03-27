@@ -1,8 +1,13 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -94,15 +99,33 @@ public class NewListingActivity extends AppCompatActivity {
                     item.setSport(sport.getText().toString());
                     //setting controller to this item now for fun
                     ItemController.setItem(item);
-                    //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
-                    //List. We'll have to sort out some terminology here.
-                    new ElasticSearch.elasticAddItem().execute(item);
-                    user.addMyItem(item.getID());
 
-                    // update the user to include the new item in its list
-                    UserController.updateUserElasticSearch(user);
-                    Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
-                    finish();
+                    // check whether we have connectivity
+                    if (NetworkUtil.getConnectivityStatus(NewListingActivity.this) == 1) {
+                        // network is available
+
+                        //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
+                        //List. We'll have to sort out some terminology here.
+                        new ElasticSearch.elasticAddItem().execute(item);
+                        user.addMyItem(item.getID());
+
+                        // update the user to include the new item in its list
+                        UserController.updateUserElasticSearch(user);
+                        Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        // network is not available
+                        // save the item to user.offlineItems and add to elasticsearch once there is connectivity
+                        user.addOfflineItem(item);
+
+                        // turn on the receiver to watch for network changes
+                        // receiver will add the item when the network is back
+                        ComponentName receiver = new ComponentName(v.getContext(), NetworkChangeReceiver.class);
+                        PackageManager pm = v.getContext().getPackageManager();
+                        pm.setComponentEnabledSetting(receiver,
+                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                                PackageManager.DONT_KILL_APP);
+                    }
                 }
             }
         });

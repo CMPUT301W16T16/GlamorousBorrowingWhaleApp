@@ -340,7 +340,6 @@ public class ElasticSearch extends Application {
         @Override
         protected String doInBackground(Void... params) {
 
-            Log.d("TEST", "elasticUpdateUser start");
             HttpURLConnection connection = null;
             URL url;
 
@@ -383,8 +382,6 @@ public class ElasticSearch extends Application {
                 }
                 jo.put("itemsBidOn", itemsBidOnIDArray);
 
-
-                Log.d("TEST", jo.toString());
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
                 writer.flush();
@@ -397,7 +394,6 @@ public class ElasticSearch extends Application {
                 while ((output = br.readLine()) != null) {
                     Log.e("website returned", output);
                     ESResponse = new JSONObject(output);
-                    Log.d("TEST", "es reponse "+ESResponse.toString());
                 }
                 Log.e("user ID ", user.getID());
 
@@ -408,7 +404,6 @@ public class ElasticSearch extends Application {
             if (connection != null)
                 connection.disconnect();
 
-            Log.d("TEST", "elasticUpdateUser end");
             return null;
         }
 
@@ -423,8 +418,6 @@ public class ElasticSearch extends Application {
 
         @Override
         protected String doInBackground(Item... params) {
-
-            Log.d("TEST", "elasticAddItem start");
 
             user = UserController.getUser();
             item = params[0];
@@ -488,7 +481,6 @@ public class ElasticSearch extends Application {
             if (connection != null)
                 connection.disconnect();
 
-            Log.d("TEST", "elasticAddItem end");
             return null;
         }
     }
@@ -571,8 +563,6 @@ public class ElasticSearch extends Application {
         @Override
         protected String doInBackground(Item... params) {
 
-            Log.d("TEST", "elasticUpdateItem start");
-
             item = params[0];
             HttpURLConnection connection = null;
             URL url;
@@ -636,7 +626,6 @@ public class ElasticSearch extends Application {
             if (connection != null)
                 connection.disconnect();
 
-            Log.d("TEST", "elasticUpdateItem end");
             return null;
         }
     }
@@ -744,7 +733,6 @@ public class ElasticSearch extends Application {
         @Override
         protected Void doInBackground(String... params) {
             username = params[0];
-            Log.d("TEST", "username "+username);
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
@@ -753,7 +741,6 @@ public class ElasticSearch extends Application {
             try {
                 String urlText = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + username;
                 url = new URL(urlText);
-                Log.d("TEST", "url: "+url);
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
@@ -765,7 +752,6 @@ public class ElasticSearch extends Application {
                 String longStringOfJSON = buffer.toString();
                 JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
                 JSONObject userFromES = allOfTheJSON.getJSONObject("_source");
-                Log.d("TEST", userFromES.toString());
 
                 user.setUsername(userFromES.getString("username"));
                 user.setEmailAddress(userFromES.getString("emailAddress"));
@@ -774,7 +760,6 @@ public class ElasticSearch extends Application {
                 user.setPassword(userFromES.getString("password"));
                 user.setID(user.getUsername());
 
-                Log.d("TEST", "aaa");
                 // getting the item lists back from JSON and continuing to store them as lists of IDs
                 ArrayList<String> myItemsIds = new ArrayList<String>();
                 JSONArray myItems = userFromES.getJSONArray("myItems");
@@ -783,7 +768,6 @@ public class ElasticSearch extends Application {
                 }
                 user.setMyItems(myItemsIds);
 
-                Log.d("TEST", "bbb");
                 ArrayList<String> itemsBidOnIds = new ArrayList<>();
                 JSONArray itemsBidOn = userFromES.getJSONArray("itemsBidOn");
                 for (int i = 0; i < itemsBidOn.length(); i++) {
@@ -797,7 +781,6 @@ public class ElasticSearch extends Application {
                     itemsBorrowedIds.add(itemsBorrowed.getString(i));
                 }
                 user.setItemsBorrowed(itemsBorrowedIds);
-                Log.d("TEST", user.getUsername());
                 UserController.setSecondaryUser(user);
 
             } catch (IOException | JSONException e) {
@@ -830,7 +813,6 @@ public class ElasticSearch extends Application {
 
         @Override
         protected ItemList doInBackground(String[]... params) {
-            Log.d("TEST", "elasticGetItemsByID start");
 
             HttpURLConnection connection = null;
             BufferedReader reader = null;
@@ -906,7 +888,6 @@ public class ElasticSearch extends Application {
             }
             // the returned item is passed on to onPostExecute as "result"
 
-            Log.d("TEST", "elasticGetItemsByID end");
             return null;
         }
     }

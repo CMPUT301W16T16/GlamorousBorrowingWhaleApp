@@ -1,5 +1,6 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import java.io.Serializable;
@@ -35,18 +36,36 @@ public class User extends AppCompatActivity implements Serializable {
     private ArrayList<String> myItems;
     //                                                              end
 
-
-//    public User() {
-//        this.myItems = new ArrayList<>();
-//        this.itemsBorrowed = new ArrayList<>();
-//    }
-
+    // being saved until they can be pushed to elastic search
+    private ArrayList<Item> offlineItems;
 
     public User() {
         this.itemsBidOn = new ArrayList<>();
         this.itemsBorrowed = new ArrayList<>();
         this.myItems = new ArrayList<>();
+        this.offlineItems = new ArrayList<>();
     }
+
+    public ArrayList<Item> getOfflineItems() {
+        return offlineItems;
+    }
+
+    public void setOfflineItems(ArrayList<Item> offlineItems) {
+        this.offlineItems = offlineItems;
+    }
+
+    public void addOfflineItem(Item item) {
+        this.offlineItems.add(item);
+    }
+
+    public void removeOfflineItem(Item item) {
+        this.offlineItems.remove(item);
+    }
+
+    //    public User() {
+//        this.myItems = new ArrayList<>();
+//        this.itemsBorrowed = new ArrayList<>();
+//    }
 
     public User(String username, String password, String emailAddress, String phoneNumber) {
         this.username = username;
@@ -152,4 +171,6 @@ public class User extends AppCompatActivity implements Serializable {
     public void removeItemBidOn(String item) {
         this.itemsBidOn.remove(item);
     }
+
+
 }
