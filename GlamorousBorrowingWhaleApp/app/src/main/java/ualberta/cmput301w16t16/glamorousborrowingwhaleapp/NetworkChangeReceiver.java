@@ -27,22 +27,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         if (status == 1) {
             // we have offline items to push
             if (!user.getOfflineItems().isEmpty()) {
-                // adding each item to elastic search and updating the user to now own the item
-                for (Item item: user.getOfflineItems()) {
-                    try {
-                        new ElasticSearch.elasticAddItem().execute(item).get(1, TimeUnit.DAYS);
-                    } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                        Log.e("ElasticSearch", "problem while waiting for elastic search to add item");
-                        e.printStackTrace();
-                    }
-                    String itemID = item.getID();
-                    user.addMyItem(itemID);
-                    UserController.updateUserElasticSearch(user);
-
-                    // removing the item from offline items
-                    //TODO: check to make sure item was successfully added first
-                    user.removeOfflineItem(item);
-                }
+                // adding the items that were defined offline to ElasticSearch
+                UserController.pushOfflineItems();
+                NetworkUtil.stopListeningForNetwork(context);
             }
         }
     }

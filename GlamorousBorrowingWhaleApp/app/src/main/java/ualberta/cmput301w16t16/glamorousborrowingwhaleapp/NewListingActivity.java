@@ -115,16 +115,14 @@ public class NewListingActivity extends AppCompatActivity {
                         finish();
                     } else {
                         // network is not available
-                        // save the item to user.offlineItems and add to elasticsearch once there is connectivity
+                        // save the item to user.offlineItems
                         user.addOfflineItem(item);
 
                         // turn on the receiver to watch for network changes
                         // receiver will add the item when the network is back
-                        ComponentName receiver = new ComponentName(v.getContext(), NetworkChangeReceiver.class);
-                        PackageManager pm = v.getContext().getPackageManager();
-                        pm.setComponentEnabledSetting(receiver,
-                                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                                PackageManager.DONT_KILL_APP);
+                        NetworkUtil.startListeningForNetwork(v.getContext());
+                        Toast.makeText(NewListingActivity.this, "Item will be pushed once network is connected", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 }
             }

@@ -35,6 +35,23 @@ public class MyProfileViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // check if there are still any items that need to be pushed to ElasticSearch
+        if (!user.getOfflineItems().isEmpty()) {
+            if (NetworkUtil.getConnectivityStatus(this) == 1) {
+                // we have items to push and we have a connection
+                UserController.pushOfflineItems();
+            } else {
+                // we have items to push but no connectivity
+                // (the receiver will push the items for us once we have connectivity)
+                NetworkUtil.startListeningForNetwork(this);
+            }
+        } else {
+            // we don't have any items to push, continue normally
+            // make sure we're not listening for network changes
+            NetworkUtil.stopListeningForNetwork(this);
+        }
+
         setContentView(R.layout.activity_profile_view);
         setTitle("Your Profile");
 

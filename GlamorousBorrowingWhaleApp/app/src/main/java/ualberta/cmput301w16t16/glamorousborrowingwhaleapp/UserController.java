@@ -83,4 +83,23 @@ public class UserController {
 
         return pref.getString("user_id", null);
     }
+
+    // push items that were defined offline to ElasticSearch
+    public static void pushOfflineItems() {
+        for (Item item: user.getOfflineItems()) {
+            try {
+                new ElasticSearch.elasticAddItem().execute(item).get(1, TimeUnit.DAYS);
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                Log.e("ElasticSearch", "problem while waiting for elastic search to add item");
+                e.printStackTrace();
+            }
+            String itemID = item.getID();
+            user.addMyItem(itemID);
+            UserController.updateUserElasticSearch(user);
+
+            // removing the item from offline items
+            //TODO: check to make sure item was successfully added first
+            user.removeOfflineItem(item);
+        }
+    }
 }

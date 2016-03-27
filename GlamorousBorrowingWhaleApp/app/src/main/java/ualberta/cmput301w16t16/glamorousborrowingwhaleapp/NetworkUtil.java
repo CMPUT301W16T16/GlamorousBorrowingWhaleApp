@@ -41,4 +41,22 @@ public class NetworkUtil {
         }
         return status;
     }
+
+    // turn on the NetworkChangeReceiver to start listening for a change in connectivity
+    public static void startListeningForNetwork(Context context) {
+        ComponentName receiver = new ComponentName(context, NetworkChangeReceiver.class);
+        PackageManager pm = context.getPackageManager();
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+    }
+
+    // turn off the NetworkChangeReceiver to stop listening for a change in connectivity
+    public static void stopListeningForNetwork(Context context) {
+        ComponentName receiver = new ComponentName(context, NetworkChangeReceiver.class);
+        PackageManager pm = context.getPackageManager();
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+    }
 }
