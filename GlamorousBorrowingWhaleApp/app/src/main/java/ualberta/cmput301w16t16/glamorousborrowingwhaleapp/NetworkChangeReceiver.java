@@ -25,12 +25,15 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
         // we just gained connectivity
         if (status == 1) {
+            Toast.makeText(context, "Internet is connected", Toast.LENGTH_SHORT).show();
             // we have offline items to push
             if (!user.getOfflineItems().isEmpty()) {
                 // adding the items that were defined offline to ElasticSearch
                 UserController.pushOfflineItems();
                 NetworkUtil.stopListeningForNetwork(context);
             }
+        } else {
+            Toast.makeText(context, "Internet is disconnected", Toast.LENGTH_SHORT).show();
         }
     }
 }
