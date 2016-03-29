@@ -75,6 +75,7 @@ public class User extends AppCompatActivity implements Serializable {
         this.myItems = new ArrayList<>();
         this.itemsBorrowed = new ArrayList<>();
         this.itemsBidOn = new ArrayList<>();
+        this.offlineItems = new ArrayList<>();
     }
 
     public String getPassword() {

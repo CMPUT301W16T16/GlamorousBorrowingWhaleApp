@@ -8,7 +8,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -52,47 +59,29 @@ public class UserController {
         return secondaryUser.getPassword().equals(password);
     }
 
-    // hand this method a user and it will update that user's data on Elastic Search
-    public static void updateUserElasticSearch(User user) {
-
-        try {
-            new ElasticSearch.elasticDeleteUser().execute(user).get(1, TimeUnit.DAYS);
-            new ElasticSearch.elasticAddUser().execute(user).get(1, TimeUnit.DAYS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            e.printStackTrace();
-        }
-    }
-
     // referenced Mar-26-2016 from http://www.androidhive.info/2012/08/android-session-management-using-shared-preferences/
     public static void setLoggedIn(Context context, boolean logged_in) {
         SharedPreferences pref = context.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
 
         if (logged_in) {
-            editor.putString("user_id", user.getID()); // Storing boolean - true/false
+            editor.putString("user_id", user.getID());
         } else {
-            editor.putString("user_id", null); // Storing boolean - true/false
+            editor.putString("user_id", null);
         }
         editor.apply();
-
-        Log.d("TEST", "setting the user as logged in");
     }
 
     public static String getLoggedIn(Context context) {
         SharedPreferences pref = context.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-
         return pref.getString("user_id", null);
     }
 
     // push items that were defined offline to ElasticSearch
     public static void pushOfflineItems() {
         for (Item item: user.getOfflineItems()) {
-            try {
-                new ElasticSearch.elasticAddItem().execute(item).get(1, TimeUnit.DAYS);
-            } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                Log.e("ElasticSearch", "problem while waiting for elastic search to add item");
-                e.printStackTrace();
-            }
+            ItemController.addItemElasticSearch(item);
+
             String itemID = item.getID();
             user.addMyItem(itemID);
             UserController.updateUserElasticSearch(user);
@@ -101,5 +90,33 @@ public class UserController {
             //TODO: check to make sure item was successfully added first
             user.removeOfflineItem(item);
         }
+    }
+
+    public static void addUserElasticSearch(User latestUser) {
+        try {
+            new ElasticSearch.elasticAddUser().execute(latestUser).get(1, TimeUnit.DAYS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            Log.d("TEST", "problem occurred while adding user to elastic search");
+            e.printStackTrace();
+        }
+    }
+
+    // hand this method a user and it will update that user's data on Elastic Search
+    public static void updateUserElasticSearch(User user) {
+        try {
+            new ElasticSearch.elasticDeleteUser().execute(user).get(1, TimeUnit.DAYS);
+            new ElasticSearch.elasticAddUser().execute(user).get(1, TimeUnit.DAYS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static User getUserByIDElasticSearch(String user_id) {
+        try {
+            new ElasticSearch.elasticGetUserByID().execute(user_id).get(1, TimeUnit.DAYS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+        }
+        return UserController.getSecondaryUser();
     }
 }

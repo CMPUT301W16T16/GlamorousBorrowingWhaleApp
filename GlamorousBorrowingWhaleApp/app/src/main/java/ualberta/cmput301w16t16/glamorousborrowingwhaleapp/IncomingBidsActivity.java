@@ -57,16 +57,20 @@ public class IncomingBidsActivity extends AppCompatActivity {
         */
         //////////////////////////////////////////////////////////////////////////////
 
-        new ElasticSearch.elasticGetIncomingBids(getApplicationContext()).execute(incomingBidsList);
-        if (BidController.getBidList() != null) {
-            bidList = BidController.getBidList();
-        } else {
-            Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids!", Toast.LENGTH_SHORT).show();
-        }
+        if (NetworkUtil.getConnectivityStatus(this) == 1) {
+            ItemController.getIncomingBidsElasticSearch();
+            if (BidController.getBidList() != null) {
+                bidList = BidController.getBidList();
+            } else {
+                Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids!", Toast.LENGTH_SHORT).show();
+            }
 
-        adapter = new CustomIncomingBidsAdapter(IncomingBidsActivity.this, bidList.getBids());
-        incomingBidsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+            adapter = new CustomIncomingBidsAdapter(IncomingBidsActivity.this, bidList.getBids());
+            incomingBidsList.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
+        }
 
         // TODO: figure out how to reimplement this, considering Bids do not have Item
 

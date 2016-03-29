@@ -1,5 +1,10 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.content.Context;
+import android.net.Network;
+import android.util.Log;
+import android.widget.ListView;
+
 import java.sql.Time;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -44,11 +49,43 @@ public class ItemController {
     // there is a problem with elasticAddItemUsingID at the moment so it's deleting but not
     // adding back in
     public static void updateItemElasticSearch(Item item) {
+        ItemController.deleteItemElasticSearch(item);
+        ItemController.addItemElasticSearch(item);
+    }
+
+    private static void deleteItemElasticSearch(Item item) {
         try {
             new ElasticSearch.elasticDeleteItem().execute(item).get(1, TimeUnit.DAYS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getItemsElasticSearch(ListView itemsListView) {
+        try {
+            new ElasticSearch.elasticGetItems().execute(itemsListView).get(1, TimeUnit.DAYS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getItemsByIDElasticSearch(String[] myItemsList) {
+        try {
+            new ElasticSearch.elasticGetItemsByID().execute(myItemsList).get(1, TimeUnit.MINUTES);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addItemElasticSearch(Item item) {
+        try {
             new ElasticSearch.elasticAddItem().execute(item).get(1, TimeUnit.DAYS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void getIncomingBidsElasticSearch() {
+
     }
 }

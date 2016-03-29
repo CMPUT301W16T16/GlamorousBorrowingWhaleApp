@@ -98,18 +98,22 @@ public class MyItemActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Get item from controller
-                item = ItemController.getItem();
-                item.setTitle(name.getText().toString());
-                item.setDescription(description.getText().toString());
-                item.setSize(size.getText().toString());
-                item.setAvailability(true);
-                //item.setBids(bids);
-                item.setOwnerID(user.getID());
-                //item.setPhoto(photoStream);
-                //NO MEAT AND POTATOES HERE
-                new ElasticSearch.elasticUpdateItem().execute(item);//I LIED IT'S HERE
-                Toast.makeText(MyItemActivity.this, "Thing Saved!", Toast.LENGTH_SHORT).show();
+                if (NetworkUtil.getConnectivityStatus(v.getContext()) == 1) {
+                    //Get item from controller
+                    item = ItemController.getItem();
+                    item.setTitle(name.getText().toString());
+                    item.setDescription(description.getText().toString());
+                    item.setSize(size.getText().toString());
+                    item.setAvailability(true);
+                    //item.setBids(bids);
+                    item.setOwnerID(user.getID());
+                    //item.setPhoto(photoStream);
+                    //NO MEAT AND POTATOES HERE
+                    ItemController.updateItemElasticSearch(item);//I LIED IT'S HERE
+                    Toast.makeText(MyItemActivity.this, "Thing Saved!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MyItemActivity.this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -128,23 +132,27 @@ public class MyItemActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!item.getBids().getBids().isEmpty()){
-                    Toast.makeText(MyItemActivity.this, "This Item Has Bids!", Toast.LENGTH_SHORT).show();
+                if (NetworkUtil.getConnectivityStatus(v.getContext()) == 1) {
+                    if (!item.getBids().getBids().isEmpty()) {
+                        Toast.makeText(MyItemActivity.this, "This Item Has Bids!", Toast.LENGTH_SHORT).show();
+                    }
+                    user.removeMyItem(item.getID());
+                    new ElasticSearch.elasticDeleteItem().execute(item);
+
+                    // TODO: remove ItemController
+                    //                if(user.getMyItems().size() != 0) {
+                    //                    ItemController.setItem(user.getMyItems().get(0));
+                    //                } else{
+                    //                    ItemController.setEmpty();
+                    //                }
+
+                    Toast.makeText(MyItemActivity.this, "Thing Deleted!", Toast.LENGTH_SHORT).show();
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                    //finish() because once the item is deleted, there's nothing to show
+                } else {
+                    Toast.makeText(v.getContext(), "You are not connected to the internet", Toast.LENGTH_SHORT).show();
                 }
-                user.removeMyItem(item.getID());
-                new ElasticSearch.elasticDeleteItem().execute(item);
-
-                // TODO: remove ItemController
-//                if(user.getMyItems().size() != 0) {
-//                    ItemController.setItem(user.getMyItems().get(0));
-//                } else{
-//                    ItemController.setEmpty();
-//                }
-
-                Toast.makeText(MyItemActivity.this, "Thing Deleted!", Toast.LENGTH_SHORT).show();
-                setResult(Activity.RESULT_OK);
-                finish();
-                //finish() because once the item is deleted, there's nothing to show
             }
         });
 

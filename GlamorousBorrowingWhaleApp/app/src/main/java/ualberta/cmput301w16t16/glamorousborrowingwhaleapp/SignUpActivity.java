@@ -62,15 +62,15 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                convertInputToString();
+                if (NetworkUtil.getConnectivityStatus(view.getContext()) == 1) {
+                    convertInputToString();
 
-                // prevents user from leaving any fields empty
-                if (username.isEmpty() || password.isEmpty() || phoneNumber.isEmpty() || emailAddress.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
-                } else {
-                    UserController.setSecondaryUser(null);
-                    try {
-                        new ElasticSearch.elasticGetUserByID(getApplicationContext()).execute(username).get(1, TimeUnit.DAYS);
+                    // prevents user from leaving any fields empty
+                    if (username.isEmpty() || password.isEmpty() || phoneNumber.isEmpty() || emailAddress.isEmpty()) {
+                        Toast.makeText(SignUpActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        UserController.setSecondaryUser(null);
+                        UserController.getUserByIDElasticSearch(username);
                         User user = UserController.getSecondaryUser();
 
                         // this user doesn't already exist
@@ -87,7 +87,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
 
                             setResult(RESULT_OK);
 
-                            new ElasticSearch.elasticAddUser().execute(latestUser);
+                            UserController.addUserElasticSearch(latestUser);
 
                             // save the user as logged in for future visits
                             UserController.setLoggedIn(view.getContext(), true);
@@ -99,10 +99,9 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                         } else {
                             Toast.makeText(SignUpActivity.this, "That username is already in use", Toast.LENGTH_SHORT).show();
                         }
-
-                    } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                        e.printStackTrace();
                     }
+                } else {
+                    Toast.makeText(view.getContext(), "You are not connected to the internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });

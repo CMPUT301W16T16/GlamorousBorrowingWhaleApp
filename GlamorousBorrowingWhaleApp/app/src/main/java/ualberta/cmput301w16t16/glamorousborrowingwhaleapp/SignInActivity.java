@@ -54,20 +54,21 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
 
         // check if the user is already logged in
-        if (UserController.getLoggedIn(this) != null) {
-            // if yes, then move straight to MyProfileActivity
-            try {
-                // should probably move this sort of thing into the controller.
-                new ElasticSearch.elasticGetUserByID(this).execute(UserController.getLoggedIn(this))
-                        .get(1, TimeUnit.DAYS);
-            } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                e.printStackTrace();
+        if (UserController.getLoggedIn(this) != null) {;
+            if (NetworkUtil.getConnectivityStatus(this) == 1) {
+                Log.d("TEST", "getLoggedIn was not null");
+                // if yes, then move straight to MyProfileActivity
+
+                // set the user as the saved user
+                User user = UserController.getUserByIDElasticSearch(UserController.getLoggedIn(this));
+                UserController.setUser(user);
+                Log.d("TEST", "we set the user in the usercontroller" + UserController.getUser().getID());
+                Intent intent = new Intent(SignInActivity.this, MyProfileViewActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(SignInActivity.this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
             }
-            // set the user as the saved user
-            UserController.setUser(UserController.getSecondaryUser());
-            Intent intent = new Intent(SignInActivity.this, MyProfileViewActivity.class);
-            startActivity(intent);
-            finish();
         }
 
         // the user is not already logged in
@@ -91,19 +92,19 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = enteredUsername.getText().toString();
-                password = enteredPassword.getText().toString();
-                // TODO: We need to do an es call here and check that the username and password match
+                if (NetworkUtil.getConnectivityStatus(view.getContext()) == 1) {
+                    username = enteredUsername.getText().toString();
+                    password = enteredPassword.getText().toString();
+                    // TODO: We need to do an es call here and check that the username and password match
 
-                // prevents user from leaving the username field empty
-                if (username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(SignInActivity.this, "You must enter your username and password.", Toast.LENGTH_SHORT).show();
-                } else {
-                    // using elastic search to check for the user name
-                    // resulting user will be set to (UserController.secondaryUser)
-                    try {
+                    // prevents user from leaving the username field empty
+                    if (username.isEmpty() || password.isEmpty()) {
+                        Toast.makeText(SignInActivity.this, "You must enter your username and password.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // using elastic search to check for the user name
+                        // resulting user will be set to (UserController.secondaryUser)
                         UserController.setSecondaryUser(null);
-                        new ElasticSearch.elasticGetUserByID(getApplicationContext()).execute(username).get(1, TimeUnit.DAYS);
+                        UserController.getUserByIDElasticSearch(username);
 
                         // elasticsearch sets the secondary user, so we check the secondary user's password
                         // with the provided password after checking that the user exists
@@ -126,10 +127,9 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                         } else {
                             Toast.makeText(view.getContext(), "There is no user with that username", Toast.LENGTH_SHORT).show();
                         }
-                    } catch (InterruptedException | ExecutionException | TimeoutException e) {
-                        Log.d("ElasticSearch", "Failed while retrieving user from ElasticSearch");
-                        e.printStackTrace();
                     }
+                } else {
+                    Toast.makeText(SignInActivity.this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

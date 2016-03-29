@@ -35,8 +35,6 @@ import java.util.ArrayList;
  */
 
 public class ElasticSearch extends Application {
-    public Context context;
-
 
     // retrieves all items on the ElasticSearch list, adding them to the returned ItemList.
     // Used in SearchResultsActivity.
@@ -45,11 +43,6 @@ public class ElasticSearch extends Application {
         TextView tv;
         ListView itemsListView;
         ArrayAdapter<Item> adapter;
-        Context context;
-
-        public elasticGetItems(Context context){
-            this.context = context;
-        }
 
         @Override
         protected ItemList doInBackground(ListView... params) {
@@ -97,13 +90,14 @@ public class ElasticSearch extends Application {
                     for (int j = 0; j < bidList.length(); j++) {
                         JSONObject currentBid = bidList.getJSONObject(j);
                         Bid tempBid = new Bid();
-                        tempBid.setOwnerID(currentBid.getString("owner"));
+                        tempBid.setOwnerID(currentBid.getString("ownerID"));
                         tempBid.setRenterID(currentBid.getString("renterID"));
                         tempBid.setItemID(currentBid.getString("itemID"));
                         tempBid.setBidAmount(currentBid.getDouble("bidAmount"));
                         tempBid.setIsAccepted(currentBid.getBoolean("isAccepted"));
                         bids.addBid(tempBid);
                     }
+
                     item.setBids(bids);
 
                     itemList.add(item);
@@ -129,36 +123,13 @@ public class ElasticSearch extends Application {
             // the returned item is passed on to onPostExecute as "result"
             return null;
         }
-
-        // doing this in SearchResultsActivity now instead
-/*
-        @Override
-        protected void onPostExecute(ItemList items) {
-            super.onPostExecute(items);
-            if (items != null) {
-                adapter = new CustomSearchResultsAdapter(context, items.getItemList());
-                itemsListView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                ItemController.setItemList(items);
-                Toast.makeText(context, "Search Finished!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "Sorry, nothing here.", Toast.LENGTH_SHORT).show();
-            }
-        }*/
     }
 
 
     // Used in IncomingBids Activity
     public static class elasticGetIncomingBids extends AsyncTask<ListView, String, BidList> {
 
-        ListView incomingBidsListView;
-        ArrayAdapter<Bid> adapter;
-        Context context;
         User user = UserController.getUser();
-
-        public elasticGetIncomingBids(Context context){
-            this.context = context;
-        }
 
         @Override
         protected BidList doInBackground(ListView... params) {
@@ -166,7 +137,6 @@ public class ElasticSearch extends Application {
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             URL url;
-            incomingBidsListView = params[0];
             String urlStringBase = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/";
             String urlStringComplete;
 
@@ -201,25 +171,7 @@ public class ElasticSearch extends Application {
                             tempBid.setIsAccepted(currentBid.getBoolean("isAccepted"));
                             bidsToShow.addBid(tempBid);
                         }
-                        //////////////////////////////////////////////////////////////////////////////////////////////// fake bid data
-// TODO get rid of this when we don't need fake bid data any more
-//                        User owner = new User("billy", "billy@abc.com", "123");
-//                        Item testItem = new Item();
-//                        testItem.setTitle("Snowshoes");
-//                        testItem.setAvailability(true);
-//                        //testItem.setOwner(owner);
-//                        testItem.setDescription("Nice pair of snowshoes. Worth about $20.00 to borrow");
-//                        BidList testBidList = new BidList();
-//                        Bid testBid = new Bid(testItem, 15.00);
-//                        testBidList.addBid(testBid);
-//                        testItem.setBids(testBidList);
-//                        bidsToShow.addBid(testBid);
-//                        Item testItem2 = new Item();
-//                        testItem2.setTitle("Golf Clubs - don't click this one (not enough data to display)");
-//                        testItem2.setAvailability(true);
-//                        Bid testBid2 = new Bid(testItem2, 30.00);
-//                        bidsToShow.addBid(testBid2);
-                        ////////////////////////////////////////////////////////////////////////////////////////////// end fake bid data
+
                         BidController.setBidList(bidsToShow);
                         return bidsToShow;
 
@@ -630,105 +582,10 @@ public class ElasticSearch extends Application {
         }
     }
 
-    public static class elasticGetUserByName extends AsyncTask<Activity, String, User> {
-
-        Activity activity;
-        Context context;
-
-        public elasticGetUserByName(Context context){
-            this.context = context;
-        }
-
-        @Override
-        protected User doInBackground(Activity... params) {
-            activity = params[0];
-
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-            URL url;
-            User user = null;
-
-            try {
-                String urlText = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + UserController.getUser().getUsername();
-                url = new URL(urlText);
-                connection = (HttpURLConnection) url.openConnection();
-                InputStream stream = connection.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(stream));
-                StringBuilder buffer = new StringBuilder();
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line);
-                }
-                String longStringOfJSON = buffer.toString();
-                JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
-                JSONObject userFromES = allOfTheJSON.getJSONObject("_source");
-
-                user = UserController.getUser();
-                user.setUsername(userFromES.getString("username"));
-                user.setEmailAddress(userFromES.getString("emailAddress"));
-                user.setPhoneNumber(userFromES.getString("phoneNumber"));
-                user.setPhoto(userFromES.getString("photo").getBytes());
-                user.setPassword(userFromES.getString("password"));
-                user.setID(user.getUsername());
-
-                // getting the item lists back from JSON and continuing to store them as lists of IDs
-                ArrayList<String> myItemsIds = new ArrayList<String>();
-                JSONArray myItems = userFromES.getJSONArray("myItems");
-                for (int i = 0; i < myItems.length(); i++) {
-                    myItemsIds.add(myItems.getString(i));
-                }
-                user.setMyItems(myItemsIds);
-
-                ArrayList<String> itemsBidOnIds = new ArrayList<>();
-                JSONArray itemsBidOn = userFromES.getJSONArray("itemsBidOn");
-                for (int i = 0; i < itemsBidOn.length(); i++) {
-                    itemsBidOnIds.add(itemsBidOn.getString(i));
-                }
-                user.setItemsBidOn(itemsBidOnIds);
-
-                ArrayList<String> itemsBorrowedIds = new ArrayList<>();
-                JSONArray itemsBorrowed = userFromES.getJSONArray("itemsBorrowed");
-                for (int i = 0; i < itemsBorrowed.length(); i++) {
-                    itemsBorrowedIds.add(itemsBorrowed.getString(i));
-                }
-                user.setItemsBorrowed(itemsBorrowedIds);
-
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (connection != null)
-                connection.disconnect();
-
-            return user;
-        }
-
-        @Override
-        protected void onPostExecute(User user) {
-            super.onPostExecute(user);
-            if (user != null) {
-                Intent intent = new Intent(activity, MyProfileViewActivity.class);
-                intent.putExtra("USERNAME", user);
-                UserController.setUser(user);
-                activity.startActivity(intent);
-                activity.finish();
-            } else {
-                Toast.makeText(context, "User search returned null", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    // I know the name is the same as the ID but we needed one of these that
-    // takes in another user's name as a parameter to display in TheirActivityView
     public static class elasticGetUserByID extends AsyncTask<String, String, Void> {
 
         String username;
-        Context context;
         User user = new User();
-
-        public elasticGetUserByID(Context context){
-            this.context = context;
-        }
 
         @Override
         protected Void doInBackground(String... params) {
@@ -804,12 +661,6 @@ public class ElasticSearch extends Application {
     // the item lists in user are stored as ArrayList<String> right now, so once that is changed to
     // String[], this will not need to be updated
     public static class elasticGetItemsByID extends AsyncTask<String[], String, ItemList> {
-
-        Context context;
-
-        public elasticGetItemsByID(Context context) {
-            this.context = context;
-        }
 
         @Override
         protected ItemList doInBackground(String[]... params) {

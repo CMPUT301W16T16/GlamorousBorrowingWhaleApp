@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MakeBidActivity extends AppCompatActivity {
 
@@ -39,35 +40,40 @@ public class MakeBidActivity extends AppCompatActivity {
                 //TODO: need to add number of hours to the whole thing
                 //TODO: make a bid on the item, needs error checking and type check etc.
 
-                // just doing amount bid for now to get it going
-                // constraints on the EditText make it so only a decimal number can be entered
-                Double amountBid = Double.valueOf(dollarsPerHour.getText().toString());
-                Double hours = Double.valueOf(numberOfHours.getText().toString());
+                if (NetworkUtil.getConnectivityStatus(v.getContext()) == 1) {
 
-                // creating the bid
-                Bid newBid = new Bid(item, amountBid);
-                newBid.setOwnerID(owner.getID());
-                newBid.setRenterID(UserController.getUser().getID());
-                newBid.setIsAccepted(false);
+                    // just doing amount bid for now to get it going
+                    // constraints on the EditText make it so only a decimal number can be entered
+                    Double amountBid = Double.valueOf(dollarsPerHour.getText().toString());
+                    Double hours = Double.valueOf(numberOfHours.getText().toString());
 
-                // adding the bid to the item
-                item.addBid(newBid);
+                    // creating the bid
+                    Bid newBid = new Bid(item, amountBid);
+                    newBid.setOwnerID(owner.getID());
+                    newBid.setRenterID(UserController.getUser().getID());
+                    newBid.setIsAccepted(false);
 
-                // removing the item as it was from owner's item list
-                owner.removeMyItem(item.getID());
+                    // adding the bid to the item
+                    item.addBid(newBid);
 
-                // updating the item's elastic search data to include the bid
-                // the item now has a new ID
-                ItemController.updateItemElasticSearch(item);
+                    // removing the item as it was from owner's item list
+                    owner.removeMyItem(item.getID());
 
-                // adding the item as it now is into the owner's item list
-                owner.addMyItem(item.getID());
+                    // updating the item's elastic search data to include the bid
+                    // the item now has a new ID
+                    ItemController.updateItemElasticSearch(item);
 
-                // updating the bidder to include the item
-                UserController.getUser().addItemBidOn(item.getID());
-                UserController.updateUserElasticSearch(UserController.getUser());
+                    // adding the item as it now is into the owner's item list
+                    owner.addMyItem(item.getID());
 
-                finish();
+                    // updating the bidder to include the item
+                    UserController.getUser().addItemBidOn(item.getID());
+                    UserController.updateUserElasticSearch(UserController.getUser());
+
+                    finish();
+                } else {
+                    Toast.makeText(v.getContext(), "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

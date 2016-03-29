@@ -49,24 +49,23 @@ public class MyItemsActivity extends AppCompatActivity {
         setTitle("My Items");
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
 
-        // here we will have to make myItems into actual items instead of IDs
-        // this is a pretty lame way to do it
-        myItemsArray = user.getMyItems();
-        //TODO: can stop converting the items list into String[] once that's it's actual type
-        myItemsList = new String[myItemsArray.size()];
-        myItemsList = myItemsArray.toArray(myItemsList);
-        try {
-            new ElasticSearch.elasticGetItemsByID(getApplicationContext()).execute(myItemsList).get(1, TimeUnit.MINUTES);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            Log.e("EXCEPTION", "problem while waiting for items to be retrieved in MyItemsActivity");
-            e.printStackTrace();
-        }
+        if (NetworkUtil.getConnectivityStatus(this) == 1) {
+            // here we will have to make myItems into actual items instead of IDs
+            // this is a pretty lame way to do it
+            myItemsArray = user.getMyItems();
+            //TODO: can stop converting the items list into String[] once that's it's actual type
+            myItemsList = new String[myItemsArray.size()];
+            myItemsList = myItemsArray.toArray(myItemsList);
+            ItemController.getItemsByIDElasticSearch(myItemsList);
 
-        // myItems contains actual items, not IDs
-        myItems = ItemController.getItemList().getItemList();
-        adapter = new CustomSearchResultsAdapter(this, myItems);
-        myItemsView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+            // myItems contains actual items, not IDs
+            myItems = ItemController.getItemList().getItemList();
+            adapter = new CustomSearchResultsAdapter(this, myItems);
+            myItemsView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

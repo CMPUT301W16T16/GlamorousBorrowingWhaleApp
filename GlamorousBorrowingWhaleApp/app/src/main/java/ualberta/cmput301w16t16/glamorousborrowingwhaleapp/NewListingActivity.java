@@ -106,7 +106,8 @@ public class NewListingActivity extends AppCompatActivity {
 
                         //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
                         //List. We'll have to sort out some terminology here.
-                        new ElasticSearch.elasticAddItem().execute(item);
+
+                        ItemController.addItemElasticSearch(item);
                         user.addMyItem(item.getID());
 
                         // update the user to include the new item in its list
