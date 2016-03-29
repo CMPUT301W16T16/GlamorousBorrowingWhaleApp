@@ -26,6 +26,10 @@ public class User extends AppCompatActivity implements Serializable {
     private byte[] photo;
     protected String ID;
 
+    // itemsBidOn = items that this user has bid on (items that belong to other people)
+    // itemsBorrowed = items that this user is currently borrowing
+    // myItems = items that this user owns (and that other users may have bid on)
+
     //working on
     private ArrayList<String> itemsBidOn;
     //private ItemList itemsBorrowing;

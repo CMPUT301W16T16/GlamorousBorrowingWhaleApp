@@ -707,7 +707,7 @@ public class ElasticSearch extends Application {
                         for (int i = 0; i < bidList.length(); i++) {
                             JSONObject currentBid = bidList.getJSONObject(i);
                             Bid tempBid = new Bid();
-                            tempBid.setOwnerID(currentBid.getString("owner"));
+                            tempBid.setOwnerID(currentBid.getString("ownerID"));
                             tempBid.setRenterID(currentBid.getString("renterID"));
                             tempBid.setItemID(currentBid.getString("itemID"));
                             tempBid.setBidAmount(currentBid.getDouble("bidAmount"));
