@@ -82,6 +82,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                             photoStream = photosNeedToBeCompressedToThis.toByteArray();
 
                             User latestUser = new User(username, password, emailAddress, phoneNumber);
+                            latestUser.setNotification(false);
                             latestUser.setPhoto(photoStream);
                             UserController.setUser(latestUser);
 

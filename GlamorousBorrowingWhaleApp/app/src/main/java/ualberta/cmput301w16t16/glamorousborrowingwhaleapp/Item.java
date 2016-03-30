@@ -14,8 +14,9 @@ public class Item {
     private byte[] photo;
     private BidList bids;
     private String sport;
-    //private User owner;
+    // private User owner;
     private String ownerID;
+    // private int rating;
     protected String ID;
 
     public void Item() {
@@ -56,6 +57,15 @@ public class Item {
     public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
 
     public byte[] getPhoto() { return photo; }
+
+    /*public int getRating() {
+
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }*/
 
     public String getID() { return ID; }
 

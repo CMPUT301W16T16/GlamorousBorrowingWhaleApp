@@ -76,6 +76,12 @@ public class MyProfileViewActivity extends AppCompatActivity {
         Button buttonMyStuff = (Button) findViewById(R.id.buttonMyStuff);
         Button buttonSearch = (Button) findViewById(R.id.buttonBorrowSearch);
         Button buttonIncomingBids = (Button) findViewById(R.id.buttonIncomingBids);
+
+        if (user.getNotification()) {
+            buttonIncomingBids.setBackgroundResource(R.drawable.rounded_corners_dark);
+            buttonIncomingBids.setTextColor(0xFFFFFF);
+        }
+
         Button buttonMyBorrowing = (Button) findViewById(R.id.buttonMyBorrowing);
         Button logoutButton = (Button) findViewById(R.id.logoutButton);
 
@@ -148,6 +154,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), IncomingBidsActivity.class);
+                user.setNotification(false);
                 startActivity(intent);
             }
         });

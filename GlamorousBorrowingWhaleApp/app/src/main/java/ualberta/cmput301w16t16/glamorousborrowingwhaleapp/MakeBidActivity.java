@@ -65,6 +65,7 @@ public class MakeBidActivity extends AppCompatActivity {
 
                     // adding the item as it now is into the owner's item list
                     owner.addMyItem(item.getID());
+                    owner.setNotification(true);
 
                     // updating the bidder to include the item
                     UserController.getUser().addItemBidOn(item.getID());

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +24,7 @@ public class User extends AppCompatActivity implements Serializable {
     private String password;
     private String emailAddress;
     private String phoneNumber;
+    private Boolean notification;
     private byte[] photo;
     protected String ID;
 
@@ -42,6 +44,12 @@ public class User extends AppCompatActivity implements Serializable {
 
     // being saved until they can be pushed to elastic search
     private ArrayList<Item> offlineItems;
+
+    // this will be used for ratings. My idea atm is for each user to have one of these
+    // array lists and when an item is set to returned (we should deal with that also)
+    // that item is appended to this and next time this user logs in something pops up to
+    // prompt them to rate it --erin
+    // private ArrayList<Item> pendingRatings;
 
     public User() {
         this.itemsBidOn = new ArrayList<>();
@@ -126,6 +134,21 @@ public class User extends AppCompatActivity implements Serializable {
         this.ID = ID;
     }
 
+    public Boolean getNotification() {
+        return notification;
+    }
+
+    public void setNotification(Boolean notification) {
+        this.notification = notification;
+    }
+
+    /*public ArrayList<Item> getPendingRatings() {
+        return pendingRatings;
+    }
+
+    public void setPendingRatings(ArrayList<Item> pendingRatings) {
+        this.pendingRatings = pendingRatings;
+    }*/
 
     public ArrayList<String> getItemsBorrowed() {
         return itemsBorrowed;

@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="700dp"
+        android:layout_height="70dp"
         android:background="@color/colorPrimary"
         android:layout_alignParentStart="true"
         android:orientation="vertical"
@@ -77,6 +77,12 @@
                 android:paddingLeft="10dp"
                 android:textColor="#000000"
                 android:gravity="center_vertical|center_horizontal"/>
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar2"
+                android:layout_gravity="center_horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -229,6 +235,12 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rounded_corners_grey"
                 android:layout_marginTop="5dp"/>
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ratingBar"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
         <LinearLayout

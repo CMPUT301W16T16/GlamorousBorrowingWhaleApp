@@ -223,6 +223,7 @@ public class ElasticSearch extends Application {
                 jo.put("phoneNumber", user.getPhoneNumber());
                 jo.put("photo", user.getPhoto());
                 jo.put("password", user.getPassword());
+                jo.put("notification", user.getNotification());
 
                 // adding items even though it is an empty array so you can still sign in even if
                 // you have never created any items
@@ -244,6 +245,8 @@ public class ElasticSearch extends Application {
                     itemsBidOnIDArray.put(itemID);
                 }
                 jo.put("itemsBidOn", itemsBidOnIDArray);
+
+                // set up ratings here
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -310,6 +313,7 @@ public class ElasticSearch extends Application {
                 jo.put("phoneNumber", user.getPhoneNumber());
                 jo.put("photo", user.getPhoto());
                 jo.put("password", user.getPassword());
+                jo.put("notification", user.getNotification());
 
                 // adding items even though it is an empty array so you can still sign in even if
                 // you have never created any items
@@ -333,6 +337,8 @@ public class ElasticSearch extends Application {
                     itemsBidOnIDArray.put(itemID);
                 }
                 jo.put("itemsBidOn", itemsBidOnIDArray);
+
+                // ratings here
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -615,6 +621,7 @@ public class ElasticSearch extends Application {
                 user.setPhoneNumber(userFromES.getString("phoneNumber"));
                 user.setPhoto(userFromES.getString("photo").getBytes());
                 user.setPassword(userFromES.getString("password"));
+                user.setNotification(userFromES.getBoolean("notification"));
                 user.setID(user.getUsername());
 
                 // getting the item lists back from JSON and continuing to store them as lists of IDs
@@ -638,6 +645,9 @@ public class ElasticSearch extends Application {
                     itemsBorrowedIds.add(itemsBorrowed.getString(i));
                 }
                 user.setItemsBorrowed(itemsBorrowedIds);
+
+                // ratings here
+
                 UserController.setSecondaryUser(user);
 
             } catch (IOException | JSONException e) {
