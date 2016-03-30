@@ -99,7 +99,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
         android:id="@+id/profileActionLayout"
         android:layout_weight="1.50"
@@ -125,12 +125,12 @@
             android:text="@string/my_bids"
             android:id="@+id/buttonMyBids"
             android:background="@layout/mybutton"
-            android:layout_below="@+id/buttonMyStuff"
             android:layout_marginTop="5dp"
-            android:layout_alignStart="@+id/buttonMyStuff"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@+id/buttonMyStuff"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:layout_width="match_parent"
@@ -140,10 +140,10 @@
             android:background="@layout/mybutton"
             android:layout_below="@+id/buttonMyBids"
             android:layout_marginTop="5dp"
-            android:layout_alignStart="@+id/buttonMyBids"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:layout_width="match_parent"
@@ -161,8 +161,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/borrow"
-            android:id="@+id/buttonBorrowSearch"
+            android:text="@string/my_items_borrowed"
+            android:id="@+id/buttonMyItemsBorrowed"
             android:background="@layout/mybutton"
             android:layout_below="@+id/buttonMyBorrowing"
             android:layout_marginTop="5dp"
@@ -170,5 +170,19 @@
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
             android:textColor="@color/colorPrimaryDark"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/borrow"
+            android:id="@+id/buttonBorrowSearch"
+            android:background="@layout/mybutton"
+            android:layout_below="@+id/buttonMyItemsBorrowing"
+            android:layout_marginTop="5dp"
+            android:layout_alignStart="@+id/buttonMyItemsBorrowing"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorPrimaryDark"/>
+
     </RelativeLayout>
 </LinearLayout>

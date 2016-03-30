@@ -37,7 +37,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // check if there are still any items that need to be pushed to ElasticSearch
-        if (!user.getOfflineItems().isEmpty()) {
+        /*if (!user.getOfflineItems().isEmpty()) {
             if (NetworkUtil.getConnectivityStatus(this) == 1) {
                 // we have items to push and we have a connection
                 UserController.pushOfflineItems();
@@ -50,7 +50,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
             // we don't have any items to push, continue normally
             // make sure we're not listening for network changes
             NetworkUtil.stopListeningForNetwork(this);
-        }
+        }*/
 
         setContentView(R.layout.activity_profile_view);
         setTitle("Your Profile");
@@ -71,7 +71,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
             profilePictureView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
         }
 
-        //Initialize the buttons.
         Button buttonMyBids = (Button) findViewById(R.id.buttonMyBids);
         Button buttonMyStuff = (Button) findViewById(R.id.buttonMyStuff);
         Button buttonSearch = (Button) findViewById(R.id.buttonBorrowSearch);
@@ -83,6 +82,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         }
 
         Button buttonMyBorrowing = (Button) findViewById(R.id.buttonMyBorrowing);
+        Button buttonMyBorrowedItems = (Button) findViewById(R.id.buttonMyItemsBorrowed);
         Button logoutButton = (Button) findViewById(R.id.logoutButton);
 
         //Setting the longClickListeners for the text boxes. If a user wishes to edit something,
@@ -163,6 +163,14 @@ public class MyProfileViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MyBorrowedItemsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonMyBorrowedItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ViewBorrowingOutActivity.class);
                 startActivity(intent);
             }
         });

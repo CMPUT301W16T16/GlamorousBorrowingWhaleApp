@@ -62,7 +62,7 @@ public class MyItemActivity extends AppCompatActivity {
         ImageButton rejectBidButton = (ImageButton) findViewById(R.id.rejectBid);
 
         //The view is updated by asking the user object for its information.
-        status.setText(Boolean.toString(item.getAvailability()));
+        status.setText(item.printAvailability());
         owner.setText(UserController.getUser().getUsername()); // shouldn't be on this page unless current user = owner
         name.setText(item.getTitle());
         description.setText(item.getDescription());
@@ -104,7 +104,13 @@ public class MyItemActivity extends AppCompatActivity {
                     item.setTitle(name.getText().toString());
                     item.setDescription(description.getText().toString());
                     item.setSize(size.getText().toString());
-                    item.setAvailability(true);
+                    if (status.getText().toString() == "Available") {
+                        item.setAvailability(true);
+                    } else if (status.getText().toString() == "Not Available") {
+                        item.setAvailability(false);
+                    } else {
+                        Toast.makeText(MyItemActivity.this, "Please set the status to Available or Not Available!", Toast.LENGTH_SHORT).show();
+                    }
                     //item.setBids(bids);
                     item.setOwnerID(user.getID());
                     //item.setPhoto(photoStream);

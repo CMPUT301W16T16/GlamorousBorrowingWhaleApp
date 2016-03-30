@@ -62,7 +62,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 // set the user as the saved user
                 User user = UserController.getUserByIDElasticSearch(UserController.getLoggedIn(this));
                 UserController.setUser(user);
-                Log.d("TEST", "we set the user in the usercontroller" + UserController.getUser().getID());
+                //Log.d("TEST", "we set the user in the usercontroller" + UserController.getUser().getID());
                 Intent intent = new Intent(SignInActivity.this, MyProfileViewActivity.class);
                 startActivity(intent);
                 finish();
