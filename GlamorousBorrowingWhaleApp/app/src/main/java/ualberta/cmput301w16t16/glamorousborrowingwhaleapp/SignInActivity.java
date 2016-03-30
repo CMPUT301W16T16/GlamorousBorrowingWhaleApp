@@ -53,6 +53,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
         // check if the user is already logged in
         if (UserController.getLoggedIn(this) != null) {;
             if (NetworkUtil.getConnectivityStatus(this) == 1) {
@@ -70,6 +71,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                 Toast.makeText(SignInActivity.this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
             }
         }
+        */
 
         // the user is not already logged in
         setContentView(R.layout.activity_sign_in);
@@ -116,7 +118,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                                 UserController.setUser(user);
 
                                 // save the user as being logged in
-                                UserController.setLoggedIn(view.getContext(), true);
+                                //UserController.setLoggedIn(view.getContext(), true);
 
                                 Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                                 startActivity(intent);

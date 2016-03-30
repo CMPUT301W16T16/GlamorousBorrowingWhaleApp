@@ -91,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity implements Serializable {
                             UserController.addUserElasticSearch(latestUser);
 
                             // save the user as logged in for future visits
-                            UserController.setLoggedIn(view.getContext(), true);
+                            //UserController.setLoggedIn(view.getContext(), true);
 
                             Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                             startActivity(intent);
