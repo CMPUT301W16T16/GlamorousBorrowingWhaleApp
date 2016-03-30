@@ -114,10 +114,11 @@ public class NewListingActivity extends AppCompatActivity {
                         UserController.updateUserElasticSearch(user);
                         Toast.makeText(NewListingActivity.this, "New Thing Saved!", Toast.LENGTH_SHORT).show();
                         finish();
+
                     } else {
                         // network is not available
                         // save the item to user.offlineItems
-                        user.addOfflineItem(item);
+                        //user.addOfflineItem(item);
 
                         // turn on the receiver to watch for network changes
                         // receiver will add the item when the network is back

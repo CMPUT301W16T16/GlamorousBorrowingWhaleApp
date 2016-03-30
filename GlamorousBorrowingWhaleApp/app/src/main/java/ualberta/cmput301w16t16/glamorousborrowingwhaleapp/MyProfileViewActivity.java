@@ -36,6 +36,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
         // check if there are still any items that need to be pushed to ElasticSearch
         /*if (!user.getOfflineItems().isEmpty()) {
             if (NetworkUtil.getConnectivityStatus(this) == 1) {
@@ -193,7 +194,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
                 ItemController.setItemList(null);
 
                 // set logged in as false so sign in activity will not automatically sign the user in
-                UserController.setLoggedIn(v.getContext(), false);
+                //UserController.setLoggedIn(v.getContext(), false);
 
                 // go back to the sign in activity
                 Intent intent = new Intent(MyProfileViewActivity.this, SignInActivity.class);
