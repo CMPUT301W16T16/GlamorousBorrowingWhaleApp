@@ -177,9 +177,9 @@
             android:text="@string/borrow"
             android:id="@+id/buttonBorrowSearch"
             android:background="@layout/mybutton"
-            android:layout_below="@+id/buttonMyItemsBorrowing"
+            android:layout_below="@+id/buttonMyItemsBorrowed"
             android:layout_marginTop="5dp"
-            android:layout_alignStart="@+id/buttonMyItemsBorrowing"
+            android:layout_alignStart="@+id/buttonMyItemsBorrowed"
             android:paddingRight="5dp"
             android:paddingLeft="5dp"
             android:textColor="@color/colorPrimaryDark"/>

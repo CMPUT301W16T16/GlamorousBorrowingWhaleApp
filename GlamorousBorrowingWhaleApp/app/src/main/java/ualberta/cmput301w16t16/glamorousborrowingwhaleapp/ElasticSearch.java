@@ -248,11 +248,11 @@ public class ElasticSearch extends Application {
 
 
                 // set up ratings here, i think this works?
-                JSONArray itemsToRateArray = new JSONArray();
+                /*JSONArray itemsToRateArray = new JSONArray();
                 for (Item item : user.getPendingRatings()) {
                     itemsToRateArray.put(item);
                 }
-                jo.put("itemsToRate", itemsToRateArray);
+                jo.put("itemsToRate", itemsToRateArray);*/
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -346,11 +346,11 @@ public class ElasticSearch extends Application {
 
 
                 // ratings here, i think this works?
-                JSONArray itemsToRateArray = new JSONArray();
+                /*JSONArray itemsToRateArray = new JSONArray();
                 for (Item itemID : user.getPendingRatings()) {
                     itemsToRateArray.put(itemID);
                 }
-                jo.put("itemsToRate", itemsToRateArray);
+                jo.put("itemsToRate", itemsToRateArray);*/
 
                 writer = new BufferedWriter(new OutputStreamWriter(stream));
                 writer.write(jo.toString());
@@ -659,12 +659,12 @@ public class ElasticSearch extends Application {
                 user.setItemsBorrowed(itemsBorrowedIds);
 
                 // ratings here, i think this works?
-                ArrayList<Item> itemsToRateArray = new ArrayList<>();
+                /*ArrayList<Item> itemsToRateArray = new ArrayList<>();
                 JSONArray itemsToRate = userFromES.getJSONArray("itemsToRate");
                 for (int i = 0; i < itemsToRate.length(); i++) {
                     itemsBorrowedIds.add(itemsToRate.getString(i));
                 }
-                user.setPendingRatings(itemsToRateArray);
+                user.setPendingRatings(itemsToRateArray);*/
 
                 UserController.setSecondaryUser(user);
 

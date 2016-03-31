@@ -17,7 +17,7 @@
     <string name="confirm">Confirm</string>
     <string name="title_activity_my_items_incoming_bids">MyItemsIncomingBidsActivity</string>
     <string name="incoming_bids">Incoming Bids</string>
-    <string name="borrowed_items">Items I'm Borrowing</string>
+    <string name="borrowed_items">Items I Am Borrowing</string>
     <string name="my_items_borrowed">My Items Being Borrowed</string>
     <string name="title_activity_view_borrowing_out">ViewBorrowingOutActivity</string>
 </resources>

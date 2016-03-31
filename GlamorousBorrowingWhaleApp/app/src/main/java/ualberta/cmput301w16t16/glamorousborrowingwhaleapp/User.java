@@ -49,7 +49,7 @@ public class User extends AppCompatActivity implements Serializable {
     // array lists and when an item is set to returned (we should deal with that also)
     // that item is appended to this and next time this user logs in something pops up to
     // prompt them to rate it --erin
-     private ArrayList<Item> pendingRatings;
+    //private ArrayList<Item> pendingRatings;
 
     public User() {
         this.itemsBidOn = new ArrayList<>();
@@ -142,13 +142,13 @@ public class User extends AppCompatActivity implements Serializable {
         this.notification = notification;
     }
 
-    public ArrayList<Item> getPendingRatings() {
+    /*public ArrayList<Item> getPendingRatings() {
         return pendingRatings;
     }
 
     public void setPendingRatings(ArrayList<Item> pendingRatings) {
         this.pendingRatings = pendingRatings;
-    }
+    }*/
 
     public ArrayList<String> getItemsBorrowed() {
         return itemsBorrowed;

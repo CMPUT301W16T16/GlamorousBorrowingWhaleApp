@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,8 +79,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
         Button buttonIncomingBids = (Button) findViewById(R.id.buttonIncomingBids);
 
         if (user.getNotification()) {
+            buttonIncomingBids.setTextColor(Color.parseColor("#ffffff"));
             buttonIncomingBids.setBackgroundResource(R.drawable.rounded_corners_dark);
-            buttonIncomingBids.setTextColor(0xFFFFFF);
         }
 
         Button buttonMyBorrowing = (Button) findViewById(R.id.buttonMyBorrowing);
@@ -156,6 +157,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), IncomingBidsActivity.class);
                 user.setNotification(false);
+                UserController.updateUserElasticSearch(user);
                 startActivity(intent);
             }
         });
@@ -298,6 +300,11 @@ public class MyProfileViewActivity extends AppCompatActivity {
         super.onResume();
         //TODO maybe add refresh content in case of offsite server update, etc. + toast to notify if done or not
         //onCreate will take care of memory release
+        Button buttonIncomingBids = (Button) findViewById(R.id.buttonIncomingBids);
+        if (user.getNotification()) {
+            buttonIncomingBids.setTextColor(Color.parseColor("#ffffff"));
+            buttonIncomingBids.setBackgroundResource(R.drawable.rounded_corners_dark);
+        }
     }
 
     /**

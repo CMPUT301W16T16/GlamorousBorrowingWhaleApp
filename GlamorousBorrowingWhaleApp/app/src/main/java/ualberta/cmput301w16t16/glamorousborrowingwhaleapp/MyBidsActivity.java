@@ -48,7 +48,7 @@ public class MyBidsActivity extends AppCompatActivity {
         for (Item item: myItems) {
             ArrayList<Bid> itemBids = item.getBids().getBids();
             for (Bid bid: itemBids) {
-                myBids.add(bid);
+                myBids.add(bid); //npe
             }
         }
 
