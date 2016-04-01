@@ -7,11 +7,17 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This activity shows ONE of the current user's available items. It gives the user the
@@ -24,13 +30,13 @@ import android.widget.Toast;
 public class MyItemActivity extends AppCompatActivity {
     private Item item;
     private EditText owner;
-    private EditText status;
     private EditText name;
     private EditText size;
     private EditText description;
     private TextView highestBid;
     private ImageView photo;
     private User user;
+    private Boolean savedStatus;
     private int result;
     private byte[] photoStream = new byte[65536];
 
@@ -48,7 +54,6 @@ public class MyItemActivity extends AppCompatActivity {
         item = ItemController.getItem();
         user = UserController.getUser();
         owner = (EditText) findViewById(R.id.owner);
-        status = (EditText) findViewById(R.id.sport);
         name = (EditText) findViewById(R.id.name);
         size = (EditText) findViewById(R.id.size);
         description = (EditText) findViewById(R.id.description);
@@ -61,8 +66,28 @@ public class MyItemActivity extends AppCompatActivity {
         ImageButton acceptBidButton = (ImageButton) findViewById(R.id.acceptBid);
         ImageButton rejectBidButton = (ImageButton) findViewById(R.id.rejectBid);
 
+        //http://www.i-programmer.info/programming/android/6388-android-adventures-spinners-and-pickers.html?start=1 3/31/16
+        AdapterView.OnItemSelectedListener onSpinner = new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position < 2) {
+                            savedStatus = true;
+                        } else {
+                            savedStatus = false;
+                        }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                };
+
+        final String[] status = {"Available", "Bidded", "Borrowed"};
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, status);
+        Spinner spinner = (Spinner)  findViewById(R.id.spinner);
+        spinner.setAdapter(stringArrayAdapter);
+        spinner.setOnItemSelectedListener(onSpinner);
+
         //The view is updated by asking the user object for its information.
-        status.setText(item.printAvailability());
         owner.setText(UserController.getUser().getUsername()); // shouldn't be on this page unless current user = owner
         name.setText(item.getTitle());
         description.setText(item.getDescription());
@@ -104,13 +129,7 @@ public class MyItemActivity extends AppCompatActivity {
                     item.setTitle(name.getText().toString());
                     item.setDescription(description.getText().toString());
                     item.setSize(size.getText().toString());
-                    if (status.getText().toString() == "Available") {
-                        item.setAvailability(true);
-                    } else if (status.getText().toString() == "Not Available") {
-                        item.setAvailability(false);
-                    } else {
-                        Toast.makeText(MyItemActivity.this, "Please set the status to Available or Not Available!", Toast.LENGTH_SHORT).show();
-                    }
+                    item.setAvailability(savedStatus);
                     //item.setBids(bids);
                     item.setOwnerID(user.getID());
                     //item.setPhoto(photoStream);
@@ -233,5 +252,16 @@ public class MyItemActivity extends AppCompatActivity {
         name.setText("");
         size.setText("");
         description.setText("");
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        String item = parent.getItemAtPosition(position).toString();
+
+        // Showing selected spinner item
+        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+    }
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
 }
