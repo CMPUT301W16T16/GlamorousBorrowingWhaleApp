@@ -99,17 +99,16 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:id="@+id/profileActionLayout"
-        android:layout_weight="1.50"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp">
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="@string/my_stuff"
             android:id="@+id/buttonMyStuff"
             android:background="@layout/mybutton"
@@ -121,7 +120,7 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="@string/my_bids"
             android:id="@+id/buttonMyBids"
             android:background="@layout/mybutton"
@@ -134,7 +133,7 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="@string/incoming_bids"
             android:id="@+id/buttonIncomingBids"
             android:background="@layout/mybutton"
@@ -147,7 +146,7 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="@string/borrowed_items"
             android:id="@+id/buttonMyBorrowing"
             android:background="@layout/mybutton"
@@ -160,7 +159,7 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="@string/my_items_borrowed"
             android:id="@+id/buttonMyItemsBorrowed"
             android:background="@layout/mybutton"
@@ -173,7 +172,7 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:text="@string/borrow"
             android:id="@+id/buttonBorrowSearch"
             android:background="@layout/mybutton"

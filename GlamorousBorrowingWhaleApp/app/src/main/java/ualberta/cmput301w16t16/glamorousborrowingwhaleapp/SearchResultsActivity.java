@@ -59,8 +59,9 @@ public class SearchResultsActivity extends AppCompatActivity {
                     Log.d("TEST", "item: " + item.getOwnerID());
                     UserController.getUserByIDElasticSearch(item.getOwnerID());
                     owner = UserController.getSecondaryUser();
-                    ProfileDialog profile = new ProfileDialog(SearchResultsActivity.this, null);
-                    profile.show();
+                    ItemController.setItem((Item) parent.getAdapter().getItem(position));
+                    Intent intent = new Intent(view.getContext(), TheirItemActivity.class);
+                    startActivity(intent);
                     //android says memory leak error here.
                 }
             });
@@ -69,19 +70,6 @@ public class SearchResultsActivity extends AppCompatActivity {
             Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
         }
 
-        // Takes you to TheirItem page
-        itemsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Item item = ItemController.getItemList().getItemList().get(position);
-                Log.d("TEST", "item: " + item.getOwnerID());
-                UserController.getUserByIDElasticSearch(item.getOwnerID());
-                owner = UserController.getSecondaryUser();
-                ItemController.setItem((Item) parent.getAdapter().getItem(position));
-                Intent intent = new Intent(view.getContext(), TheirItemActivity.class);
-                startActivity(intent);
-                return false;
-            }
-        });
+
     }
 }

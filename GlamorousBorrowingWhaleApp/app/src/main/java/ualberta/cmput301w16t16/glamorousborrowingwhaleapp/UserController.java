@@ -59,26 +59,6 @@ public class UserController {
         return secondaryUser.getPassword().equals(password);
     }
 
-    /*
-    // referenced Mar-26-2016 from http://www.androidhive.info/2012/08/android-session-management-using-shared-preferences/
-    public static void setLoggedIn(Context context, boolean logged_in) {
-        SharedPreferences pref = context.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        SharedPreferences.Editor editor = pref.edit();
-
-        if (logged_in) {
-            editor.putString("user_id", user.getID());
-        } else {
-            editor.putString("user_id", null);
-        }
-        editor.apply();
-    }
-
-    public static String getLoggedIn(Context context) {
-        SharedPreferences pref = context.getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        return pref.getString("user_id", null);
-    }
-    */
-
     // push items that were defined offline to ElasticSearch
     public static void pushOfflineItems() {
         for (Item item: user.getOfflineItems()) {

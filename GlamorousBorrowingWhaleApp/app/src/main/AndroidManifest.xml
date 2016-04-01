@@ -36,7 +36,7 @@
         <!-- android:name=".MyItemsIncomingBidsActivity" -->
         <!-- android:label="@string/title_activity_my_items_incoming_bids" -->
         <!-- android:theme="@style/AppTheme.NoActionBar"></activity> -->
-        <activity android:name=".MakeBidActivity"></activity>
+        <activity android:name=".MakeBidActivity" />
 
         <receiver
             android:name=".NetworkChangeReceiver"
@@ -51,7 +51,8 @@
         <activity
             android:name=".ViewBorrowingOutActivity"
             android:label="@string/title_activity_view_borrowing_out"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TheirProfileViewActivity"></activity>
     </application>
 
 </manifest>

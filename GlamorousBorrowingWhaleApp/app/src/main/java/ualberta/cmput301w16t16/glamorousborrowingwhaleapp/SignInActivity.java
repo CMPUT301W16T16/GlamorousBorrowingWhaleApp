@@ -53,27 +53,6 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-        // check if the user is already logged in
-        if (UserController.getLoggedIn(this) != null) {;
-            if (NetworkUtil.getConnectivityStatus(this) == 1) {
-                Log.d("TEST", "getLoggedIn was not null");
-                // if yes, then move straight to MyProfileActivity
-
-                // set the user as the saved user
-                User user = UserController.getUserByIDElasticSearch(UserController.getLoggedIn(this));
-                UserController.setUser(user);
-                //Log.d("TEST", "we set the user in the usercontroller" + UserController.getUser().getID());
-                Intent intent = new Intent(SignInActivity.this, MyProfileViewActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(SignInActivity.this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
-            }
-        }
-        */
-
-        // the user is not already logged in
         setContentView(R.layout.activity_sign_in);
 
         // sign up button starts the sign up activity and the sign up view
@@ -116,9 +95,6 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                             if (UserController.checkPassword(password)) {
                                 Log.d("TEST", user.getUsername());
                                 UserController.setUser(user);
-
-                                // save the user as being logged in
-                                //UserController.setLoggedIn(view.getContext(), true);
 
                                 Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
                                 startActivity(intent);

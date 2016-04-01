@@ -118,7 +118,7 @@ public class NewListingActivity extends AppCompatActivity {
                     } else {
                         // network is not available
                         // save the item to user.offlineItems
-                        //user.addOfflineItem(item);
+                        user.addOfflineItem(item);
 
                         // turn on the receiver to watch for network changes
                         // receiver will add the item when the network is back

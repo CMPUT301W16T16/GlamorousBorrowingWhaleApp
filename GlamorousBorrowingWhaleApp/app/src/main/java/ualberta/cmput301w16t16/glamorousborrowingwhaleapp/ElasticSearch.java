@@ -53,7 +53,7 @@ public class ElasticSearch extends Application {
             itemsListView = params[0];
 
             try {
-                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=50");
+                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=10");
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));

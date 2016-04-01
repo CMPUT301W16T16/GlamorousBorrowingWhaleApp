@@ -2,6 +2,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,6 +38,8 @@ public class IncomingBidsActivity extends AppCompatActivity {
         setTitle("Incoming Bids");
 
         User user = UserController.getUser();
+        user.setNotification(false);
+
         ListView incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
 
         //////////////////////////////////////////////////////////////////////////////

@@ -102,7 +102,7 @@
                     android:gravity="center_vertical"
                     android:autoText="false"
                     android:textAlignment="viewEnd"/>
-                <TextView
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:id="@+id/theirItemOwner"
@@ -117,7 +117,7 @@
                     android:paddingLeft="10dp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_vertical"
-                    android:autoText="false"/>
+                    android:autoText="false" />
             </LinearLayout>
 
             <LinearLayout

@@ -71,7 +71,7 @@ public class ItemController {
 
     public static void getItemsByIDElasticSearch(String[] myItemsList) {
         try {
-            new ElasticSearch.elasticGetItemsByID().execute(myItemsList).get(1, TimeUnit.MINUTES);
+            new ElasticSearch.elasticGetItemsByID().execute(myItemsList).get(1, TimeUnit.DAYS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }

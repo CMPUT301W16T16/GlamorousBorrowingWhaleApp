@@ -35,6 +35,7 @@ public class TheirItemActivity extends AppCompatActivity {
     private TextView sport;
     private ImageView photo;
     private Button makeBid;
+    private Button itemOwner;
 
     private int result;
     private byte[] photoStream = new byte[65536];
@@ -58,6 +59,7 @@ public class TheirItemActivity extends AppCompatActivity {
         description = (TextView) findViewById(R.id.theirItemDescription);
         photo = (ImageView) findViewById(R.id.pictureView);
         makeBid = (Button) findViewById(R.id.theirItemMakeBid);
+        itemOwner = (Button) findViewById(R.id.theirItemOwner);
 
         // setting the TextViews
         name.setText(item.getTitle());
@@ -106,6 +108,15 @@ public class TheirItemActivity extends AppCompatActivity {
                 startActivityForResult(bringTheGallery, result);
             }
 
+        });
+
+        itemOwner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TheirItemActivity.this, TheirProfileViewActivity.class);
+                startActivity(intent);
+
+            }
         });
 
     }

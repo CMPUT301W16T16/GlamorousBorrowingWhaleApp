@@ -2,16 +2,20 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 
 /**
@@ -23,8 +27,8 @@ import java.util.ArrayList;
  */
 
 public class MyBidsActivity extends AppCompatActivity {
-    private ArrayList<Bid> myBids;
-    private ArrayAdapter<Bid> adapter;
+    private ArrayList<BidItem> pairs = new ArrayList<>();
+    private ArrayAdapter<BidItem> adapter;
     private User user = UserController.getUser();
     private ListView myBidsView;
     private String[] myItemsList;
@@ -44,22 +48,40 @@ public class MyBidsActivity extends AppCompatActivity {
         ItemController.getItemsByIDElasticSearch(myItemsList);
         myItems = ItemController.getItemList().getItemList();
 
+
         // get all of the bids held by all of the items
         for (Item item: myItems) {
             ArrayList<Bid> itemBids = item.getBids().getBids();
             for (Bid bid: itemBids) {
-                myBids.add(bid); //npe
+                BidItem pair = new BidItem(bid, item);
+                pairs.add(pair);
+                //myBids.add(bid); //npe
             }
         }
 
-        adapter = new CustomMyBidsAdapter(this, myBids);
+        adapter = new CustomMyBidsAdapter(this, pairs);
         myBidsView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        myBidsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            /*
+            The ViewAdapter saves the position of what is clicked in the dynamic list.
+            Set that Item as the current Item and send the user to the MyItemActivity with the current Item
+             */
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
+                ItemController.setItem(bidItem.item);
+                Intent intent = new Intent(view.getContext(), TheirItemActivity.class);
+                startActivity(intent);
+                return false;
+            }
+        });
     }
 
-    public class CustomMyBidsAdapter extends ArrayAdapter<Bid> {
+    public class CustomMyBidsAdapter extends ArrayAdapter<BidItem> {
 
-        public CustomMyBidsAdapter(Context context, ArrayList<Bid> bids) {
+        public CustomMyBidsAdapter(Context context, ArrayList<BidItem> bids) {
             super(context, R.layout.custom_incoming_bids_row, bids);
         }
 
@@ -67,15 +89,12 @@ public class MyBidsActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             View view = inflater.inflate(R.layout.custom_incoming_bids_row, parent, false);
-            Bid bid = getItem(position);
-
-            // TODO: figure out how to reimplement this, considering Bids DO NOT HAVE ITEMS
-            // adding the item title
-//        TextView itemTitle = (TextView) view.findViewById(R.id.incomingBidsItemTitle);
-//        itemTitle.setText(bid.getItem().getTitle());
+            BidItem pair = getItem(position);
+            Bid bid = pair.bid;
+            Item item = pair.item;
 
             TextView itemTitle = (TextView) view.findViewById(R.id.incomingBidsItemTitle);
-            itemTitle.setText("temp text s.t. app doesn't crash");
+            itemTitle.setText(item.getTitle());
 
             // adding the amount that was bid
             TextView amountBid = (TextView) view.findViewById(R.id.incomingBidsAmountBid);
@@ -83,5 +102,17 @@ public class MyBidsActivity extends AppCompatActivity {
             return view;
         }
     }
+
+    public class BidItem {
+        public final Bid bid;
+        public final Item item;
+
+        public BidItem(Bid bid, Item item) {
+            this.bid = bid;
+            this.item = item;
+        }
+    }
+
+
 }
 

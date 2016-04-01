@@ -30,7 +30,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
             if (!user.getOfflineItems().isEmpty()) {
                 // adding the items that were defined offline to ElasticSearch
                 UserController.pushOfflineItems();
-                NetworkUtil.stopListeningForNetwork(context);
+                //NetworkUtil.stopListeningForNetwork(context);
             }
         } else {
             Toast.makeText(context, "Internet is disconnected", Toast.LENGTH_SHORT).show();
