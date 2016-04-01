@@ -20,12 +20,12 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
     private ArrayAdapter<Item> adapter;
     private User user = UserController.getUser();
     // Probably never used
-    public ArrayAdapter<Item> getAdapter() {
+    private ArrayAdapter<Item> getAdapter() {
         return adapter;
     }
-    ListView itemsView;
-    ArrayList<String> itemsArray;
-    String[] itemsList;
+    private ListView itemsView;
+    private ArrayList<String> itemsArray;
+    private String[] itemsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

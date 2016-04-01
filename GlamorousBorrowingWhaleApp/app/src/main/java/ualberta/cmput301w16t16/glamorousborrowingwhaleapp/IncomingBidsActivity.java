@@ -27,33 +27,45 @@ import java.util.ArrayList;
 */
 
 public class IncomingBidsActivity extends AppCompatActivity {
-    private BidList bidList = new BidList();
-    private ArrayAdapter<Bid> adapter;
+    private ArrayList<BidItem> pairs = new ArrayList<>();
+    private ArrayAdapter<BidItem> adapter;
+    private BidList myBidList = new BidList();
+    private BidList itemBidList = new BidList();
+    private User user = UserController.getUser();
+    private ListView incomingBidsList;
+    private String[] myItemsList;
+    private ArrayList<Item> myItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_bids);
         setTitle("Incoming Bids");
-
-        User user = UserController.getUser();
         user.setNotification(false);
 
-        ListView incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
+        // get all the users items that have bids
+        incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
+        ArrayList<String> myItemsArray = user.getMyItems();
+        myItemsList = new String[myItemsArray.size()];
+        myItemsList = myItemsArray.toArray(myItemsList);
+        ItemController.getItemsByIDElasticSearch(myItemsList);
+        myItems = ItemController.getItemList().getItemList();
 
-        if (NetworkUtil.getConnectivityStatus(this) == 1) {
-            ItemController.getIncomingBidsElasticSearch(incomingBidsList);
-            if (BidController.getBidList() != null) {
-                bidList = BidController.getBidList();
-            } else {
-                Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids!", Toast.LENGTH_SHORT).show();
+        for (Item item : myItems) {
+            itemBidList = item.getBids();
+            for (Bid bid : itemBidList.getBids()) {
+                myBidList.addBid(bid);
+                BidItem pair = new BidItem(bid, item);
+                pairs.add(pair);
             }
+        }
 
-            adapter = new CustomIncomingBidsAdapter(IncomingBidsActivity.this, bidList.getBids());
-            incomingBidsList.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
+        adapter = new CustomIncomingBidsAdapter(this, pairs);
+        incomingBidsList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        if (myBidList.isEmpty()) {
+            Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids!", Toast.LENGTH_SHORT).show();
         }
 
         // referenced Mar-21-2016 from http://stackoverflow.com/questions/18841650/replacing-listview-row-with-another-layout-onclick
@@ -101,6 +113,38 @@ public class IncomingBidsActivity extends AppCompatActivity {
         });
     }
 
+    public class CustomIncomingBidsAdapter extends ArrayAdapter<BidItem> {
+
+        public CustomIncomingBidsAdapter(Context context, ArrayList<BidItem> bids) {
+            super(context, R.layout.custom_incoming_bids_row, bids);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            View view = inflater.inflate(R.layout.custom_incoming_bids_row, parent, false);
+            BidItem pair = getItem(position);
+            Bid bid = pair.bid;
+            Item item = pair.item;
+
+            TextView itemTitle = (TextView) view.findViewById(R.id.incomingBidsItemTitle);
+            itemTitle.setText(item.getTitle());
+
+            // adding the amount that was bid
+            TextView amountBid = (TextView) view.findViewById(R.id.incomingBidsAmountBid);
+            amountBid.setText("Amount Bid: $" + String.format("%.2f", bid.getBidAmount()));
+            return view;
+        }
+    }
+
+    public class BidItem {
+        public final Bid bid;
+        public final Item item;
+
+        public BidItem(Bid bid, Item item) {
+            this.bid = bid;
+            this.item = item;
+        }
+    }
 
 }
-

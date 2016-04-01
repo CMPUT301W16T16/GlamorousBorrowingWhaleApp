@@ -30,13 +30,15 @@ import java.util.List;
 public class MyItemActivity extends AppCompatActivity {
     private Item item;
     private EditText owner;
+    private TextView status;
     private EditText name;
     private EditText size;
+    private EditText sport;
     private EditText description;
     private TextView highestBid;
     private ImageView photo;
     private User user;
-    private Boolean savedStatus;
+    private Boolean boolStatus;
     private int result;
     private byte[] photoStream = new byte[65536];
 
@@ -46,7 +48,6 @@ public class MyItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_item);
         // Taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
         setTitle("My Item");
-        // END
 
         /**
          * Sets the user and item for this activity and grabs the EditText things for use.
@@ -54,44 +55,35 @@ public class MyItemActivity extends AppCompatActivity {
         item = ItemController.getItem();
         user = UserController.getUser();
         owner = (EditText) findViewById(R.id.owner);
+        status = (TextView) findViewById(R.id.status);
         name = (EditText) findViewById(R.id.name);
         size = (EditText) findViewById(R.id.size);
+        sport = (EditText) findViewById(R.id.sport);
         description = (EditText) findViewById(R.id.description);
         highestBid = (TextView) findViewById(R.id.highestBid);
         photo = (ImageView) findViewById(R.id.pictureView);
 
-        //Initialize the Buttons!
         ImageButton saveButton = (ImageButton) findViewById(R.id.save);
         ImageButton deleteButton = (ImageButton) findViewById(R.id.delete);
         ImageButton acceptBidButton = (ImageButton) findViewById(R.id.acceptBid);
         ImageButton rejectBidButton = (ImageButton) findViewById(R.id.rejectBid);
 
-        //http://www.i-programmer.info/programming/android/6388-android-adventures-spinners-and-pickers.html?start=1 3/31/16
-        AdapterView.OnItemSelectedListener onSpinner = new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if (position < 2) {
-                            savedStatus = true;
-                        } else {
-                            savedStatus = false;
-                        }
-                    }
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                };
-
-        final String[] status = {"Available", "Bidded", "Borrowed"};
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, status);
-        Spinner spinner = (Spinner)  findViewById(R.id.spinner);
-        spinner.setAdapter(stringArrayAdapter);
-        spinner.setOnItemSelectedListener(onSpinner);
-
         //The view is updated by asking the user object for its information.
         owner.setText(UserController.getUser().getUsername()); // shouldn't be on this page unless current user = owner
+        boolStatus = item.getAvailability();
+        if (boolStatus == false) {
+            status.setText("Borrowed");
+        } else {
+            if (item.getBids().isEmpty()) {
+                status.setText("Available");
+            } else {
+                status.setText("Bidded");
+            }
+        }
         name.setText(item.getTitle());
         description.setText(item.getDescription());
         size.setText(item.getSize());
+        sport.setText(item.getSport());
         if (item.getHighestBidAmount() > 0) {
             highestBid.setText("$"+String.format("%.2f", item.getHighestBidAmount()));
         } else {
@@ -129,7 +121,6 @@ public class MyItemActivity extends AppCompatActivity {
                     item.setTitle(name.getText().toString());
                     item.setDescription(description.getText().toString());
                     item.setSize(size.getText().toString());
-                    item.setAvailability(savedStatus);
                     //item.setBids(bids);
                     item.setOwnerID(user.getID());
                     //item.setPhoto(photoStream);

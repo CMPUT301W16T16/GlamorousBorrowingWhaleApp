@@ -11,8 +11,9 @@ import android.widget.Toast;
 public class MakeBidActivity extends AppCompatActivity {
 
     public Button bidButton;
-    private User owner = UserController.getSecondaryUser();
     private Item item = ItemController.getItem();
+    private User owner;
+    private String ownerID;
     EditText dollarsPerHour;
     EditText numberOfHours;
 
@@ -20,6 +21,8 @@ public class MakeBidActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_make_bid);
+        ownerID = item.getOwnerID();
+        owner = UserController.getUserByIDElasticSearch(ownerID);
 
         //TODO: images are causing problems
         /*
