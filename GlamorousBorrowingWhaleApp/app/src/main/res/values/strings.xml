@@ -8,6 +8,7 @@
     <string name="title_activity_view_things_borrowed">ViewThingsBorrowedActivity</string>
     <string name="title_activity_view_pending_bids">ViewPendingBidsActivity</string>
     <string name="title_activity_view_my_item">ViewMyItemActivity</string>
+    <string name="title_activity_view_borrowing_out">ViewBorrowingOutActivity</string>
     <string name="my_stuff">My Stuff</string>
     <string name="my_bids">My Bids</string>
     <string name="borrow">Search</string>
@@ -19,5 +20,5 @@
     <string name="incoming_bids">Incoming Bids</string>
     <string name="borrowed_items">Items I Am Borrowing</string>
     <string name="my_items_borrowed">My Items Being Borrowed</string>
-    <string name="title_activity_view_borrowing_out">ViewBorrowingOutActivity</string>
+    <string name="spinner_prompt">Status</string>
 </resources>

@@ -29,7 +29,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
     private BidList bidList = new BidList();
     private ArrayAdapter<Bid> adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,26 +38,8 @@ public class IncomingBidsActivity extends AppCompatActivity {
         User user = UserController.getUser();
         ListView incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
 
-        //////////////////////////////////////////////////////////////////////////////
-        /*
-        Item item = new Item();
-        item.setAvailability(true);
-        item.setOwnerID(UserController.getUser().getID());
-        item.setTitle("snowshoes");
-        item.setDescription("nice pair of snowshows");
-        item.setPhoto(null);
-        item.setID("snowshoes");
-        item.setSize("medium");
-        Bid bid = new Bid(item, 5);
-        BidList bidList = new BidList();
-        bidList.addBid(bid);
-        item.setBids(bidList);
-        user.addMyItem(item.getID());
-        */
-        //////////////////////////////////////////////////////////////////////////////
-
         if (NetworkUtil.getConnectivityStatus(this) == 1) {
-            ItemController.getIncomingBidsElasticSearch();
+            ItemController.getIncomingBidsElasticSearch(incomingBidsList);
             if (BidController.getBidList() != null) {
                 bidList = BidController.getBidList();
             } else {
@@ -71,23 +52,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
         }
-
-        // TODO: figure out how to reimplement this, considering Bids do not have Item
-
-//        // allows the user the select any bid entry to start the MyItemActivity with the item the bid belongs to
-//        // taken Mar-21-2016 from http://stackoverflow.com/questions/20922036/android-cant-call-setonitemclicklistener-from-a-listview
-//        // taken Mar-21-2016 from http://stackoverflow.com/questions/1124548/how-to-pass-the-values-from-one-activity-to-previous-activity
-//        incomingBidsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                Bid bid = bidArray.get(position);
-//                ItemController.setItem(bid.getItem());
-//                BidController.setBid(bid);
-//                Intent intent = new Intent(IncomingBidsActivity.this, MyItemActivity.class);
-//                startActivity(intent);
-//                return false;
-//            }
-//        });
 
         // referenced Mar-21-2016 from http://stackoverflow.com/questions/18841650/replacing-listview-row-with-another-layout-onclick
         // this doesn't work very well, although the buttons do show up when you click on one of the bids once
