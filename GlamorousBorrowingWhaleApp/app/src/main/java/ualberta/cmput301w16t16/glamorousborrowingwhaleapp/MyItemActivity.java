@@ -124,8 +124,7 @@ public class MyItemActivity extends AppCompatActivity {
                     //item.setBids(bids);
                     item.setOwnerID(user.getID());
                     //item.setPhoto(photoStream);
-                    //NO MEAT AND POTATOES HERE
-                    ItemController.updateItemElasticSearch(item);//I LIED IT'S HERE
+                    ItemController.updateItemElasticSearch(item);
                     Toast.makeText(MyItemActivity.this, "Thing Saved!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MyItemActivity.this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();

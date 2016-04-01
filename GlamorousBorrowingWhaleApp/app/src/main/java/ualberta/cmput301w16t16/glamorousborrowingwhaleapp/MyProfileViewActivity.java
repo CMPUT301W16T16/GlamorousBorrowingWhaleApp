@@ -81,6 +81,10 @@ public class MyProfileViewActivity extends AppCompatActivity {
         if (user.getNotification()) {
             buttonIncomingBids.setTextColor(Color.parseColor("#ffffff"));
             buttonIncomingBids.setBackgroundResource(R.drawable.rounded_corners_dark);
+        } else {
+            buttonIncomingBids.setTextColor(Color.parseColor("#2e4154"));
+            buttonIncomingBids.setBackgroundResource(R.drawable.rounded_corners_dark);
+            buttonIncomingBids.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
         Button buttonMyBorrowing = (Button) findViewById(R.id.buttonMyBorrowing);
@@ -304,6 +308,10 @@ public class MyProfileViewActivity extends AppCompatActivity {
         if (user.getNotification()) {
             buttonIncomingBids.setTextColor(Color.parseColor("#ffffff"));
             buttonIncomingBids.setBackgroundResource(R.drawable.rounded_corners_dark);
+        } else {
+            buttonIncomingBids.setTextColor(Color.parseColor("#2e4154"));
+            buttonIncomingBids.setBackgroundResource(R.drawable.rounded_corners_dark);
+            buttonIncomingBids.setBackgroundColor(Color.parseColor("#ffffff"));
         }
     }
 

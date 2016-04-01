@@ -29,8 +29,10 @@ public class CustomSearchResultsAdapter extends ArrayAdapter<Item> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View view = inflater.inflate(R.layout.custom_row_my_items, parent, false);
+
         TextView title = (TextView) view.findViewById(R.id.my_items_title);
         TextView description = (TextView) view.findViewById(R.id.my_items_description);
+
         Item item = getItem(position);
         title.setText(item.getTitle());
         description.setText(item.getDescription());

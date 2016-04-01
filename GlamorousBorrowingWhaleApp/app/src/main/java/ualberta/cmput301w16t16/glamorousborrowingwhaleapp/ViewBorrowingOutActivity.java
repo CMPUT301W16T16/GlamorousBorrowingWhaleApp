@@ -38,16 +38,20 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
             // here we will have to make myItems into actual items instead of IDs
             // this is a pretty lame way to do it
             itemsArray = user.getItemsBorrowed();
-            //TODO: can stop converting the items list into String[] once that's it's actual type
-            itemsList = new String[itemsArray.size()];
-            itemsList = itemsArray.toArray(itemsList);
-            ItemController.getItemsByIDElasticSearch(itemsList);
+            if (itemsArray.isEmpty()) {
+                Toast.makeText(ViewBorrowingOutActivity.this, "None of your items are being borrowed.", Toast.LENGTH_SHORT).show();
+            } else {
+                //TODO: can stop converting the items list into String[] once that's it's actual type
+                itemsList = new String[itemsArray.size()];
+                itemsList = itemsArray.toArray(itemsList);
+                ItemController.getItemsByIDElasticSearch(itemsList);
 
-            // myItems contains actual items, not IDs
-            itemsBorrowingOut = ItemController.getItemList().getItemList();
-            adapter = new CustomSearchResultsAdapter(this, itemsBorrowingOut);
-            itemsView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+                // myItems contains actual items, not IDs
+                itemsBorrowingOut = ItemController.getItemList().getItemList();
+                adapter = new CustomSearchResultsAdapter(this, itemsBorrowingOut);
+                itemsView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
         } else {
             Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
         }

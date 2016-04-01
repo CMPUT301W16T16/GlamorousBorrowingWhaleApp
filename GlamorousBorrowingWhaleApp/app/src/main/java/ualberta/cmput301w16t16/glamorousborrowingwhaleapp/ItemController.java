@@ -53,7 +53,7 @@ public class ItemController {
         ItemController.addItemElasticSearch(item);
     }
 
-    private static void deleteItemElasticSearch(Item item) {
+    public static void deleteItemElasticSearch(Item item) {
         try {
             new ElasticSearch.elasticDeleteItem().execute(item).get(1, TimeUnit.DAYS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
@@ -69,12 +69,13 @@ public class ItemController {
         }
     }
 
-    public static void getItemsByIDElasticSearch(String[] myItemsList) {
+    public static ItemList getItemsByIDElasticSearch(String[] myItemsList) {
         try {
             new ElasticSearch.elasticGetItemsByID().execute(myItemsList).get(1, TimeUnit.DAYS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }
+        return itemList;
     }
 
     public static void addItemElasticSearch(Item item) {

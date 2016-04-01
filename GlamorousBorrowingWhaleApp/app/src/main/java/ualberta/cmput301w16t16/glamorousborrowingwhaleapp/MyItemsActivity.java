@@ -101,6 +101,12 @@ public class MyItemsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        myItemsArray = user.getMyItems();
+        //TODO: can stop converting the items list into String[] once that's it's actual type
+        myItemsList = new String[myItemsArray.size()];
+        myItemsList = myItemsArray.toArray(myItemsList);
+        ItemController.getItemsByIDElasticSearch(myItemsList);
+
         // checking that there is an item to add to the adapter, and that it belongs to the current user
         if (ItemController.getItem() != null
                 && ItemController.getItem().getOwnerID().equals(UserController.getUser().getID())
@@ -108,19 +114,5 @@ public class MyItemsActivity extends AppCompatActivity {
             myItems.add(ItemController.getItem());
             adapter.notifyDataSetChanged();
         }
-    }
-
-    // Gonna delete this once we get elastic search working with bids
-    private void setFirstBids(Item item) {
-        BidList bids = new BidList();
-        Bid bid1 = new Bid(item, 0.30);
-        Bid bid2 = new Bid(item, 0.50);
-        Bid bid3 = new Bid(item, 1.20);
-        Bid bid4 = new Bid(item, 0.25);
-        item.setBids(bids);
-        item.addBid(bid1);
-        item.addBid(bid2);
-        item.addBid(bid3);
-        item.addBid(bid4);
     }
 }

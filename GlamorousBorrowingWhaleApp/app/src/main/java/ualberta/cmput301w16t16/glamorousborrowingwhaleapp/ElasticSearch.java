@@ -583,9 +583,7 @@ public class ElasticSearch extends Application {
                 while ((output = br.readLine()) != null) {
                     Log.e("website returned", output);
                     ESResponse = new JSONObject(output);
-                    if (ESResponse.getString("_id") != null) {
-                        item.setID(ESResponse.getString("_id"));
-                    }
+                    item.setID(ESResponse.getString("_id"));
                 }
                 Log.e("item ID", item.getID());
 

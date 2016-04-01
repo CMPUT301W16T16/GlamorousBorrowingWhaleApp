@@ -65,7 +65,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
         if (myBidList.isEmpty()) {
-            Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids.", Toast.LENGTH_SHORT).show();
         }
 
         // referenced Mar-21-2016 from http://stackoverflow.com/questions/18841650/replacing-listview-row-with-another-layout-onclick

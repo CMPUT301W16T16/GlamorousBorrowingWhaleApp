@@ -13,6 +13,7 @@ public class MakeBidActivity extends AppCompatActivity {
     public Button bidButton;
     private Item item = ItemController.getItem();
     private User owner;
+    private User renter;
     private String ownerID;
     EditText dollarsPerHour;
     EditText numberOfHours;
@@ -21,8 +22,11 @@ public class MakeBidActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popup_make_bid);
+        renter = UserController.getUser();
+        UserController.setSecondaryUser(renter);
         ownerID = item.getOwnerID();
         owner = UserController.getUserByIDElasticSearch(ownerID);
+        UserController.setUser(owner);
 
         //TODO: images are causing problems
         /*
@@ -53,26 +57,25 @@ public class MakeBidActivity extends AppCompatActivity {
                     // creating the bid
                     Bid newBid = new Bid(item, amountBid);
                     newBid.setOwnerID(owner.getID());
-                    newBid.setRenterID(UserController.getUser().getID());
+                    newBid.setRenterID(renter.getID());
                     newBid.setIsAccepted(false);
 
-                    // adding the bid to the item
                     item.addBid(newBid);
-
-                    // removing the item as it was from owner's item list
                     owner.removeMyItem(item.getID());
-
-                    // updating the item's elastic search data to include the bid
-                    // the item now has a new ID
-                    ItemController.updateItemElasticSearch(item);
-
-                    // adding the item as it now is into the owner's item list
-                    owner.addMyItem(item.getID());
                     owner.setNotification(true);
 
+                    // updating the item's elastic search data to include the bid
+                    // the item now has a new ID, then add the item as it now is
+                    // into the owner's item list and give them a notification
+                    ItemController.deleteItemElasticSearch(item);
+                    ItemController.addItemElasticSearch(item);
+                    owner.addMyItem(item.getID());
+                    renter.addItemBidOn(item.getID());
+
                     // updating the bidder to include the item
-                    UserController.getUser().addItemBidOn(item.getID());
-                    UserController.updateUserElasticSearch(UserController.getUser());
+                    UserController.updateUserElasticSearch(owner);
+                    UserController.setUser(renter);
+                    UserController.updateUserElasticSearch(renter);
 
                     finish();
                 } else {

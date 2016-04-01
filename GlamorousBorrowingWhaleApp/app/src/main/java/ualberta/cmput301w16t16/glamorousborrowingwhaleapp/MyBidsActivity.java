@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -48,7 +49,6 @@ public class MyBidsActivity extends AppCompatActivity {
         ItemController.getItemsByIDElasticSearch(myItemsList);
         myItems = ItemController.getItemList().getItemList();
 
-
         // get all of the bids held by all of the items
         for (Item item: myItems) {
             ArrayList<Bid> itemBids = item.getBids().getBids();
@@ -57,6 +57,10 @@ public class MyBidsActivity extends AppCompatActivity {
                 pairs.add(pair);
                 //myBids.add(bid); //npe
             }
+        }
+
+        if (pairs.isEmpty()) {
+            Toast.makeText(MyBidsActivity.this, "You haven't bid on any items.", Toast.LENGTH_SHORT).show();
         }
 
         adapter = new CustomMyBidsAdapter(this, pairs);
