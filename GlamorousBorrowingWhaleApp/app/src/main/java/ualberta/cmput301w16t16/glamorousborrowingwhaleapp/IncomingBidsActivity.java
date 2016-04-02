@@ -35,6 +35,18 @@ public class IncomingBidsActivity extends AppCompatActivity {
     private ListView incomingBidsList;
     private String[] myItemsList;
     private ArrayList<Item> myItems;
+    private User owner;
+
+    private Bid selectedBid;
+    private Item selectedItem;
+    private ArrayList<String> ownersItems;
+    private String ownersItemsString[];
+    private ItemList itemList;
+    private String itemID;
+    private String renterID;
+    private User renter;
+    private ArrayList<String> rentersBiddedItems;
+    private String savedID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +87,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
         incomingBidsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 // removing the old views
                 TextView incomingBidsItemTitle = (TextView) findViewById(R.id.incomingBidsItemTitle);
@@ -94,6 +106,24 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 incomingBidsAmountBidInflate.setText(incomingBidsAmountBid.getText());
                 incomingBidsItemTitleInflate.setText(incomingBidsItemTitle.getText());
 
+                BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
+                selectedItem = bidItem.item;
+                selectedBid = bidItem.bid;
+                owner = UserController.getUser();
+                ownersItems = owner.getMyItems();
+                ownersItemsString = new String[ownersItems.size()];
+                ownersItemsString = ownersItems.toArray(ownersItemsString);
+                itemList = ItemController.getItemsByIDElasticSearch(ownersItemsString);
+
+                for (Item item : itemList.getItemList()) {
+                    for (Bid bid : item.getBids().getBids()) {
+                        if (bid.getItemID().equals(selectedBid.getItemID())) {
+                            savedID = bid.getItemID();
+                            ItemController.setItem(item);
+                        }
+                    }
+                }
+
                 checkmarkButton.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -107,6 +137,26 @@ public class IncomingBidsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         //TODO: reject this bid
+
+                        User owner = UserController.getUser();
+                        Item item = ItemController.getItem();
+
+                        renterID = selectedBid.getRenterID();
+                        renter = UserController.getUserByIDElasticSearch(renterID);
+                        renter.removeItemBidOn(savedID);
+                        UserController.updateUserElasticSearch(renter);
+
+                        BidList bids = item.getBids();
+                        bids.removeBid(selectedBid);
+                        item.setBids(bids);
+
+                        itemID = item.getID();
+                        owner.removeMyItem(itemID);
+                        ItemController.updateItemElasticSearch(item);
+                        itemID = item.getID();
+                        owner.addMyItem(itemID);
+
+                        UserController.updateUserElasticSearch(owner);
                     }
                 });
             }

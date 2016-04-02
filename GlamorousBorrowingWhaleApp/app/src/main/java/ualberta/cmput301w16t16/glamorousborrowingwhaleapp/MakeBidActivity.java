@@ -15,6 +15,7 @@ public class MakeBidActivity extends AppCompatActivity {
     private User owner;
     private User renter;
     private String ownerID;
+    private String oldItemID;
     EditText dollarsPerHour;
     EditText numberOfHours;
 
@@ -54,27 +55,20 @@ public class MakeBidActivity extends AppCompatActivity {
                     Double amountBid = Double.valueOf(dollarsPerHour.getText().toString());
                     Double hours = Double.valueOf(numberOfHours.getText().toString());
 
-                    // creating the bid
                     Bid newBid = new Bid(item, amountBid);
                     newBid.setOwnerID(owner.getID());
                     newBid.setRenterID(renter.getID());
                     newBid.setIsAccepted(false);
-
                     item.addBid(newBid);
                     owner.removeMyItem(item.getID());
                     owner.setNotification(true);
-
-                    // updating the item's elastic search data to include the bid
-                    // the item now has a new ID, then add the item as it now is
-                    // into the owner's item list and give them a notification
-                    ItemController.deleteItemElasticSearch(item);
-                    ItemController.addItemElasticSearch(item);
+                    oldItemID = item.getID();
+                    ItemController.updateItemElasticSearch(item);
                     owner.addMyItem(item.getID());
+                    renter.removeItemBidOn(oldItemID);
                     renter.addItemBidOn(item.getID());
-
-                    // updating the bidder to include the item
+                    //newBid.setItemID(item.getID());
                     UserController.updateUserElasticSearch(owner);
-                    UserController.setUser(renter);
                     UserController.updateUserElasticSearch(renter);
 
                     finish();
