@@ -52,12 +52,15 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/ratingBar3"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="35dp" />
+                    android:layout_marginLeft="35dp"
+                    android:numStars="5"
+                    android:rating="0"
+                    android:stepSize="1" />
 
                 <ImageButton
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/imageButton"
+                    android:id="@+id/myItemComment"
                     android:src="@mipmap/comments"
                     android:background="@layout/mybutton"
                     android:layout_gravity="right"

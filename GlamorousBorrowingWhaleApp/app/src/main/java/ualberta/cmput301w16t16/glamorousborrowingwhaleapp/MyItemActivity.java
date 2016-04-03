@@ -71,6 +71,7 @@ public class MyItemActivity extends AppCompatActivity {
         ImageButton deleteButton = (ImageButton) findViewById(R.id.delete);
         ImageButton acceptBidButton = (ImageButton) findViewById(R.id.acceptBid);
         ImageButton rejectBidButton = (ImageButton) findViewById(R.id.rejectBid);
+        ImageButton myComment = (ImageButton) findViewById(R.id.myItemComment);
 
         //The view is updated by asking the user object for its information.
         owner.setText(UserController.getUser().getUsername()); // shouldn't be on this page unless current user = owner
@@ -216,6 +217,14 @@ public class MyItemActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MyItemActivity.this, "No Bids!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        myComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // code for when my comment button is pressed
+                // view comments on item
             }
         });
 

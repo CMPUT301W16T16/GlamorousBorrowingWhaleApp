@@ -36,6 +36,7 @@ public class TheirItemActivity extends AppCompatActivity {
     private ImageView photo;
     private Button makeBid;
     private Button itemOwner;
+    private ImageButton theirComment;
 
     private int result;
     private byte[] photoStream = new byte[65536];
@@ -60,8 +61,7 @@ public class TheirItemActivity extends AppCompatActivity {
         photo = (ImageView) findViewById(R.id.pictureView);
         makeBid = (Button) findViewById(R.id.theirItemMakeBid);
         itemOwner = (Button) findViewById(R.id.theirItemOwner);
-
-        ImageButton theirComment = (ImageButton) findViewById(R.id.theirItemComment);
+        theirComment = (ImageButton) findViewById(R.id.theirItemComment);
 
         // setting the TextViews
         name.setText(item.getTitle());
@@ -101,6 +101,14 @@ public class TheirItemActivity extends AppCompatActivity {
             }
         });
 
+
+        theirComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // code for when the their comment button is pressed
+                // view comments on item
+            }
+        });
 
         // this is the gallery selection method for pictures
         photo.setOnClickListener(new View.OnClickListener() {
