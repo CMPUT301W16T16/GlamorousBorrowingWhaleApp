@@ -36,7 +36,7 @@ public class TheirItemActivity extends AppCompatActivity {
     private ImageView photo;
     private Button makeBid;
     private Button itemOwner;
-    private ImageButton theirComment;
+    private ImageButton theirComment;  // button to view comments
 
     private int result;
     private byte[] photoStream = new byte[65536];
