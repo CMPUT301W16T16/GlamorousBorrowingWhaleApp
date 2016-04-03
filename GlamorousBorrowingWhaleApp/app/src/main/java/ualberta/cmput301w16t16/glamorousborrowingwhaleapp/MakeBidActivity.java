@@ -2,6 +2,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -15,7 +16,9 @@ public class MakeBidActivity extends AppCompatActivity {
     private User owner;
     private User renter;
     private String ownerID;
+    private String renterID;
     private String oldItemID;
+    private BidList allBids;
     EditText dollarsPerHour;
     EditText numberOfHours;
 
@@ -70,6 +73,15 @@ public class MakeBidActivity extends AppCompatActivity {
                     //newBid.setItemID(item.getID());
                     UserController.updateUserElasticSearch(owner);
                     UserController.updateUserElasticSearch(renter);
+
+                    allBids = item.getBids();
+                    for (Bid bid : allBids.getBids()) {
+                        renterID = bid.getRenterID();
+                        renter = UserController.getUserByIDElasticSearch(renterID);
+                        renter.removeItemBidOn(oldItemID);
+                        renter.addItemBidOn(item.getID());
+                        UserController.updateUserElasticSearch(renter);
+                    }
 
                     finish();
                 } else {

@@ -106,6 +106,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 incomingBidsAmountBidInflate.setText(incomingBidsAmountBid.getText());
                 incomingBidsItemTitleInflate.setText(incomingBidsItemTitle.getText());
 
+                // this is just setting up information to accept/reject bids
                 BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
                 selectedBid = bidItem.bid;
                 owner = UserController.getUser();
@@ -134,34 +135,16 @@ public class IncomingBidsActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        //TODO: accept this bid
+                        //TODO: get a refresh or something working so this bid disappears when u reject it
+                        AcceptBid();
                     }
                 });
 
                 xmarkButton.setOnClickListener(new View.OnClickListener() {
-
+                    //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
-                        User owner = UserController.getUser();
-
-                        renterID = selectedBid.getRenterID();
-                        renter = UserController.getUserByIDElasticSearch(renterID);
-                        renter.removeItemBidOn(newID);
-                        UserController.updateUserElasticSearch(renter);
-
-                        BidList bids = item.getBids();
-                        for (Bid bid : bids.getBids()) {
-                            if (bid.getItemID().equals(selectedBid.getItemID())) {
-                                bids.removeBid(bid);
-                            }
-                        }
-                        item.setBids(bids);
-
-                        owner.removeMyItem(newID);
-                        ItemController.updateItemElasticSearch(item);
-                        newID = item.getID();
-                        owner.addMyItem(newID);
-                        UserController.updateUserElasticSearch(owner);
+                        RejectBid();
                     }
                 });
             }
@@ -200,6 +183,54 @@ public class IncomingBidsActivity extends AppCompatActivity {
             this.bid = bid;
             this.item = item;
         }
+    }
+
+    public void RejectBid() {
+        renterID = selectedBid.getRenterID();
+        renter = UserController.getUserByIDElasticSearch(renterID);
+        renter.removeItemBidOn(newID);
+        UserController.updateUserElasticSearch(renter);
+
+        BidList bids = item.getBids();
+        for (Bid bid : bids.getBids()) {
+            if (bid.getItemID().equals(selectedBid.getItemID())) {
+                bids.removeBid(bid);
+            }
+        }
+        item.setBids(bids);
+
+        owner.removeMyItem(newID);
+        ItemController.updateItemElasticSearch(item);
+        newID = item.getID();
+        owner.addMyItem(newID);
+        UserController.updateUserElasticSearch(owner);
+    }
+
+    public void AcceptBid() {
+        renterID = selectedBid.getRenterID();
+        renter = UserController.getUserByIDElasticSearch(renterID);
+        renter.removeItemBidOn(newID);
+        renter.addItemBorrowed(newID);
+        UserController.updateUserElasticSearch(renter);
+
+        BidList bids = item.getBids();
+
+        for (Bid bid : bids.getBids()) {
+            renterID = bid.getRenterID();
+            renter = UserController.getUserByIDElasticSearch(renterID);
+            renter.removeItemBidOn(newID);
+            UserController.updateUserElasticSearch(renter);
+        }
+
+        bids = new BidList();
+        item.setBids(bids);
+        item.setAvailability(false);
+        Log.e("itemID", item.getID());
+        owner.removeMyItem(newID);
+        ItemController.updateItemElasticSearch(item);
+        newID = item.getID();
+        owner.addMyItem(newID);
+        UserController.updateUserElasticSearch(owner);
     }
 
 }

@@ -39,6 +39,8 @@ public class MyItemActivity extends AppCompatActivity {
     private ImageView photo;
     private User user;
     private Boolean boolStatus;
+    private String oldID;
+    private String newID;
     private int result;
     private byte[] photoStream = new byte[65536];
 
@@ -116,7 +118,6 @@ public class MyItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (NetworkUtil.getConnectivityStatus(v.getContext()) == 1) {
-                    //Get item from controller
                     item = ItemController.getItem();
                     item.setTitle(name.getText().toString());
                     item.setDescription(description.getText().toString());
@@ -124,8 +125,14 @@ public class MyItemActivity extends AppCompatActivity {
                     //item.setBids(bids);
                     item.setOwnerID(user.getID());
                     //item.setPhoto(photoStream);
+                    oldID = item.getID();
                     ItemController.updateItemElasticSearch(item);
+                    newID = item.getID();
+                    user.removeMyItem(oldID);
+                    user.addMyItem(newID);
+                    UserController.updateUserElasticSearch(user);
                     Toast.makeText(MyItemActivity.this, "Thing Saved!", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     Toast.makeText(MyItemActivity.this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
                 }
