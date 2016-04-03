@@ -221,8 +221,9 @@ public class MyProfileViewActivity extends AppCompatActivity {
      * and the dialog box is closed. If the OK button is selected with empty fields, only the fields
      * with content in them will update their corresponding attribute; the empty fields will not do
      * anything.
-     * @author martina
+     *
      * @return
+     * @author martina
      */
 
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
@@ -265,12 +266,12 @@ public class MyProfileViewActivity extends AppCompatActivity {
                             }
                         })
                 .setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
 
@@ -282,8 +283,9 @@ public class MyProfileViewActivity extends AppCompatActivity {
 
     /**
      * Android Lifecycle - probably not needed, placeholder.
-     * @author adam
+     *
      * @return
+     * @author adam
      */
 
     @Override
@@ -295,8 +297,9 @@ public class MyProfileViewActivity extends AppCompatActivity {
     /**
      * Android Lifecycle - for whatever reason the user information may be updated server-side;
      * it may be useful to update the "local" object.
-     * @author adam
+     *
      * @return
+     * @author adam
      */
 
     @Override
@@ -320,8 +323,9 @@ public class MyProfileViewActivity extends AppCompatActivity {
      * onStop may lead to a memory release (home button then start playing a game for example), the
      * app should save state when stopped, maybe a push to server if possible.  Best before a destroy
      * condition.
-     * @author adam
+     *
      * @return
+     * @author adam
      */
 
     @Override
@@ -329,8 +333,4 @@ public class MyProfileViewActivity extends AppCompatActivity {
         super.onStop();
         //TODO add the write to disk/server function here probably
     }
-
-
-
-
 }

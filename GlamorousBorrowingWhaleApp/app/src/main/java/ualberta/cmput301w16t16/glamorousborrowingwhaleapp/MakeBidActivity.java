@@ -30,7 +30,6 @@ public class MakeBidActivity extends AppCompatActivity {
         UserController.setSecondaryUser(renter);
         ownerID = item.getOwnerID();
         owner = UserController.getUserByIDElasticSearch(ownerID);
-        UserController.setUser(owner);
 
         //TODO: images are causing problems
         /*
@@ -70,7 +69,6 @@ public class MakeBidActivity extends AppCompatActivity {
                     owner.addMyItem(item.getID());
                     renter.removeItemBidOn(oldItemID);
                     renter.addItemBidOn(item.getID());
-                    //newBid.setItemID(item.getID());
                     UserController.updateUserElasticSearch(owner);
                     UserController.updateUserElasticSearch(renter);
 
@@ -79,10 +77,10 @@ public class MakeBidActivity extends AppCompatActivity {
                         renterID = bid.getRenterID();
                         renter = UserController.getUserByIDElasticSearch(renterID);
                         renter.removeItemBidOn(oldItemID);
+                        renter.removeItemBidOn(item.getID());
                         renter.addItemBidOn(item.getID());
                         UserController.updateUserElasticSearch(renter);
                     }
-
                     finish();
                 } else {
                     Toast.makeText(v.getContext(), "You are not connected to the internet.", Toast.LENGTH_SHORT).show();

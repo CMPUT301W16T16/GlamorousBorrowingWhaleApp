@@ -1,11 +1,14 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +19,6 @@ import java.util.ArrayList;
 
 public class ViewBorrowingOutActivity extends AppCompatActivity {
     //private ItemList myItemsList;
-    private ArrayList<Item> itemsBorrowingOut;
     private ArrayAdapter<Item> adapter;
     private User user = UserController.getUser();
     // Probably never used
@@ -24,8 +26,10 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
         return adapter;
     }
     private ListView itemsView;
-    private ArrayList<String> itemsArray;
+    private ArrayList<String> usersItems;
+    private ArrayList<Item> usersItemsArrayList;
     private String[] itemsList;
+    private String itemID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +39,22 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
         itemsView = (ListView) findViewById(R.id.myItemsListView);
 
         if (NetworkUtil.getConnectivityStatus(this) == 1) {
-            // here we will have to make myItems into actual items instead of IDs
-            // this is a pretty lame way to do it
-            itemsArray = user.getItemsBorrowed();
-            if (itemsArray.isEmpty()) {
+            usersItems = user.getMyItems();
+            itemsList = new String[usersItems.size()];
+            itemsList = usersItems.toArray(itemsList);
+            ItemController.getItemsByIDElasticSearch(itemsList);
+            usersItemsArrayList = ItemController.getItemList().getItemList();
+            for (Item item : usersItemsArrayList) {
+                if (item.getAvailability()) {
+                    usersItemsArrayList.remove(item);
+                }
+            }
+
+            if (usersItemsArrayList.isEmpty()) {
                 Toast.makeText(ViewBorrowingOutActivity.this, "None of your items are being borrowed.", Toast.LENGTH_SHORT).show();
             } else {
                 //TODO: can stop converting the items list into String[] once that's it's actual type
-                itemsList = new String[itemsArray.size()];
-                itemsList = itemsArray.toArray(itemsList);
-                ItemController.getItemsByIDElasticSearch(itemsList);
-
-                // myItems contains actual items, not IDs
-                itemsBorrowingOut = ItemController.getItemList().getItemList();
-                adapter = new CustomSearchResultsAdapter(this, itemsBorrowingOut);
+                adapter = new CustomSearchResultsAdapter(this, usersItemsArrayList);
                 itemsView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
@@ -61,6 +67,7 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
             The ViewAdapter saves the position of what is clicked in the dynamic list.
             Set that Item as the current Item and send the user to the MyItemActivity with the current Item
              */
+            // maybe a popup to ask if they wanna mark as returned actually
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemController.setItem((Item) parent.getAdapter().getItem(position));
@@ -68,7 +75,30 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
                 startActivity(intent);
                 return false;
             }
+
         });
+
+        itemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            // http://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android 04/03/16
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle("Mark Returned")
+                        .setMessage("Mark this item as returned?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+
     }
 
     /**
@@ -83,8 +113,8 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
         // checking that there is an item to add to the adapter, and that it belongs to the current user
         if (ItemController.getItem() != null
                 && ItemController.getItem().getOwnerID().equals(UserController.getUser().getID())
-                && !itemsBorrowingOut.contains(ItemController.getItem())) {
-            itemsBorrowingOut.add(ItemController.getItem());
+                && !usersItemsArrayList.contains(ItemController.getItem())) {
+            usersItemsArrayList.add(ItemController.getItem());
             adapter.notifyDataSetChanged();
         }
     }

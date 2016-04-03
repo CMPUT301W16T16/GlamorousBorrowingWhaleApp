@@ -740,6 +740,7 @@ public class ElasticSearch extends Application {
                         }
 
                         tempItem.setBids(bids);
+                        tempItem.setID(ID);
                         itemList.add(tempItem);
 
 

@@ -39,6 +39,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
     private String[] items;
     private String[] ownersItemsString;
     private String renterID;
+    private String oldID;
     private String newID;
     private ArrayList<Item> myItems;
     private User owner = UserController.getUser();
@@ -56,29 +57,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
         setTitle("Incoming Bids");
         owner.setNotification(false);
 
-        incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
-        ArrayList<String> myItemsArray = owner.getMyItems();
-        myItemsList = new String[myItemsArray.size()];
-        myItemsList = myItemsArray.toArray(myItemsList);
-        ItemController.getItemsByIDElasticSearch(myItemsList);
-        myItems = ItemController.getItemList().getItemList();
-
-        for (Item item : myItems) {
-            itemBidList = item.getBids();
-            for (Bid bid : itemBidList.getBids()) {
-                myBidList.addBid(bid);
-                BidItem pair = new BidItem(bid, item);
-                pairs.add(pair);
-            }
-        }
-
-        adapter = new CustomIncomingBidsAdapter(this, pairs);
-        incomingBidsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-        if (myBidList.isEmpty()) {
-            Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids.", Toast.LENGTH_SHORT).show();
-        }
+        SetBids();
 
         // referenced Mar-21-2016 from http://stackoverflow.com/questions/18841650/replacing-listview-row-with-another-layout-onclick
         // this doesn't work very well, although the buttons do show up when you click on one of the bids once
@@ -106,7 +85,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 incomingBidsAmountBidInflate.setText(incomingBidsAmountBid.getText());
                 incomingBidsItemTitleInflate.setText(incomingBidsItemTitle.getText());
 
-                // this is just setting up information to accept/reject bids
                 BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
                 selectedBid = bidItem.bid;
                 owner = UserController.getUser();
@@ -128,23 +106,24 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 items[0] = newID;
                 ItemController.getItemsByIDElasticSearch(items);
                 item = ItemController.getItemList().getItemList().get(0);
-                item.setID(newID);
+                oldID = item.getID();
+                item.setID(newID); // maybe redundant now?
                 ItemController.setItem(item);
 
                 checkmarkButton.setOnClickListener(new View.OnClickListener() {
-
+                    //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
-                        //TODO: get a refresh or something working so this bid disappears when u reject it
                         AcceptBid();
+                        SetBids();
                     }
                 });
-
                 xmarkButton.setOnClickListener(new View.OnClickListener() {
                     //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
                         RejectBid();
+                        SetBids();
                     }
                 });
             }
@@ -210,8 +189,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
         renterID = selectedBid.getRenterID();
         renter = UserController.getUserByIDElasticSearch(renterID);
         renter.removeItemBidOn(newID);
-        renter.addItemBorrowed(newID);
-        UserController.updateUserElasticSearch(renter);
 
         BidList bids = item.getBids();
 
@@ -219,18 +196,46 @@ public class IncomingBidsActivity extends AppCompatActivity {
             renterID = bid.getRenterID();
             renter = UserController.getUserByIDElasticSearch(renterID);
             renter.removeItemBidOn(newID);
+            renter.removeItemBidOn(oldID);
             UserController.updateUserElasticSearch(renter);
         }
 
         bids = new BidList();
         item.setBids(bids);
         item.setAvailability(false);
-        Log.e("itemID", item.getID());
         owner.removeMyItem(newID);
         ItemController.updateItemElasticSearch(item);
         newID = item.getID();
         owner.addMyItem(newID);
+        renter.addItemBorrowed(newID);
+        UserController.updateUserElasticSearch(renter);
         UserController.updateUserElasticSearch(owner);
+    }
+
+    public void SetBids() {
+        incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
+        ArrayList<String> myItemsArray = owner.getMyItems();
+        myItemsList = new String[myItemsArray.size()];
+        myItemsList = myItemsArray.toArray(myItemsList);
+        ItemController.getItemsByIDElasticSearch(myItemsList);
+        myItems = ItemController.getItemList().getItemList();
+        pairs.clear();
+        for (Item item : myItems) {
+            itemBidList = item.getBids();
+            for (Bid bid : itemBidList.getBids()) {
+                myBidList.addBid(bid);
+                BidItem pair = new BidItem(bid, item);
+                pairs.add(pair);
+            }
+        }
+
+        adapter = new CustomIncomingBidsAdapter(this, pairs);
+        incomingBidsList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        if (myBidList.isEmpty()) {
+            Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
