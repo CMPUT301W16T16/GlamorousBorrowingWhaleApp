@@ -21,6 +21,9 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
     //private ItemList myItemsList;
     private ArrayAdapter<Item> adapter;
     private User user = UserController.getUser();
+    private User renter;
+    private String renterID;
+    private String oldID;
     // Probably never used
     private ArrayAdapter<Item> getAdapter() {
         return adapter;
@@ -28,39 +31,17 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
     private ListView itemsView;
     private ArrayList<String> usersItems;
     private ArrayList<Item> usersItemsArrayList;
+    private ArrayList<String> rentersBorrowedItems;
     private String[] itemsList;
-    private String itemID;
+    private Item selectedItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_borrowing_out);
         setTitle("My Items Currently Borrowed");
-        itemsView = (ListView) findViewById(R.id.myItemsListView);
 
-        if (NetworkUtil.getConnectivityStatus(this) == 1) {
-            usersItems = user.getMyItems();
-            itemsList = new String[usersItems.size()];
-            itemsList = usersItems.toArray(itemsList);
-            ItemController.getItemsByIDElasticSearch(itemsList);
-            usersItemsArrayList = ItemController.getItemList().getItemList();
-            for (Item item : usersItemsArrayList) {
-                if (item.getAvailability()) {
-                    usersItemsArrayList.remove(item);
-                }
-            }
-
-            if (usersItemsArrayList.isEmpty()) {
-                Toast.makeText(ViewBorrowingOutActivity.this, "None of your items are being borrowed.", Toast.LENGTH_SHORT).show();
-            } else {
-                //TODO: can stop converting the items list into String[] once that's it's actual type
-                adapter = new CustomSearchResultsAdapter(this, usersItemsArrayList);
-                itemsView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-        } else {
-            Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
-        }
+        SetItems();
 
         itemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             /*
@@ -87,7 +68,21 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
                         .setMessage("Mark this item as returned?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
+                                selectedItem = usersItemsArrayList.get(position);
+                                selectedItem.setAvailability(true);
+                                selectedItem.setRenterID("");
+                                oldID = selectedItem.getID();
+                                renterID = selectedItem.getRenterID();
+                                renter = UserController.getUserByIDElasticSearch(renterID);
+                                rentersBorrowedItems = renter.getItemsBorrowed();
+                                rentersBorrowedItems.remove(selectedItem.getID());
+                                UserController.updateUserElasticSearch(renter);
+                                ItemController.updateItemElasticSearch(selectedItem);
+                                usersItems = user.getMyItems();
+                                usersItems.remove(oldID);
+                                usersItems.add(selectedItem.getID());
+                                UserController.updateUserElasticSearch(user);
+                                SetItems();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -116,6 +111,34 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
                 && !usersItemsArrayList.contains(ItemController.getItem())) {
             usersItemsArrayList.add(ItemController.getItem());
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void SetItems() {
+        itemsView = (ListView) findViewById(R.id.myItemsListView);
+
+        if (NetworkUtil.getConnectivityStatus(this) == 1) {
+            usersItems = user.getMyItems();
+            itemsList = new String[usersItems.size()];
+            itemsList = usersItems.toArray(itemsList);
+            ItemController.getItemsByIDElasticSearch(itemsList);
+            usersItemsArrayList = ItemController.getItemList().getItemList();
+            for (Item item : usersItemsArrayList) {
+                if (item.getAvailability()) {
+                    usersItemsArrayList.remove(item);
+                }
+            }
+
+            if (usersItemsArrayList.isEmpty()) {
+                Toast.makeText(ViewBorrowingOutActivity.this, "None of your items are being borrowed.", Toast.LENGTH_SHORT).show();
+            } else {
+                //TODO: can stop converting the items list into String[] once that's it's actual type
+                adapter = new CustomSearchResultsAdapter(this, usersItemsArrayList);
+                itemsView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+        } else {
+            Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
         }
     }
 

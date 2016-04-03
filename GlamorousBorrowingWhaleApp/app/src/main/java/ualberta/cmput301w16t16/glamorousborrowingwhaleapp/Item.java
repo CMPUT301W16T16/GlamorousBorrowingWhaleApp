@@ -15,6 +15,7 @@ public class Item {
     private BidList bids;
     private String sport;
     // private User owner;
+    private String renterID;
     private String ownerID;
     // private int rating;
     protected String ID;
@@ -74,6 +75,14 @@ public class Item {
     public String getOwnerID() { return ownerID; }
 
     public void setOwnerID(String ownerID) { this.ownerID = ownerID; }
+
+    public String getRenterID() {
+        return renterID;
+    }
+
+    public void setRenterID(String renterID) {
+        this.renterID = renterID;
+    }
 
     public BidList getBids() {
         return bids;
