@@ -203,6 +203,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
         bids = new BidList();
         item.setBids(bids);
         item.setAvailability(false);
+        item.setRenterID(renterID);
         owner.removeMyItem(newID);
         ItemController.updateItemElasticSearch(item);
         newID = item.getID();

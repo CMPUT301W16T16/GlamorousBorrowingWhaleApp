@@ -83,6 +83,7 @@ public class ElasticSearch extends Application {
                     item.setAvailability(itemFromES.getBoolean("availability"));
                     item.setPhoto(itemFromES.getString("photo").getBytes());
                     item.setOwnerID(itemFromES.getString("owner"));
+                    item.setRenterID(itemFromES.getString("renter"));
                     item.setSport(itemFromES.getString("sport"));
 
                     BidList bids = new BidList();
@@ -99,7 +100,6 @@ public class ElasticSearch extends Application {
                     }
 
                     item.setBids(bids);
-
                     itemList.add(item);
                 }
                 ItemController.setItemList(itemList);
@@ -410,6 +410,7 @@ public class ElasticSearch extends Application {
                 jo.put("availability", item.getAvailability());
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
+                jo.put("renter", item.getRenterID());
                 jo.put("sport", item.getSport());
                 JSONArray ja = new JSONArray();
                 for (int i = 0; i < item.getBids().getBids().size(); i++) {
@@ -554,6 +555,7 @@ public class ElasticSearch extends Application {
                 jo.put("availability", item.getAvailability());
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
+                jo.put("renter", item.getRenterID());
                 jo.put("sport", item.getSport());
 
                 // this last one probably won't work the same
@@ -728,6 +730,7 @@ public class ElasticSearch extends Application {
                         tempItem.setAvailability(itemFromES.getBoolean("availability"));
                         tempItem.setPhoto(itemFromES.getString("photo").getBytes());
                         tempItem.setOwnerID(itemFromES.getString("owner"));
+                        tempItem.setRenterID(itemFromES.getString("renter"));
                         tempItem.setSport(itemFromES.getString("sport"));
 
                         BidList bids = new BidList();
