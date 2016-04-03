@@ -95,8 +95,6 @@ public class MyItemsActivity extends AppCompatActivity {
     /**
      * Refreshes the adapter so the view is refreshed
      */
-    // this seems like a fairly shady way to update the adapter but it's the only way I could
-    // seem get it to work
     //TODO: improve the way the view/adapter is updated here
     @Override
     protected void onResume() {
@@ -111,5 +109,6 @@ public class MyItemsActivity extends AppCompatActivity {
         adapter = new CustomSearchResultsAdapter(this, myItems);
         myItemsView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
     }
 }
