@@ -107,6 +107,9 @@ public class MyItemsActivity extends AppCompatActivity {
         myItemsList = myItemsArray.toArray(myItemsList);
         ItemController.getItemsByIDElasticSearch(myItemsList);
 
+        myItems = ItemController.getItemList().getItemList();
+        adapter.notifyDataSetChanged();
+        /*
         // checking that there is an item to add to the adapter, and that it belongs to the current user
         if (ItemController.getItem() != null
                 && ItemController.getItem().getOwnerID().equals(UserController.getUser().getID())
@@ -114,5 +117,6 @@ public class MyItemsActivity extends AppCompatActivity {
             myItems.add(ItemController.getItem());
             adapter.notifyDataSetChanged();
         }
+        */
     }
 }
