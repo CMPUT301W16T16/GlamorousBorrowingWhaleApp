@@ -264,7 +264,6 @@ public class ElasticSearch extends Application {
                 String output;
                 JSONObject ESResponse;
                 while ((output = br.readLine()) != null) {
-                    Log.d("TEST", "AddUser "+output);
                     Log.e("website returned", output);
                     ESResponse = new JSONObject(output);
                     if (ESResponse.getString("_id") != null) {
@@ -435,7 +434,6 @@ public class ElasticSearch extends Application {
                 String output;
                 JSONObject ESResponse;
                 while ((output = br.readLine()) != null) {
-                    Log.d("TEST", "AddItem "+output);
                     Log.e("website returned", output);
                     ESResponse = new JSONObject(output);
                     if (ESResponse.getString("_id") != null) {
@@ -476,8 +474,6 @@ public class ElasticSearch extends Application {
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line);
                 }
-
-                Log.d("TEST", "DeleteUser ");
                 return null;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -513,7 +509,6 @@ public class ElasticSearch extends Application {
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line);
                 }
-                Log.d("TEST", "DeleteItem ");
                 return null;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -729,6 +724,7 @@ public class ElasticSearch extends Application {
                         tempItem.setDescription(itemFromES.getString("description"));
                         tempItem.setAvailability(itemFromES.getBoolean("availability"));
                         tempItem.setPhoto(itemFromES.getString("photo").getBytes());
+                        tempItem.setSize(itemFromES.getString("size"));
                         tempItem.setOwnerID(itemFromES.getString("owner"));
                         tempItem.setRenterID(itemFromES.getString("renter"));
                         tempItem.setSport(itemFromES.getString("sport"));

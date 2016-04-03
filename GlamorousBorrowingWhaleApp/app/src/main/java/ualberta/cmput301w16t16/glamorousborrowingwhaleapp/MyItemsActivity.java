@@ -108,15 +108,8 @@ public class MyItemsActivity extends AppCompatActivity {
         ItemController.getItemsByIDElasticSearch(myItemsList);
 
         myItems = ItemController.getItemList().getItemList();
+        adapter = new CustomSearchResultsAdapter(this, myItems);
+        myItemsView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        /*
-        // checking that there is an item to add to the adapter, and that it belongs to the current user
-        if (ItemController.getItem() != null
-                && ItemController.getItem().getOwnerID().equals(UserController.getUser().getID())
-                && !myItems.contains(ItemController.getItem())) {
-            myItems.add(ItemController.getItem());
-            adapter.notifyDataSetChanged();
-        }
-        */
     }
 }
