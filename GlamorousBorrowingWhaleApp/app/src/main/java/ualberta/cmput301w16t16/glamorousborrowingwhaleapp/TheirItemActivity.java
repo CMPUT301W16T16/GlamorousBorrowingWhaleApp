@@ -61,6 +61,8 @@ public class TheirItemActivity extends AppCompatActivity {
         makeBid = (Button) findViewById(R.id.theirItemMakeBid);
         itemOwner = (Button) findViewById(R.id.theirItemOwner);
 
+        ImageButton theirComment = (ImageButton) findViewById(R.id.theirItemComment);
+
         // setting the TextViews
         name.setText(item.getTitle());
         owner.setText(item.getOwnerID());
