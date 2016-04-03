@@ -410,10 +410,6 @@ public class ElasticSearch extends Application {
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
                 jo.put("sport", item.getSport());
-                // this last one probably won't work the same
-                //jo.put("bids", item.getBids());
-
-                // changed it to this
                 JSONArray ja = new JSONArray();
                 for (int i = 0; i < item.getBids().getBids().size(); i++) {
                     Bid bid = item.getBids().getBids().get(i);

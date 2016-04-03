@@ -27,37 +27,37 @@ import java.util.ArrayList;
 */
 
 public class IncomingBidsActivity extends AppCompatActivity {
+    // I'm sorry theres like a thousand variables i'll try to clean this up later - erin
     private ArrayList<BidItem> pairs = new ArrayList<>();
     private ArrayAdapter<BidItem> adapter;
+    private ArrayList<String> ownersItems;
+    private Bid selectedBid;
     private BidList myBidList = new BidList();
     private BidList itemBidList = new BidList();
-    private User user = UserController.getUser();
     private ListView incomingBidsList;
     private String[] myItemsList;
-    private ArrayList<Item> myItems;
-    private User owner;
-
-    private Bid selectedBid;
-    private Item selectedItem;
-    private ArrayList<String> ownersItems;
-    private String ownersItemsString[];
-    private ItemList itemList;
-    private String itemID;
+    private String[] items;
+    private String[] ownersItemsString;
     private String renterID;
+    private String newID;
+    private ArrayList<Item> myItems;
+    private User owner = UserController.getUser();
     private User renter;
-    private ArrayList<String> rentersBiddedItems;
-    private String savedID;
+    private ItemList itemList;
+    private Integer pos = -1;
+    private Integer finalPos;
+
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_bids);
         setTitle("Incoming Bids");
-        user.setNotification(false);
+        owner.setNotification(false);
 
-        // get all the users items that have bids
         incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
-        ArrayList<String> myItemsArray = user.getMyItems();
+        ArrayList<String> myItemsArray = owner.getMyItems();
         myItemsList = new String[myItemsArray.size()];
         myItemsList = myItemsArray.toArray(myItemsList);
         ItemController.getItemsByIDElasticSearch(myItemsList);
@@ -107,7 +107,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 incomingBidsItemTitleInflate.setText(incomingBidsItemTitle.getText());
 
                 BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
-                selectedItem = bidItem.item;
                 selectedBid = bidItem.bid;
                 owner = UserController.getUser();
                 ownersItems = owner.getMyItems();
@@ -116,13 +115,20 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 itemList = ItemController.getItemsByIDElasticSearch(ownersItemsString);
 
                 for (Item item : itemList.getItemList()) {
+                    pos = 0;
                     for (Bid bid : item.getBids().getBids()) {
                         if (bid.getItemID().equals(selectedBid.getItemID())) {
-                            savedID = bid.getItemID();
-                            ItemController.setItem(item);
+                            finalPos = pos;
                         }
                     }
                 }
+                newID = owner.getMyItems().get(finalPos);
+                items = new String[1];
+                items[0] = newID;
+                ItemController.getItemsByIDElasticSearch(items);
+                item = ItemController.getItemList().getItemList().get(0);
+                item.setID(newID);
+                ItemController.setItem(item);
 
                 checkmarkButton.setOnClickListener(new View.OnClickListener() {
 
@@ -136,26 +142,25 @@ public class IncomingBidsActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        //TODO: reject this bid
-
                         User owner = UserController.getUser();
-                        Item item = ItemController.getItem();
 
                         renterID = selectedBid.getRenterID();
                         renter = UserController.getUserByIDElasticSearch(renterID);
-                        renter.removeItemBidOn(savedID);
+                        renter.removeItemBidOn(newID);
                         UserController.updateUserElasticSearch(renter);
 
                         BidList bids = item.getBids();
-                        bids.removeBid(selectedBid);
+                        for (Bid bid : bids.getBids()) {
+                            if (bid.getItemID().equals(selectedBid.getItemID())) {
+                                bids.removeBid(bid);
+                            }
+                        }
                         item.setBids(bids);
 
-                        itemID = item.getID();
-                        owner.removeMyItem(itemID);
+                        owner.removeMyItem(newID);
                         ItemController.updateItemElasticSearch(item);
-                        itemID = item.getID();
-                        owner.addMyItem(itemID);
-
+                        newID = item.getID();
+                        owner.addMyItem(newID);
                         UserController.updateUserElasticSearch(owner);
                     }
                 });
