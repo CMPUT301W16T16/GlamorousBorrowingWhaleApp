@@ -95,8 +95,6 @@ public class MyItemsActivity extends AppCompatActivity {
     /**
      * Refreshes the adapter so the view is refreshed
      */
-    // this seems like a fairly shady way to update the adapter but it's the only way I could
-    // seem get it to work
     //TODO: improve the way the view/adapter is updated here
     @Override
     protected void onResume() {
@@ -106,8 +104,6 @@ public class MyItemsActivity extends AppCompatActivity {
         myItemsList = new String[myItemsArray.size()];
         myItemsList = myItemsArray.toArray(myItemsList);
         ItemController.getItemsByIDElasticSearch(myItemsList);
-
-        // checking that there is an item to add to the adapter, and that it belongs to the current user
         if (ItemController.getItem() != null
                 && ItemController.getItem().getOwnerID().equals(UserController.getUser().getID())
                 && !myItems.contains(ItemController.getItem())) {

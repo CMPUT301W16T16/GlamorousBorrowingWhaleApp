@@ -1,6 +1,8 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -160,14 +162,10 @@ public class MyItemActivity extends AppCompatActivity {
                     }
                     user.removeMyItem(item.getID());
                     new ElasticSearch.elasticDeleteItem().execute(item);
-
-                    // TODO: remove ItemController
-                    //                if(user.getMyItems().size() != 0) {
-                    //                    ItemController.setItem(user.getMyItems().get(0));
-                    //                } else{
-                    //                    ItemController.setEmpty();
-                    //                }
-
+                    UserController.updateUserElasticSearch(user);
+                    ItemList itemList = ItemController.getItemList();
+                    itemList.remove(item);
+                    ItemController.setItemList(itemList);
                     Toast.makeText(MyItemActivity.this, "Thing Deleted!", Toast.LENGTH_SHORT).show();
                     setResult(Activity.RESULT_OK);
                     finish();
@@ -245,10 +243,6 @@ public class MyItemActivity extends AppCompatActivity {
 
     protected void onStop() {
         super.onStop();
-        //pretty redundant but whatev
-        name.setText("");
-        size.setText("");
-        description.setText("");
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -32,10 +32,16 @@ public class CustomSearchResultsAdapter extends ArrayAdapter<Item> {
 
         TextView title = (TextView) view.findViewById(R.id.my_items_title);
         TextView description = (TextView) view.findViewById(R.id.my_items_description);
+        TextView renter = (TextView) view.findViewById(R.id.my_items_renter);
 
         Item item = getItem(position);
         title.setText(item.getTitle());
         description.setText(item.getDescription());
+        if (item.getRenterID().equals("")) {
+            renter.setText("This item isn't being rented");
+        } else {
+            renter.setText(item.getRenterID());
+        }
         ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
 
         if (item.getPhoto() != null) {
