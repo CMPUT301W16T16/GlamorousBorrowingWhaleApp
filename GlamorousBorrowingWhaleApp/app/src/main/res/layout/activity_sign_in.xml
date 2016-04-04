@@ -14,14 +14,15 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="356dp"
         android:layout_height="wrap_content"
         android:id="@+id/datGlamorousWhaleThough"
-        android:src="@drawable/glamorouswhale1"
         android:paddingTop="30dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1.45"
+        android:src="@drawable/glamorouswhale1" />
 
     <LinearLayout
         android:layout_width="match_parent"

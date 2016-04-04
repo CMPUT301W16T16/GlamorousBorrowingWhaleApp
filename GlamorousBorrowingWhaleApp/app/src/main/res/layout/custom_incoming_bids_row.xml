@@ -33,7 +33,6 @@
         android:orientation="horizontal">
         <Button
             android:focusable="false"
-            android:focusableInTouchMode="false"
             android:id="@+id/incomingBidsAccept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +48,6 @@
 
         <Button
             android:focusable="false"
-            android:focusableInTouchMode="false"
             android:id="@+id/incomingBidsReject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

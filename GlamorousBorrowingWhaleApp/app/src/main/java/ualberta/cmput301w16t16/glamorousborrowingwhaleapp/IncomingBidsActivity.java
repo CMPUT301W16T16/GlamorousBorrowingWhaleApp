@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
 
 /**
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 
 public class IncomingBidsActivity extends AppCompatActivity {
     // I'm sorry theres like a thousand variables i'll try to clean this up later - erin
+    Button acceptButton;
+    Button rejectButton;
     private ArrayList<BidItem> pairs = new ArrayList<>();
     private ArrayAdapter<BidItem> adapter;
     private ArrayList<String> ownersItems;
@@ -48,8 +51,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
     private ItemList itemList;
     private Integer pos = -1;
     private Integer finalPos;
-    Button acceptButton;
-    Button rejectButton;
 
     private Item item;
 
@@ -78,6 +79,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 owner = UserController.getUser();
                 item = bidItem.item;
 
+                view.clearFocus();
                 acceptButton.setClickable(true);
                 rejectButton.setClickable(true);
                 acceptButton.setOnClickListener(new View.OnClickListener() {
@@ -136,55 +138,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
         }
     }
 
-    public void RejectBid() {
-        renterID = selectedBid.getRenterID();
-        renter = UserController.getUserByIDElasticSearch(renterID);
-        renter.removeItemBidOn(newID);
-        UserController.updateUserElasticSearch(renter);
-
-        BidList bids = item.getBids();
-        for (Bid bid : bids.getBids()) {
-            if (bid.getItemID().equals(selectedBid.getItemID())) {
-                bids.removeBid(bid);
-            }
-        }
-        item.setBids(bids);
-
-        owner.removeMyItem(newID);
-        ItemController.updateItemElasticSearch(item);
-        newID = item.getID();
-        owner.addMyItem(newID);
-        UserController.updateUserElasticSearch(owner);
-    }
-
-    public void AcceptBid() {
-        renterID = selectedBid.getRenterID();
-        renter = UserController.getUserByIDElasticSearch(renterID);
-        renter.removeItemBidOn(newID);
-
-        BidList bids = item.getBids();
-
-        for (Bid bid : bids.getBids()) {
-            renterID = bid.getRenterID();
-            renter = UserController.getUserByIDElasticSearch(renterID);
-            renter.removeItemBidOn(newID);
-            renter.removeItemBidOn(oldID);
-            UserController.updateUserElasticSearch(renter);
-        }
-
-        bids = new BidList();
-        item.setBids(bids);
-        item.setAvailability(false);
-        item.setRenterID(renterID);
-        owner.removeMyItem(newID);
-        ItemController.updateItemElasticSearch(item);
-        newID = item.getID();
-        owner.addMyItem(newID);
-        renter.addItemBorrowed(newID);
-        UserController.updateUserElasticSearch(renter);
-        UserController.updateUserElasticSearch(owner);
-    }
-
     public void SetBids() {
         incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
         ArrayList<String> myItemsArray = owner.getMyItems();
@@ -210,5 +163,4 @@ public class IncomingBidsActivity extends AppCompatActivity {
             Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids.", Toast.LENGTH_SHORT).show();
         }
     }
-
 }
