@@ -125,7 +125,7 @@
             <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:id="@+id/imageButton"
+                android:id="@+id/discardRating"
                 android:src="@android:drawable/ic_menu_delete"
                 android:background="@layout/mybutton"
                 android:layout_alignParentTop="true"
@@ -138,7 +138,7 @@
             <ImageButton
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:id="@+id/imageButton2"
+                android:id="@+id/saveRating"
                 android:src="@android:drawable/ic_menu_save"
                 android:background="@layout/mybutton"
                 android:layout_alignParentBottom="true"

@@ -3,8 +3,10 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,6 +44,7 @@ public class MakeRatingActivity extends AppCompatActivity{
 
         // setting the views
         name.setText(item.getTitle());
+        comment.setText(item.getDescription());
         // photo.set?
 
         if (item.getPhoto() != null) {
@@ -49,12 +52,30 @@ public class MakeRatingActivity extends AppCompatActivity{
             photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
         }
 
+        ImageButton saveRatingButton = (ImageButton) findViewById(R.id.saveRating);
+        ImageButton discardRatingButton = (ImageButton) findViewById(R.id.discardRating);
 
-        // Submit Rating Button
-        // Discard Button
 
-        // Add Comment
-        // Add Rating
+
+
+
+        // Submit Rating Button (save) Submits the rating
+        saveRatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // code for when save button is pressed
+                // Use code below to save comment text
+                //item.set________(description.getText().toString());
+            }
+        });
+        // Discard Button (discard) Discards current entered data
+        discardRatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // code for when discard button is pressed
+            }
+        });
+
 
 
 
