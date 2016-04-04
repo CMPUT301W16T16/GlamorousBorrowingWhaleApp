@@ -117,6 +117,7 @@ public class TheirItemActivity extends AppCompatActivity {
         makeRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // if user has made bid on item and item status is returned:
                 Intent intent = new Intent(TheirItemActivity.this, MakeRatingActivity.class);
                 startActivity(intent);
             }
