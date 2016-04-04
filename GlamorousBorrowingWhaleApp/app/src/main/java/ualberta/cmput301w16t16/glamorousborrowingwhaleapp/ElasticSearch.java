@@ -99,13 +99,14 @@ public class ElasticSearch extends Application {
                     JSONObject thingInList = hitsList.getJSONObject(i);
                     JSONObject itemFromES = thingInList.getJSONObject("_source");
                     
-                    //Start Code HERE
-                    //if ( userController.getUser().getID().isEqual(itemFromES.getString("owner")) ) {
-                    //    continue;
-                    //}
-                    //if ( !itemFromES.getBoolean("availability") ) {
-                    //    continue;
-                    //}
+                    //Check to see if the current iterable item is either the user's item
+                    //or not available for rent
+                    if ( UserController.getUser().getID().equals(itemFromES.getString("owner")) ) {
+                        continue;
+                    }
+                    if ( !itemFromES.getBoolean("availability") ) {
+                        continue;
+                    }
 
                     // filling in the information for the item
                     Item item = new Item();
