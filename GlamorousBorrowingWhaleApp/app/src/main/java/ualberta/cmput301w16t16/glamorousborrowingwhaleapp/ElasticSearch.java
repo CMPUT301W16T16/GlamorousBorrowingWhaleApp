@@ -64,11 +64,12 @@ public class ElasticSearch extends Application {
             URL url;
             itemsListView = params[0];
             //implementing our own null check
+            //&size=100 is the number of items that can be shown in the listview adapter
             if (query != null) {
-                query = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?q=title:"+
+                query = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=100&q=title:"+
                         "*" + query + "*";
             } else {
-                query = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?";
+                query = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=100";
             }
 
             try {
@@ -78,7 +79,6 @@ public class ElasticSearch extends Application {
             }
 
             try {
-                //url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=10");
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));

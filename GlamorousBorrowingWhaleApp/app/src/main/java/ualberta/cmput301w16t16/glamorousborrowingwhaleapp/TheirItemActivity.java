@@ -163,6 +163,8 @@ public class TheirItemActivity extends AppCompatActivity {
     }
 
     public void launchProfileDialog(View view) {
-
+        UserController.getUserByIDElasticSearch(item.getOwnerID());
+        ProfileDialog profile = new ProfileDialog(TheirItemActivity.this);
+        profile.show();
     }
 }

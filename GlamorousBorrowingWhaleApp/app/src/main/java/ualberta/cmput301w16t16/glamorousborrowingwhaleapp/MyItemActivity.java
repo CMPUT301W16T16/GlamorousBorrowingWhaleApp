@@ -2,6 +2,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -70,8 +71,9 @@ public class MyItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item);
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Your Items");
+        actionBar.setTitle("My Item");
         actionBar.setHomeButtonEnabled(true);
+        //setTitle("My Item");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /**
@@ -197,20 +199,31 @@ public class MyItemActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (NetworkUtil.getConnectivityStatus(v.getContext()) == 1) {
-                    if (!item.getBids().getBids().isEmpty()) {
-                        Toast.makeText(MyItemActivity.this, "This Item Has Bids!", Toast.LENGTH_SHORT).show();
-                    }
-                    user.removeMyItem(item.getID());
-                    new ElasticSearch.elasticDeleteItem().execute(item);
-                    UserController.updateUserElasticSearch(user);
-                    ItemList itemList = ItemController.getItemList();
-                    itemList.remove(item);
-                    ItemController.setItemList(itemList);
-                    Toast.makeText(MyItemActivity.this, "Thing Deleted!", Toast.LENGTH_SHORT).show();
-                    setResult(Activity.RESULT_OK);
-                    finish();
-                    //finish() because once the item is deleted, there's nothing to show
+                new AlertDialog.Builder(MyItemActivity.this)
+//                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Delete Item?")
+                        .setMessage("Are you sure you want to delete this item?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                    user.removeMyItem(item.getID());
+                                    new ElasticSearch.elasticDeleteItem().execute(item);
+                                    UserController.updateUserElasticSearch(user);
+                                    ItemList itemList = ItemController.getItemList();
+                                    itemList.remove(item);
+                                    ItemController.setItemList(itemList);
+                                    Toast.makeText(MyItemActivity.this, "Thing Deleted!", Toast.LENGTH_SHORT).show();
+                                    setResult(Activity.RESULT_OK);
+                                    finish();
+                            }
+
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
                 } else {
                     Toast.makeText(v.getContext(), "You are not connected to the internet", Toast.LENGTH_SHORT).show();
                 }
@@ -224,7 +237,6 @@ public class MyItemActivity extends AppCompatActivity {
                 Intent bringTheGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(bringTheGallery, result);
             }
-
         });
 
         myComment.setOnClickListener(new View.OnClickListener() {
@@ -234,7 +246,6 @@ public class MyItemActivity extends AppCompatActivity {
                 // view comments on item
             }
         });
-
 
     }
     //setting up the action bar icons

@@ -98,7 +98,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
             });
 
-            // Opens pop up for user info
             itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
