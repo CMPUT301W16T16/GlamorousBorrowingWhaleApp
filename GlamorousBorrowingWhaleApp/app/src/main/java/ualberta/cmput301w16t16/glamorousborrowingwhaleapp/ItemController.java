@@ -61,9 +61,11 @@ public class ItemController {
         }
     }
 
-    public static void getItemsElasticSearch(ListView itemsListView) {
+    public static void getItemsElasticSearch(ListView itemsListView, String query,
+                                             CustomSearchResultsAdapter adapter, Context context) {
         try {
-            new ElasticSearch.elasticGetItems().execute(itemsListView).get(1, TimeUnit.DAYS);
+            new ElasticSearch.elasticGetItems(query, adapter,
+                    context).execute(itemsListView).get(1, TimeUnit.DAYS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
         }
