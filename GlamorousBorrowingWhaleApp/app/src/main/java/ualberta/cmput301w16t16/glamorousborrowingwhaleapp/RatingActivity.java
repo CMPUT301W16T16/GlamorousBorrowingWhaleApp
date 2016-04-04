@@ -39,7 +39,7 @@ public class RatingActivity extends AppCompatActivity {
     ArrayList<String> ratingsArray;
     String[] ratingsList;
 
-    //TODO: this code below is incomplete and doesn't populate the listview
+    //TODO: this code below is incomplete and doesn't populate the listview, crashes when try to make a rating
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +50,7 @@ public class RatingActivity extends AppCompatActivity {
 
         if (NetworkUtil.getConnectivityStatus(this) == 1) {
 
-
-
+            //!!
 
         } else {
             Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
