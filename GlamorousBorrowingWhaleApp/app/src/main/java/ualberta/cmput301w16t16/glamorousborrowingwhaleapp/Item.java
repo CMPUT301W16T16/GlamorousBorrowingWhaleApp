@@ -106,6 +106,8 @@ public class Item {
         this.bids.addBid(bid);
     }
 
+
+
     public String printAvailability() {
         if (availability) {
             return "Available";
