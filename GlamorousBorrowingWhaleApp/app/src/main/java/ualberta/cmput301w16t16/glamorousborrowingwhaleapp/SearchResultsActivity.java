@@ -6,6 +6,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +34,7 @@ public class SearchResultsActivity extends AppCompatActivity {
     ListView itemsListView;
     SearchView searchView;
     ItemList items = new ItemList();
+    String query;
     User owner;
     public CustomSearchResultsAdapter adapter;
 
@@ -38,29 +42,46 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+        //get the action bar object so we can customize it using the support libraries
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Search Results: Enter a search query");
-        actionBar.setHomeButtonEnabled(false);
+        actionBar.setTitle("Search Results: All");
+        actionBar.setHomeButtonEnabled(true);
         itemsListView = (ListView) findViewById(R.id.myItemsListView);
         searchView = (SearchView) findViewById(R.id.searchView);
 
         if (NetworkUtil.getConnectivityStatus(this) == 1) {
+            //query will always be null here, so when this activity is created and we have
+            //network access, the search view will always be first populated with all the items
+            //in elasticsearch.
+            if (query == null) {
+                ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
+            }
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    //If a user presses "enter" on the keyboard it submits whatever is in the
+                    //field as long as it is not "" (searchView handles "" and null in its own way
                     if (adapter != null) {
+                        //if the adapter has stuff going on, lets reset the view to prep for a new
+                        //set of data coming from the new search
                         adapter.clear();
                         adapter.notifyDataSetChanged();
                     }
+                    //Getting search from elasticsearch using the query
                     ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
+                    //Just setting some fun dynamic action bar action
                     if (!query.equals("")) {
                         actionBar.setTitle("Search Results: " + query);
+                    } else {
+                        actionBar.setTitle("Search Results: All");
                     }
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String query) {
+                    //If a user enters text in the searchView the view auto submits the
+                    //text to the below. Otherwise same as above.
                     if (adapter != null) {
                         adapter.clear();
                         adapter.notifyDataSetChanged();
@@ -68,23 +89,14 @@ public class SearchResultsActivity extends AppCompatActivity {
                     ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
                     if (!query.equals("")) {
                         actionBar.setTitle("Search Results: " + query);
+                    } else {
+                        actionBar.setTitle("Search Results: All");
                     }
                     return false;
                 }
 
 
             });
-//
-//            ItemController.getItemsElasticSearch(itemsListView, "", adapter, getApplicationContext());
-//            items = ItemController.getItemList();
-//            if (items != null) {
-//                adapter = new CustomSearchResultsAdapter(this, items.getItemList());
-//                itemsListView.setAdapter(adapter);
-//                adapter.notifyDataSetChanged();
-//                Toast.makeText(this, "Search Finished!", Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(this, "Sorry, nothing here.", Toast.LENGTH_SHORT).show();
-//            }
 
             itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -104,5 +116,30 @@ public class SearchResultsActivity extends AppCompatActivity {
         }
 
 
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                goToHome();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void goToHome() {
+        Intent i = new Intent(SearchResultsActivity.this, MyProfileViewActivity.class);
+        startActivity(i);
     }
 }

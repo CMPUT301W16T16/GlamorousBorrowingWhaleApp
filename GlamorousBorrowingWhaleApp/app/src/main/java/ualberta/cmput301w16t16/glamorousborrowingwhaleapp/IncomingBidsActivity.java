@@ -76,8 +76,24 @@ public class IncomingBidsActivity extends AppCompatActivity {
 
                 BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
                 selectedBid = bidItem.bid;
-                owner = UserController.getUser();
-                item = bidItem.item;
+                /*owner = UserController.getUser();
+                itemList = ItemController.getItemsByIDElasticSearch(ownersItemsString);
+
+                for (Item item : itemList.getItemList()) {
+                    pos = 0;
+                    for (Bid bid : item.getBids().getBids()) {
+                        if (bid.getItemID().equals(selectedBid.getItemID())) {
+                            finalPos = pos;
+                        }
+                    }
+                }
+                newID = owner.getMyItems().get(finalPos);
+                items = new String[1];
+                items[0] = newID;
+                ItemController.getItemsByIDElasticSearch(items);
+                item = ItemController.getItemList().getItemList().get(0);
+                oldID = item.getID();
+                ItemController.setItem(item);*/
 
                 view.clearFocus();
                 acceptButton.setClickable(true);

@@ -10,14 +10,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:layout_alignParentStart="true"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@layout/mybutton"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
@@ -36,16 +35,17 @@
                     android:scaleType="fitCenter"
                     android:id="@+id/pictureView"
                     android:src="@drawable/glamorouswhale1"
+                    android:background="@layout/mybutton"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="0dp"
-                    android:layout_weight="5"/>
+                    android:layout_weight="3"/>
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="5"
+                    android:layout_weight="4"
                     android:gravity="bottom"
                     android:layout_marginRight="10dp">
 
@@ -54,21 +54,24 @@
                         android:layout_height="wrap_content"
                         android:text="Delete Photo"
                         android:id="@+id/button5"
-                        android:onClick="deletePhoto" />
+                        android:onClick="deletePhoto"
+                        android:textSize="13sp" />
 
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Add Location"
                         android:id="@+id/button4"
-                        android:onClick="launchGetLocation" />
+                        android:onClick="launchGetLocation"
+                        android:textSize="13sp" />
 
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Delete Location"
                         android:id="@+id/button3"
-                        android:onClick="deleteLocation" />
+                        android:onClick="deleteLocation"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
             </LinearLayout>

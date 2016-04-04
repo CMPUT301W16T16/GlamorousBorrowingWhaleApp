@@ -8,8 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +70,10 @@ public class MyItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item);
-        setTitle("My Item");
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("My Item");
+        actionBar.setHomeButtonEnabled(true);
+        //setTitle("My Item");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /**
@@ -241,6 +248,32 @@ public class MyItemActivity extends AppCompatActivity {
         });
 
     }
+    //setting up the action bar icons
+    //taken from http://www.androidhive.info/2013/11/android-working-with-action-bar/
+    // Apr3/16
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                goToHome();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void goToHome() {
+        Intent i = new Intent(MyItemActivity.this, MyProfileViewActivity.class);
+        startActivity(i);
+    }
 
     // also pictures
     @Override
@@ -276,5 +309,21 @@ public class MyItemActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
     }
 
+    public void launchGetLocation(View view) {
+        Intent intent = new Intent(view.getContext(), GetLocationActivity.class);
+        final int result = 1;
+        startActivityForResult(intent, result);
 
+    }
+
+    public void deletePhoto(View view) {
+        photo.setImageResource(R.drawable.glamorouswhale1);
+        Toast.makeText(this, "photo returned to default!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void deleteLocation(View view) {
+        item.setLatitude(0);
+        item.setLongitude(0);
+        Toast.makeText(this, "location deleted!", Toast.LENGTH_SHORT).show();
+    }
 }

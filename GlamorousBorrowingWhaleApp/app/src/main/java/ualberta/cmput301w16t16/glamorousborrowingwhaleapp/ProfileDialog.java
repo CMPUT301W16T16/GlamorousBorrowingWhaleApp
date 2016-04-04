@@ -20,7 +20,7 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
     public Button confirmButton;
     private User owner;
 
-    public ProfileDialog(Activity a, User owner) {
+    public ProfileDialog(Activity a) {
         super(a);
         this.activity = a;
         this.owner = UserController.getSecondaryUser();
