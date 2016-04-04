@@ -205,23 +205,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logout();
-                finish();/*
-                // clear all of the current items in the controllers
-                UserController.setUser(null);
-                UserController.setSecondaryUser(null);
-                ItemController.setItem(null);
-                ItemController.setItemList(null);
-
-                // set logged in as false so sign in activity will not automatically sign the user in
-                //UserController.setLoggedIn(v.getContext(), false);
-
-                // go back to the sign in activity
-                Intent intent = new Intent(MyProfileViewActivity.this, SignInActivity.class);
-
-                // make sure the user cannot press the back button to go back into another activity
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();*/
+                finish();
             }
         });
     }
@@ -242,7 +226,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
         // make sure the user cannot press the back button to go back into another activity
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        //finish();
     }
 
 
@@ -257,7 +240,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
      * @return
      * @author martina
      */
-
     // taken Feb-29-2016 from http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
     public boolean longClick() {
         //LayoutInflater has an issue with large size bitmap in xml for alertdialog, has
@@ -344,9 +326,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
      * @return
      * @author adam
      */
-
-
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -360,11 +339,9 @@ public class MyProfileViewActivity extends AppCompatActivity {
      * @return
      * @author adam
      */
-
     @Override
     protected void onResume() {
         super.onResume();
-        //TODO maybe add refresh content in case of offsite server update, etc. + toast to notify if done or not
         //onCreate will take care of memory release
         Button buttonIncomingBids = (Button) findViewById(R.id.buttonIncomingBids);
         if (user.getNotification()) {
@@ -386,10 +363,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
      * @return
      * @author adam
      */
-
     @Override
     protected void onStop() {
         super.onStop();
-        //TODO add the write to disk/server function here probably
     }
 }

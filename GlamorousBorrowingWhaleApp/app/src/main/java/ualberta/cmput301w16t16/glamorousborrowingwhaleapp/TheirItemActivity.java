@@ -107,8 +107,6 @@ public class TheirItemActivity extends AppCompatActivity {
          * The item's attributes are then set from the EditText boxes.
          */
 
-
-
         // Taken from http://stackoverflow.com/questions/7146976/android-how-to-set-the-rating-bar-is-non-clickable-and-touchable-in-htc-mobile
         // code makes rating bar non-clickable (UNTESTED)
         theirItemRatingBar.setOnTouchListener(new View.OnTouchListener() {
@@ -161,6 +159,10 @@ public class TheirItemActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+
+    public void launchProfileDialog(View view) {
 
     }
 }
