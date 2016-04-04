@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -324,6 +325,9 @@ public class MyProfileViewActivity extends AppCompatActivity {
             case R.id.action_search:
                 return true;
             case R.id.help_menu:
+                //taken from http://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/CMPUT301W16T16/GlamorousBorrowingWhaleApp/wiki"));
+                startActivity(browserIntent);
                 return true;
             case R.id.logout_menu:
                 logout();

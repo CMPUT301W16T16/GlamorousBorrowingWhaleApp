@@ -39,7 +39,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Search Results: All");
+        actionBar.setTitle("Search Results: Enter a search query");
         actionBar.setHomeButtonEnabled(false);
         itemsListView = (ListView) findViewById(R.id.myItemsListView);
         searchView = (SearchView) findViewById(R.id.searchView);
@@ -48,15 +48,27 @@ public class SearchResultsActivity extends AppCompatActivity {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    if (adapter != null) {
+                        adapter.clear();
+                        adapter.notifyDataSetChanged();
+                    }
                     ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
-                    actionBar.setTitle("Search Results: " + query);
+                    if (!query.equals("")) {
+                        actionBar.setTitle("Search Results: " + query);
+                    }
                     return false;
                 }
 
                 @Override
-                public boolean onQueryTextChange(String newText) {
-                    ItemController.getItemsElasticSearch(itemsListView, newText, adapter, getApplicationContext());
-                    actionBar.setTitle("Search Results: " + newText);
+                public boolean onQueryTextChange(String query) {
+                    if (adapter != null) {
+                        adapter.clear();
+                        adapter.notifyDataSetChanged();
+                    }
+                    ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
+                    if (!query.equals("")) {
+                        actionBar.setTitle("Search Results: " + query);
+                    }
                     return false;
                 }
             });
