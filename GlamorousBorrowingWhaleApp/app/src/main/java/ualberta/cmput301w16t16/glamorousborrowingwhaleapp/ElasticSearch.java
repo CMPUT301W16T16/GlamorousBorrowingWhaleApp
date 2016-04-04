@@ -46,6 +46,7 @@ public class ElasticSearch extends Application {
         CustomSearchResultsAdapter adapter;
         Context context;
 
+        //gathering data to be worked on
         public elasticGetItems(String query, CustomSearchResultsAdapter adapter, Context context) {
             this.query = query;
             this.adapter = adapter;
@@ -62,6 +63,7 @@ public class ElasticSearch extends Application {
             BufferedReader reader = null;
             URL url;
             itemsListView = params[0];
+            //implementing our own null check
             if (query != null) {
                 query = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?q=title:"+
                         "*" + query + "*";
@@ -101,6 +103,7 @@ public class ElasticSearch extends Application {
                     Item item = new Item();
                     item.setID(thingInList.getString("_id"));
                     item.setTitle(itemFromES.getString("title"));
+                    Log.e("item title", item.getTitle());
                     item.setDescription(itemFromES.getString("description"));
                     item.setSize(itemFromES.getString("size"));
                     item.setAvailability(itemFromES.getBoolean("availability"));
@@ -164,7 +167,11 @@ public class ElasticSearch extends Application {
 
         @Override
         protected void onPostExecute(ItemList itemList) {
+            //onPostExecute works on the UI thread.
+            //Updating the adapter passed in from another class.
             try {
+                //Create a new adapter using the new ItemList, set it to the old
+                //adapter variable so the whatever activity is using it sees it as so.
                 this.adapter = new CustomSearchResultsAdapter(itemsListView.getContext(),
                         ItemController.getItemList().getItemList());
                 itemsListView.setAdapter(this.adapter);

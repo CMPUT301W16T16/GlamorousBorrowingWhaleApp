@@ -96,15 +96,13 @@ public class MyItemsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_search_actions, menu);
+        inflater.inflate(R.menu.main_actions, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
-                return true;
             case R.id.home:
                 goToHome();
                 return true;

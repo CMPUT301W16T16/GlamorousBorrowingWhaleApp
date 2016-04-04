@@ -12,7 +12,11 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -49,6 +53,9 @@ public class NewListingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_listing);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Create New Listing");
+        actionBar.setHomeButtonEnabled(true);
 
         name = (EditText) findViewById(R.id.name);
         sport = (EditText) findViewById(R.id.sport);
@@ -153,6 +160,32 @@ public class NewListingActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    //setting up the action bar icons
+    //taken from http://www.androidhive.info/2013/11/android-working-with-action-bar/
+    // Apr3/16
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                goToHome();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void goToHome() {
+        Intent i = new Intent(NewListingActivity.this, MyProfileViewActivity.class);
+        startActivity(i);
     }
 
     // this gets the returns from the photo and location Activities

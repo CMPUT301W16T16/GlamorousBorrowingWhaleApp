@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This activity lists for the user their profile information which can then be
@@ -294,10 +295,13 @@ public class MyProfileViewActivity extends AppCompatActivity {
 
         return false;
     }
+    //setting up the action bar icons
+    //taken from http://www.androidhive.info/2013/11/android-working-with-action-bar/
+    // Apr3/16
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.profile_menu_actions, menu);
+        inflater.inflate(R.menu.profile_menu_nosearch_actions, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -308,8 +312,14 @@ public class MyProfileViewActivity extends AppCompatActivity {
                 return true;
             case R.id.help_menu:
                 //taken from http://stackoverflow.com/questions/2201917/how-can-i-open-a-url-in-androids-web-browser-from-my-application
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/CMPUT301W16T16/GlamorousBorrowingWhaleApp/wiki"));
-                startActivity(browserIntent);
+                try{
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/CMPUT301W16T16/GlamorousBorrowingWhaleApp/wiki"));
+                    startActivity(browserIntent);
+                } catch (Exception e) {
+                    Toast.makeText(MyProfileViewActivity.this,
+                            "No browser to navigate to the help page!", Toast.LENGTH_SHORT).show();
+                }
+
                 return true;
             case R.id.logout_menu:
                 logout();

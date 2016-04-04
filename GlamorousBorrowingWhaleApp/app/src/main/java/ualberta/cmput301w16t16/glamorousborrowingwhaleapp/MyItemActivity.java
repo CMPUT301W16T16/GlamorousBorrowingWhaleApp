@@ -7,8 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +69,9 @@ public class MyItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item);
-        // Taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
-        setTitle("My Item");
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Your Items");
+        actionBar.setHomeButtonEnabled(true);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /**
@@ -231,6 +236,32 @@ public class MyItemActivity extends AppCompatActivity {
         });
 
 
+    }
+    //setting up the action bar icons
+    //taken from http://www.androidhive.info/2013/11/android-working-with-action-bar/
+    // Apr3/16
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                goToHome();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void goToHome() {
+        Intent i = new Intent(MyItemActivity.this, MyProfileViewActivity.class);
+        startActivity(i);
     }
 
     // also pictures
