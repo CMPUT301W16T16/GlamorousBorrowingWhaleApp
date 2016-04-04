@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
 
 /**
@@ -31,7 +32,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
     // I'm sorry theres like a thousand variables i'll try to clean this up later - erin
     private ArrayList<BidItem> pairs = new ArrayList<>();
     private ArrayAdapter<BidItem> adapter;
-    private ArrayList<String> ownersItems;
+    private ArrayList<String> ownersItems = new ArrayList<>();
     private Bid selectedBid;
     private BidList myBidList = new BidList();
     private BidList itemBidList = new BidList();
@@ -42,14 +43,16 @@ public class IncomingBidsActivity extends AppCompatActivity {
     private String renterID;
     private String oldID;
     private String newID;
-    private ArrayList<Item> myItems;
+    private ArrayList<Item> myItems = new ArrayList<>();
     private User owner = UserController.getUser();
     private User renter;
     private ItemList itemList;
     private Integer pos = -1;
     private Integer finalPos;
-    Button acceptButton;
-    Button rejectButton;
+    private Button currAccept;
+    private Button currReject;
+    private Button prevAccept;
+    private Button prevReject;
 
     private Item item;
 
@@ -60,22 +63,37 @@ public class IncomingBidsActivity extends AppCompatActivity {
         setTitle("Incoming Bids");
         owner.setNotification(false);
 
-        acceptButton = (Button) findViewById(R.id.incomingBidsAccept);
-        rejectButton = (Button) findViewById(R.id.incomingBidsReject);
-
         SetBids();
 
         incomingBidsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                final Button incomingBidsAcceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
+                final Button incomingBidsRejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
 
-                Button acceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
-                Button rejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
+                prevAccept = currAccept;
+                prevReject = currReject;
+                currAccept = incomingBidsAcceptButton;
+                currReject = incomingBidsRejectButton;
+
+                if (prevAccept != null && prevReject != null) {
+                    prevAccept.setVisibility(View.GONE);
+                    prevReject.setVisibility(View.GONE);
+                }
+                currAccept.setVisibility(View.VISIBLE);
+                currReject.setVisibility(View.VISIBLE);
+                ///Log.d("MARTINATESTING", "prevShowButtons: "+String.valueOf(prevShowButtons));
+                //Log.d("MARTINATESTING", "showButtons: "+String.valueOf(showButtons));
+
+
 
                 BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
                 selectedBid = bidItem.bid;
-                /*owner = UserController.getUser();
+                owner = UserController.getUser();
+                ownersItems = owner.getMyItems();
+                ownersItemsString = new String[ownersItems.size()];
+                ownersItemsString = ownersItems.toArray(ownersItemsString);
                 itemList = ItemController.getItemsByIDElasticSearch(ownersItemsString);
 
                 for (Item item : itemList.getItemList()) {
@@ -92,22 +110,23 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 ItemController.getItemsByIDElasticSearch(items);
                 item = ItemController.getItemList().getItemList().get(0);
                 oldID = item.getID();
-                ItemController.setItem(item);*/
+                item.setID(newID); // maybe redundant now?
+                ItemController.setItem(item);
 
-                acceptButton.setClickable(true);
-                rejectButton.setClickable(true);
-                acceptButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        BidController.acceptBid(selectedBid, item, owner);
-                        SetBids();
-                    }
-                });
-                rejectButton.setOnClickListener(new View.OnClickListener() {
+                incomingBidsAcceptButton.setOnClickListener(new View.OnClickListener() {
                     //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
-                        BidController.rejectBid(selectedBid, item, owner);
+                        AcceptBid();
+                        Toast.makeText(IncomingBidsActivity.this, "You are now renting out your item!", Toast.LENGTH_SHORT).show();
+                        SetBids();
+                    }
+                });
+                incomingBidsRejectButton.setOnClickListener(new View.OnClickListener() {
+                    //TODO: get a refresh or something working so this bid disappears when u reject it
+                    @Override
+                    public void onClick(View v) {
+                        RejectBid();
                         SetBids();
                     }
                 });
@@ -129,15 +148,17 @@ public class IncomingBidsActivity extends AppCompatActivity {
             Bid bid = pair.bid;
             Item item = pair.item;
 
-            Button acceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
-            Button rejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
-
             TextView itemTitle = (TextView) view.findViewById(R.id.incomingBidsItemTitle);
             itemTitle.setText(item.getTitle());
 
+            Button incomingBidsAcceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
+            Button incomingBidsRejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
+            incomingBidsAcceptButton.setVisibility(View.GONE);
+            incomingBidsRejectButton.setVisibility(View.GONE);
+
             // adding the amount that was bid
             TextView amountBid = (TextView) view.findViewById(R.id.incomingBidsAmountBid);
-            amountBid.setText("Amount Bid:\n $" + String.format("%.2f", bid.getBidAmount()) + "/Hour");
+            amountBid.setText("Amount Bid: $" + String.format("%.2f", bid.getBidAmount()));
             return view;
         }
     }
@@ -159,18 +180,41 @@ public class IncomingBidsActivity extends AppCompatActivity {
         UserController.updateUserElasticSearch(renter);
 
         BidList bids = item.getBids();
-        for (Bid bid : bids.getBids()) {
-            if (bid.getItemID().equals(selectedBid.getItemID())) {
-                bids.removeBid(bid);
+        ArrayList<Bid> bidsToRemove = new ArrayList<>();
+        if (!bids.getBids().isEmpty()) {
+            for (Bid bid : bids.getBids()) {
+                if (bid.getItemID().equals(selectedBid.getItemID())) {
+                    bidsToRemove.add(bid);
+                }
             }
+        }
+        for (Bid bid : bidsToRemove) {
+            bids.removeBid(bid);
         }
         item.setBids(bids);
 
-        owner.removeMyItem(newID);
+        String renterID = selectedBid.getRenterID();
+        User renter = UserController.getUserByIDElasticSearch(renterID);
+
+        owner.removeMyItem(item.getID());
+        renter.removeItemBidOn(item.getID());
+
         ItemController.updateItemElasticSearch(item);
-        newID = item.getID();
-        owner.addMyItem(newID);
+
+        owner.addMyItem(item.getID());
+
+        boolean renterHasBids = false;
+        for (Bid bid : item.getBids().getBids()) {
+            if (bid.getRenterID().equals(renterID)) {
+                renterHasBids = true;
+            }
+        }
+        if (renterHasBids) {
+            renter.addItemBidOn(item.getID());
+        }
+
         UserController.updateUserElasticSearch(owner);
+        UserController.updateUserElasticSearch(renter);
     }
 
     public void AcceptBid() {

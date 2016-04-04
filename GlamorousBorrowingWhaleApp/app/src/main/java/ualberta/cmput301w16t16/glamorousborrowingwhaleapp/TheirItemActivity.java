@@ -141,16 +141,6 @@ public class TheirItemActivity extends AppCompatActivity {
             }
         });
 
-        // this is the gallery selection method for pictures
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent bringTheGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(bringTheGallery, result);
-            }
-
-        });
-
         itemOwner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -124,9 +124,12 @@ public class MyBidsActivity extends AppCompatActivity {
         for (Item item: myItems) {
             ArrayList<Bid> itemBids = item.getBids().getBids();
             for (Bid bid: itemBids) {
-                BidItem pair = new BidItem(bid, item);
-                pairs.add(pair);
-                //myBids.add(bid); //npe
+                // only add items that this user is actually bidding on
+                if (bid.getRenterID().equals(UserController.getUser().getID())) {
+                    BidItem pair = new BidItem(bid, item);
+                    pairs.add(pair);
+                    //myBids.add(bid); //npe
+                }
             }
         }
 
