@@ -118,6 +118,7 @@ public class ElasticSearch extends Application {
                         e.printStackTrace() ;
                         Log.v("JSON error", "renter missing");
                     }
+
                     try {
                         item.setLatitude(itemFromES.getDouble("latitude"));
                         item.setLongitude(itemFromES.getDouble("longitude"));
@@ -125,7 +126,6 @@ public class ElasticSearch extends Application {
                         e.printStackTrace();
                         Log.v("JSON error", "map data missing");
                     }
-
 
                     BidList bids = new BidList();
                     JSONArray bidList = itemFromES.getJSONArray("bids");
@@ -179,7 +179,6 @@ public class ElasticSearch extends Application {
             } catch (NullPointerException e) {
                 Toast.makeText(context, "Search Failed!", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 
@@ -208,7 +207,7 @@ public class ElasticSearch extends Application {
                 jo.put("username", user.getUsername());
                 jo.put("emailAddress", user.getEmailAddress());
                 jo.put("phoneNumber", user.getPhoneNumber());
-                jo.put("photo", user.getPhoto());
+                jo.put("photo", user.getPhotoES());
                 jo.put("password", user.getPassword());
                 jo.put("notification", user.getNotification());
 
@@ -298,7 +297,7 @@ public class ElasticSearch extends Application {
                 jo.put("description", item.getDescription());
                 jo.put("size", item.getSize());
                 jo.put("availability", item.getAvailability());
-                jo.put("photo", item.getPhoto());
+                jo.put("photo", item.getPhotoES());
                 jo.put("owner", item.getOwnerID());
                 jo.put("renter", item.getRenterID());
                 jo.put("sport", item.getSport());
@@ -692,7 +691,7 @@ public class ElasticSearch extends Application {
                 jo.put("description", item.getDescription());
                 jo.put("size", item.getSize());
                 jo.put("availability", item.getAvailability());
-                jo.put("photo", item.getPhoto());
+                jo.put("photo", item.getPhotoES());
                 jo.put("owner", item.getOwnerID());
                 jo.put("renter", item.getRenterID());
                 jo.put("sport", item.getSport());
@@ -763,7 +762,7 @@ public class ElasticSearch extends Application {
                 jo.put("username", user.getUsername());
                 jo.put("emailAddress", user.getEmailAddress());
                 jo.put("phoneNumber", user.getPhoneNumber());
-                jo.put("photo", user.getPhoto());
+                jo.put("photo", user.getPhotoES());
                 jo.put("password", user.getPassword());
                 jo.put("notification", user.getNotification());
 

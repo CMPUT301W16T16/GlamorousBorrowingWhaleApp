@@ -1,6 +1,9 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.util.Base64;
 
 /**
  * Created by Martina on 16-02-29.
@@ -14,6 +17,8 @@ public class Item {
     private String size;
     private Boolean availability;
     private byte[] photo;
+    protected String thumbnailBase64;
+    protected transient Bitmap thumbnail;
     private BidList bids;
     public RatingList ratings;
     private String sport;
@@ -58,9 +63,28 @@ public class Item {
 
     public void setAvailability(Boolean availability) {this.availability = availability;}
 
-    public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
+    public void setPhoto(byte[] photoByteArray) {
+        photo = photoByteArray;
+        thumbnailBase64 = Base64.encodeToString(photoByteArray, Base64.DEFAULT);
+    }
 
-    public byte[] getPhoto() { return photo; }
+//    public void setPhotoES(byte[] photoAsString) {
+//        thumbnailBase64 = photoAsString;
+//    }
+
+    public Bitmap getPhoto() {
+        thumbnailBase64 = Base64.encodeToString(photo, Base64.DEFAULT);
+        if (thumbnailBase64 != null) {
+            byte[] decodeString = Base64.decode(thumbnailBase64, Base64.DEFAULT);
+            thumbnail = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
+            return thumbnail;
+        }
+        return null;
+    }
+
+    public String getPhotoES() {
+        return thumbnailBase64;
+    }
 
     //public int getRating() {return rating;}
     //public void setRating(int rating) {this.rating = rating;}

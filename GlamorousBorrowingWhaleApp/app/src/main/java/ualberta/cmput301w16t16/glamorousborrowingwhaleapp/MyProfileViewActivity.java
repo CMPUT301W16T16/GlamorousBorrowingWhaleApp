@@ -69,7 +69,6 @@ public class MyProfileViewActivity extends AppCompatActivity {
         actionBar.setTitle("Your Profile");
         actionBar.setHomeButtonEnabled(true);
 
-
         //This chunk grabs the TextViews and operates on them
         profileName = (TextView) findViewById(R.id.profileName);
         profilePhone = (TextView) findViewById(R.id.profilePhone);
@@ -81,8 +80,7 @@ public class MyProfileViewActivity extends AppCompatActivity {
         profileEmail.setText(user.getEmailAddress());
 
         if (user.getPhoto() != null) {
-            byte[] tempPhoto = user.getPhoto();
-            profilePictureView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+            profilePictureView.setImageBitmap(user.getPhoto());
         }
 
         Button buttonMyBids = (Button) findViewById(R.id.buttonMyBids);

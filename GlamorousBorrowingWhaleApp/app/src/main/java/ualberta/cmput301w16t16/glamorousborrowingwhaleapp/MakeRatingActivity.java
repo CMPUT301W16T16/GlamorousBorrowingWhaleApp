@@ -64,8 +64,7 @@ public class MakeRatingActivity extends AppCompatActivity{
         // photo.set?
 
         if (item.getPhoto() != null) {
-            byte[] tempPhoto = item.getPhoto();
-            photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+            photo.setImageBitmap(item.getPhoto());
         }
 
         ImageButton saveRatingButton = (ImageButton) findViewById(R.id.saveRating);

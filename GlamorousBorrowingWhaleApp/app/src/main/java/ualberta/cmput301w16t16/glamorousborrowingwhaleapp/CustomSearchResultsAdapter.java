@@ -44,9 +44,10 @@ public class CustomSearchResultsAdapter extends ArrayAdapter<Item> {
         }
         ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
 
+        imageView.setImageResource(R.drawable.glamorouswhale1);
+
         if (item.getPhoto() != null) {
-            byte[] tempPhoto = item.getPhoto();
-            imageView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+            imageView.setImageBitmap(item.getPhoto());
         }
 
         return view;

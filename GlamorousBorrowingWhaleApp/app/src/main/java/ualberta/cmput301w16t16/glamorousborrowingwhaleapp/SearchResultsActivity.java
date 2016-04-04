@@ -56,6 +56,7 @@ public class SearchResultsActivity extends AppCompatActivity {
             if (query == null) {
                 ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
             }
+
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -94,8 +95,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                     }
                     return false;
                 }
-
-
             });
 
             itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,11 +113,9 @@ public class SearchResultsActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
         }
-
-
-
-
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

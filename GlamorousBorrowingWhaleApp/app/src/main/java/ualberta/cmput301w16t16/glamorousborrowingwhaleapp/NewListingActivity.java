@@ -204,11 +204,8 @@ public class NewListingActivity extends AppCompatActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     Location location = data.getParcelableExtra("location");
-                    // Toast.makeText(this, location.toString(), Toast.LENGTH_SHORT).show();
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
-                    // latitude = Double.parseDouble(data.getStringExtra("latitude"));
-                    // longitude = Double.parseDouble(data.getStringExtra("longitude"));
                 } else {
                     Toast.makeText(this, "Could not get location", Toast.LENGTH_SHORT).show();
                 }

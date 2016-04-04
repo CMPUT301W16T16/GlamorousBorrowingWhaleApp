@@ -1,8 +1,11 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -27,6 +30,8 @@ public class User extends AppCompatActivity implements Serializable {
     private String phoneNumber;
     private Boolean notification;
     private byte[] photo;
+    protected String thumbnailBase64;
+    protected transient Bitmap thumbnail;
     protected String ID;
     private Location location;
 
@@ -34,15 +39,9 @@ public class User extends AppCompatActivity implements Serializable {
     // itemsBorrowed = items that this user is currently borrowing
     // myItems = items that this user owns (and that other users may have bid on)
 
-    //working on
     private ArrayList<String> itemsBidOn;
-    //private ItemList itemsBorrowing;
-    // i want to switch the ItemList over into a String[]
     private ArrayList<String> itemsBorrowed;
-    //private ItemList itemsRenting;
-    // i want to switch the ItemList over into a String[]
     private ArrayList<String> myItems;
-    //                                                              end
 
     // being saved until they can be pushed to elastic search
     private ArrayList<Item> offlineItems = new ArrayList<>();
@@ -76,11 +75,6 @@ public class User extends AppCompatActivity implements Serializable {
         this.offlineItems.remove(item);
     }
 
-    //    public User() {
-//        this.myItems = new ArrayList<>();
-//        this.itemsBorrowed = new ArrayList<>();
-//    }
-
     public User(String username, String password, String emailAddress, String phoneNumber) {
         this.username = username;
         this.password = password;
@@ -100,9 +94,22 @@ public class User extends AppCompatActivity implements Serializable {
         this.password = password;
     }
 
-    public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
+    public void setPhoto(byte[] photoByteArray) {
+        photo = photoByteArray;
+        thumbnailBase64 = Base64.encodeToString(photoByteArray, Base64.DEFAULT);
+    }
 
-    public byte[] getPhoto() { return photo; }
+    public Bitmap getPhoto() {
+        if (thumbnailBase64 != null) {
+            byte[] decodeString = Base64.decode(thumbnailBase64, Base64.DEFAULT);
+            thumbnail = BitmapFactory.decodeByteArray(decodeString, 0, decodeString.length);
+        }
+        return thumbnail;
+    }
+
+    public byte[] getPhotoES() {
+        return photo;
+    }
 
     public String getUsername() {
         return username;
@@ -184,7 +191,6 @@ public class User extends AppCompatActivity implements Serializable {
     public void removeMyItem(String itemID) {
         myItems.remove(itemID);
     }
-
 
     public ArrayList<String> getItemsBidOn() {
         return itemsBidOn;

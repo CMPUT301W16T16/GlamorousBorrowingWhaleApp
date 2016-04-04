@@ -87,8 +87,7 @@ public class MyBorrowedItemsActivity extends AppCompatActivity {
             ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
 
             if (item.getPhoto() != null) {
-                byte[] tempPhoto = item.getPhoto();
-                imageView.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+                imageView.setImageBitmap(item.getPhoto());
             }
 
             return view;

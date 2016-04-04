@@ -87,8 +87,7 @@ public class TheirItemActivity extends AppCompatActivity {
         theirItemRatingBar.setRating(2.5f); // TODO: don't forget to change this, set constant for testing
 
         if (item.getPhoto() != null) {
-            byte[] tempPhoto = item.getPhoto();
-            photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+            photo.setImageBitmap(item.getPhoto());
         }
 
         //Bids is not implemented yet.

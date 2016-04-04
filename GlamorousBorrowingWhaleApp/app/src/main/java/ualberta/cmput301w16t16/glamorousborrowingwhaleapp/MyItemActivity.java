@@ -6,6 +6,10 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
@@ -29,6 +33,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -121,23 +127,15 @@ public class MyItemActivity extends AppCompatActivity {
             }
         });
 
-        /*
         if (item.getPhoto() != null) {
-            byte[] tempPhoto = item.getPhoto();
-            photo.setImageBitmap(BitmapFactory.decodeByteArray(tempPhoto, 0, tempPhoto.length));
+            photo.setImageBitmap(item.getPhoto());
         }
 
         //Bids is not implemented yet.
         //Removing setBids activities for now.
         //bids = item.getBids();
 
-        //TODO: images are causing problems
-        // picture management
-        Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
-        ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
-        photoStream = photosNeedToBeCompressedToThis.toByteArray();
-        */
+
         /**
          * saveButton is onClick and leverages the ItemController for its item.
          * The item's attributes are then set from the EditText boxes.
@@ -149,12 +147,20 @@ public class MyItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (NetworkUtil.getConnectivityStatus(v.getContext()) == 1) {
                     item = ItemController.getItem();
+                    // picture management
+                    if (photo == null) {
+                        photo.setImageResource(R.drawable.glamorouswhale1);
+                    }
+                    Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
+                    ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
+                    image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
+                    photoStream = photosNeedToBeCompressedToThis.toByteArray();
                     item.setTitle(name.getText().toString());
                     item.setDescription(description.getText().toString());
                     item.setSize(size.getText().toString());
+                    item.setPhoto(photoStream);
                     //item.setBids(bids);
                     item.setOwnerID(user.getID());
-                    //item.setPhoto(photoStream);
                     oldID = item.getID();
                     ItemController.updateItemElasticSearch(item);
                     newID = item.getID();
@@ -195,21 +201,17 @@ public class MyItemActivity extends AppCompatActivity {
 
         myItemRatingBar.setFocusable(false);
 
-        // TODO: this should really pop up an ARE YOU SURE regardless of empty BidList or no.
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (NetworkUtil.getConnectivityStatus(v.getContext()) == 1) {
                 new AlertDialog.Builder(MyItemActivity.this)
-//                        .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Delete Item?")
                         .setMessage("Are you sure you want to delete this item?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                         {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
                                     user.removeMyItem(item.getID());
                                     new ElasticSearch.elasticDeleteItem().execute(item);
                                     UserController.updateUserElasticSearch(user);
@@ -220,7 +222,6 @@ public class MyItemActivity extends AppCompatActivity {
                                     setResult(Activity.RESULT_OK);
                                     finish();
                             }
-
                         })
                         .setNegativeButton("No", null)
                         .show();
@@ -234,6 +235,7 @@ public class MyItemActivity extends AppCompatActivity {
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final int result = 0;
                 Intent bringTheGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(bringTheGallery, result);
             }
@@ -255,7 +257,6 @@ public class MyItemActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_actions, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -275,16 +276,27 @@ public class MyItemActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    // also pictures
+    // this gets the returns from the photo and location Activities
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == result) {
-            if (resultCode == RESULT_OK) {
-                Uri selectedImage = data.getData();
-                photo.setImageURI(selectedImage);
-            } else {
-                Toast.makeText(this, "Could not load image", Toast.LENGTH_SHORT).show();
-            }
+        switch (requestCode) {
+            case 0:
+                if (resultCode == RESULT_OK) {
+                    Uri selectedImage = data.getData();
+                    photo.setImageURI(selectedImage);
+                } else {
+                    Toast.makeText(this, "Could not load image", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    Location location = data.getParcelableExtra("location");
+                    item.setLatitude(location.getLatitude());
+                    item.setLongitude(location.getLongitude());
+                } else {
+                    Toast.makeText(this, "Could not get location", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
@@ -298,22 +310,10 @@ public class MyItemActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        // On selecting a spinner item
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-    }
-    public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-    }
-
     public void launchGetLocation(View view) {
         Intent intent = new Intent(view.getContext(), GetLocationActivity.class);
         final int result = 1;
         startActivityForResult(intent, result);
-
     }
 
     public void deletePhoto(View view) {
