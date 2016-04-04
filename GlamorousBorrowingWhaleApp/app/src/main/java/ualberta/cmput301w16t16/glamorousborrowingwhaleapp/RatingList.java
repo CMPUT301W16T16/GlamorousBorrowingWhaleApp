@@ -11,9 +11,19 @@ import java.util.ArrayList;
 
 public class RatingList {
 
+    private float avgRating;
+
     private ArrayList<Rating> ratings = new ArrayList<>();
 
-    public void addRating(Rating rating) {ratings.add(rating);
+    public void addRating(Rating rating) {ratings.add(rating);}
+
+    public float avgRating() {
+        // TODO: write the function to calculate average
+        // calculate average numerical star rating for display
+        return avgRating;
 
     }
+
+
 }
+

@@ -13,12 +13,11 @@ public class Item {
     private Boolean availability;
     private byte[] photo;
     private BidList bids;
-    private RatingList ratings;
+    public RatingList ratings;
     private String sport;
     // private User owner;
     private String renterID;
     private String ownerID;
-    private int ratingAvg;
     protected String ID;
 
     public void Item() {
@@ -136,9 +135,8 @@ public class Item {
         this.ratings = ratings;
     }
 
-    public int calcAverageRating(RatingList ratings){
-        // calculate the average rating integer for display purposes
-        return ratingAvg;
+    public float calcAverageRating(RatingList ratings){
+        return this.ratings.avgRating();
     }
 
     public void addRating(Rating rating){

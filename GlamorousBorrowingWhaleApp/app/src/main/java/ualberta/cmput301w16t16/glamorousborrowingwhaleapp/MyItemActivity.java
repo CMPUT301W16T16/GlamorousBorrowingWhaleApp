@@ -8,12 +8,14 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,10 @@ public class MyItemActivity extends AppCompatActivity {
     private String newID;
     private int result;
     private byte[] photoStream = new byte[65536];
+    private RatingBar myItemRatingBar;
+    private float calcRating; // calculated average rating
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,8 @@ public class MyItemActivity extends AppCompatActivity {
         description = (EditText) findViewById(R.id.description);
         highestBid = (TextView) findViewById(R.id.highestBid);
         photo = (ImageView) findViewById(R.id.pictureView);
+        myItemRatingBar = (RatingBar) findViewById(R.id.myRatingBar);
+
 
         ImageButton saveButton = (ImageButton) findViewById(R.id.save);
         ImageButton deleteButton = (ImageButton) findViewById(R.id.delete);
@@ -152,6 +160,21 @@ public class MyItemActivity extends AppCompatActivity {
          * is in a "controlled" null state, code may be implemented elsewhere that can handle this
          * simple condition.
          */
+
+        // TODO: set myItemRatingBar.rating = average rating
+        // use function 'avgRating' in RatingList activity
+        //calcRating = item.calcAverageRating(item.ratings);
+        myItemRatingBar.setRating(2.5f); // TODO: don't forget to change this, set constant for testing
+
+        // Taken from http://stackoverflow.com/questions/7146976/android-how-to-set-the-rating-bar-is-non-clickable-and-touchable-in-htc-mobile
+        // code makes rating bar non-clickable (UNTESTED)
+        myItemRatingBar.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
+        myItemRatingBar.setFocusable(false);
 
         // TODO: this should really pop up an ARE YOU SURE regardless of empty BidList or no.
         deleteButton.setOnClickListener(new View.OnClickListener() {

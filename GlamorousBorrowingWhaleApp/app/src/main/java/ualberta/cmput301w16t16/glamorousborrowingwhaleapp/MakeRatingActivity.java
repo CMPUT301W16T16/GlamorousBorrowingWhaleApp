@@ -19,13 +19,24 @@ import android.widget.TextView;
  */
 public class MakeRatingActivity extends AppCompatActivity{
 
-    private Item item;
+    private Item item = ItemController.getItem();
     private User ownerUser;
+    private User owner;
+    private User renter;
+    private String ownerID;
+    private String renterID;
+    private String oldItemID;
 
     private TextView name;
     private EditText comment;
-    private RatingBar rating;
     private ImageView photo;
+
+    private RatingBar ratingBar;
+    private float ratingFloat;
+
+
+    private RatingList allratings;
+
 
 
     @Override
@@ -34,6 +45,11 @@ public class MakeRatingActivity extends AppCompatActivity{
         setContentView(R.layout.activity_create_rating);
         //setTitle("Leave your Review");
 
+        renter = UserController.getUser();
+        UserController.setSecondaryUser(renter);
+        ownerID = item.getOwnerID();
+        owner = UserController.getUserByIDElasticSearch(ownerID);
+
         // getting item and the owner
         item = ItemController.getItem();
         ownerUser = UserController.getUser();
@@ -41,7 +57,7 @@ public class MakeRatingActivity extends AppCompatActivity{
         // getting the views
         name = (TextView) findViewById(R.id.theirItemName);
         photo = (ImageView) findViewById(R.id.pictureView);
-        rating = (RatingBar) findViewById(R.id.theirRating);
+        ratingBar = (RatingBar) findViewById(R.id.theirRating);
 
         // setting the views
         name.setText(item.getTitle());
@@ -54,24 +70,27 @@ public class MakeRatingActivity extends AppCompatActivity{
 
         ImageButton saveRatingButton = (ImageButton) findViewById(R.id.saveRating);
 
+        // This listens for changes to the rating bar and sets the rating to a variable
+        ratingBar.setOnRatingBarChangeListener(
+                new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                        ratingFloat = rating;
+                    }
+                }
+        );
+
+
         // TODO: make this actually update the rating objects for the item
         // Submit Rating Button (save) Submits the rating (comment and star)
         saveRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // code for when save button is pressed
-
                 // Use code below to save comment text
                 //item.set________(description.getText().toString());
 
-                rating.setOnRatingBarChangeListener(
-                        new RatingBar.OnRatingBarChangeListener() {
-                            @Override
-                            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                                // set item rating to (String.valueOf(rating));
-                            }
-                        }
-                );
+                // Save ratingFloat
+                //item.set(?);
 
             }
         });

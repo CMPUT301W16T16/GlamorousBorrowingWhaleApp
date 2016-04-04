@@ -77,6 +77,7 @@ public class ItemTest extends ApplicationTestCase<Application> {
         assertEquals(item.toString(), "skates; women's US 8");
     }
 
+    /*
     // testing that when an item is changed, it is updated everywhere
     public void testEditItem() {
         Item item = new Item();
@@ -87,5 +88,5 @@ public class ItemTest extends ApplicationTestCase<Application> {
 
         // assert that the item is currently correct for the user
         assertTrue(user.getItemsRenting().hasItem(item));
-    }
+    }*/
 }

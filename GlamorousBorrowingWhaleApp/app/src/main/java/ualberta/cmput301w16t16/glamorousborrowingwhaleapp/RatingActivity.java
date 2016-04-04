@@ -21,8 +21,9 @@ import java.util.ArrayList;
 /**
  * This class is used to see ratings/comments on a given item.
  * It does not matter who the owner is. (someone else or the user)
+ * You get to it by pressing the comment buttons to the right of star
+ * ratings.
  * @author adam, andrew, erin, laura, martina
- * @see SearchResultsActivity
  */
 
 public class RatingActivity extends AppCompatActivity {
