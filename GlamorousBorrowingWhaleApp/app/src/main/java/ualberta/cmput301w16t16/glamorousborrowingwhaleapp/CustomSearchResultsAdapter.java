@@ -40,7 +40,7 @@ public class CustomSearchResultsAdapter extends ArrayAdapter<Item> {
         if (item.getRenterID() == null || item.getRenterID().equals("")) {
             renter.setText("This item isn't being rented");
         } else {
-            renter.setText(item.getRenterID());
+            renter.setText(item.getRenterID() + "is renting this item.");
         }
         ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
 

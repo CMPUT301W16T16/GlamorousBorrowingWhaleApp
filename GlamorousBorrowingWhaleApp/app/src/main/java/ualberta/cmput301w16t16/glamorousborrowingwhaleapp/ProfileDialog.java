@@ -13,6 +13,7 @@ import android.widget.TextView;
 /**
  * Created by andrew on 12/03/16.
  */
+
 public class ProfileDialog extends Dialog implements android.view.View.OnClickListener {
 
     public Activity activity;
@@ -30,6 +31,7 @@ public class ProfileDialog extends Dialog implements android.view.View.OnClickLi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_profile);
+        setTitle("Owner:");
         User user = owner;
 
         //TODO: images are causing problems

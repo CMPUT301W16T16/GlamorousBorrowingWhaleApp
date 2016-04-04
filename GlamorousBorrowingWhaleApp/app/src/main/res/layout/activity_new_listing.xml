@@ -52,7 +52,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Delete Photo"
-                        android:id="@+id/button5" />
+                        android:id="@+id/button5"
+                        android:onClick="deletePhoto" />
 
                     <Button
                         android:layout_width="match_parent"
@@ -65,7 +66,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Delete Location"
-                        android:id="@+id/button3" />
+                        android:id="@+id/button3"
+                        android:onClick="deleteLocation" />
                 </LinearLayout>
 
             </LinearLayout>

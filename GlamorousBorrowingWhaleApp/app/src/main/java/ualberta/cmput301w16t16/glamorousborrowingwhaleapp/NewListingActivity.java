@@ -80,6 +80,9 @@ public class NewListingActivity extends AppCompatActivity {
                     Toast.makeText(NewListingActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
                 } else {
                     // picture management
+                    if (photo == null) {
+                        photo.setImageResource(R.drawable.glamorouswhale1);
+                    }
                     Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
                     ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
@@ -107,9 +110,7 @@ public class NewListingActivity extends AppCompatActivity {
                     // check whether we have connectivity
                     if (NetworkUtil.getConnectivityStatus(NewListingActivity.this) == 1) {
                         // network is available
-
-                        //Adding the latestItem to the current user's (Controlled by UserController) RentedItem
-                        //List. We'll have to sort out some terminology here.
+                        //Adding the latestItem to the current user's (Controlled by UserController) ItemList
 
                         ItemController.addItemElasticSearch(item);
                         user.addMyItem(item.getID());
@@ -169,6 +170,7 @@ public class NewListingActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Could not load image", Toast.LENGTH_SHORT).show();
                 }
+                break;
             case 1:
                 if (resultCode == RESULT_OK) {
                     Location location = data.getParcelableExtra("location");
@@ -180,6 +182,7 @@ public class NewListingActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Could not get location", Toast.LENGTH_SHORT).show();
                 }
+                break;
         }
     }
 
@@ -197,5 +200,12 @@ public class NewListingActivity extends AppCompatActivity {
         final int result = 1;
         startActivityForResult(intent, result);
 
+    }
+
+    public void deletePhoto(View view) {
+        photo.setImageResource(R.drawable.glamorouswhale1);
+    }
+
+    public void deleteLocation(View view) {
     }
 }

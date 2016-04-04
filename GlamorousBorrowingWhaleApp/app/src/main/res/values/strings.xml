@@ -29,4 +29,5 @@
     <string name="title_activity_get_location">Map</string>
     <string name="cancel">Cancel!</string>
     <string name="location_correct">Yes, that\'s correct!</string>
+    <string name="google_app_id">borrow-whale</string>
 </resources>

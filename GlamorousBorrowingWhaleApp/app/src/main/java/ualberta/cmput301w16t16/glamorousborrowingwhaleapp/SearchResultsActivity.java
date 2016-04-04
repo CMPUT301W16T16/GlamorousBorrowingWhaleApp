@@ -86,7 +86,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 //                Toast.makeText(this, "Sorry, nothing here.", Toast.LENGTH_SHORT).show();
 //            }
 
-            // Opens pop up for user info
             itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

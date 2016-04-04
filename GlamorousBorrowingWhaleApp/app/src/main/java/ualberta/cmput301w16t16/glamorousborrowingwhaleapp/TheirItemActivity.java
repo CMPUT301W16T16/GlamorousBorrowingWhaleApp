@@ -163,6 +163,7 @@ public class TheirItemActivity extends AppCompatActivity {
     }
 
     public void launchProfileDialog(View view) {
-
+        ProfileDialog profile = new ProfileDialog(TheirItemActivity.this, null);
+        profile.show();
     }
 }
