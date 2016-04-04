@@ -133,7 +133,8 @@
                     android:paddingLeft="10dp"
                     android:textColor="#FFFFFF"
                     android:gravity="center_vertical"
-                    android:autoText="false" />
+                    android:autoText="false"
+                    android:onClick="launchProfileDialog" />
             </LinearLayout>
 
             <LinearLayout

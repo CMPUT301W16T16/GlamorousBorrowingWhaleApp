@@ -24,10 +24,6 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
     private User renter;
     private String renterID;
     private String oldID;
-    // Probably never used
-    private ArrayAdapter<Item> getAdapter() {
-        return adapter;
-    }
     private ListView itemsView;
     private ArrayList<String> usersItems;
     private ArrayList<Item> usersItemsArrayList;

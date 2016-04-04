@@ -37,7 +37,7 @@ public class CustomSearchResultsAdapter extends ArrayAdapter<Item> {
         Item item = getItem(position);
         title.setText(item.getTitle());
         description.setText(item.getDescription());
-        if (item.getRenterID().equals("")) {
+        if (item.getRenterID() == null || item.getRenterID().equals("")) {
             renter.setText("This item isn't being rented");
         } else {
             renter.setText(item.getRenterID());

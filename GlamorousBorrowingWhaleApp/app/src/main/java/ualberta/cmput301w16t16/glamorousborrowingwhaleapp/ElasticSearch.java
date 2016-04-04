@@ -65,19 +65,14 @@ public class ElasticSearch extends Application {
             if (query != null) {
                 query = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?q=title:"+
                         "*" + query + "*";
-                //Java complains if this is not checked :P
-                try {
-                    url = new URL(query);
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                }
             } else {
-                //Java complains if this is not checked :P
-                try {
-                    url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?");
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                }
+                query = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?";
+            }
+
+            try {
+                url = new URL(query);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
             }
 
             try {
@@ -111,10 +106,23 @@ public class ElasticSearch extends Application {
                     item.setAvailability(itemFromES.getBoolean("availability"));
                     item.setPhoto(itemFromES.getString("photo").getBytes());
                     item.setOwnerID(itemFromES.getString("owner"));
-                    item.setRenterID(itemFromES.getString("renter"));
                     item.setSport(itemFromES.getString("sport"));
-                    item.setLatitude(itemFromES.getDouble("latitude"));
-                    item.setLongitude(itemFromES.getDouble("longitude"));
+
+                    // in a try catch for now as not all of our data has these
+                    try {
+                        item.setRenterID(itemFromES.getString("renter"));
+                    } catch (JSONException e) {
+                        e.printStackTrace() ;
+                        Log.v("JSON error", "renter missing");
+                    }
+                    try {
+                        item.setLatitude(itemFromES.getDouble("latitude"));
+                        item.setLongitude(itemFromES.getDouble("longitude"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.v("JSON error", "map data missing");
+                    }
+
 
                     BidList bids = new BidList();
                     JSONArray bidList = itemFromES.getJSONArray("bids");
@@ -167,77 +175,6 @@ public class ElasticSearch extends Application {
 
         }
     }
-
-
-    // Used in IncomingBids Activity
-    public static class elasticGetIncomingBids extends AsyncTask<ListView, String, BidList> {
-
-        User user = UserController.getUser();
-
-        @Override
-        protected BidList doInBackground(ListView... params) {
-
-            HttpURLConnection connection = null;
-            BufferedReader reader = null;
-            URL url;
-            String urlStringBase = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/";
-            String urlStringComplete;
-
-            BidList bidsToShow = new BidList();
-            ArrayList<String> itemIDList = user.getMyItems();
-            if (itemIDList != null) {
-                for (String ID : itemIDList) {
-                    urlStringComplete = urlStringBase + ID;
-                    try {
-                        url = new URL(urlStringComplete);
-                        connection = (HttpURLConnection) url.openConnection();
-                        InputStream stream = connection.getInputStream();
-                        reader = new BufferedReader(new InputStreamReader(stream));
-                        StringBuilder buffer = new StringBuilder();
-                        String line = "";
-                        while ((line = reader.readLine()) != null) {
-                            buffer.append(line);
-                        }
-                        String longStringOfJSON = buffer.toString();
-                        JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
-                        JSONObject itemFromES = allOfTheJSON.getJSONObject("_source");
-
-                        JSONArray bidList = itemFromES.getJSONArray("bids");
-
-                        for (int i = 0; i < bidList.length(); i++) {
-                            JSONObject currentBid = bidList.getJSONObject(i);
-                            Bid tempBid = new Bid();
-                            tempBid.setOwnerID(currentBid.getString("ownerID"));
-                            tempBid.setRenterID(currentBid.getString("renterID"));
-                            tempBid.setItemID(currentBid.getString("itemID"));
-                            tempBid.setBidAmount(currentBid.getDouble("bidAmount"));
-                            tempBid.setIsAccepted(currentBid.getBoolean("isAccepted"));
-                            bidsToShow.addBid(tempBid);
-                        }
-
-                        BidController.setBidList(bidsToShow);
-                        return bidsToShow;
-
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    // ugly "closing down shop" section
-                    if (connection != null)
-                        connection.disconnect();
-                    try {
-                        if (reader != null) {
-                            reader.close();
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            return null;
-        }
-    }
-
 
     // used in SignUpActivity and UserController.updateUserElasticSearch
     public static class elasticAddUser extends AsyncTask<User, String, String> {
@@ -314,100 +251,6 @@ public class ElasticSearch extends Application {
                     }
                 }
                 Log.e("user ID", user.getID());
-
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (connection != null)
-                connection.disconnect();
-
-            return null;
-        }
-
-    }
-
-    // pretty much copied from elasticAddUser
-    // updates the current user using UserController, no need to pass in the user to be updated
-    // currently seems to have a problem writing to the elastic search although i'm fairly sure the
-    // jo that I'm trying to write out is correct
-
-    // Not Working
-    // using elasticSearchDeleteUser and elasticSearchAddUser instead
-    // like we may as well delete this it's pretty useless - erin
-    public static class elasticUpdateUser extends AsyncTask<Void, String, String> {
-
-        User user = UserController.getUser();
-        BufferedWriter writer;
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            HttpURLConnection connection = null;
-            URL url;
-
-            try {
-                String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + user.getUsername();
-                url = new URL(urlString);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("PUT");
-                connection.setDoOutput(true);
-                OutputStream stream = new BufferedOutputStream(connection.getOutputStream());
-
-                // JSON assist from Mar-13-2016 from http://stackoverflow.com/questions/18983185/how-to-create-correct-jsonarray-in-java-using-jsonobject
-                JSONObject jo = new JSONObject();
-                jo.put("username", user.getUsername());
-                jo.put("emailAddress", user.getEmailAddress());
-                jo.put("phoneNumber", user.getPhoneNumber());
-                jo.put("photo", user.getPhoto());
-                jo.put("password", user.getPassword());
-                jo.put("notification", user.getNotification());
-
-                // adding items even though it is an empty array so you can still sign in even if
-                // you have never created any items
-                JSONArray myItemsIDArray = new JSONArray();
-                for (String itemID : user.getMyItems()) {
-                    myItemsIDArray.put(itemID);
-                }
-                jo.put("myItems", myItemsIDArray);
-
-
-                JSONArray itemsBorrowedIDArray = new JSONArray();
-                for (String itemID : user.getItemsBorrowed()) {
-                    itemsBorrowedIDArray.put(itemID);
-                }
-                jo.put("itemsBorrowed", itemsBorrowedIDArray);
-
-
-
-                JSONArray itemsBidOnIDArray = new JSONArray();
-                for (String itemID : user.getItemsBidOn()) {
-                    itemsBidOnIDArray.put(itemID);
-                }
-                jo.put("itemsBidOn", itemsBidOnIDArray);
-
-
-                // ratings here, i think this works?
-                /*JSONArray itemsToRateArray = new JSONArray();
-                for (Item itemID : user.getPendingRatings()) {
-                    itemsToRateArray.put(itemID);
-                }
-                jo.put("itemsToRate", itemsToRateArray);*/
-
-                writer = new BufferedWriter(new OutputStreamWriter(stream));
-                writer.write(jo.toString());
-                writer.flush();
-                writer.close();
-                stream.close();
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String output;
-                JSONObject ESResponse;
-                while ((output = br.readLine()) != null) {
-                    Log.e("website returned", output);
-                    ESResponse = new JSONObject(output);
-                }
-                Log.e("user ID ", user.getID());
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -566,78 +409,6 @@ public class ElasticSearch extends Application {
         }
     }
 
-
-    //much copied from existing elasticAddItem class here
-    public static class elasticUpdateItem extends AsyncTask<Item, String, String> {
-
-        Item item;
-        BufferedWriter writer;
-
-        @Override
-        protected String doInBackground(Item... params) {
-
-            item = params[0];
-            HttpURLConnection connection = null;
-            URL url;
-
-            try {
-                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/" + item.getID());
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setDoOutput(true);
-                OutputStream stream = new BufferedOutputStream(connection.getOutputStream());
-
-                JSONObject jo = new JSONObject();
-                jo.put("_id", item.getID());
-                jo.put("title", item.getTitle());
-                jo.put("description", item.getDescription());
-                jo.put("size", item.getSize());
-                jo.put("availability", item.getAvailability());
-                jo.put("photo", item.getPhoto());
-                jo.put("owner", item.getOwnerID());
-                jo.put("renter", item.getRenterID());
-                jo.put("sport", item.getSport());
-
-                JSONArray ja = new JSONArray();
-                for (int i = 0; i < item.getBids().getBids().size(); i++) {
-                    Bid bid = item.getBids().getBids().get(i);
-                    JSONObject joBid = new JSONObject();
-                    joBid.put("isAccepted", bid.getIsAccepted());
-                    joBid.put("ownerID", bid.getOwnerID());
-                    joBid.put("renterID", bid.getRenterID());
-                    joBid.put("itemID", bid.getItemID());
-                    joBid.put("bidAmount", bid.getBidAmount());
-                    ja.put(joBid);
-                }
-                jo.put("bids", ja);
-
-                writer = new BufferedWriter(new OutputStreamWriter(stream));
-                writer.write(jo.toString());
-                writer.flush();
-                writer.close();
-                stream.close();
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String output;
-                JSONObject ESResponse;
-                while ((output = br.readLine()) != null) {
-                    Log.e("website returned", output);
-                    ESResponse = new JSONObject(output);
-                    item.setID(ESResponse.getString("_id"));
-                }
-                Log.e("item ID", item.getID());
-
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-
-            if (connection != null)
-                connection.disconnect();
-
-            return null;
-        }
-    }
-
     public static class elasticGetUserByID extends AsyncTask<String, String, Void> {
 
         String username;
@@ -717,7 +488,6 @@ public class ElasticSearch extends Application {
             return null;
         }
     }
-
 
     // very similar to elasticGetItems
     // getting a list of actual item objects from their IDs and setting the current
@@ -813,4 +583,235 @@ public class ElasticSearch extends Application {
             return null;
         }
     }
+
+    // Used in IncomingBids Activity
+    public static class elasticGetIncomingBids extends AsyncTask<ListView, String, BidList> {
+
+        User user = UserController.getUser();
+
+        @Override
+        protected BidList doInBackground(ListView... params) {
+
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+            URL url;
+            String urlStringBase = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/";
+            String urlStringComplete;
+
+            BidList bidsToShow = new BidList();
+            ArrayList<String> itemIDList = user.getMyItems();
+            if (itemIDList != null) {
+                for (String ID : itemIDList) {
+                    urlStringComplete = urlStringBase + ID;
+                    try {
+                        url = new URL(urlStringComplete);
+                        connection = (HttpURLConnection) url.openConnection();
+                        InputStream stream = connection.getInputStream();
+                        reader = new BufferedReader(new InputStreamReader(stream));
+                        StringBuilder buffer = new StringBuilder();
+                        String line = "";
+                        while ((line = reader.readLine()) != null) {
+                            buffer.append(line);
+                        }
+                        String longStringOfJSON = buffer.toString();
+                        JSONObject allOfTheJSON = new JSONObject(longStringOfJSON);
+                        JSONObject itemFromES = allOfTheJSON.getJSONObject("_source");
+
+                        JSONArray bidList = itemFromES.getJSONArray("bids");
+
+                        for (int i = 0; i < bidList.length(); i++) {
+                            JSONObject currentBid = bidList.getJSONObject(i);
+                            Bid tempBid = new Bid();
+                            tempBid.setOwnerID(currentBid.getString("ownerID"));
+                            tempBid.setRenterID(currentBid.getString("renterID"));
+                            tempBid.setItemID(currentBid.getString("itemID"));
+                            tempBid.setBidAmount(currentBid.getDouble("bidAmount"));
+                            tempBid.setIsAccepted(currentBid.getBoolean("isAccepted"));
+                            bidsToShow.addBid(tempBid);
+                        }
+
+                        BidController.setBidList(bidsToShow);
+                        return bidsToShow;
+
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // ugly "closing down shop" section
+                    if (connection != null)
+                        connection.disconnect();
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////  Not In Use:
+
+    //much copied from existing elasticAddItem class here
+    public static class elasticUpdateItem extends AsyncTask<Item, String, String> {
+
+        Item item;
+        BufferedWriter writer;
+
+        @Override
+        protected String doInBackground(Item... params) {
+
+            item = params[0];
+            HttpURLConnection connection = null;
+            URL url;
+
+            try {
+                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/" + item.getID());
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                OutputStream stream = new BufferedOutputStream(connection.getOutputStream());
+
+                JSONObject jo = new JSONObject();
+                jo.put("_id", item.getID());
+                jo.put("title", item.getTitle());
+                jo.put("description", item.getDescription());
+                jo.put("size", item.getSize());
+                jo.put("availability", item.getAvailability());
+                jo.put("photo", item.getPhoto());
+                jo.put("owner", item.getOwnerID());
+                jo.put("renter", item.getRenterID());
+                jo.put("sport", item.getSport());
+
+                JSONArray ja = new JSONArray();
+                for (int i = 0; i < item.getBids().getBids().size(); i++) {
+                    Bid bid = item.getBids().getBids().get(i);
+                    JSONObject joBid = new JSONObject();
+                    joBid.put("isAccepted", bid.getIsAccepted());
+                    joBid.put("ownerID", bid.getOwnerID());
+                    joBid.put("renterID", bid.getRenterID());
+                    joBid.put("itemID", bid.getItemID());
+                    joBid.put("bidAmount", bid.getBidAmount());
+                    ja.put(joBid);
+                }
+                jo.put("bids", ja);
+
+                writer = new BufferedWriter(new OutputStreamWriter(stream));
+                writer.write(jo.toString());
+                writer.flush();
+                writer.close();
+                stream.close();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String output;
+                JSONObject ESResponse;
+                while ((output = br.readLine()) != null) {
+                    Log.e("website returned", output);
+                    ESResponse = new JSONObject(output);
+                    item.setID(ESResponse.getString("_id"));
+                }
+                Log.e("item ID", item.getID());
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (connection != null)
+                connection.disconnect();
+
+            return null;
+        }
+    }
+
+    // using elasticSearchDeleteUser and elasticSearchAddUser instead
+    // like we may as well delete this it's pretty useless - erin
+    public static class elasticUpdateUser extends AsyncTask<Void, String, String> {
+
+        User user = UserController.getUser();
+        BufferedWriter writer;
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            HttpURLConnection connection = null;
+            URL url;
+
+            try {
+                String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + user.getUsername();
+                url = new URL(urlString);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("PUT");
+                connection.setDoOutput(true);
+                OutputStream stream = new BufferedOutputStream(connection.getOutputStream());
+
+                // JSON assist from Mar-13-2016 from http://stackoverflow.com/questions/18983185/how-to-create-correct-jsonarray-in-java-using-jsonobject
+                JSONObject jo = new JSONObject();
+                jo.put("username", user.getUsername());
+                jo.put("emailAddress", user.getEmailAddress());
+                jo.put("phoneNumber", user.getPhoneNumber());
+                jo.put("photo", user.getPhoto());
+                jo.put("password", user.getPassword());
+                jo.put("notification", user.getNotification());
+
+                // adding items even though it is an empty array so you can still sign in even if
+                // you have never created any items
+                JSONArray myItemsIDArray = new JSONArray();
+                for (String itemID : user.getMyItems()) {
+                    myItemsIDArray.put(itemID);
+                }
+                jo.put("myItems", myItemsIDArray);
+
+                JSONArray itemsBorrowedIDArray = new JSONArray();
+                for (String itemID : user.getItemsBorrowed()) {
+                    itemsBorrowedIDArray.put(itemID);
+                }
+                jo.put("itemsBorrowed", itemsBorrowedIDArray);
+
+                JSONArray itemsBidOnIDArray = new JSONArray();
+                for (String itemID : user.getItemsBidOn()) {
+                    itemsBidOnIDArray.put(itemID);
+                }
+                jo.put("itemsBidOn", itemsBidOnIDArray);
+
+                // ratings here, i think this works?
+                /*JSONArray itemsToRateArray = new JSONArray();
+                for (Item itemID : user.getPendingRatings()) {
+                    itemsToRateArray.put(itemID);
+                }
+                jo.put("itemsToRate", itemsToRateArray);*/
+
+                writer = new BufferedWriter(new OutputStreamWriter(stream));
+                writer.write(jo.toString());
+                writer.flush();
+                writer.close();
+                stream.close();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String output;
+                JSONObject ESResponse;
+                while ((output = br.readLine()) != null) {
+                    Log.e("website returned", output);
+                    ESResponse = new JSONObject(output);
+                }
+                Log.e("user ID ", user.getID());
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (connection != null)
+                connection.disconnect();
+
+            return null;
+        }
+
+    }
+
 }

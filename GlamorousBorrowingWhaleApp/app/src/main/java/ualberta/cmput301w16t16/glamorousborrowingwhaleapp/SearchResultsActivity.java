@@ -71,18 +71,20 @@ public class SearchResultsActivity extends AppCompatActivity {
                     }
                     return false;
                 }
-            });
 
-            /*ItemController.getItemsElasticSearch(itemsListView, "", adapter, getApplicationContext());
-            items = ItemController.getItemList();
-            if (items != null) {
-                //adapter = new CustomSearchResultsAdapter(this, items.getItemList());
-                //itemsListView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                Toast.makeText(this, "Search Finished!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Sorry, nothing here.", Toast.LENGTH_SHORT).show();
-            }*/
+
+            });
+//
+//            ItemController.getItemsElasticSearch(itemsListView, "", adapter, getApplicationContext());
+//            items = ItemController.getItemList();
+//            if (items != null) {
+//                adapter = new CustomSearchResultsAdapter(this, items.getItemList());
+//                itemsListView.setAdapter(adapter);
+//                adapter.notifyDataSetChanged();
+//                Toast.makeText(this, "Search Finished!", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(this, "Sorry, nothing here.", Toast.LENGTH_SHORT).show();
+//            }
 
             // Opens pop up for user info
             itemsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

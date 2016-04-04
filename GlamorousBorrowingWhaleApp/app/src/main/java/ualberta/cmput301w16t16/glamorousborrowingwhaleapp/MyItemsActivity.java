@@ -34,10 +34,7 @@ public class MyItemsActivity extends AppCompatActivity {
     private ArrayList<Item> myItems;
     private ArrayAdapter<Item> adapter;
     private User user = UserController.getUser();
-    // Probably never used
-    public ArrayAdapter<Item> getAdapter() {
-        return adapter;
-    }
+
     ListView myItemsView;
     ArrayList<String> myItemsArray;
     String[] myItemsList;
@@ -55,7 +52,6 @@ public class MyItemsActivity extends AppCompatActivity {
 
         if (NetworkUtil.getConnectivityStatus(this) == 1) {
             // here we will have to make myItems into actual items instead of IDs
-            // this is a pretty lame way to do it
             myItemsArray = user.getMyItems();
             //TODO: can stop converting the items list into String[] once that's it's actual type
             myItemsList = new String[myItemsArray.size()];
@@ -75,23 +71,21 @@ public class MyItemsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // changed this from MyItemActivity.class to NewListingActivity.class
                 Intent intent = new Intent(view.getContext(), NewListingActivity.class);
                 startActivity(intent);
             }
         });
 
-        myItemsView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        myItemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             /*
             The ViewAdapter saves the position of what is clicked in the dynamic list.
             Set that Item as the current Item and send the user to the MyItemActivity with the current Item
              */
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ItemController.setItem((Item) parent.getAdapter().getItem(position));
                 Intent intent = new Intent(view.getContext(), MyItemActivity.class);
                 startActivity(intent);
-                return false;
             }
         });
     }
