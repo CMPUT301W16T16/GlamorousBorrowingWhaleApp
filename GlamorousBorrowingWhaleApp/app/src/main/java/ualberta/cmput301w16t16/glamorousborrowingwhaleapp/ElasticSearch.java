@@ -131,7 +131,7 @@ public class ElasticSearch extends Application {
                     itemList.add(item);
                 }
                 ItemController.setItemList(itemList);
-                return null;
+                return itemList;
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -154,10 +154,14 @@ public class ElasticSearch extends Application {
 
         @Override
         protected void onPostExecute(ItemList itemList) {
-            adapter = new CustomSearchResultsAdapter(itemsListView.getContext(),
-                    ItemController.getItemList().getItemList());
-            itemsListView.setAdapter(adapter);
-            this.adapter.notifyDataSetChanged();
+            try {
+                adapter = new CustomSearchResultsAdapter(itemsListView.getContext(),
+                        ItemController.getItemList().getItemList());
+                itemsListView.setAdapter(adapter);
+                this.adapter.notifyDataSetChanged();
+            } catch (NullPointerException e) {
+                Toast.makeText(context, "Search Failed!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

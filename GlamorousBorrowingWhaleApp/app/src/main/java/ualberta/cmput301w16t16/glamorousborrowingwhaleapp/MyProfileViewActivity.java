@@ -6,10 +6,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,7 +60,12 @@ public class MyProfileViewActivity extends AppCompatActivity {
         }*/
 
         setContentView(R.layout.activity_profile_view);
-        setTitle("Your Profile");
+        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        myToolbar.setTitle("Your Profile");*/
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Your Profile");
+        actionBar.setHomeButtonEnabled(true);
 
 
         //This chunk grabs the TextViews and operates on them
@@ -193,6 +203,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                logout();
+                finish();/*
                 // clear all of the current items in the controllers
                 UserController.setUser(null);
                 UserController.setSecondaryUser(null);
@@ -208,9 +220,28 @@ public class MyProfileViewActivity extends AppCompatActivity {
                 // make sure the user cannot press the back button to go back into another activity
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish();
+                finish();*/
             }
         });
+    }
+
+    public void logout() {
+        // clear all of the current items in the controllers
+        UserController.setUser(null);
+        UserController.setSecondaryUser(null);
+        ItemController.setItem(null);
+        ItemController.setItemList(null);
+
+        // set logged in as false so sign in activity will not automatically sign the user in
+        //UserController.setLoggedIn(v.getContext(), false);
+
+        // go back to the sign in activity
+        Intent intent = new Intent(MyProfileViewActivity.this, SignInActivity.class);
+
+        // make sure the user cannot press the back button to go back into another activity
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        //finish();
     }
 
 
@@ -280,6 +311,28 @@ public class MyProfileViewActivity extends AppCompatActivity {
 
         return false;
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.profile_menu_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+            case R.id.help_menu:
+                return true;
+            case R.id.logout_menu:
+                logout();
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     /**
      * Android Lifecycle - probably not needed, placeholder.
@@ -287,6 +340,8 @@ public class MyProfileViewActivity extends AppCompatActivity {
      * @return
      * @author adam
      */
+
+
 
     @Override
     protected void onPause() {

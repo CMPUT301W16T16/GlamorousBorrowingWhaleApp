@@ -2,6 +2,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.content.Intent;
 import android.net.Network;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,23 +38,25 @@ public class SearchResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Search Results: All");
+        actionBar.setHomeButtonEnabled(false);
         itemsListView = (ListView) findViewById(R.id.myItemsListView);
         searchView = (SearchView) findViewById(R.id.searchView);
-        setTitle("Search Results: All");
 
         if (NetworkUtil.getConnectivityStatus(this) == 1) {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
-                    setTitle("Search Results: " + query);
+                    actionBar.setTitle("Search Results: " + query);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     ItemController.getItemsElasticSearch(itemsListView, newText, adapter, getApplicationContext());
-                    setTitle("Search Results: " + newText);
+                    actionBar.setTitle("Search Results: " + newText);
                     return false;
                 }
             });

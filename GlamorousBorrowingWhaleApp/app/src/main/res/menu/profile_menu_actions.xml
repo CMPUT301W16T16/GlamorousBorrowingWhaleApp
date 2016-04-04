@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Search -->
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/search_button"
+        app:showAsAction="ifRoom"/>
+
+    <!-- Help -->
+    <item android:id="@+id/help_menu"
+        android:icon="@drawable/ic_help_outline"
+        android:title="@string/help_button"
+        app:showAsAction="ifRoom" />
+
+    <!-- Logout -->
+    <item android:id="@+id/logout_menu"
+        android:icon="@drawable/ic_logout_menu"
+        android:title="@string/logout_menu"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -21,4 +21,8 @@
     <string name="borrowed_items">Items I Am Borrowing</string>
     <string name="my_items_borrowed">My Items Being Borrowed</string>
     <string name="spinner_prompt">Status</string>
+    <string name="home_button">home button</string>
+    <string name="search_button">search button</string>
+    <string name="help_button">help button</string>
+    <string name="logout_menu">logout button on action bar</string>
 </resources>

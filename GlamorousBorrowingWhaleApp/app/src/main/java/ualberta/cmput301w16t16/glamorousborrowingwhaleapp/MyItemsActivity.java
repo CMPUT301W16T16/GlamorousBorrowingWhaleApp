@@ -2,9 +2,13 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,9 +16,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * This activity allows a user to see their items that are available to be
@@ -44,9 +45,12 @@ public class MyItemsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_my_items);
-        //taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
-        setTitle("My Items");
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Your Items");
+        actionBar.setHomeButtonEnabled(true);
+
         myItemsView = (ListView) findViewById(R.id.myItemsListView);
 
         if (NetworkUtil.getConnectivityStatus(this) == 1) {
@@ -91,6 +95,34 @@ public class MyItemsActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    //setting up the action bar icons
+    //taken from http://www.androidhive.info/2013/11/android-working-with-action-bar/
+    // Apr3/16
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_search_actions, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+            case R.id.home:
+                goToHome();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void goToHome() {
+        Intent i = new Intent(MyItemsActivity.this, MyProfileViewActivity.class);
+        startActivity(i);
     }
 
     /**
