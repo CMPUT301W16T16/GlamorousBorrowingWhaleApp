@@ -10,7 +10,7 @@ import java.util.Calendar;
  * @author adam, andrew, erin, laura, martina
  */
 
-public class Bid {
+public class Bid implements Comparable<Bid> {
 
 // expiry of a bid?
 // switched Date to Calendar type for ease of use.
@@ -32,6 +32,7 @@ public class Bid {
         this.renterID = UserController.getUser().getID(); //current user is the renter
         this.bidAmount = bidAmount;
     }
+
 
     public Boolean getIsAccepted() {
         return isAccepted;
@@ -69,6 +70,16 @@ public class Bid {
 
     public String toString() { return this.getItemID() + ";" +  this.bidAmount; }
 
+    @Override
+    public int compareTo(Bid another) {
+        if (this.bidAmount < another.bidAmount) {
+            return 1;
+        }
+        else if(this.bidAmount > another.bidAmount){
+            return -1;
+        }
+        return 0;
+    }
 
 
 

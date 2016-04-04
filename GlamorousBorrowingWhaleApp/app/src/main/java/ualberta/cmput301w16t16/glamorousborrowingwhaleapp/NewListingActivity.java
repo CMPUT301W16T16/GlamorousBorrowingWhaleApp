@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -40,7 +41,8 @@ public class NewListingActivity extends AppCompatActivity {
     private BidList bids;
     private User user;
     private Item item;
-    private int result;
+    private double latitude;
+    private double longitude;
     private byte[] photoStream = new byte[65536];
 
     @Override
@@ -61,7 +63,6 @@ public class NewListingActivity extends AppCompatActivity {
 
         saveButton = (ImageButton) findViewById(R.id.save);
         deleteButton = (ImageButton) findViewById(R.id.delete);
-        //Setting up the buttons and getting user focus.
 
         bids = new BidList();
 
@@ -77,7 +78,6 @@ public class NewListingActivity extends AppCompatActivity {
                     Toast.makeText(NewListingActivity.this, "Something must be entered in every field.", Toast.LENGTH_SHORT).show();
                 } else {
                     // picture management
-
                     Bitmap image = ((BitmapDrawable) photo.getDrawable()).getBitmap();
                     ByteArrayOutputStream photosNeedToBeCompressedToThis = new ByteArrayOutputStream();
                     image.compress(Bitmap.CompressFormat.JPEG, 100, photosNeedToBeCompressedToThis);
@@ -96,6 +96,9 @@ public class NewListingActivity extends AppCompatActivity {
                     item.setPhoto(photoStream);
                     item.setOwnerID(user.getID());
                     item.setSport(sport.getText().toString());
+                    item.setLatitude(latitude);
+                    item.setLongitude(longitude);
+
                     //setting controller to this item now for fun
                     ItemController.setItem(item);
 
@@ -145,21 +148,35 @@ public class NewListingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent bringTheGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                final int result = 0;
                 startActivityForResult(bringTheGallery, result);
             }
 
         });
     }
-    // also pictures
+
+    // this gets the returns from the photo and location Activities
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == result) {
-            if (resultCode == RESULT_OK) {
-                Uri selectedImage = data.getData();
-                photo.setImageURI(selectedImage);
-            } else {
-                Toast.makeText(this, "Could not load image", Toast.LENGTH_SHORT).show();
-            }
+        switch (requestCode) {
+            case 0:
+                if (resultCode == RESULT_OK) {
+                    Uri selectedImage = data.getData();
+                    photo.setImageURI(selectedImage);
+                } else {
+                    Toast.makeText(this, "Could not load image", Toast.LENGTH_SHORT).show();
+                }
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    Location location = data.getParcelableExtra("location");
+                    // Toast.makeText(this, location.toString(), Toast.LENGTH_SHORT).show();
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+                    // latitude = Double.parseDouble(data.getStringExtra("latitude"));
+                    // longitude = Double.parseDouble(data.getStringExtra("longitude"));
+                } else {
+                    Toast.makeText(this, "Could not get location", Toast.LENGTH_SHORT).show();
+                }
         }
     }
 
@@ -170,5 +187,12 @@ public class NewListingActivity extends AppCompatActivity {
         name.setText("");
         size.setText("");
         description.setText("");
+    }
+
+    public void launchGetLocation(View view) {
+        Intent intent = new Intent(view.getContext(), GetLocationActivity.class);
+        final int result = 1;
+        startActivityForResult(intent, result);
+
     }
 }

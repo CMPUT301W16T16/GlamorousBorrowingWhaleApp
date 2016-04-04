@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
 public class ItemController {
 
     private static Item item;
-    private static ItemList itemList;
+    private static ItemList itemList = new ItemList();
 
     public ItemController() { }
 

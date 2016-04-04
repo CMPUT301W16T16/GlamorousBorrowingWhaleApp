@@ -105,13 +105,13 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // checking that there is an item to add to the adapter, and that it belongs to the current user
-        if (ItemController.getItem() != null
-                && ItemController.getItem().getOwnerID().equals(UserController.getUser().getID())
-                && !usersItemsArrayList.contains(ItemController.getItem())) {
-            usersItemsArrayList.add(ItemController.getItem());
-            adapter.notifyDataSetChanged();
-        }
+        usersItems = user.getMyItems();
+        itemsList = new String[usersItems.size()];
+        itemsList = usersItems.toArray(itemsList);
+        ItemController.getItemsByIDElasticSearch(itemsList);
+        usersItemsArrayList = ItemController.getItemList().getItemList();
+        adapter.notifyDataSetChanged();
+
     }
 
     public void SetItems() {

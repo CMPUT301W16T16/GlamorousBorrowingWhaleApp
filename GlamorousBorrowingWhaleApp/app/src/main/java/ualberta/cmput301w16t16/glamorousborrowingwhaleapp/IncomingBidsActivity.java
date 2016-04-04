@@ -65,10 +65,6 @@ public class IncomingBidsActivity extends AppCompatActivity {
 
         SetBids();
 
-        // referenced Mar-21-2016 from http://stackoverflow.com/questions/18841650/replacing-listview-row-with-another-layout-onclick
-        // this doesn't work very well, although the buttons do show up when you click on one of the bids once
-        // the buttons don't lead any where yet and the replaced view has the wrong text
-        //TODO: the inflated layout doesn't retain the item (bid) information since the text views have different IDs
         incomingBidsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -76,41 +72,18 @@ public class IncomingBidsActivity extends AppCompatActivity {
 
                 Button acceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
                 Button rejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
-                acceptButton.setVisibility(View.VISIBLE);
-                rejectButton.setVisibility(View.VISIBLE);
-                
+
                 BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
                 selectedBid = bidItem.bid;
                 owner = UserController.getUser();
-                ownersItems = owner.getMyItems();
-                ownersItemsString = new String[ownersItems.size()];
-                ownersItemsString = ownersItems.toArray(ownersItemsString);
-                itemList = ItemController.getItemsByIDElasticSearch(ownersItemsString);
-
-                for (Item item : itemList.getItemList()) {
-                    pos = 0;
-                    for (Bid bid : item.getBids().getBids()) {
-                        if (bid.getItemID().equals(selectedBid.getItemID())) {
-                            finalPos = pos;
-                        }
-                    }
-                }
-                newID = owner.getMyItems().get(finalPos);
-                items = new String[1];
-                items[0] = newID;
-                ItemController.getItemsByIDElasticSearch(items);
-                item = ItemController.getItemList().getItemList().get(0);
-                oldID = item.getID();
-                item.setID(newID); // maybe redundant now?
-                ItemController.setItem(item);
+                item = bidItem.item;
 
                 acceptButton.setClickable(true);
                 rejectButton.setClickable(true);
                 acceptButton.setOnClickListener(new View.OnClickListener() {
-                    //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
-                        AcceptBid();
+                        BidController.acceptBid(selectedBid, item, owner);
                         SetBids();
                     }
                 });
@@ -118,7 +91,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
                     //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
-                        RejectBid();
+                        BidController.rejectBid(selectedBid, item, owner);
                         SetBids();
                     }
                 });
@@ -142,15 +115,13 @@ public class IncomingBidsActivity extends AppCompatActivity {
 
             Button acceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
             Button rejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
-            acceptButton.setVisibility(View.GONE);
-            rejectButton.setVisibility(View.GONE);
 
             TextView itemTitle = (TextView) view.findViewById(R.id.incomingBidsItemTitle);
             itemTitle.setText(item.getTitle());
 
             // adding the amount that was bid
             TextView amountBid = (TextView) view.findViewById(R.id.incomingBidsAmountBid);
-            amountBid.setText("Amount Bid: $" + String.format("%.2f", bid.getBidAmount()));
+            amountBid.setText("Amount Bid:\n $" + String.format("%.2f", bid.getBidAmount()) + "/Hour");
             return view;
         }
     }
