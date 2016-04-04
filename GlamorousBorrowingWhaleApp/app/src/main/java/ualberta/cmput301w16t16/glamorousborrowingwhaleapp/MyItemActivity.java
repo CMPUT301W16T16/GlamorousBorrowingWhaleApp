@@ -309,5 +309,21 @@ public class MyItemActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
     }
 
+    public void launchGetLocation(View view) {
+        Intent intent = new Intent(view.getContext(), GetLocationActivity.class);
+        final int result = 1;
+        startActivityForResult(intent, result);
 
+    }
+
+    public void deletePhoto(View view) {
+        photo.setImageResource(R.drawable.glamorouswhale1);
+        Toast.makeText(this, "photo returned to default!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void deleteLocation(View view) {
+        item.setLatitude(0);
+        item.setLongitude(0);
+        Toast.makeText(this, "location deleted!", Toast.LENGTH_SHORT).show();
+    }
 }

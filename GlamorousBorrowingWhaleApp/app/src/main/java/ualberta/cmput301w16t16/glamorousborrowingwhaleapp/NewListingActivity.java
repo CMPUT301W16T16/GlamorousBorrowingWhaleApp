@@ -216,14 +216,14 @@ public class NewListingActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        //this also clears on home button press. Issue for sure.
-        super.onPause();
-        name.setText("");
-        size.setText("");
-        description.setText("");
-    }
+//    @Override
+//    protected void onPause() {
+//        //this also clears on home button press. Issue for sure.
+//        super.onPause();
+//        name.setText("");
+//        size.setText("");
+//        description.setText("");
+//    }
 
     public void launchGetLocation(View view) {
         Intent intent = new Intent(view.getContext(), GetLocationActivity.class);
@@ -234,8 +234,12 @@ public class NewListingActivity extends AppCompatActivity {
 
     public void deletePhoto(View view) {
         photo.setImageResource(R.drawable.glamorouswhale1);
+        Toast.makeText(this, "photo returned to default!", Toast.LENGTH_SHORT).show();
     }
 
     public void deleteLocation(View view) {
+        latitude = 0;
+        longitude = 0;
+        Toast.makeText(this, "location deleted!", Toast.LENGTH_SHORT).show();
     }
 }
