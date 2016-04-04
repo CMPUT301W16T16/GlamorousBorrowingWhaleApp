@@ -47,8 +47,6 @@ public class NewListingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_listing);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         name = (EditText) findViewById(R.id.name);
         sport = (EditText) findViewById(R.id.sport);
@@ -134,7 +132,6 @@ public class NewListingActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO delete shit
                 //All this does atm is clear the edittext boxes.
                 name.setText("");
                 size.setText("");

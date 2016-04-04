@@ -24,5 +24,5 @@
     <string name="home_button">home button</string>
     <string name="search_button">search button</string>
     <string name="help_button">help button</string>
-    <string name="logout_menu">logout button on action bar</string>
+    <string name="logout_menu">logout</string>
 </resources>

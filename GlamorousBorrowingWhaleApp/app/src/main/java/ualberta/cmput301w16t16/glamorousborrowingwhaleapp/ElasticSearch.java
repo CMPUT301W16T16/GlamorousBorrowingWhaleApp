@@ -103,10 +103,7 @@ public class ElasticSearch extends Application {
                     Item item = new Item();
                     item.setID(thingInList.getString("_id"));
                     item.setTitle(itemFromES.getString("title"));
-                    Log.e("ItemTitle", item.getTitle());
-                    Log.e("ItemID", item.getID());
                     item.setDescription(itemFromES.getString("description"));
-                    Log.e("ItemDesc", item.getDescription());
                     item.setSize(itemFromES.getString("size"));
                     item.setAvailability(itemFromES.getBoolean("availability"));
                     item.setPhoto(itemFromES.getString("photo").getBytes());
@@ -482,6 +479,7 @@ public class ElasticSearch extends Application {
                     }
                 }
                 Log.e("item ID", item.getID());
+
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
