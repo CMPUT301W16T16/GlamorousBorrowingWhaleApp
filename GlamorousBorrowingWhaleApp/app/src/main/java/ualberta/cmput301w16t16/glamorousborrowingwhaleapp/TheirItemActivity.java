@@ -25,7 +25,6 @@ import org.w3c.dom.Text;
 public class TheirItemActivity extends AppCompatActivity {
 
     private Item item;
-    private User ownerUser;
 
     private TextView name;
     private TextView owner;
@@ -48,9 +47,8 @@ public class TheirItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_their_item);
         setTitle("Their Item");
 
-        // getting item and the owner
+        // getting item
         item = ItemController.getItem();
-        ownerUser = UserController.getUser();
 
         // getting the TextViews
         name = (TextView) findViewById(R.id.theirItemName);

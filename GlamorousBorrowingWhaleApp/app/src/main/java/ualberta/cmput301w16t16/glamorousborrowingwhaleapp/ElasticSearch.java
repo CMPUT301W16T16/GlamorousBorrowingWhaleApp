@@ -55,6 +55,9 @@ public class ElasticSearch extends Application {
         @Override
         protected ItemList doInBackground(ListView... params) {
 
+            ItemList emptyItemList = new ItemList();
+            ItemController.setItemList(emptyItemList);
+
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             URL url;

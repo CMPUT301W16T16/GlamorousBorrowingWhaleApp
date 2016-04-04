@@ -14,6 +14,13 @@ public class BidList {
 
     //note: added a constructor here for testing
     private ArrayList<Bid> bids = new ArrayList<>();
+
+    public BidList() { }
+
+    public BidList(ArrayList<Bid> bids) {
+        this.bids = bids;
+    }
+
     private Bid highestBid;
 
     public void addBid(Bid bid) {

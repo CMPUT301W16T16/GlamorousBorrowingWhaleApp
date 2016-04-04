@@ -2,23 +2,32 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,6 +54,10 @@ public class MyItemActivity extends AppCompatActivity {
     private String newID;
     private int result;
     private byte[] photoStream = new byte[65536];
+    private ArrayAdapter<Bid> adapter;
+    private ArrayList<Bid> bids = new ArrayList<>();
+    private Button acceptButton;
+    private Button rejectButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +65,7 @@ public class MyItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_item);
         // Taken from http://stackoverflow.com/questions/3438276/change-title-bar-text-in-android March12,2016
         setTitle("My Item");
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /**
          * Sets the user and item for this activity and grabs the EditText things for use.
@@ -64,20 +78,18 @@ public class MyItemActivity extends AppCompatActivity {
         size = (EditText) findViewById(R.id.size);
         sport = (EditText) findViewById(R.id.sport);
         description = (EditText) findViewById(R.id.description);
-        highestBid = (TextView) findViewById(R.id.highestBid);
         photo = (ImageView) findViewById(R.id.pictureView);
 
         ImageButton saveButton = (ImageButton) findViewById(R.id.save);
         ImageButton deleteButton = (ImageButton) findViewById(R.id.delete);
-        ImageButton acceptBidButton = (ImageButton) findViewById(R.id.acceptBid);
-        ImageButton rejectBidButton = (ImageButton) findViewById(R.id.rejectBid);
         ImageButton myComment = (ImageButton) findViewById(R.id.myItemComment);
+        Button bidsOnThisItem = (Button) findViewById(R.id.viewAllBidsButton);
 
         //The view is updated by asking the user object for its information.
         owner.setText(UserController.getUser().getUsername()); // shouldn't be on this page unless current user = owner
         boolStatus = item.getAvailability();
         if (boolStatus == false) {
-            status.setText("Borrowed");
+            status.setText("Borrowed by "+item.getRenterID());
         } else {
             if (item.getBids().isEmpty()) {
                 status.setText("Available");
@@ -89,11 +101,15 @@ public class MyItemActivity extends AppCompatActivity {
         description.setText(item.getDescription());
         size.setText(item.getSize());
         sport.setText(item.getSport());
-        if (item.getHighestBidAmount() > 0) {
-            highestBid.setText("$"+String.format("%.2f", item.getHighestBidAmount()));
-        } else {
-            highestBid.setText("No bids yet. Bummer :(");
-        }
+
+        bidsOnThisItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyItemActivity.this, BidsForOneItemActivity.class);
+                startActivity(intent);
+            }
+        });
+
         /*
         if (item.getPhoto() != null) {
             byte[] tempPhoto = item.getPhoto();
@@ -187,39 +203,6 @@ public class MyItemActivity extends AppCompatActivity {
 
         });
 
-        acceptBidButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!item.getBids().getBids().isEmpty()) {
-                    item.getBids().getHighestBid().setIsAccepted(true);
-                    Toast.makeText(MyItemActivity.this, "Bid Accepted!", Toast.LENGTH_SHORT).show();
-                    //TODO: insert code here to delete the other bids and notify users that their bid has been declined.
-                    //TODO: insert code here to refresh the view?
-                    //The rationale behind deleting all bids is if you don't want to honour the
-                    //highest bid, why would you want to select a lower one? Future idea - click bid
-                    //to show dates, you may be able to go off of that. Then the next highest bid wil show.
-                    //Remember Bid amounts are per hour - maybe have the per hour value and the total
-                    //amount calculated by the time requested.
-                } else {
-                    Toast.makeText(MyItemActivity.this, "No Bids!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        rejectBidButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!item.getBids().getBids().isEmpty()) {
-                    item.getBids().getHighestBid().setIsAccepted(false);
-                    Toast.makeText(MyItemActivity.this, "Bid Rejected!", Toast.LENGTH_SHORT).show();
-                    //TODO: insert code here to delete all bids??
-                    //TODO: insert code to refresh the view.
-                } else {
-                    Toast.makeText(MyItemActivity.this, "No Bids!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         myComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,4 +247,6 @@ public class MyItemActivity extends AppCompatActivity {
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
+
+
 }

@@ -52,7 +52,8 @@
             android:name=".ViewBorrowingOutActivity"
             android:label="@string/title_activity_view_borrowing_out"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TheirProfileViewActivity"></activity>
+        <activity android:name=".TheirProfileViewActivity" />
+        <activity android:name=".BidsForOneItemActivity"></activity>
     </application>
 
 </manifest>

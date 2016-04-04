@@ -14,8 +14,8 @@
         android:id="@+id/profileInfoLayout"
         android:background="@drawable/rounded_corners_dark"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp">
 
         <ImageButton
@@ -94,8 +94,8 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/rounded_corners_dark"
         android:textColor="#FFFFFF"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -103,8 +103,8 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/profileActionLayout"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp">
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp">
 
         <Button
             android:layout_width="match_parent"

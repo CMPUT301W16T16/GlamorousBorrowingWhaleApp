@@ -17,6 +17,12 @@ public class ItemList {
     private ArrayList<Item> itemList = new ArrayList<Item>();
     //note - if setItemList is called, then this is overwritten. Problem? Good Question.
 
+    public ItemList() { }
+
+    public ItemList(ArrayList<Item> itemList) {
+        this.itemList = itemList;
+    }
+
     private int currentSize = itemList.size();
 
     public void add(Item item) {

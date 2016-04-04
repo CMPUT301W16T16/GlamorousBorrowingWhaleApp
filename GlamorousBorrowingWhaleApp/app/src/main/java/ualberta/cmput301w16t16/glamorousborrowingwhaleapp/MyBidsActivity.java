@@ -44,25 +44,7 @@ public class MyBidsActivity extends AppCompatActivity {
 
         // get all of the users items that they have bid on
         myBidsView = (ListView) findViewById(R.id.myBidsListView);
-        ArrayList<String> myItemsArray = user.getItemsBidOn();
-        myItemsList = new String[myItemsArray.size()];
-        myItemsList = myItemsArray.toArray(myItemsList);
-        ItemController.getItemsByIDElasticSearch(myItemsList);
-        myItems = ItemController.getItemList().getItemList();
-
-        // get all of the bids held by all of the items
-        for (Item item: myItems) {
-            ArrayList<Bid> itemBids = item.getBids().getBids();
-            for (Bid bid: itemBids) {
-                BidItem pair = new BidItem(bid, item);
-                pairs.add(pair);
-                //myBids.add(bid); //npe
-            }
-        }
-
-        if (pairs.isEmpty()) {
-            Toast.makeText(MyBidsActivity.this, "You haven't bid on any items.", Toast.LENGTH_SHORT).show();
-        }
+        getPairs();
 
         adapter = new CustomMyBidsAdapter(this, pairs);
         myBidsView.setAdapter(adapter);
@@ -120,6 +102,36 @@ public class MyBidsActivity extends AppCompatActivity {
         public BidItem(Bid bid, Item item) {
             this.bid = bid;
             this.item = item;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPairs();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void getPairs() {
+        ArrayList<String> myItemsArray = user.getItemsBidOn();
+        myItemsList = new String[myItemsArray.size()];
+        myItemsList = myItemsArray.toArray(myItemsList);
+        ItemController.getItemsByIDElasticSearch(myItemsList);
+        myItems = ItemController.getItemList().getItemList();
+
+        pairs.clear();
+        // get all of the bids held by all of the items
+        for (Item item: myItems) {
+            ArrayList<Bid> itemBids = item.getBids().getBids();
+            for (Bid bid: itemBids) {
+                BidItem pair = new BidItem(bid, item);
+                pairs.add(pair);
+                //myBids.add(bid); //npe
+            }
+        }
+
+        if (pairs.isEmpty()) {
+            Toast.makeText(MyBidsActivity.this, "You haven't bid on any items.", Toast.LENGTH_SHORT).show();
         }
     }
 

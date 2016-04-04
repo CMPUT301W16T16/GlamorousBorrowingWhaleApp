@@ -21,9 +21,9 @@
             android:scaleType="fitCenter"
             android:id="@+id/pictureView"
             android:src="@drawable/glamorouswhale1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:background="@layout/mybutton"
@@ -37,9 +37,9 @@
             android:layout_below="@+id/linearLayout"
             android:layout_centerHorizontal="true"
             android:background="@layout/mybutton"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:layout_marginBottom="0dp"
             android:gravity="center_vertical"
             android:weightSum="1">
@@ -220,8 +220,8 @@
             android:layout_height="180dp"
             android:background="@layout/mybutton"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp">
             <TextView
@@ -268,23 +268,23 @@
                 android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:id="@+id/theirItemMakeBid"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/rounded_corners_dark"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:text="Make A Bid"
-                android:textColor="#FFFFFF"/>
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="5dp" />
         </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:id="@+id/makeRating"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/rounded_corners_dark"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:text="Leave a Rating"
             android:textColor="#FFFFFF" />
