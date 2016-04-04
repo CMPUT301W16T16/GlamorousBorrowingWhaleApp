@@ -17,7 +17,7 @@ public class Item {
     // private User owner;
     private String renterID;
     private String ownerID;
-    // private int rating;
+    private int rating;
     protected String ID;
 
     public void Item() {
@@ -59,14 +59,14 @@ public class Item {
 
     public byte[] getPhoto() { return photo; }
 
-    /*public int getRating() {
+    public int getRating() {
 
         return rating;
     }
 
     public void setRating(int rating) {
         this.rating = rating;
-    }*/
+    }
 
     public String getID() { return ID; }
 
