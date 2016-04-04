@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,6 +97,11 @@ public class MyBidsActivity extends AppCompatActivity {
             BidItem pair = getItem(position);
             Bid bid = pair.bid;
             Item item = pair.item;
+
+            Button acceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
+            Button rejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
+            acceptButton.setVisibility(View.GONE);
+            rejectButton.setVisibility(View.GONE);
 
             TextView itemTitle = (TextView) view.findViewById(R.id.incomingBidsItemTitle);
             itemTitle.setText(item.getTitle());

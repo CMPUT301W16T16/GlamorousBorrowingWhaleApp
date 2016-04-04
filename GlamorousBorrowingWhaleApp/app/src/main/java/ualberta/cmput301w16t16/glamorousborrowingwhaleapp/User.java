@@ -43,7 +43,7 @@ public class User extends AppCompatActivity implements Serializable {
     //                                                              end
 
     // being saved until they can be pushed to elastic search
-    private ArrayList<Item> offlineItems;
+    private ArrayList<Item> offlineItems = new ArrayList<>();
 
     // this will be used for ratings. My idea atm is for each user to have one of these
     // array lists and when an item is set to returned (we should deal with that also)

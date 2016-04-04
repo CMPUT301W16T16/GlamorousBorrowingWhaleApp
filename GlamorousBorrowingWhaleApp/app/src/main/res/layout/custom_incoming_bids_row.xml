@@ -1,29 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/incomingBidsItemTitle"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="23sp"
-        android:layout_margin="5dp"
-        android:textColor="#000000"/>
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/incomingBidsItemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:layout_margin="5dp"
+            android:textColor="#000000"/>
 
-    <TextView
-        android:id="@+id/incomingBidsAmountBid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/incomingBidsAmountBid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textColor="#000000"/>
 
-    <RelativeLayout
-        android:id="@+id/rl_inflate"
-        android:layout_width="fill_parent"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/incomingBidsAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="accept"
+            android:background="@drawable/rounded_corners_dark"
+            android:layout_alignTop="@+id/incomingBidsXmark"
+            android:layout_toStartOf="@+id/incomingBidsXmark"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="0dp"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/incomingBidsReject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="reject"
+            android:background="@drawable/rounded_corners_dark"
+            android:layout_alignTop="@+id/incomingBidsItemTitle"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
 
 
 </LinearLayout>

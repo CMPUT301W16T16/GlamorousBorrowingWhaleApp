@@ -74,7 +74,6 @@ public class MyItemsActivity extends AppCompatActivity {
                 // changed this from MyItemActivity.class to NewListingActivity.class
                 Intent intent = new Intent(view.getContext(), NewListingActivity.class);
                 startActivity(intent);
-                Log.d("TEST", "aaa");
             }
         });
 
