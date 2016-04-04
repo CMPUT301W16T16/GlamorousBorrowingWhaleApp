@@ -56,7 +56,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Item item = ItemController.getItemList().getItemList().get(position);
-                    Log.d("TEST", "item: " + item.getOwnerID());
                     UserController.getUserByIDElasticSearch(item.getOwnerID());
                     owner = UserController.getSecondaryUser();
                     ItemController.setItem((Item) parent.getAdapter().getItem(position));
