@@ -55,6 +55,8 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
 
         setContentView(R.layout.activity_sign_in);
 
+        NetworkUtil.stopListeningForNetwork(this);
+
         // sign up button starts the sign up activity and the sign up view
         Button signUpButton = (Button) findViewById(R.id.sign_up_button);
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +93,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                         // with the provided password after checking that the user exists
                         user = UserController.getSecondaryUser();
                         if (user != null) {
-                            Log.d("TEST", user.getUsername());
                             if (UserController.checkPassword(password)) {
-                                Log.d("TEST", user.getUsername());
                                 UserController.setUser(user);
 
                                 Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);

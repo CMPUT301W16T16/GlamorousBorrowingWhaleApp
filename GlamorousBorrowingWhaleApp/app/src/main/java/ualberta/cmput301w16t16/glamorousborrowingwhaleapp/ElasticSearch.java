@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -39,10 +40,17 @@ public class ElasticSearch extends Application {
     // retrieves all items on the ElasticSearch list, adding them to the returned ItemList.
     // Used in SearchResultsActivity.
     public static class elasticGetItems extends AsyncTask<ListView, String, ItemList> {
-
+        String query;
         TextView tv;
         ListView itemsListView;
-        ArrayAdapter<Item> adapter;
+        CustomSearchResultsAdapter adapter;
+        Context context;
+
+        public elasticGetItems(String query, CustomSearchResultsAdapter adapter, Context context) {
+            this.query = query;
+            this.adapter = adapter;
+            this.context = context;
+        }
 
         @Override
         protected ItemList doInBackground(ListView... params) {
@@ -51,9 +59,26 @@ public class ElasticSearch extends Application {
             BufferedReader reader = null;
             URL url;
             itemsListView = params[0];
+            if (query != null) {
+                query = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?q=title:"+
+                        "*" + query + "*";
+                //Java complains if this is not checked :P
+                try {
+                    url = new URL(query);
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                //Java complains if this is not checked :P
+                try {
+                    url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=10");
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             try {
-                url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=10");
+                //url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=10");
                 connection = (HttpURLConnection) url.openConnection();
                 InputStream stream = connection.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(stream));
@@ -78,7 +103,10 @@ public class ElasticSearch extends Application {
                     Item item = new Item();
                     item.setID(thingInList.getString("_id"));
                     item.setTitle(itemFromES.getString("title"));
+                    Log.e("ItemTitle", item.getTitle());
+                    Log.e("ItemID", item.getID());
                     item.setDescription(itemFromES.getString("description"));
+                    Log.e("ItemDesc", item.getDescription());
                     item.setSize(itemFromES.getString("size"));
                     item.setAvailability(itemFromES.getBoolean("availability"));
                     item.setPhoto(itemFromES.getString("photo").getBytes());
@@ -103,7 +131,7 @@ public class ElasticSearch extends Application {
                     itemList.add(item);
                 }
                 ItemController.setItemList(itemList);
-                return itemList;
+                return null;
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -122,6 +150,14 @@ public class ElasticSearch extends Application {
 
             // the returned item is passed on to onPostExecute as "result"
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(ItemList itemList) {
+            adapter = new CustomSearchResultsAdapter(itemsListView.getContext(),
+                    ItemController.getItemList().getItemList());
+            itemsListView.setAdapter(adapter);
+            this.adapter.notifyDataSetChanged();
         }
     }
 

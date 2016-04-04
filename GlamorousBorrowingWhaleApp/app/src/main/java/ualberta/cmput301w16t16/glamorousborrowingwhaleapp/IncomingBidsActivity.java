@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -47,6 +48,8 @@ public class IncomingBidsActivity extends AppCompatActivity {
     private ItemList itemList;
     private Integer pos = -1;
     private Integer finalPos;
+    Button acceptButton;
+    Button rejectButton;
 
     private Item item;
 
@@ -56,6 +59,9 @@ public class IncomingBidsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_incoming_bids);
         setTitle("Incoming Bids");
         owner.setNotification(false);
+
+        acceptButton = (Button) findViewById(R.id.incomingBidsAccept);
+        rejectButton = (Button) findViewById(R.id.incomingBidsReject);
 
         SetBids();
 
@@ -68,23 +74,11 @@ public class IncomingBidsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                // removing the old views
-                TextView incomingBidsItemTitle = (TextView) findViewById(R.id.incomingBidsItemTitle);
-                TextView incomingBidsAmountBid = (TextView) findViewById(R.id.incomingBidsAmountBid);
-                incomingBidsItemTitle.setVisibility(View.GONE);
-                incomingBidsAmountBid.setVisibility(View.GONE);
-
-                RelativeLayout rl_inflate = (RelativeLayout) view.findViewById(R.id.rl_inflate);
-                View child = getLayoutInflater().inflate(R.layout.incoming_bids_inflate, null);
-                rl_inflate.addView(child);
-
-                ImageButton checkmarkButton = (ImageButton) child.findViewById(R.id.incomingBidsCheckmark);
-                ImageButton xmarkButton = (ImageButton) child.findViewById(R.id.incomingBidsXmark);
-                TextView incomingBidsItemTitleInflate = (TextView) findViewById(R.id.incomingBidsItemTitleInflate);
-                TextView incomingBidsAmountBidInflate = (TextView) findViewById(R.id.incomingBidsAmountBidInflate);
-                incomingBidsAmountBidInflate.setText(incomingBidsAmountBid.getText());
-                incomingBidsItemTitleInflate.setText(incomingBidsItemTitle.getText());
-
+                Button acceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
+                Button rejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
+                acceptButton.setVisibility(View.VISIBLE);
+                rejectButton.setVisibility(View.VISIBLE);
+                
                 BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
                 selectedBid = bidItem.bid;
                 owner = UserController.getUser();
@@ -110,7 +104,9 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 item.setID(newID); // maybe redundant now?
                 ItemController.setItem(item);
 
-                checkmarkButton.setOnClickListener(new View.OnClickListener() {
+                acceptButton.setClickable(true);
+                rejectButton.setClickable(true);
+                acceptButton.setOnClickListener(new View.OnClickListener() {
                     //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
@@ -118,7 +114,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
                         SetBids();
                     }
                 });
-                xmarkButton.setOnClickListener(new View.OnClickListener() {
+                rejectButton.setOnClickListener(new View.OnClickListener() {
                     //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
@@ -143,6 +139,11 @@ public class IncomingBidsActivity extends AppCompatActivity {
             BidItem pair = getItem(position);
             Bid bid = pair.bid;
             Item item = pair.item;
+
+            Button acceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
+            Button rejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
+            acceptButton.setVisibility(View.GONE);
+            rejectButton.setVisibility(View.GONE);
 
             TextView itemTitle = (TextView) view.findViewById(R.id.incomingBidsItemTitle);
             itemTitle.setText(item.getTitle());
