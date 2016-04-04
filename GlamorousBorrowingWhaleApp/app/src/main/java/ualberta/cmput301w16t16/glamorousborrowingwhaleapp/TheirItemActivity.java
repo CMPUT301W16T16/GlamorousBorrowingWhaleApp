@@ -3,6 +3,7 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -46,7 +47,10 @@ public class TheirItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_their_item);
-        setTitle("Their Item");
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Their Item");
+        actionBar.setHomeButtonEnabled(false);
 
         // getting item and the owner
         item = ItemController.getItem();
