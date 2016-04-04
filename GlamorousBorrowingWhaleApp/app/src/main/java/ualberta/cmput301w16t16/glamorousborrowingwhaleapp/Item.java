@@ -1,5 +1,7 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
+import android.location.Location;
+
 /**
  * Created by Martina on 16-02-29.
  * This object provides all the associated information for a piece of equipment
@@ -15,10 +17,13 @@ public class Item {
     private BidList bids;
     public RatingList ratings;
     private String sport;
-    // private User owner;
     private String renterID;
     private String ownerID;
     protected String ID;
+    private double latitude;
+    private double longitude;
+
+
 
     public void Item() {
     }
@@ -115,6 +120,20 @@ public class Item {
         }
     }
 
+    // Location Functions
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
     // Sport Functions
     public String getSport() {
@@ -124,7 +143,6 @@ public class Item {
     public void setSport(String sport) {
         this.sport = sport;
     }
-
 
     //Rating Functions
     public RatingList getRatings(){
@@ -142,16 +160,6 @@ public class Item {
     public void addRating(Rating rating){
         this.ratings.addRating(rating);
     }
-
-
-//    public User getOwner() {
-//        return owner;
-//    }
-//
-//    public void setOwner(User owner) {
-//        this.owner = owner;
-//    }
-
 
 
     /**

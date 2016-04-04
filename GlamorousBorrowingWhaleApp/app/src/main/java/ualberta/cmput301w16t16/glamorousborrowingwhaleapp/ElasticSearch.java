@@ -116,6 +116,8 @@ public class ElasticSearch extends Application {
                     item.setOwnerID(itemFromES.getString("owner"));
                     item.setRenterID(itemFromES.getString("renter"));
                     item.setSport(itemFromES.getString("sport"));
+                    item.setLatitude(itemFromES.getDouble("latitude"));
+                    item.setLongitude(itemFromES.getDouble("longitude"));
 
                     BidList bids = new BidList();
                     JSONArray bidList = itemFromES.getJSONArray("bids");
@@ -269,8 +271,7 @@ public class ElasticSearch extends Application {
                 jo.put("password", user.getPassword());
                 jo.put("notification", user.getNotification());
 
-                // adding items even though it is an empty array so you can still sign in even if
-                // you have never created any items
+                // adding items even though it is an empty array so you can still sign in even if you have never created any items
                 JSONArray myItemsIDArray = new JSONArray();
                 for (String itemID : user.getMyItems()) {
                     myItemsIDArray.put(itemID);
@@ -289,7 +290,6 @@ public class ElasticSearch extends Application {
                     itemsBidOnIDArray.put(itemID);
                 }
                 jo.put("itemsBidOn", itemsBidOnIDArray);
-
 
                 // set up ratings here, i think this works?
                 /*JSONArray itemsToRateArray = new JSONArray();
@@ -455,6 +455,9 @@ public class ElasticSearch extends Application {
                 jo.put("owner", item.getOwnerID());
                 jo.put("renter", item.getRenterID());
                 jo.put("sport", item.getSport());
+                jo.put("latitude", item.getLatitude());
+                jo.put("longitude", item.getLongitude());
+
                 JSONArray ja = new JSONArray();
                 for (int i = 0; i < item.getBids().getBids().size(); i++) {
                     Bid bid = item.getBids().getBids().get(i);
@@ -597,10 +600,6 @@ public class ElasticSearch extends Application {
                 jo.put("renter", item.getRenterID());
                 jo.put("sport", item.getSport());
 
-                // this last one probably won't work the same
-                //jo.put("bids", item.getBids());
-
-                // changed it to this
                 JSONArray ja = new JSONArray();
                 for (int i = 0; i < item.getBids().getBids().size(); i++) {
                     Bid bid = item.getBids().getBids().get(i);
@@ -772,6 +771,8 @@ public class ElasticSearch extends Application {
                         tempItem.setOwnerID(itemFromES.getString("owner"));
                         tempItem.setRenterID(itemFromES.getString("renter"));
                         tempItem.setSport(itemFromES.getString("sport"));
+                        tempItem.setLatitude(itemFromES.getDouble("latitude"));
+                        tempItem.setLongitude(itemFromES.getDouble("longitude"));
 
                         BidList bids = new BidList();
                         JSONArray bidList = itemFromES.getJSONArray("bids");

@@ -1,6 +1,7 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.content.Context;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 
 import java.io.Serializable;
@@ -27,6 +28,7 @@ public class User extends AppCompatActivity implements Serializable {
     private Boolean notification;
     private byte[] photo;
     protected String ID;
+    private Location location;
 
     // itemsBidOn = items that this user has bid on (items that belong to other people)
     // itemsBorrowed = items that this user is currently borrowing
@@ -199,6 +201,7 @@ public class User extends AppCompatActivity implements Serializable {
     public void removeItemBidOn(String item) {
         this.itemsBidOn.remove(item);
     }
+
 
 
 }
