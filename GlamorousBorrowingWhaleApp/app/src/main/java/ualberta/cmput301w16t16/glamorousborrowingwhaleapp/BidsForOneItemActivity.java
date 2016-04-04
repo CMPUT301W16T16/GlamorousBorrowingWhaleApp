@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +26,11 @@ public class BidsForOneItemActivity extends AppCompatActivity {
 
     Integer pos = -1;
     Integer finalPos;
+    private Button currAccept;
+    private Button currReject;
+    private Button prevAccept;
+    private Button prevReject;
+    ListView allBidsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +40,8 @@ public class BidsForOneItemActivity extends AppCompatActivity {
         item = ItemController.getItem();
         owner = UserController.getUser();
 
-        ListView allBidsView = (ListView) findViewById(R.id.allBidsView);
-        bids = item.getBids().getBids();
-        Collections.sort(bids);
-        adapter = new CustomBidsOnItemAdapter(this, bids);
-        allBidsView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        allBidsView = (ListView) findViewById(R.id.allBidsView);
+        setAdapter();
 
         allBidsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -48,8 +50,18 @@ public class BidsForOneItemActivity extends AppCompatActivity {
 
                 Button incomingBidsAcceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
                 Button incomingBidsRejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
-                incomingBidsAcceptButton.setVisibility(View.VISIBLE);
-                incomingBidsRejectButton.setVisibility(View.VISIBLE);
+
+                prevAccept = currAccept;
+                prevReject = currReject;
+                currAccept = incomingBidsAcceptButton;
+                currReject = incomingBidsRejectButton;
+
+                if (prevAccept != null && prevReject != null) {
+                    prevAccept.setVisibility(View.GONE);
+                    prevReject.setVisibility(View.GONE);
+                }
+                currAccept.setVisibility(View.VISIBLE);
+                currReject.setVisibility(View.VISIBLE);
 
                 ArrayList<String> ownersItems = owner.getMyItems();
                 String[] ownersItemsString = new String[ownersItems.size()];
@@ -76,19 +88,15 @@ public class BidsForOneItemActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         BidController.acceptBid(selectedBid, item, owner);
-                        bids = item.getBids().getBids();
-                        Log.d("MARTINA", bids.toString());
-                        Collections.sort(bids);
-                        adapter.notifyDataSetChanged();
+                        Toast.makeText(BidsForOneItemActivity.this, "You are now renting out your item!", Toast.LENGTH_SHORT).show();
+                        setAdapter();
                     }
                 });
                 incomingBidsRejectButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         BidController.rejectBid(selectedBid, item, owner);
-                        bids = item.getBids().getBids();
-                        Collections.sort(bids);
-                        adapter.notifyDataSetChanged();
+                        setAdapter();
                     }
                 });
             }
@@ -120,5 +128,13 @@ public class BidsForOneItemActivity extends AppCompatActivity {
             amountBid.setText("Amount Bid:\n $" + String.format("%.2f", bid.getBidAmount()) + "/Hour");
             return view;
         }
+    }
+
+    public void setAdapter() {
+        bids = item.getBids().getBids();
+        Collections.sort(bids);
+        adapter = new CustomBidsOnItemAdapter(this, bids);
+        allBidsView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 }

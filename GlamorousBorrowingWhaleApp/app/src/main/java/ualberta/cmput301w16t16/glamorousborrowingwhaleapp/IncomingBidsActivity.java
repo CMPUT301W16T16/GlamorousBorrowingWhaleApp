@@ -49,6 +49,10 @@ public class IncomingBidsActivity extends AppCompatActivity {
     private ItemList itemList;
     private Integer pos = -1;
     private Integer finalPos;
+    private Button currAccept;
+    private Button currReject;
+    private Button prevAccept;
+    private Button prevReject;
 
     private Item item;
 
@@ -65,11 +69,24 @@ public class IncomingBidsActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                final Button incomingBidsAcceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
+                final Button incomingBidsRejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
 
-                Button incomingBidsAcceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
-                Button incomingBidsRejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
-                incomingBidsAcceptButton.setVisibility(View.VISIBLE);
-                incomingBidsRejectButton.setVisibility(View.VISIBLE);
+                prevAccept = currAccept;
+                prevReject = currReject;
+                currAccept = incomingBidsAcceptButton;
+                currReject = incomingBidsRejectButton;
+
+                if (prevAccept != null && prevReject != null) {
+                    prevAccept.setVisibility(View.GONE);
+                    prevReject.setVisibility(View.GONE);
+                }
+                currAccept.setVisibility(View.VISIBLE);
+                currReject.setVisibility(View.VISIBLE);
+                ///Log.d("MARTINATESTING", "prevShowButtons: "+String.valueOf(prevShowButtons));
+                //Log.d("MARTINATESTING", "showButtons: "+String.valueOf(showButtons));
+
+
 
                 BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
                 selectedBid = bidItem.bid;
@@ -101,6 +118,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         AcceptBid();
+                        Toast.makeText(IncomingBidsActivity.this, "You are now renting out your item!", Toast.LENGTH_SHORT).show();
                         SetBids();
                     }
                 });
