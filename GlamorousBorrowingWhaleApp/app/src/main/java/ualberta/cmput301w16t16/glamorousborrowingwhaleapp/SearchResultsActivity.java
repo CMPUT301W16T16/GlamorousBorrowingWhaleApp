@@ -53,9 +53,9 @@ public class SearchResultsActivity extends AppCompatActivity {
             //query will always be null here, so when this activity is created and we have
             //network access, the search view will always be first populated with all the items
             //in elasticsearch.
-            if (query == null) {
-                ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
-            }
+            
+            //ElasticSearch has its own null case to take care of, so we just pass whatever as the query.
+            ItemController.getItemsElasticSearch(itemsListView, query, adapter, getApplicationContext());
 
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
