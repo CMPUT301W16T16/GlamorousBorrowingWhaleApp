@@ -29,16 +29,13 @@ public class BidController {
     }
 
     public static void rejectBid(Bid selectedBid, Item item, User owner) {
-        String renterID = selectedBid.getRenterID();
-        User renter = UserController.getUserByIDElasticSearch(renterID);
-        renter.removeItemBidOn(item.getID());
-        UserController.updateUserElasticSearch(renter);
-
         BidList bids = item.getBids();
         ArrayList<Bid> bidsToRemove = new ArrayList<>();
-        for (Bid bid : bids.getBids()) {
-            if (bid.getItemID().equals(selectedBid.getItemID())) {
-                bidsToRemove.add(bid);
+        if (!bids.getBids().isEmpty()) {
+            for (Bid bid : bids.getBids()) {
+                if (bid.getItemID().equals(selectedBid.getItemID())) {
+                    bidsToRemove.add(bid);
+                }
             }
         }
         for (Bid bid : bidsToRemove) {
@@ -46,10 +43,28 @@ public class BidController {
         }
         item.setBids(bids);
 
+        String renterID = selectedBid.getRenterID();
+        User renter = UserController.getUserByIDElasticSearch(renterID);
+
         owner.removeMyItem(item.getID());
+        renter.removeItemBidOn(item.getID());
+
         ItemController.updateItemElasticSearch(item);
+
         owner.addMyItem(item.getID());
+
+        boolean renterHasBids = false;
+        for (Bid bid : item.getBids().getBids()) {
+            if (bid.getRenterID().equals(renterID)) {
+                renterHasBids = true;
+            }
+        }
+        if (renterHasBids) {
+            renter.addItemBidOn(item.getID());
+        }
+
         UserController.updateUserElasticSearch(owner);
+        UserController.updateUserElasticSearch(renter);
     }
 
     public static void acceptBid(Bid selectedBid, Item item, User owner) {

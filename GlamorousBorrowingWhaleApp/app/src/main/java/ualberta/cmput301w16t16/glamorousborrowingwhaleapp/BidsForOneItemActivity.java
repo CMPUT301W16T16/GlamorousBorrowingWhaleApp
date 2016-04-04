@@ -21,7 +21,10 @@ public class BidsForOneItemActivity extends AppCompatActivity {
     private ArrayAdapter<Bid> adapter;
 
     private Item item;
-    private User user;
+    private User owner;
+
+    Integer pos = -1;
+    Integer finalPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class BidsForOneItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bids_for_one_item);
 
         item = ItemController.getItem();
-        user = UserController.getUser();
+        owner = UserController.getUser();
 
         ListView allBidsView = (ListView) findViewById(R.id.allBidsView);
         bids = item.getBids().getBids();
@@ -43,26 +46,46 @@ public class BidsForOneItemActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 final Bid selectedBid = (Bid) parent.getAdapter().getItem(position);
 
-                Button acceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
-                Button rejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
+                Button incomingBidsAcceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
+                Button incomingBidsRejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
+                incomingBidsAcceptButton.setVisibility(View.VISIBLE);
+                incomingBidsRejectButton.setVisibility(View.VISIBLE);
 
-                acceptButton.setClickable(true);
-                rejectButton.setClickable(true);
-                acceptButton.setOnClickListener(new View.OnClickListener() {
+                ArrayList<String> ownersItems = owner.getMyItems();
+                String[] ownersItemsString = new String[ownersItems.size()];
+                ownersItemsString = ownersItems.toArray(ownersItemsString);
+                ItemList itemList = ItemController.getItemsByIDElasticSearch(ownersItemsString);
+
+                for (Item item : itemList.getItemList()) {
+                    pos = 0;
+                    for (Bid bid : item.getBids().getBids()) {
+                        if (bid.getItemID().equals(selectedBid.getItemID())) {
+                            finalPos = pos;
+                        }
+                    }
+                }
+                String newID = owner.getMyItems().get(finalPos);
+                String[] items = new String[1];
+                items[0] = newID;
+                ItemController.getItemsByIDElasticSearch(items);
+                item = ItemController.getItemList().getItemList().get(0);
+                item.setID(newID); // maybe redundant now?
+                ItemController.setItem(item);
+
+                incomingBidsAcceptButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("MARTINA", "trying to accept the bid");
-                        BidController.acceptBid(selectedBid, item, user);
+                        BidController.acceptBid(selectedBid, item, owner);
                         bids = item.getBids().getBids();
+                        Log.d("MARTINA", bids.toString());
                         Collections.sort(bids);
                         adapter.notifyDataSetChanged();
                     }
                 });
-                rejectButton.setOnClickListener(new View.OnClickListener() {
+                incomingBidsRejectButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("MARTINA", "trying to reject the bid");
-                        BidController.rejectBid(selectedBid, item, user);
+                        BidController.rejectBid(selectedBid, item, owner);
                         bids = item.getBids().getBids();
                         Collections.sort(bids);
                         adapter.notifyDataSetChanged();
@@ -71,6 +94,7 @@ public class BidsForOneItemActivity extends AppCompatActivity {
             }
         });
     }
+
     public class CustomBidsOnItemAdapter extends ArrayAdapter<Bid> {
 
         public CustomBidsOnItemAdapter(Context context, ArrayList<Bid> bids) {
@@ -85,6 +109,11 @@ public class BidsForOneItemActivity extends AppCompatActivity {
 
             TextView itemTitle = (TextView) view.findViewById(R.id.incomingBidsItemTitle);
             itemTitle.setVisibility(View.GONE);
+
+            Button incomingBidsAcceptButton = (Button) view.findViewById(R.id.incomingBidsAccept);
+            Button incomingBidsRejectButton = (Button) view.findViewById(R.id.incomingBidsReject);
+            incomingBidsAcceptButton.setVisibility(View.GONE);
+            incomingBidsRejectButton.setVisibility(View.GONE);
 
             // adding the amount that was bid
             TextView amountBid = (TextView) view.findViewById(R.id.incomingBidsAmountBid);
