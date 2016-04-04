@@ -1,6 +1,7 @@
 package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 
 import android.graphics.BitmapFactory;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
@@ -22,11 +24,9 @@ public class MakeRatingActivity extends AppCompatActivity{
 
     private TextView name;
     private EditText comment;
-    // rating
+    private RatingBar rating;
     private ImageView photo;
 
-    private Button discard;
-    private Button save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -41,10 +41,10 @@ public class MakeRatingActivity extends AppCompatActivity{
         // getting the views
         name = (TextView) findViewById(R.id.theirItemName);
         photo = (ImageView) findViewById(R.id.pictureView);
+        rating = (RatingBar) findViewById(R.id.theirRating);
 
         // setting the views
         name.setText(item.getTitle());
-        comment.setText(item.getDescription());
         // photo.set?
 
         if (item.getPhoto() != null) {
@@ -53,26 +53,26 @@ public class MakeRatingActivity extends AppCompatActivity{
         }
 
         ImageButton saveRatingButton = (ImageButton) findViewById(R.id.saveRating);
-        ImageButton discardRatingButton = (ImageButton) findViewById(R.id.discardRating);
 
-
-
-
-
-        // Submit Rating Button (save) Submits the rating
+        // TODO: make this actually update the rating objects for the item
+        // Submit Rating Button (save) Submits the rating (comment and star)
         saveRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // code for when save button is pressed
+
                 // Use code below to save comment text
                 //item.set________(description.getText().toString());
-            }
-        });
-        // Discard Button (discard) Discards current entered data
-        discardRatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // code for when discard button is pressed
+
+                rating.setOnRatingBarChangeListener(
+                        new RatingBar.OnRatingBarChangeListener() {
+                            @Override
+                            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                                // set item rating to (String.valueOf(rating));
+                            }
+                        }
+                );
+
             }
         });
 
