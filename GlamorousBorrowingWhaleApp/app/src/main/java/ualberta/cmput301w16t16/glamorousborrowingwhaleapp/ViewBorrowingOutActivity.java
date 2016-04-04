@@ -25,9 +25,9 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
     private String renterID;
     private String oldID;
     private ListView itemsView;
-    private ArrayList<String> usersItems;
-    private ArrayList<Item> usersItemsArrayList;
-    private ArrayList<String> rentersBorrowedItems;
+    private ArrayList<String> usersItems = new ArrayList<>();
+    private ArrayList<Item> usersItemsArrayList = new ArrayList<>();
+    private ArrayList<String> rentersBorrowedItems = new ArrayList<>();
     private String[] itemsList;
     private Item selectedItem;
 
@@ -101,13 +101,7 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        usersItems = user.getMyItems();
-        itemsList = new String[usersItems.size()];
-        itemsList = usersItems.toArray(itemsList);
-        ItemController.getItemsByIDElasticSearch(itemsList);
-        usersItemsArrayList = ItemController.getItemList().getItemList();
-        adapter.notifyDataSetChanged();
-
+        SetItems();
     }
 
     public void SetItems() {
@@ -124,15 +118,13 @@ public class ViewBorrowingOutActivity extends AppCompatActivity {
                     usersItemsArrayList.remove(item);
                 }
             }
-
             if (usersItemsArrayList.isEmpty()) {
                 Toast.makeText(ViewBorrowingOutActivity.this, "None of your items are being borrowed.", Toast.LENGTH_SHORT).show();
-            } else {
-                //TODO: can stop converting the items list into String[] once that's it's actual type
-                adapter = new CustomSearchResultsAdapter(this, usersItemsArrayList);
-                itemsView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
             }
+            //TODO: can stop converting the items list into String[] once that's it's actual type
+            adapter = new CustomSearchResultsAdapter(this, usersItemsArrayList);
+            itemsView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         } else {
             Toast.makeText(this, "You are not connected to the internet.", Toast.LENGTH_SHORT).show();
         }
