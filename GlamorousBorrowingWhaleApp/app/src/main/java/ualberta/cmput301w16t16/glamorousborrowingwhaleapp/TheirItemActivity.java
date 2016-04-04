@@ -94,6 +94,7 @@ public class TheirItemActivity extends AppCompatActivity {
          * The item's attributes are then set from the EditText boxes.
          */
 
+        // TODO: make this go show the user the comments
         theirComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

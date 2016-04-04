@@ -220,6 +220,7 @@ public class MyItemActivity extends AppCompatActivity {
             }
         });
 
+        // TODO: make this go show the user the comments
         myComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
