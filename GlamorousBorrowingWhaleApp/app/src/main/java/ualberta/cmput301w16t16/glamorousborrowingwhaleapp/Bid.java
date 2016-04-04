@@ -12,18 +12,14 @@ import java.util.Calendar;
 
 public class Bid implements Comparable<Bid> {
 
-// expiry of a bid?
-// switched Date to Calendar type for ease of use.
-//    private Calendar startDate;
-//    private Calendar endDate;
-
     private Boolean isAccepted;
     private String ownerID;
     private String renterID;
     private String itemID;
     private double bidAmount;
 
-    public Bid() {}
+    public Bid() {
+    }
 
     //This Bid must have an item passed to it (the item being bidded on)
     public Bid(Item item, double bidAmount) {
@@ -42,7 +38,9 @@ public class Bid implements Comparable<Bid> {
         this.isAccepted = isAccepted;
     }
 
-    public String getOwnerID() { return ownerID; }
+    public String getOwnerID() {
+        return ownerID;
+    }
 
     public void setOwnerID(String ownerID) {
         this.ownerID = ownerID;
@@ -64,41 +62,25 @@ public class Bid implements Comparable<Bid> {
         return bidAmount;
     }
 
-    public String getItemID() { return itemID; }
+    public String getItemID() {
+        return itemID;
+    }
 
-    public void setItemID(String itemID) { this.itemID = itemID; }
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
+    }
 
-    public String toString() { return this.getItemID() + ";" +  this.bidAmount; }
+    public String toString() {
+        return this.getItemID() + ";" + this.bidAmount;
+    }
 
     @Override
     public int compareTo(Bid another) {
         if (this.bidAmount < another.bidAmount) {
             return 1;
-        }
-        else if(this.bidAmount > another.bidAmount){
+        } else if (this.bidAmount > another.bidAmount) {
             return -1;
         }
         return 0;
     }
-
-
-
-    ////////////////////////////////////////////////////// maybe later
-
-
-//    public Calendar getStartDate() {
-//        return startDate;
-//    }
-//
-//    public void setStartDate(Calendar startDate) {
-//        this.startDate = startDate;
-//    }
-//
-//    public Calendar getEndDate() {
-//        return endDate;
-//    }
-//
-//    public void setEndDate(Calendar endDate) {
-//        this.endDate = endDate;
-//    }
 }

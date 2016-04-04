@@ -32,17 +32,6 @@ public class NetworkUtil {
         return NOT_CONNECTED;
     }
 
-    public static String getConnectivityStatusString(Context context) {
-        int conn = NetworkUtil.getConnectivityStatus(context);
-        String status = null;
-        if (conn == NetworkUtil.CONNECTED) {
-            status = "Connected to Internet";
-        } else if (conn == NOT_CONNECTED) {
-            status = "Not connected to Internet";
-        }
-        return status;
-    }
-
     // turn on the NetworkChangeReceiver to start listening for a change in connectivity
     public static void startListeningForNetwork(Context context) {
         ComponentName receiver = new ComponentName(context, NetworkChangeReceiver.class);

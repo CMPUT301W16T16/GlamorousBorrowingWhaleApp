@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class BidList {
 
-    //note: added a constructor here for testing
     private ArrayList<Bid> bids = new ArrayList<>();
 
     public BidList() { }

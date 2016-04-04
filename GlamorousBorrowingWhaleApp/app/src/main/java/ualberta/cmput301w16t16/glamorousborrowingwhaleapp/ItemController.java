@@ -87,12 +87,4 @@ public class ItemController {
             e.printStackTrace();
         }
     }
-
-    public static void getIncomingBidsElasticSearch(ListView bidsListView) {
-        try {
-            new ElasticSearch.elasticGetIncomingBids().execute(bidsListView).get(1, TimeUnit.DAYS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            e.printStackTrace();
-        }
-    }
 }

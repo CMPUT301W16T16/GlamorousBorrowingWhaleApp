@@ -93,7 +93,7 @@ public class SignInActivity extends AppCompatActivity implements Serializable {
                         // with the provided password after checking that the user exists
                         user = UserController.getSecondaryUser();
                         if (user != null) {
-                            if (UserController.checkPassword(password)) {
+                            if (UserController.checkPassword(password, user)) {
                                 UserController.setUser(user);
 
                                 Intent intent = new Intent(view.getContext(), MyProfileViewActivity.class);
