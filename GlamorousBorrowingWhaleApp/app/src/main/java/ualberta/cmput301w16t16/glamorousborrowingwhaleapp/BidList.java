@@ -22,7 +22,6 @@ public class BidList {
 
     public void removeBid(Bid bid) {
         bids.remove(bid);
-
     }
 
     public ArrayList<Bid> getBids() {

@@ -111,6 +111,7 @@ public class ElasticSearch extends Application {
                     item.setAvailability(itemFromES.getBoolean("availability"));
                     item.setPhoto(itemFromES.getString("photo").getBytes());
                     item.setOwnerID(itemFromES.getString("owner"));
+                    item.setRenterID(itemFromES.getString("renter"));
                     item.setSport(itemFromES.getString("sport"));
 
                     BidList bids = new BidList();
@@ -127,7 +128,6 @@ public class ElasticSearch extends Application {
                     }
 
                     item.setBids(bids);
-
                     itemList.add(item);
                 }
                 ItemController.setItemList(itemList);
@@ -235,7 +235,6 @@ public class ElasticSearch extends Application {
     // used in SignUpActivity and UserController.updateUserElasticSearch
     public static class elasticAddUser extends AsyncTask<User, String, String> {
 
-        User user = UserController.getUser();
         BufferedWriter writer;
 
         @Override
@@ -243,6 +242,7 @@ public class ElasticSearch extends Application {
 
             HttpURLConnection connection = null;
             URL url;
+            User user = params[0];
 
             try {
                 String urlString = "http://cmput301.softwareprocess.es:8080/cmput301w16t16/User/" + user.getUsername();
@@ -329,6 +329,7 @@ public class ElasticSearch extends Application {
 
     // Not Working
     // using elasticSearchDeleteUser and elasticSearchAddUser instead
+    // like we may as well delete this it's pretty useless - erin
     public static class elasticUpdateUser extends AsyncTask<Void, String, String> {
 
         User user = UserController.getUser();
@@ -444,11 +445,8 @@ public class ElasticSearch extends Application {
                 jo.put("availability", item.getAvailability());
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
+                jo.put("renter", item.getRenterID());
                 jo.put("sport", item.getSport());
-                // this last one probably won't work the same
-                //jo.put("bids", item.getBids());
-
-                // changed it to this
                 JSONArray ja = new JSONArray();
                 for (int i = 0; i < item.getBids().getBids().size(); i++) {
                     Bid bid = item.getBids().getBids().get(i);
@@ -588,6 +586,7 @@ public class ElasticSearch extends Application {
                 jo.put("availability", item.getAvailability());
                 jo.put("photo", item.getPhoto());
                 jo.put("owner", item.getOwnerID());
+                jo.put("renter", item.getRenterID());
                 jo.put("sport", item.getSport());
 
                 // this last one probably won't work the same
@@ -761,7 +760,9 @@ public class ElasticSearch extends Application {
                         tempItem.setDescription(itemFromES.getString("description"));
                         tempItem.setAvailability(itemFromES.getBoolean("availability"));
                         tempItem.setPhoto(itemFromES.getString("photo").getBytes());
+                        tempItem.setSize(itemFromES.getString("size"));
                         tempItem.setOwnerID(itemFromES.getString("owner"));
+                        tempItem.setRenterID(itemFromES.getString("renter"));
                         tempItem.setSport(itemFromES.getString("sport"));
 
                         BidList bids = new BidList();
@@ -779,6 +780,7 @@ public class ElasticSearch extends Application {
                         }
 
                         tempItem.setBids(bids);
+                        tempItem.setID(ID);
                         itemList.add(tempItem);
 
 

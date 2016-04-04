@@ -67,8 +67,7 @@ public class Bid {
 
     public void setItemID(String itemID) { this.itemID = itemID; }
 
-    // can this be commented out?
-    //public String toString() { return this.getItem() + ";" +  this.bidAmount; }
+    public String toString() { return this.getItemID() + ";" +  this.bidAmount; }
 
 
 

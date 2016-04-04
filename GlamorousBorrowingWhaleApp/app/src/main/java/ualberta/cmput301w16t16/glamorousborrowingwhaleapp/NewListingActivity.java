@@ -94,6 +94,7 @@ public class NewListingActivity extends AppCompatActivity {
                     item.setAvailability(true);
                     item.setBids(bids);
                     item.setOwnerID(user.getID());
+                    item.setRenterID("");
                     item.setPhoto(photoStream);
                     item.setOwnerID(user.getID());
                     item.setSport(sport.getText().toString());

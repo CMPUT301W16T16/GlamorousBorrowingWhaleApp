@@ -42,7 +42,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="0dp"
             android:gravity="center_vertical"
-            >
+            android:weightSum="1">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,11 +78,27 @@
                 android:textColor="#000000"
                 android:gravity="center_vertical|center_horizontal"/>
 
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ratingBar2"
-                android:layout_gravity="center_horizontal" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/theirRating"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="65dp" />
+
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/theirItemComment"
+                    android:src="@mipmap/comments"
+                    android:background="@layout/mybutton"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="0dp" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -260,6 +276,18 @@
                 android:text="Make A Bid"
                 android:textColor="#FFFFFF"/>
         </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/makeRating"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/rounded_corners_dark"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Leave a Rating"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 

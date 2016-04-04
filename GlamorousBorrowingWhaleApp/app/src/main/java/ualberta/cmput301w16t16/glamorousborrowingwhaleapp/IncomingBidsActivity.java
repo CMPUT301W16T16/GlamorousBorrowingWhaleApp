@@ -27,46 +27,37 @@ import java.util.ArrayList;
 */
 
 public class IncomingBidsActivity extends AppCompatActivity {
+    // I'm sorry theres like a thousand variables i'll try to clean this up later - erin
     private ArrayList<BidItem> pairs = new ArrayList<>();
     private ArrayAdapter<BidItem> adapter;
+    private ArrayList<String> ownersItems;
+    private Bid selectedBid;
     private BidList myBidList = new BidList();
     private BidList itemBidList = new BidList();
-    private User user = UserController.getUser();
     private ListView incomingBidsList;
     private String[] myItemsList;
+    private String[] items;
+    private String[] ownersItemsString;
+    private String renterID;
+    private String oldID;
+    private String newID;
     private ArrayList<Item> myItems;
+    private User owner = UserController.getUser();
+    private User renter;
+    private ItemList itemList;
+    private Integer pos = -1;
+    private Integer finalPos;
+
+    private Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_bids);
         setTitle("Incoming Bids");
-        user.setNotification(false);
+        owner.setNotification(false);
 
-        // get all the users items that have bids
-        incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
-        ArrayList<String> myItemsArray = user.getMyItems();
-        myItemsList = new String[myItemsArray.size()];
-        myItemsList = myItemsArray.toArray(myItemsList);
-        ItemController.getItemsByIDElasticSearch(myItemsList);
-        myItems = ItemController.getItemList().getItemList();
-
-        for (Item item : myItems) {
-            itemBidList = item.getBids();
-            for (Bid bid : itemBidList.getBids()) {
-                myBidList.addBid(bid);
-                BidItem pair = new BidItem(bid, item);
-                pairs.add(pair);
-            }
-        }
-
-        adapter = new CustomIncomingBidsAdapter(this, pairs);
-        incomingBidsList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-        if (myBidList.isEmpty()) {
-            Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids.", Toast.LENGTH_SHORT).show();
-        }
+        SetBids();
 
         // referenced Mar-21-2016 from http://stackoverflow.com/questions/18841650/replacing-listview-row-with-another-layout-onclick
         // this doesn't work very well, although the buttons do show up when you click on one of the bids once
@@ -75,7 +66,7 @@ public class IncomingBidsActivity extends AppCompatActivity {
         incomingBidsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                 // removing the old views
                 TextView incomingBidsItemTitle = (TextView) findViewById(R.id.incomingBidsItemTitle);
@@ -94,19 +85,45 @@ public class IncomingBidsActivity extends AppCompatActivity {
                 incomingBidsAmountBidInflate.setText(incomingBidsAmountBid.getText());
                 incomingBidsItemTitleInflate.setText(incomingBidsItemTitle.getText());
 
-                checkmarkButton.setOnClickListener(new View.OnClickListener() {
+                BidItem bidItem = (BidItem) parent.getAdapter().getItem(position);
+                selectedBid = bidItem.bid;
+                owner = UserController.getUser();
+                ownersItems = owner.getMyItems();
+                ownersItemsString = new String[ownersItems.size()];
+                ownersItemsString = ownersItems.toArray(ownersItemsString);
+                itemList = ItemController.getItemsByIDElasticSearch(ownersItemsString);
 
+                for (Item item : itemList.getItemList()) {
+                    pos = 0;
+                    for (Bid bid : item.getBids().getBids()) {
+                        if (bid.getItemID().equals(selectedBid.getItemID())) {
+                            finalPos = pos;
+                        }
+                    }
+                }
+                newID = owner.getMyItems().get(finalPos);
+                items = new String[1];
+                items[0] = newID;
+                ItemController.getItemsByIDElasticSearch(items);
+                item = ItemController.getItemList().getItemList().get(0);
+                oldID = item.getID();
+                item.setID(newID); // maybe redundant now?
+                ItemController.setItem(item);
+
+                checkmarkButton.setOnClickListener(new View.OnClickListener() {
+                    //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
-                        //TODO: accept this bid
+                        AcceptBid();
+                        SetBids();
                     }
                 });
-
                 xmarkButton.setOnClickListener(new View.OnClickListener() {
-
+                    //TODO: get a refresh or something working so this bid disappears when u reject it
                     @Override
                     public void onClick(View v) {
-                        //TODO: reject this bid
+                        RejectBid();
+                        SetBids();
                     }
                 });
             }
@@ -144,6 +161,81 @@ public class IncomingBidsActivity extends AppCompatActivity {
         public BidItem(Bid bid, Item item) {
             this.bid = bid;
             this.item = item;
+        }
+    }
+
+    public void RejectBid() {
+        renterID = selectedBid.getRenterID();
+        renter = UserController.getUserByIDElasticSearch(renterID);
+        renter.removeItemBidOn(newID);
+        UserController.updateUserElasticSearch(renter);
+
+        BidList bids = item.getBids();
+        for (Bid bid : bids.getBids()) {
+            if (bid.getItemID().equals(selectedBid.getItemID())) {
+                bids.removeBid(bid);
+            }
+        }
+        item.setBids(bids);
+
+        owner.removeMyItem(newID);
+        ItemController.updateItemElasticSearch(item);
+        newID = item.getID();
+        owner.addMyItem(newID);
+        UserController.updateUserElasticSearch(owner);
+    }
+
+    public void AcceptBid() {
+        renterID = selectedBid.getRenterID();
+        renter = UserController.getUserByIDElasticSearch(renterID);
+        renter.removeItemBidOn(newID);
+
+        BidList bids = item.getBids();
+
+        for (Bid bid : bids.getBids()) {
+            renterID = bid.getRenterID();
+            renter = UserController.getUserByIDElasticSearch(renterID);
+            renter.removeItemBidOn(newID);
+            renter.removeItemBidOn(oldID);
+            UserController.updateUserElasticSearch(renter);
+        }
+
+        bids = new BidList();
+        item.setBids(bids);
+        item.setAvailability(false);
+        item.setRenterID(renterID);
+        owner.removeMyItem(newID);
+        ItemController.updateItemElasticSearch(item);
+        newID = item.getID();
+        owner.addMyItem(newID);
+        renter.addItemBorrowed(newID);
+        UserController.updateUserElasticSearch(renter);
+        UserController.updateUserElasticSearch(owner);
+    }
+
+    public void SetBids() {
+        incomingBidsList = (ListView) findViewById(R.id.incomingBidsListView);
+        ArrayList<String> myItemsArray = owner.getMyItems();
+        myItemsList = new String[myItemsArray.size()];
+        myItemsList = myItemsArray.toArray(myItemsList);
+        ItemController.getItemsByIDElasticSearch(myItemsList);
+        myItems = ItemController.getItemList().getItemList();
+        pairs.clear();
+        for (Item item : myItems) {
+            itemBidList = item.getBids();
+            for (Bid bid : itemBidList.getBids()) {
+                myBidList.addBid(bid);
+                BidItem pair = new BidItem(bid, item);
+                pairs.add(pair);
+            }
+        }
+
+        adapter = new CustomIncomingBidsAdapter(this, pairs);
+        incomingBidsList.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        if (myBidList.isEmpty()) {
+            Toast.makeText(IncomingBidsActivity.this, "You don't have any incoming bids.", Toast.LENGTH_SHORT).show();
         }
     }
 

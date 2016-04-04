@@ -36,6 +36,8 @@ public class TheirItemActivity extends AppCompatActivity {
     private ImageView photo;
     private Button makeBid;
     private Button itemOwner;
+    private Button makeRating; // button to leave a rating on someone elses item
+    private ImageButton theirComment;  // button to view comments
 
     private int result;
     private byte[] photoStream = new byte[65536];
@@ -60,6 +62,8 @@ public class TheirItemActivity extends AppCompatActivity {
         photo = (ImageView) findViewById(R.id.pictureView);
         makeBid = (Button) findViewById(R.id.theirItemMakeBid);
         itemOwner = (Button) findViewById(R.id.theirItemOwner);
+        makeRating = (Button) findViewById(R.id.makeRating);
+        theirComment = (ImageButton) findViewById(R.id.theirItemComment);
 
         // setting the TextViews
         name.setText(item.getTitle());
@@ -90,6 +94,13 @@ public class TheirItemActivity extends AppCompatActivity {
          * The item's attributes are then set from the EditText boxes.
          */
 
+        theirComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // code for when the their comment button is pressed
+                // view comments on item
+            }
+        });
 
         makeBid.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +110,13 @@ public class TheirItemActivity extends AppCompatActivity {
             }
         });
 
+        makeRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TheirItemActivity.this, MakeRatingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // this is the gallery selection method for pictures
         photo.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +133,6 @@ public class TheirItemActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TheirItemActivity.this, TheirProfileViewActivity.class);
                 startActivity(intent);
-
             }
         });
 
