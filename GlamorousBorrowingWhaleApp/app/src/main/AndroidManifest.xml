@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignInActivity">
+        <activity android:name=".SignInActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,22 +22,31 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".MyItemActivity" />
-        <activity android:name=".SearchResultsActivity" />
-        <activity android:name=".MyBorrowedItemsActivity" />
-        <activity android:name=".MyBidsActivity" />
+        <activity android:name=".MyItemActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyItemsActivity"/>
+        <activity android:name=".SearchResultsActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyProfileViewActivity"/>
+        <activity android:name=".MyBorrowedItemsActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyProfileViewActivity"/>
+        <activity android:name=".MyBidsActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyProfileViewActivity"/>
         <activity android:name=".MyProfileViewActivity" />
-        <activity android:name=".TheirItemActivity" />
-        <activity android:name=".MyItemsActivity" />
-        <activity android:name=".NewListingActivity" />
-        <activity android:name=".IncomingBidsActivity" />
-        <activity android:name=".MyBorrowedItemActivity" />
+        <activity android:name=".TheirItemActivity"/>
+        <activity android:name=".MyItemsActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyProfileViewActivity"/>
+        <activity android:name=".NewListingActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyItemsActivity"/>
+        <activity android:name=".IncomingBidsActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyProfileViewActivity"/>
+        <activity android:name=".MyBorrowedItemActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyProfileViewActivity"/>
         <activity android:name=".User" />
         <activity android:name=".PersistentToolbar" />
         <!-- android:name=".MyItemsIncomingBidsActivity" -->
         <!-- android:label="@string/title_activity_my_items_incoming_bids" -->
         <!-- android:theme="@style/AppTheme.NoActionBar"></activity> -->
-        <activity android:name=".MakeBidActivity" />
+        <activity android:name=".MakeBidActivity"
+            android:parentActivityName="ualberta.cmput301w16t16.glamorousborrowingwhaleapp.MyProfileViewActivity"/>
 
         <receiver
             android:name=".NetworkChangeReceiver"
@@ -51,9 +61,11 @@
         <activity
             android:name=".ViewBorrowingOutActivity"
             android:label="@string/title_activity_view_borrowing_out"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TheirProfileViewActivity" />
-        <activity android:name=".BidsForOneItemActivity"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".TheirProfileViewActivity"/>
+        <activity android:name=".BidsForOneItemActivity"/>
     </application>
+
+
 
 </manifest>

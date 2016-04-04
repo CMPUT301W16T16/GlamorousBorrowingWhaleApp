@@ -13,11 +13,11 @@ public class Item {
     private Boolean availability;
     private byte[] photo;
     private BidList bids;
+    public RatingList ratings;
     private String sport;
     // private User owner;
     private String renterID;
     private String ownerID;
-    private int rating;
     protected String ID;
 
     public void Item() {
@@ -51,22 +51,14 @@ public class Item {
         return availability;
     }
 
-    public void setAvailability(Boolean availability) {
-        this.availability = availability;
-    }
+    public void setAvailability(Boolean availability) {this.availability = availability;}
 
     public void setPhoto(byte[] photoByteArray) { photo = photoByteArray; }
 
     public byte[] getPhoto() { return photo; }
 
-    public int getRating() {
-
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
+    //public int getRating() {return rating;}
+    //public void setRating(int rating) {this.rating = rating;}
 
     public String getID() { return ID; }
 
@@ -84,6 +76,8 @@ public class Item {
         this.renterID = renterID;
     }
 
+
+    // Bid Functions
     public BidList getBids() {
         return bids;
         //Hi note that this is a BidList type!!!!!
@@ -107,6 +101,22 @@ public class Item {
         }
     }
 
+    public void addBid(Bid bid){
+        this.bids.addBid(bid);
+    }
+
+
+
+    public String printAvailability() {
+        if (availability) {
+            return "Available";
+        } else {
+            return "Not Available";
+        }
+    }
+
+
+    // Sport Functions
     public String getSport() {
         return sport;
     }
@@ -114,6 +124,25 @@ public class Item {
     public void setSport(String sport) {
         this.sport = sport;
     }
+
+
+    //Rating Functions
+    public RatingList getRatings(){
+        return ratings;
+    }
+
+    public void setRatings(RatingList ratings){
+        this.ratings = ratings;
+    }
+
+    public float calcAverageRating(RatingList ratings){
+        return this.ratings.avgRating();
+    }
+
+    public void addRating(Rating rating){
+        this.ratings.addRating(rating);
+    }
+
 
 //    public User getOwner() {
 //        return owner;
@@ -123,17 +152,7 @@ public class Item {
 //        this.owner = owner;
 //    }
 
-    public void addBid(Bid bid){
-        this.bids.addBid(bid);
-    }
 
-    public String printAvailability() {
-        if (availability) {
-            return "Available";
-        } else {
-            return "Not Available";
-        }
-    }
 
     /**
      * Passes a string of our choosing to the view adapter in MyItemsActivity.

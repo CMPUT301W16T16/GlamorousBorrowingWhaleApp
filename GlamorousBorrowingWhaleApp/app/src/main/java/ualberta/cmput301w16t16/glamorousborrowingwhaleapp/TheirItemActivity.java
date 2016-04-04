@@ -3,13 +3,16 @@ package ualberta.cmput301w16t16.glamorousborrowingwhaleapp;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,8 @@ public class TheirItemActivity extends AppCompatActivity {
     private Button itemOwner;
     private Button makeRating; // button to leave a rating on someone elses item
     private ImageButton theirComment;  // button to view comments
+    private RatingBar theirItemRatingBar;
+    private float calcRating; // calculated average rating
 
     private int result;
     private byte[] photoStream = new byte[65536];
@@ -45,7 +50,10 @@ public class TheirItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_their_item);
-        setTitle("Their Item");
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Their Item");
+        actionBar.setHomeButtonEnabled(false);
 
         // getting item
         item = ItemController.getItem();
@@ -62,6 +70,7 @@ public class TheirItemActivity extends AppCompatActivity {
         itemOwner = (Button) findViewById(R.id.theirItemOwner);
         makeRating = (Button) findViewById(R.id.makeRating);
         theirComment = (ImageButton) findViewById(R.id.theirItemComment);
+        theirItemRatingBar = (RatingBar) findViewById(R.id.theirRatingBar);
 
         // setting the TextViews
         name.setText(item.getTitle());
@@ -70,6 +79,12 @@ public class TheirItemActivity extends AppCompatActivity {
         size.setText(item.getSize());
         sport.setText(item.getSport());
         description.setText(item.getDescription());
+
+        // TODO: set theirItemRatingBar.rating = average rating, when this function isn't implemented the view crashes
+        // use function 'avgRating' in RatingList activity
+        //calcRating = item.calcAverageRating(item.ratings);
+        //theirItemRatingBar.setRating(calcRating);
+        theirItemRatingBar.setRating(2.5f); // TODO: don't forget to change this, set constant for testing
 
         if (item.getPhoto() != null) {
             byte[] tempPhoto = item.getPhoto();
@@ -92,6 +107,19 @@ public class TheirItemActivity extends AppCompatActivity {
          * The item's attributes are then set from the EditText boxes.
          */
 
+
+
+        // Taken from http://stackoverflow.com/questions/7146976/android-how-to-set-the-rating-bar-is-non-clickable-and-touchable-in-htc-mobile
+        // code makes rating bar non-clickable (UNTESTED)
+        theirItemRatingBar.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
+        theirItemRatingBar.setFocusable(false);
+
+        // TODO: make this go show the user the comments
         theirComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -74,7 +74,7 @@ public class ElasticSearch extends Application {
             } else {
                 //Java complains if this is not checked :P
                 try {
-                    url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?&size=10");
+                    url = new URL("http://cmput301.softwareprocess.es:8080/cmput301w16t16/Item/_search?");
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
@@ -134,7 +134,7 @@ public class ElasticSearch extends Application {
                     itemList.add(item);
                 }
                 ItemController.setItemList(itemList);
-                return null;
+                return itemList;
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -157,10 +157,15 @@ public class ElasticSearch extends Application {
 
         @Override
         protected void onPostExecute(ItemList itemList) {
-            adapter = new CustomSearchResultsAdapter(itemsListView.getContext(),
-                    ItemController.getItemList().getItemList());
-            itemsListView.setAdapter(adapter);
-            this.adapter.notifyDataSetChanged();
+            try {
+                this.adapter = new CustomSearchResultsAdapter(itemsListView.getContext(),
+                        ItemController.getItemList().getItemList());
+                itemsListView.setAdapter(this.adapter);
+                this.adapter.notifyDataSetChanged();
+            } catch (NullPointerException e) {
+                Toast.makeText(context, "Search Failed!", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
